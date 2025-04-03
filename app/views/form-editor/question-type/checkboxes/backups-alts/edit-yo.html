@@ -1,0 +1,1337 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit radios question - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{# #}
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/redesigntest/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/redesigntest/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          <span class="govuk-caption-l" style="color: white">Apply for a county parish holding certificate</span>
+
+          Edit page 2
+        </h1>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#question-1">Page settings</a>
+                            </li>
+
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#overview-noquestions">Overview of questions</a>
+                            </li>
+
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#question-1-information-type">Question 1</a>
+                            </li>
+
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+
+                        <span class="govuk-caption-l">Page 1</span>
+                        <h2 class="govuk-heading-l">Question</h2>
+
+                        <form method="post" id="options-form"
+                          action="/redesigntest/templates/1-question/radios/overview">
+
+                          {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                          {{ govukInput({
+                          label: {
+                          text: "Question",
+                          classes: "govuk-label--m",
+                          isPageHeading: false
+                          },
+                          id: "question-label-input-radios",
+                          value: data['question-label-input-radios'],
+                          name: "questionLabelInputRadios",
+                          oninput: "updateHeading()"
+                          }) }}
+
+                          <!-- Hint Text Area -->
+                          <!-- Hint Text Area -->
+                          {{ govukTextarea({
+                          label: {
+                          text: "Hint text (optional)",
+                          classes: "govuk-label--m"
+                          },
+                          id: "hint-text-input-radios",
+                          name: "hintTextInputRadios",
+                          value: data['hint-text-input-radios'],
+                          classes: "govuk-textarea",
+                          rows: 3,
+                          describedBy: "hint-text-input-radios"
+                          }) }}
+
+                          <!-- List config -->
+
+                          <div class="govuk-form-group">
+
+
+                            <div data-module="moj-add-another">
+
+
+
+
+
+                              <h2 class="govuk-heading-m moj-add-another__heading" tabindex="-1">Create and edit your
+                                list of options</h2>
+
+
+
+                              {% call govukFieldset({
+                              classes: 'moj-add-another__item',
+                              legend: {
+                              text: 'Option',
+                              classes: 'moj-add-another__title govuk-fieldset__legend--m',
+                              isPageHeading: false
+                              }
+                              }) %}
+
+                              <div id="options-container">
+                                {{ govukInput({
+                                id: 'option[0][option_label]',
+                                name: 'option[0][option_label]',
+                                label: {
+                                html: 'Label',
+                                classes: 'govuk-!-font-weight-bold'
+                                },
+                                attributes: {
+                                'data-name': 'option[0][option_label]',
+                                'data-id': 'option[0][option_label]'
+                                }
+                                }) }}
+                              </div>
+
+                              {% endcall %}
+
+                              <div class="moj-button-action">
+                                {{ govukButton({
+                                text: 'Add another option',
+                                classes: 'govuk-button--inverse moj-add-another__add-button govuk-!-margin-bottom-4
+                                govuk-!-margin-top-6 govuk-!-margin-bottom-6',
+                                id: 'add-option-button'
+                                }) }}
+                              </div>
+
+
+
+
+                              <!-- Make Optional Checkbox -->
+                              <div class="govuk-form-group">
+                                <div class="govuk-checkboxes--small">
+                                  <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" type="checkbox" id="makeOptional"
+                                      name="makeOptional" value="{{ data['optional-label-q1'] }}">
+                                    <label class="govuk-label govuk-checkboxes__label" for="makeOptional">
+                                      Make this question optional
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- Add guidance above this question -->
+                              <details class="govuk-details" data-module="govuk-details">
+                                <summary class="govuk-details__summary">
+                                  <span class="govuk-details__summary-text">
+                                    Add guidance above this question (optional)
+                                  </span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                  <!-- Default Content for Question 1 -->
+                                  <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+                                    <!-- Page Heading Input -->
+                                    {{ govukInput({
+                                    label: {
+                                    text: "Page heading",
+                                    classes: "govuk-label govuk-label--m govuk-!-margin-top-0"
+                                    },
+                                    hint: {
+                                    text: "Page headings should be a statement and not a question. For example,
+                                    ‘Passport information’",
+                                    id: "page-heading-input-hint"
+                                    },
+                                    id: "page-heading-input-radios",
+                                    name: "pageHeadingInputRadios",
+                                    type: "text",
+                                    attributes: {
+                                    'aria-describedby': "page-heading-input-hint",
+                                    'data-preview-target': '#dynamic-heading'
+                                    }
+                                    }) }}
+
+                                    <!-- Guidance Text Textarea -->
+                                    {{ govukTextarea({
+                                    label: {
+                                    text: "Guidance text (optional)",
+                                    classes: "govuk-label govuk-label--m"
+                                    },
+                                    hint: {
+                                    text: "Use Markdown to format the content or add hyperlinks",
+                                    id: "guidance-textarea-hint"
+                                    },
+                                    id: "guidance-textarea-radios",
+                                    name: "guidanceTextareaRadios",
+                                    rows: 5,
+                                    attributes: {
+                                    'aria-describedby': "guidance-textarea-hint",
+                                    'data-preview-target': '#guidance-paragraph'
+                                    }
+                                    }) }}
+
+                                  </div>
+                                </div>
+                              </details>
+
+                              {{ govukInput({
+                              label: {
+                              text: "Short description",
+                              classes: "govuk-label--m",
+                              isPageHeading: false
+                              },
+                              hint: {
+                              text: "Enter a short description for this question like 'licence period'. Short
+                              descriptions are used in error messages and on the check your answers page."
+                              },
+                              id: "error-message-input-radios",
+                              name: "errorMessageInputRadios"
+                              }) }}
+
+                              <div id="summary-container">
+
+                                <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                                <!-- The dynamic summary list will be populated here -->
+                                <h2 class="govuk-heading-m">Question settings</h2>
+
+                                {{ govukSummaryList({
+                                classes: "govuk-summary-list govuk-section-break govuk-section-break--visible
+                                govuk-!-margin-bottom-6 ",
+                                rows: [
+                                {
+                                key: {
+                                text: "Type of information"
+                                },
+                                value: {
+                                html: "List: radios"
+                                },
+                                actions: {
+                                items: [
+                                {
+                                href: "/redesigntest/templates/1-question/information-type.html",
+                                text: "Change",
+                                visuallyHiddenText: "name"
+                                }
+                                ]
+                                }
+                                }
+                                ]
+                                }) }}
+                              </div>
+                              <div class="moj-button-action">
+                                {{ govukButton({
+                                text: 'Save and continue',
+                                type: 'submit'
+                                }) }}
+                              </div>
+
+
+                        </form>
+
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Right Column for Preview -->
+  <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+    style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+    <!-- Before content -->
+    <div id="before-content">
+      <p class="govuk-body-s" style="margin-bottom: 0">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Preview
+          this page in a new tab</a>
+      </p>
+    </div>
+
+    <!-- Include the preview template -->
+    {% include "/redesigntest/templates/previews/radios/edit.html" %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // DOM Elements
+    const domElements = {
+      questionLabelInputRadios: document.getElementById('question-label-input-radios'),
+      questionLabelLegend: document.querySelector('legend[for="question-label-input-radios"]'),
+      hintTextInput: document.getElementById('hint-text-input-radios'), // Corrected ID
+      hintTextOutput: document.getElementById('listPreview-hint'), // Corrected target element
+      makeOptionalCheckbox: document.getElementById('makeOptional'),
+      pageHeadingInputRadios: document.getElementById('page-heading-input-radios'),
+      dynamicHeading: document.getElementById('dynamic-heading'),
+      guidanceTextareaRadios: document.getElementById('guidance-textarea-radios'),
+      guidanceParagraph: document.getElementById('guidance-paragraph')
+    };
+
+    // Log to check if all elements are correctly selected
+    console.log("DOM Elements:", domElements);
+
+    // Initialize event listeners
+    initializeEventListeners();
+
+    function initializeEventListeners() {
+      // Update question label
+      if (domElements.questionLabelInputRadios && domElements.questionLabelLegend) {
+        console.log("Adding event listener to questionLabelInputRadios");
+        domElements.questionLabelInputRadios.addEventListener('input', updateQuestionLabel);
+      } else {
+        console.error("questionLabelInputRadios or questionLabelLegend not found.");
+      }
+
+      // Update hint text
+      if (domElements.hintTextInput && domElements.hintTextOutput) {
+        console.log("Adding event listener to hintTextInput");
+        domElements.hintTextInput.addEventListener('input', updateHintText);
+        applyHighlightOnFocus(domElements.hintTextInput, domElements.hintTextOutput);
+      } else {
+        console.error("hintTextInput or hintTextOutput not found.");
+      }
+
+      // Update page heading
+      if (domElements.pageHeadingInputRadios && domElements.dynamicHeading) {
+        console.log("Adding event listener to pageHeadingInput");
+        domElements.pageHeadingInputRadios.addEventListener('input', updatePageHeading);
+        applyHighlightOnFocus(domElements.pageHeadingInputRadios, domElements.dynamicHeading);
+      } else {
+        console.error("pageHeadingInputRadios or dynamicHeading not found.");
+      }
+
+      // Update guidance text
+      if (domElements.guidanceTextareaRadios && domElements.guidanceParagraph) {
+        console.log("Adding event listener to guidanceTextarea");
+        domElements.guidanceTextarea.addEventListener('input', updateGuidanceText);
+        applyHighlightOnFocus(domElements.guidanceTextareaRadios, domElements.guidanceParagraph);
+      } else {
+        console.error("guidanceTextareaRadios or guidanceParagraph not found.");
+      }
+
+      // Apply focus/blur highlighting for question label and legend
+      applyHighlightOnFocus(domElements.questionLabelInputRadios, domElements.questionLabelLegend);
+    }
+
+    function updateQuestionLabel() {
+      console.log("Updating question label");
+      const suffix = domElements.makeOptionalCheckbox && domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+      domElements.questionLabelLegend.textContent = domElements.questionLabelInputRadios.value || 'Question';
+      domElements.questionLabelLegend.textContent += suffix;
+    }
+
+    function updateHintText() {
+      console.log("Updating hint text");
+      const defaultHint = "Hint text"; // Placeholder
+      domElements.hintTextOutput.textContent = domElements.hintTextInput.value.trim() || defaultHint;
+      console.log("Hint text updated to:", domElements.hintTextOutput.textContent);
+    }
+
+    function updatePageHeading() {
+      console.log("Updating page heading");
+      domElements.dynamicHeading.textContent = domElements.pageHeadingInputRadios.value;
+    }
+
+    function updateGuidanceText() {
+      console.log("Updating guidance text");
+      domElements.guidanceParagraph.textContent = domElements.guidanceTextareaRadios.value;
+    }
+
+    // Function to apply focus/blur highlights dynamically to inputs and their corresponding targets
+    function applyHighlightOnFocus(inputElement, targetElement) {
+      if (inputElement && targetElement) {
+        inputElement.addEventListener('focus', function () {
+          console.log(`Highlighting ${targetElement.id} on focus`);
+          targetElement.classList.add('highlight');
+        });
+        inputElement.addEventListener('blur', function () {
+          console.log(`Removing highlight from ${targetElement.id} on blur`);
+          targetElement.classList.remove('highlight');
+        });
+
+        // Apply highlight immediately if input is already focused
+        if (document.activeElement === inputElement) {
+          targetElement.classList.add('highlight');
+        }
+      } else {
+        console.error(`Input or target element not found for IDs: ${inputElement?.id}, ${targetElement?.id}`);
+      }
+    }
+  });
+</script>
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let optionIndex = 1; // Start at 1 for dynamically added options, 0 is already present
+
+    // Get the input field by its ID
+    const inputField = document.getElementById('question-label-input-radios');
+
+    // Ensure the input field exists before adding event listener
+    if (!inputField) {
+      console.error('Input field not found.');
+      return;
+    }
+
+    // Get the radio legend element
+    const radioLegend = document.querySelector('#radio-list fieldset legend');
+
+    if (!radioLegend) {
+      console.error('Radio legend not found.');
+      return;
+    }
+
+    // Add event listener to the input field to update the legend text
+    inputField.addEventListener('input', function (event) {
+      radioLegend.textContent = event.target.value || 'Question 1'; // Fallback to a default if input is empty
+    });
+
+    // Function to update the legend with the number
+    const updateLegend = (index, element) => {
+      element.innerHTML = `Option ${index + 1}`; // Append just the number
+    };
+
+
+    // Add event listener to update labels when checkbox is toggled
+    if (domElements.optionalCheckbox) {
+      domElements.optionalCheckbox.addEventListener('change', () => {
+        updateLabels(); // Update label text and highlight state
+      });
+    } else {
+      console.error("Optional checkbox element not found");
+    }
+
+    // Apply focus/blur highlighting for the question input and its corresponding output
+    applyQuestionHighlightOnFocus();
+
+    // Initialize the label with or without optional suffix and highlight on page load
+    updateLabels();
+  });
+
+
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Consolidated DOM elements
+    const domElements = {
+      // Error message elements
+      errorMessageInput: document.getElementById('error-message-input'),
+      errorMessagePreview: document.getElementById('error-message-preview'), // Hidden "Error:" span
+      errorDynamicText: document.getElementById('error-dynamic-text'), // Span to update dynamically
+
+      optionalCheckbox: document.getElementById('makeOptional') // Checkbox for optional toggle
+    };
+
+
+    // --- Error Message Functionality ---
+
+    // Function to update the error message preview based on input
+    function updateErrorMessage() {
+      const errorMessageText = domElements.errorMessageInput.value.trim();
+
+      // Update the dynamic error message text
+      domElements.errorDynamicText.textContent = errorMessageText || "Select an option"; // Default message
+
+      // Highlight or unhighlight the preview based on input presence
+      if (errorMessageText) {
+        domElements.errorMessagePreview.classList.add('highlight');
+      } else {
+        domElements.errorMessagePreview.classList.remove('highlight');
+      }
+    }
+
+    // Function to apply focus/blur highlights for error message input and preview
+    function applyErrorHighlightOnFocus() {
+      const inputElement = domElements.errorMessageInput;
+      const targetElement = domElements.errorMessagePreview;
+
+      if (inputElement && targetElement) {
+        // Apply highlight when the input gains focus
+        inputElement.addEventListener('focus', () => {
+          targetElement.classList.add('highlight');
+        });
+
+        // Remove highlight when the input loses focus
+        inputElement.addEventListener('blur', () => {
+          // Only remove the highlight if the input field is empty
+          if (!inputElement.value.trim()) {
+            targetElement.classList.remove('highlight');
+          }
+        });
+
+        // If the input is already focused (e.g., auto-focused), apply the highlight immediately
+        if (document.activeElement === inputElement) {
+          targetElement.classList.add('highlight');
+        }
+      } else {
+        console.error(`Input or target element not found: error-message-input, error-message-preview`);
+      }
+    }
+
+    // Add event listener to update the error message when user types
+    if (domElements.errorMessageInput) {
+      domElements.errorMessageInput.addEventListener('input', updateErrorMessage);
+    } else {
+      console.error("Error message input element not found");
+    }
+
+    // Apply focus/blur highlighting for the error message input and its corresponding preview
+    applyErrorHighlightOnFocus();
+
+    // --- Question Label Functionality ---
+
+    // Function to update labels and highlight based on checkbox state
+    function updateLabels() {
+      const isChecked = domElements.optionalCheckbox.checked;
+      const suffix = isChecked ? ' (optional)' : '';
+
+      // Remove existing ' (optional)' suffix before adding it again to prevent duplicates
+      const removeSuffix = (text) => text.replace(/\s*\(optional\)$/, '');
+
+      // Update input and legend text with the optional suffix
+      domElements.questionLabelInput.value = removeSuffix(domElements.questionLabelInput.value) + suffix;
+      domElements.questionLegend.textContent = removeSuffix(domElements.questionLegend.textContent) + suffix;
+
+      // Toggle highlight based on checkbox state
+      if (isChecked) {
+        domElements.questionLegend.classList.add('highlight');
+      } else {
+        domElements.questionLegend.classList.remove('highlight'); // Remove highlight when unchecked
+      }
+    }
+
+    // Function to apply focus/blur highlights for question label input and output
+    function applyQuestionHighlightOnFocus() {
+      const inputElement = domElements.questionLabelInput;
+      const targetElement = domElements.questionLegend;
+
+      if (inputElement && targetElement) {
+        inputElement.addEventListener('focus', () => {
+          // Only add the highlight if the checkbox is checked
+          if (domElements.optionalCheckbox.checked) {
+            targetElement.classList.add('highlight');
+          }
+        });
+
+        inputElement.addEventListener('blur', () => {
+          targetElement.classList.remove('highlight'); // Always remove the highlight on blur
+        });
+
+        // If the input is already focused and checkbox is checked, apply the highlight immediately
+        if (document.activeElement === inputElement && domElements.optionalCheckbox.checked) {
+          targetElement.classList.add('highlight');
+        }
+      } else {
+        console.error(`Input or target element not found: question-label-input-q1, question-label-output`);
+      }
+    }
+
+    // Add event listener to update labels when checkbox is toggled
+    if (domElements.optionalCheckbox) {
+      domElements.optionalCheckbox.addEventListener('change', () => {
+        updateLabels(); // Update label text and highlight state
+      });
+    } else {
+      console.error("Optional checkbox element not found");
+    }
+
+    // Apply focus/blur highlighting for the question input and its corresponding output
+    applyQuestionHighlightOnFocus();
+
+    // Initialize the label with or without optional suffix and highlight on page load
+    updateLabels();
+  });
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const domElements = {
+      questionInput: document.getElementById('question-label-input-radios'),
+      dynamicHeading: document.getElementById('question-label-output'),
+      hintTextInputRadios: document.getElementById('hint-text-input-radios'), // Textarea input element
+      listPreviewHint: document.getElementById('listPreview-hint') // Correct target element for the hint
+    };
+
+
+    // Initialize the event listeners
+    initializeEventListeners();
+
+    function initializeEventListeners() {
+      const inputListeners = [
+        { element: domElements.questionInput, event: "input", handler: updateHeading },
+        { element: domElements.hintTextInput, event: "input", handler: updateHint }
+      ];
+
+      inputListeners.forEach(bindListener);
+
+      // Apply focus/blur highlighting for the textarea and its target hint
+
+
+      // Apply focus/blur highlighting for the question input and its output heading
+      applyHighlightOnFocus('question-label-input-radios', 'question-label-legend-q1');
+
+      // Apply focus/blur highlighting for the textarea and its target hint
+      applyHighlightOnFocus('hint-text-input-radios', 'listPreview-hint');
+
+      // Initialize the heading and hint text on page load
+      updateHeading();
+      updateHint();
+    }
+
+    function bindListener({ element, event, handler }) {
+      if (element) {
+        element.addEventListener(event, handler);
+      } else {
+        console.error(`Element not found for event listener: ${event}`);
+      }
+    }
+
+    function updateHeading() {
+      const defaultHeading = "Question 1";
+      setTextContent(domElements.dynamicHeading, domElements.questionInput.value.trim(), defaultHeading);
+    }
+
+    function updateHint() {
+      const defaultHint = ""; // You can set a default hint text if needed
+      setTextContent(domElements.listPreviewHint, domElements.hintTextInputRadios.value.trim(), defaultHint);
+    }
+
+    function setTextContent(element, value, defaultValue) {
+      if (element) {
+        element.textContent = value || defaultValue; // Use default if no value
+      } else {
+        console.error(`Element not found: ${element}`);
+      }
+    }
+
+    // Function to apply focus/blur highlights dynamically to inputs and their corresponding targets
+    function applyHighlightOnFocus(inputElementId, targetElementId) {
+      const inputElement = document.getElementById(inputElementId);
+      const targetElement = document.getElementById(targetElementId);
+
+      if (inputElement && targetElement) {
+        inputElement.addEventListener('focus', () => targetElement.classList.add('highlight'));
+        inputElement.addEventListener('blur', () => targetElement.classList.remove('highlight'));
+
+        // If the input is already focused, apply the highlight immediately
+        if (document.activeElement === inputElement) {
+          targetElement.classList.add('highlight');
+        }
+      } else {
+        console.error(`Input or target element not found: ${inputElementId}, ${targetElementId}`);
+      }
+    }
+  });
+
+
+</script>
+
+
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    let optionIndex = 1; // Start at 1 for dynamically added options, 0 is already present
+
+
+
+
+
+    // Helper to bind event listeners
+    function bindListener(element, event, handler) {
+      if (element) {
+        console.log(`Binding ${event} to element with ID: ${element.id}`);
+        element.addEventListener(event, handler);
+      }
+    }
+
+    // Function to update the legend with the number
+    const updateLegend = (index, element) => {
+      element.innerHTML = `Option ${index + 1}`; // Append just the number
+    };
+
+    // Apply focus/blur highlights dynamically to inputs and radio labels
+    function applyHighlightOnFocus(inputElementId, radioElementId) {
+      const inputElement = document.getElementById(inputElementId);
+      const radioLabel = document.querySelector(`label[for="${radioElementId}"]`);
+
+      if (inputElement && radioLabel) {
+        console.log(`Applying focus/blur to input: ${inputElementId}, radioLabel: ${radioElementId}`);
+
+        // Immediately highlight on focus
+        bindListener(inputElement, 'focus', () => {
+          console.log(`Focus on input: ${inputElementId}`);
+          radioLabel.classList.add('highlight');
+        });
+
+        // Remove highlight on blur
+        bindListener(inputElement, 'blur', () => {
+          console.log(`Blur on input: ${inputElementId}`);
+          radioLabel.classList.remove('highlight');
+        });
+
+        // If the input is already in focus (for safety)
+        if (document.activeElement === inputElement) {
+          radioLabel.classList.add('highlight');
+        }
+      } else {
+        console.log(`Could not find input or radio label for ${inputElementId}, ${radioElementId}`);
+      }
+    }
+
+    // Update the radio label when the input changes
+    const updateRadioLabel = (index, value) => {
+      const radioLabel = document.querySelector(`label[for="listPreview-option${index}"]`);
+      if (radioLabel) {
+        console.log(`Updating radio label for listPreview-option${index}`);
+        radioLabel.textContent = value ? value : `Option ${index + 1}`;
+      }
+    };
+
+    // Add a new radio option in the list preview
+    const addRadioOption = (index) => {
+      const radioList = document.getElementById('radio-list');
+      const newRadioHTML = `
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="listPreview-option${index}" name="listPreview" type="radio" value="option${index}">
+              <label class="govuk-label govuk-radios__label" for="listPreview-option${index}" value="data['Option ${index + 1}']">Option ${index + 1}</label>
+            </div>
+            
+          `;
+      radioList.insertAdjacentHTML('beforeend', newRadioHTML);
+    };
+
+    // Handle dynamic input addition and apply listeners
+    const handleNewInput = (input, index, legend) => {
+      console.log(`Handling new input for index: ${index}`);
+
+      bindListener(input, 'input', function () {
+        updateRadioLabel(index, this.value);
+      });
+
+      // Apply focus and blur highlighting using generated IDs
+      applyHighlightOnFocus(input.id, `listPreview-option${index}`);
+
+      // Update the legend with the number
+      updateLegend(index, legend);
+    };
+
+    // Set up the MutationObserver to monitor new options being added
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1 && node.classList.contains('moj-add-another__item')) {
+            const input = node.querySelector('input');
+            const label = node.querySelector('label');
+            const legend = node.querySelector('legend');
+
+            if (input && label && legend) {
+              console.log(`New input detected for index: ${optionIndex}`);
+
+              // Assign unique IDs to newly added input and label
+              input.id = `option[${optionIndex}][option_label]`;
+              input.name = `option[${optionIndex}][option_label]`;
+              label.setAttribute('for', `option[${optionIndex}][option_label]`);
+
+              // Add corresponding radio button in the preview
+              addRadioOption(optionIndex);
+
+              // Handle new input event, focus/blur highlights, and update legend
+              handleNewInput(input, optionIndex, legend);
+
+              optionIndex++; // Increment index for the next added option
+            }
+          }
+        });
+      });
+    });
+
+    // Start observing the options container for added fields
+    const optionsContainer = document.querySelector('#options-form');
+    if (optionsContainer) {
+      observer.observe(optionsContainer, { childList: true, subtree: true });
+    }
+
+    // Delay to ensure DOM is fully rendered before handling the first input
+    setTimeout(() => {
+      const firstInput = document.getElementById('option[0][option_label]');
+      const firstLegend = document.querySelector('legend');
+      if (firstInput && firstLegend) {
+        console.log("Handling first input (option[0]) manually after delay");
+        handleNewInput(firstInput, 0, firstLegend); // Ensure first input behaves the same
+      } else {
+        console.log("First input (option[0][option_label]) or legend not found!");
+      }
+
+      // Add an initial radio option for the first field (option[0])
+      addRadioOption(0);
+    }, 100); // Delay by 100ms to ensure DOM readiness
+
+  });
+
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let optionIndex = 1;
+
+    // Function to apply focus/blur highlights to inputs and their corresponding labels
+    function applyHighlightOnFocus(inputElementId, radioElementId) {
+      const inputElement = document.getElementById(inputElementId);
+      const radioLabel = document.querySelector(`label.govuk-radios__label[for="${radioElementId}"]`);
+
+      if (inputElement && radioLabel) {
+        // Add highlight on focus
+        inputElement.addEventListener('focus', function () {
+          radioLabel.classList.add('highlight');
+        });
+
+        // Remove highlight on blur
+        inputElement.addEventListener('blur', function () {
+          radioLabel.classList.remove('highlight');
+        });
+
+        // Apply highlight immediately if input is already focused
+        if (document.activeElement === inputElement) {
+          radioLabel.classList.add('highlight');
+        }
+      } else {
+        console.error(`Input element or correct radio label not found for IDs: ${inputElementId}, ${radioElementId}`);
+      }
+    }
+
+    // Add initial focus/blur behavior for the first option
+    applyHighlightOnFocus('option[0][option_label]', 'listPreview-option0');
+
+    // Set up the MutationObserver to handle dynamically added options
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1 && node.classList.contains('moj-add-another__item')) {
+            const input = node.querySelector('input');
+            const label = node.querySelector('label.govuk-radios__label'); // Ensure we only select the correct radio label
+
+            if (input && label) {
+              // Assign unique IDs to the newly added input and label
+              input.id = `option[${optionIndex}][option_label]`;
+              input.name = `option[${optionIndex}][option_label]`;
+              label.setAttribute('for', `listPreview-option${optionIndex}`);
+
+              // Apply focus/blur highlighting for the newly added input
+              applyHighlightOnFocus(input.id, `listPreview-option${optionIndex}`);
+
+              optionIndex++; // Increment option index for the next added option
+            }
+          }
+        });
+      });
+    });
+
+    // Observe the options container for dynamically added options
+    const optionsContainer = document.querySelector('#options-form');
+    if (optionsContainer) {
+      observer.observe(optionsContainer, { childList: true, subtree: true });
+    }
+
+    // Apply highlighting to the first input on page load
+    setTimeout(() => {
+      const firstInput = document.getElementById('option[0][option_label]');
+      const firstLabel = document.querySelector('label.govuk-radios__label[for="listPreview-option0"]');
+
+      if (firstInput && firstLabel) {
+        applyHighlightOnFocus(firstInput.id, 'listPreview-option0');
+      }
+    }, 100);
+  });
+
+
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get the input field
+    const inputElement = document.getElementById('question-label-input-q1');
+    console.log('Input Element:', inputElement);  // Check if input element is found
+
+
+
+    // Get the legend field
+    const legendElement = document.getElementById('question-label-legend-q1');
+    console.log('Legend Element:', legendElement);  // Check if legend element is found
+
+    // Ensure both elements exist
+    if (!inputElement || !legendElement) {
+      console.error('Input or legend element not found.');
+      return;
+    }
+
+    // Add focus and blur listeners
+    inputElement.addEventListener('focus', function () {
+      console.log('Input focused');
+      legendElement.classList.add('highlight');  // Add highlight class
+    });
+
+    inputElement.addEventListener('blur', function () {
+      console.log('Input blurred');
+      legendElement.classList.remove('highlight');  // Remove highlight class
+    });
+
+    // If input is already focused (for safety in some cases)
+    if (document.activeElement === inputElement) {
+      legendElement.classList.add('highlight');
+    }
+  });
+
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // DOM Elements
+    const domElements = {
+      // Existing elements
+      questionLabelInputRadios: document.getElementById('question-label-input-radios'),
+      questionLabelLegend: document.querySelector('legend[for="question-label-input-radios"]'),
+      hintTextInputRadios: document.getElementById('hint-text-input-radios'),
+      hintTextOutput: document.getElementById('hint-text-output'),
+      makeOptionalCheckbox: document.getElementById('makeOptional'),
+
+      // New elements for page heading and guidance text
+      pageHeadingInputRadios: document.getElementById('page-heading-input-radios'),
+      dynamicHeading: document.getElementById('dynamic-heading'),
+      guidanceTextareaRadios: document.getElementById('guidance-textarea-radios'),
+      guidanceParagraph: document.getElementById('guidance-paragraph')
+    };
+
+    // Initialize event listeners
+    initializeEventListeners();
+
+    function initializeEventListeners() {
+      // Update question label
+      if (domElements.questionLabelInputRadios && domElements.questionLabelLegend) {
+        domElements.questionLabelInputRadios.addEventListener('input', updateQuestionLabel);
+      }
+
+      // Update hint text and handle placeholder
+      if (domElements.hintTextInputRadios && domElements.hintTextOutput) {
+        domElements.hintTextInputRadios.addEventListener('input', updateHintText);
+        domElements.hintTextInputRadios.addEventListener('focus', showPlaceholderHint);
+        domElements.hintTextInputRadios.addEventListener('blur', clearPlaceholderHint);
+      }
+
+      // Update page heading and handle placeholder
+      if (domElements.pageHeadingInputRadios && domElements.dynamicHeading) {
+        domElements.pageHeadingInputRadios.addEventListener('input', updatePageHeading);
+        domElements.pageHeadingInputRadios.addEventListener('focus', showPlaceholderHeading);
+        domElements.pageHeadingInputRadios.addEventListener('blur', clearPlaceholderHeading);
+      }
+
+      // Update optional label
+      if (domElements.makeOptionalCheckbox) {
+        domElements.makeOptionalCheckbox.addEventListener('change', updateQuestionLabel);
+      }
+
+      // Update guidance text and handle placeholder
+      if (domElements.guidanceTextareaRadios && domElements.guidanceParagraph) {
+        domElements.guidanceTextareaRadios.addEventListener('input', updateGuidanceText);
+        domElements.guidanceTextareaRadios.addEventListener('focus', showPlaceholderGuidance);
+        domElements.guidanceTextareaRadios.addEventListener('blur', clearPlaceholderGuidance);
+      }
+
+      // Apply focus/blur highlighting
+      applyHighlightOnFocus(domElements.questionLabelInputRadios, domElements.questionLabelLegend);
+      applyHighlightOnFocus(domElements.hintTextInputRadios, domElements.hintTextOutput);
+      applyHighlightOnFocus(domElements.pageHeadingInputRadios, domElements.dynamicHeading);
+      applyHighlightOnFocus(domElements.guidanceTextareaRadios, domElements.guidanceParagraph);
+    }
+
+    function updateQuestionLabel() {
+      const suffix = domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+      domElements.questionLabelLegend.textContent = domElements.questionLabelInputRadios.value || 'Question';
+      domElements.questionLabelLegend.textContent += suffix;
+    }
+
+    function updateHintText() {
+      domElements.hintTextOutput.textContent = domElements.hintTextInputRadios.value;
+    }
+
+    function updatePageHeading() {
+      domElements.dynamicHeading.textContent = domElements.pageHeadingInputRadios.value;
+    }
+
+    function updateGuidanceText() {
+      domElements.guidanceParagraph.textContent = domElements.guidanceTextareaRadios.value;
+    }
+
+    function applyHighlightOnFocus(inputElement, targetElement) {
+      if (inputElement && targetElement) {
+        inputElement.addEventListener('focus', function () {
+          targetElement.classList.add('highlight');
+        });
+        inputElement.addEventListener('blur', function () {
+          targetElement.classList.remove('highlight');
+        });
+
+        // If the input is already focused
+        if (document.activeElement === inputElement) {
+          targetElement.classList.add('highlight');
+        }
+      }
+    }
+
+    // Placeholder handling for hint text
+    function showPlaceholderHint() {
+      const hintTextOutput = document.getElementById('hint-text-output');
+      if (domElements.hintTextInputRadios && hintTextOutput && !domElements.hintTextInputRadios.value) {
+        hintTextOutput.textContent = 'Hint text';
+      }
+    }
+
+    function clearPlaceholderHint() {
+      const hintTextOutput = document.getElementById('hint-text-output');
+      if (domElements.hintTextInputRadios && hintTextOutput && !domElements.hintTextInputRadios.value) {
+        hintTextOutput.textContent = ''; // Clear the hint text when input is empty
+      }
+    }
+
+
+    // Placeholder handling for page heading
+    function showPlaceholderHeading() {
+      if (!domElements.pageHeadingInputRadios.value) {
+        domElements.dynamicHeading.textContent = 'Page heading';
+      }
+    }
+
+    function clearPlaceholderHeading() {
+      if (!domElements.pageHeadingInputRadios.value) {
+        domElements.dynamicHeading.textContent = '';
+      }
+    }
+
+    // Placeholder handling for guidance text
+    function showPlaceholderGuidance() {
+      if (!domElements.guidanceTextareaRadios.value) {
+        domElements.guidanceParagraph.textContent = 'Guidance text';
+      }
+    }
+
+    function clearPlaceholderGuidance() {
+      if (!domElements.guidanceTextareaRadios.value) {
+        domElements.guidanceParagraph.textContent = '';
+      }
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // DOM Elements
+    const domElements = {
+      questionLabelInputRadios: document.getElementById('question-label-input-radios'),
+      questionLabelLegend: document.querySelector('legend[for="question-label-input-radios"]'),
+      hintTextInput: document.getElementById('hint-text-input-radios'),
+      hintTextOutput: document.getElementById('listPreview-hint'),
+      makeOptionalCheckbox: document.getElementById('makeOptional'),
+      pageHeadingInputRadios: document.getElementById('page-heading-input-radios'),
+      dynamicHeading: document.getElementById('dynamic-heading'),
+      guidanceTextareaRadios: document.getElementById('guidance-textarea-radios'),
+      guidanceParagraph: document.getElementById('guidance-paragraph')
+    };
+
+    // Log to check if all elements are correctly selected
+    console.log("DOM Elements:", domElements);
+
+    // Initialize event listeners
+    initializeEventListeners();
+
+    function initializeEventListeners() {
+      // Update question label
+      if (domElements.questionLabelInputRadios && domElements.questionLabelLegend) {
+        console.log("Adding event listener to questionLabelInputRadios");
+        domElements.questionLabelInputRadios.addEventListener('input', updateQuestionLabel);
+      } else {
+        console.error("questionLabelInputRadios or questionLabelLegend not found.");
+      }
+
+      // Update hint text
+      if (domElements.hintTextInput && domElements.hintTextOutput) {
+        console.log("Adding event listener to hintTextInput");
+        domElements.hintTextInput.addEventListener('input', updateHintText);
+        applyHighlightOnFocus(domElements.hintTextInput, domElements.hintTextOutput);
+      } else {
+        console.error("hintTextInput or hintTextOutput not found.");
+      }
+
+      // Update page heading
+      if (domElements.pageHeadingInputRadios && domElements.dynamicHeading) {
+        console.log("Adding event listener to pageHeadingInput");
+        domElements.pageHeadingInputRadios.addEventListener('input', updatePageHeading);
+        applyHighlightOnFocus(domElements.pageHeadingInputRadios, domElements.dynamicHeading);
+      } else {
+        console.error("pageHeadingInputRadios or dynamicHeading not found.");
+      }
+
+      // Update guidance text
+      if (domElements.guidanceTextareaRadios && domElements.guidanceParagraph) {
+        console.log("Adding event listener to guidanceTextarea");
+        domElements.guidanceTextareaRadios.addEventListener('input', updateGuidanceText);
+        applyHighlightOnFocus(domElements.guidanceTextareaRadios, domElements.guidanceParagraph);
+      } else {
+        console.error("guidanceTextareaRadios or guidanceParagraph not found.");
+      }
+
+      // Apply focus/blur highlighting for question label and legend
+      applyHighlightOnFocus(domElements.questionLabelInputRadios, domElements.questionLabelLegend);
+    }
+
+    function updateQuestionLabel() {
+      console.log("Updating question label");
+      const suffix = domElements.makeOptionalCheckbox && domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+      domElements.questionLabelLegend.textContent = domElements.questionLabelInputRadios.value || 'Question';
+      domElements.questionLabelLegend.textContent += suffix;
+    }
+
+    function updateHintText() {
+      console.log("Updating hint text");
+      const defaultHint = "Hint text"; // Placeholder
+      domElements.hintTextOutput.textContent = domElements.hintTextInput.value.trim() || defaultHint;
+      console.log("Hint text updated to:", domElements.hintTextOutput.textContent);
+    }
+
+    function updatePageHeading() {
+      console.log("Updating page heading");
+      domElements.dynamicHeading.textContent = domElements.pageHeadingInputRadios.value;
+    }
+
+    function updateGuidanceText() {
+      console.log("Updating guidance text");
+      domElements.guidanceParagraph.textContent = domElements.guidanceTextareaRadios.value;
+    }
+
+    // Function to apply focus/blur highlights dynamically to inputs and their corresponding targets
+    function applyHighlightOnFocus(inputElement, targetElement) {
+      if (inputElement && targetElement) {
+        inputElement.addEventListener('focus', function () {
+          console.log(`Highlighting ${targetElement.id} on focus`);
+          targetElement.classList.add('highlight');
+        });
+        inputElement.addEventListener('blur', function () {
+          console.log(`Removing highlight from ${targetElement.id} on blur`);
+          targetElement.classList.remove('highlight');
+        });
+
+        // Apply highlight immediately if input is already focused
+        if (document.activeElement === inputElement) {
+          targetElement.classList.add('highlight');
+        }
+      } else {
+        console.error(`Input or target element not found for IDs: ${inputElement?.id}, ${targetElement?.id}`);
+      }
+    }
+  });
+
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // DOM Elements
+    const domElements = {
+      multiQuestionLabelInputRadios: document.getElementById('multi-question-label-input-radios'),
+      errorMessageInputRadios: document.getElementById('error-message-input-radios'),
+      errorMessagePreviewElements: document.querySelectorAll("#error-dynamic-text, #error-dynamic-text-long, #error-dynamic-text-short, #error-dynamic-text-range"),
+      makeOptionalCheckbox: document.getElementById('make-optional'),
+      maxPastInput: document.getElementById('max-past'),
+      maxCharactersInput: document.getElementById('max-characters'),
+      minCharactersPreview: document.querySelectorAll("#min-characters, #min-length, #min-length-range"),
+      maxCharactersPreview: document.querySelectorAll("#max-characters, #max-length, #max-length-range"),
+      errorMessagePreviewSummary: document.getElementById('error-message-preview-summary') // Add the details component
+    };
+
+    // Initialize event listeners
+    initializeEventListeners();
+
+    function initializeEventListeners() {
+      // Update short description and apply highlighting
+      if (domElements.errorMessageInputRadios && domElements.errorMessagePreviewElements.length) {
+        domElements.errorMessageInputRadios.addEventListener('input', updateErrorMessages);
+        applyHighlightOnFocus(domElements.errorMessageInputRadios, domElements.errorMessagePreviewElements);
+
+        // Activate the details component on focus and deactivate on blur
+        domElements.errorMessageInputRadios.addEventListener('focus', openErrorMessagePreview);
+        domElements.errorMessageInputRadios.addEventListener('blur', closeErrorMessagePreview);
+      }
+
+      // Apply focus/blur highlighting to other elements
+      applyHighlightOnFocus(domElements.multiQuestionLabelInputRadios, document.getElementById('question-label-legend'));
+
+      // Update character limits dynamically
+      if (domElements.minCharactersInput && domElements.maxCharactersInput) {
+        domElements.minCharactersInput.addEventListener('input', updateCharacterLimits);
+        domElements.maxCharactersInput.addEventListener('input', updateCharacterLimits);
+      }
+    }
+
+    function updateErrorMessages() {
+      const shortDescription = domElements.errorMessageInputRadios.value || '[Short description]';
+      domElements.errorMessagePreviewElements.forEach(element => {
+        element.textContent = shortDescription;
+      });
+    }
+
+    function updateCharacterLimits() {
+      const minCharacters = domElements.minCharactersInput.value || '[min length]';
+      const maxCharacters = domElements.maxCharactersInput.value || '[max length]';
+
+      domElements.minCharactersPreview.forEach(element => {
+        element.textContent = minCharacters;
+      });
+
+      domElements.maxCharactersPreview.forEach(element => {
+        element.textContent = maxCharacters;
+      });
+    }
+
+    function applyHighlightOnFocus(inputElement, targetElements) {
+      if (inputElement && targetElements) {
+        inputElement.addEventListener('focus', function () {
+          targetElements.forEach(target => target.classList.add('highlight'));
+        });
+        inputElement.addEventListener('blur', function () {
+          targetElements.forEach(target => target.classList.remove('highlight'));
+        });
+
+        // If the input is already focused, apply the highlight immediately
+        if (document.activeElement === inputElement) {
+          targetElements.forEach(target => target.classList.add('highlight'));
+        }
+      }
+    }
+
+    // Function to open the details component when the input is focused
+    function openErrorMessagePreview() {
+      if (domElements.errorMessagePreviewSummary) {
+        domElements.errorMessagePreviewSummary.setAttribute('open', 'open'); // Opens the details component
+      }
+    }
+
+    // Function to close the details component when the input loses focus
+    function closeErrorMessagePreview() {
+      if (domElements.errorMessagePreviewSummary) {
+        domElements.errorMessagePreviewSummary.removeAttribute('open'); // Closes the details component
+      }
+    }
+  });
+</script>
+
+
+<style>
+  .highlight {
+    background-color: #ffe5cc;
+    border-bottom: 2px solid #ffb266;
+    color: black;
+  }
+
+  #before-content {
+    position: absolute;
+    top: 0;
+    left: 10 !important;
+    right: 0;
+    width: 100%;
+    padding: 10px !important;
+    box-sizing: border-box;
+    z-index: 1;
+    border-bottom: 1px solid #008938;
+    padding-left: 10px;
+  }
+
+  #second-container {
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  #second-container>* {
+    padding-left: 0px;
+    z-index: 2;
+  }
+</style>
+
+</div>
+</div>
+{% endblock %}

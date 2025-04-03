@@ -1,0 +1,79 @@
+{% from "./_label_size_macro.html" import get_label_size -%}
+
+{%- set page_heading = data['pageHeadingAutocomplete'] if data is defined and data['pageHeadingAutocomplete'] else false
+-%}
+{%- set question_count = currentPage.questions | length if currentPage and currentPage.questions else 1 -%}
+{%- set labelSize = get_label_size(page_heading, question_count, true) -%}
+
+<!-- Debug info -->
+<!-- Page heading: {{ page_heading }} -->
+<!-- Question count: {{ question_count }} -->
+<!-- Label size: {{ labelSize }} -->
+
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--{{ labelSize }}">
+      <h1 class="govuk-fieldset__heading" id="question-label-legend-q1">
+        {{ question.label or data['questionLabelInputAutocomplete'] or '' }}
+      </h1>
+    </legend>
+    {% if data.hintTextInputAutocomplete %}
+    <div id="listPreview-hint" class="govuk-hint">
+      {{ question.hint or '' }}
+    </div>
+    {% endif %}
+
+    <script src="https://unpkg.com/accessible-autocomplete@2.0.4/dist/accessible-autocomplete.min.js"></script>
+
+    <!-- autocomplete preview -->
+
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--{{ labelSize }}" for="autocomplete">
+        {{ question.label }}
+      </label>
+      {% if question.hint %}
+      <div id="autocomplete-hint" class="govuk-hint">
+        {{ question.hint }}
+      </div>
+      {% endif %}
+      <select class="govuk-select" id="autocomplete" name="autocomplete" aria-describedby="autocomplete-hint">
+        <option value="">Please select</option>
+        {% for option in question.options %}
+        <option value="{{ option.value }}">{{ option.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- autocomplete preview -->
+
+    <script>
+      // Initialise or reinitialise the autocomplete
+      function initialiseAutocomplete(options) {
+        // Clear the container before reinitializing
+        const container = document.querySelector("#autocomplete-container");
+        container.innerHTML = "";
+
+        // Dummy options list
+        const dummyOptions = [
+          'France',
+          'Germany',
+          'United Kingdom'
+        ];
+
+        // Initialise the accessible autocomplete with the given options
+        accessibleAutocomplete({
+          element: container,
+          id: "autocomplete-input", // To match it to the label
+          source: dummyOptions
+        });
+      }
+
+      // Ensure that the function runs after the content is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        initialiseAutocomplete();
+      });
+    </script>
+
+  </fieldset>
+
+</div>

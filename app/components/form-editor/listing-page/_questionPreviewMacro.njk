@@ -1,0 +1,47 @@
+{% macro questionPreview(question, currentPage) %}
+  {% set basePath = "/form-editor/question-type/questions/previews/" %}
+  {% set templatePath = "" %}
+
+  {# Determine label size based on page heading and number of questions #}
+  {% if currentPage.pageHeading %}
+    {% set labelSize = "m" %}
+  {% else %}
+    {% set labelSize = (currentPage.questions and currentPage.questions.length == 1) ? "l" : "m" %}
+  {% endif %}
+
+  {% if question.type == "phone" %}
+    {% set templatePath = basePath + "phone-preview.html" %}
+  {% elif question.type == "address" %}
+    {% set templatePath = basePath + "address-preview.html" %}
+  {% elif question.type == "file" %}
+    {% set templatePath = basePath + "fileupload-preview.html" %}
+  {% elif question.type == "email" %}
+    {% set templatePath = basePath + "email-preview.html" %}
+
+  {% elif question.type == "text" %}
+    {% if question.subType == "short-answer-nf" %}
+      {% set templatePath = basePath + "shorttext-preview.html" %}
+    {% elif question.subType == "long-answer" %}
+      {% set templatePath = basePath + "textarea-preview.html" %}
+    {% elif question.subType == "numbers" %}
+      {% set templatePath = basePath + "numbers-preview.html" %}
+    {% else %}
+      {% set templatePath = basePath + "text-preview.html" %}
+    {% endif %}
+
+  {% elif question.type == "list" %}
+    {% if question.subType == "radios" %}
+      {% set templatePath = basePath + "radios-preview.html" %}
+    {% elif question.subType == "checkboxes" %}
+      {% set templatePath = basePath + "checkboxes-preview.html" %}
+    {% elif question.subType == "yes-no" %}
+      {% set templatePath = basePath + "yesno-preview.html" %}
+    {% elif question.subType == "select" %}
+      {% set templatePath = basePath + "autocomplete-preview.html" %}
+    {% else %}
+      {% set templatePath = basePath + "list-preview.html" %}
+    {% endif %}
+  {% endif %}
+
+  {% include templatePath with { labelSize: labelSize } %}
+{% endmacro %}

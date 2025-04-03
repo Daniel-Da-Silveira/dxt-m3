@@ -1,0 +1,719 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit page 1 - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{#  #}
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    containerClasses: containerClasses,
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/onboarding/sign-out-confirmation",
+    navigationItems: [
+      { href: "/library.html", text: "Forms library", id: "nav-library" },
+      { href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+      { href: "/redesigntest/listing", text: "Editor", id: "nav-editor" }    ],
+    activeLinkId: "nav-editor"
+  }) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/redesigntest/listing.html" }) }}
+
+    <hr
+      class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0"
+    />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          <span class="govuk-caption-l" style="color: white"
+            >Apply for a county parish holding certificate</span
+          >
+
+          Edit page 2
+        </h1>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div
+        class="govuk-grid-column-one-half-from-desktop"
+        id="container"
+        style="flex: 1 1 75%; overflow-y: auto"
+      >
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div
+            class="govuk-summary-card__content govuk-!-padding-top-0"
+            style="background-color: #f3f2f1"
+          >
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div
+                        class="govuk-summary-card__content"
+                        style="margin-bottom: 0"
+                      >
+                        <!-- Sub Navigation for Question -->
+                        <nav
+                          class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation"
+                        >
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            <li class="moj-sub-navigation__item">
+                              <a
+                                class="moj-sub-navigation__link"
+                                href="/redesigntest/templates/1-question/settings"
+                                >Page settings</a
+                              >
+                            </li>
+
+                            <li class="moj-sub-navigation__item">
+                              <a
+                                class="moj-sub-navigation__link" aria-current="page"
+                                href="#overview-noquestions"
+                                >Overview of questions</a
+                              >
+                            </li>
+
+                          </ul>
+                        </nav>
+
+                        <div
+                          class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"
+                        ></div>
+
+                        <form class="form" action="/information-type-answer1" method="post">
+
+                        {% set dateHtml %}
+                        {{ govukRadios({
+                          name: "dateType",
+                          fieldset: {
+                            legend: {
+                              text: "Type of date",
+                              isPageHeading: true,
+                              classes: "govuk-fieldset__legend"
+                            }
+                          },
+                          items: [
+                            {
+                              value: "day-month-year",
+                              text: "Day, month and year"
+                            },
+                            {
+                              value: "month-year",
+                              text: "Month and year"
+                            }
+                          ]
+                        }) }}
+                      {% endset -%}
+
+                      {% set writtenHtml %}
+                        {{ govukRadios({
+                          name: "written",
+                          fieldset: {
+                            legend: {
+                              text: "Type of written answer"
+                            }
+                          },
+                          items: [
+                            {
+                              value: "short-answer",
+                              text: "Short answer (a single line)"
+
+                            },
+                            {
+                              value: "long-answer",
+                              text: "Long answer (more than a single line)"
+                            }
+                          ]
+                        }) }}
+                      {% endset -%}
+
+                      {% set list2Html %}
+                        {{ govukRadios({
+                          name: "listType",
+                          fieldset: {
+                            legend: {
+                              text: "Type of list",
+                              classes: "govuk-fieldset__legend"
+                            }
+                          },
+                          items: [
+                            {
+                              value: "yes-no",
+                              text: "Yes or No",
+                              hint: {
+                                text: "Allow users to answer either ‘Yes’ or ‘No’"
+                              }
+                            },
+                            {
+                              value: "checkboxes",
+                              text: "Checkboxes",
+                              hint: {
+                                text: "A list for users to select multiple answers"
+                              }
+                            },
+                            {
+                              value: "radios",
+                              text: "Radios",
+                              hint: {
+                                text: "A list for users to select one answer"
+                              }
+                            },
+                            {
+                              value: "select",
+                              text: "Select",
+                              hint: {
+                                text: "A drop-down list for users to select one answer"
+
+                          }
+                        }
+                          ]
+                        }) }}
+                      {% endset -%}
+
+                      {{ govukRadios({
+                        name: "informationQuestion1",
+                        fieldset: {
+                          legend: {
+                            text: "What information do you need from users?",
+                            isPageHeading: true,
+                            classes: "govuk-fieldset__legend--l"
+                          }
+                        },
+                        hint: {
+                          text: "You can ask for more information later"
+                        },
+                        items: [
+                          {
+                            value: "text",
+                            text: "Written answer",
+                            hint: {
+                              text: "A short or long answer as text or number"
+                            },
+                            conditional: {
+                              html: writtenHtml
+                            }
+                          },
+                          {
+                            value: "date",
+                            text: "Date",
+                            hint: {
+                              text: "A day, month and year or month and year only"
+                            },
+                            conditional: {
+                              html: dateHtml
+                            }
+                          },
+                          {
+                            value: "address",
+                            text: "UK address",
+                            hint: {
+                              text: "A street address, town or city and postcode"
+                            }
+                          },
+                          {
+                            value: "phone",
+                            text: "Phone number",
+                            hint: {
+                              text: "A UK phone number, for example, 07700 900 982 or +44 808 157 0192"
+                            }
+                          },
+                          {
+                            value: "file",
+                            text: "Supporting evidence",
+                            hint: {
+                              text: "A document, for example, DOC, PDF, CSV, Excel "
+                            }
+                          },
+                          {
+                            value: "email",
+                            text: "Email address",
+                            hint: {
+                              text: "An email address, for example, name@example.com"
+                            }
+                          },
+                          {
+                            divider: "or"
+                          },
+                          {
+                            value: "list",
+                            text: "A list of options that users can choose from",
+                            conditional: {
+                              html: list2Html
+                            }
+                          }
+                        ]
+                      }) }}
+
+  {{ govukButton({
+    text: "Save and continue",
+    id: "add-question-button"
+  }) }}
+  </form>
+
+
+</div></div></div></div></div></div></div>
+
+      <!-- Right Column for Additional Content -->
+      <div
+        class="govuk-grid-column-one-half-from-desktop"
+        id="second-container"
+        style="
+          outline: solid 1px #008938;
+          height: 100%;
+          position: sticky;
+          top: 0;
+          padding: 20px;
+          box-shadow: 5px 10px #008938;
+        "
+      >
+        <!-- New HTML content for before element -->
+        <div id="before-content">
+          <p class="govuk-body-s" style="margin-bottom: 0">
+            <a
+              href="#"
+              class="govuk-link govuk-link--no-visited-state"
+              rel="noreferrer noopener"
+              target="_blank"
+              >Preview this page in a new tab</a
+            >
+          </p>
+        </div>
+
+        <!-- Additional Content Here -->
+        <div class="additional-content">
+          <div>
+            <!-- Tag for Preview -->
+            <strong class="govuk-tag govuk-tag--yellow  govuk-!-margin-top-8 govuk-!-margin-bottom-3" style="max-width: 500px;">
+              Preview of  selected question
+            </strong>
+
+            <!-- Form for Preview -->
+            <form>
+              <!-- Dynamic Heading -->
+              <div id="heading-container">
+                {% set setName = data['setNameShorttext'] or '' %}
+                <span id="dynamic-caption" class="govuk-caption-xl" data-setname="{{ setName }}">{{ data['setNameShorttext'] or '' }} 1</span>
+                <h1 class="govuk-heading-xl" id="dynamic-heading">{{ data['pageHeading'] or '' }}</h1>
+              </div>
+
+              <div class="preview-container" id="preview-container">
+                <!-- Short Answer Preview -->
+                <div class="preview-content short-answer-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--l" for="short-answer">
+                      Question
+                    </label>
+                    <input class="govuk-input govuk-!-width-full" id="short-answer" name="shortAnswer" type="text">
+                  </div>
+                </div>
+                <!-- Long Answer Preview -->
+                <div class="preview-content long-answer-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--l" for="more-detail">
+                      Question
+                    </label>
+                    <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="5" aria-describedby="more-detail-hint"></textarea>
+                  </div>
+                </div>
+
+                {# File Upload Preview #}
+                <div class="preview-content file-preview" style="display: none;">
+                  <div class="govuk-form-group"></div>
+                  <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--l" for="text-input-field" id="question-label-legend">
+                     Question
+                    </label>
+                  </h1>
+                  <div id="hint-text-output" class="govuk-hint">
+                    </div>
+
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="file-upload-1">
+                    Upload a file
+                  </label>
+                  <input class="govuk-file-upload" id="file-upload-1" name="fileUpload1" type="file">
+                </div>
+
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                  Upload file
+                </button>
+
+                    <p class="govuk-body" aria-live="polite">1 of 2 files uploaded</p>
+
+
+
+                    <p class="govuk-body govuk-!-display-none" id="refreshPageProgress"><a href="#" class="govuk-link">Refresh page to update file upload progress</a></p>
+
+                    <dl class="govuk-summary-list govuk-summary-list--long-key">
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          File2.jpg
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <strong class="govuk-tag govuk-tag--yellow">
+                  Uploading
+                </strong>
+
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                          <a class="govuk-link" href="#">Remove<span class="govuk-visually-hidden"> file1.jpg</span></a>
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          File1.jpg
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          <strong class="govuk-tag govuk-tag--green">
+                  Uploaded
+                </strong>
+
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                          <a class="govuk-link" href="#">Remove<span class="govuk-visually-hidden"> receipt1.jpg</span></a>
+                        </dd>
+                      </div>
+                    </dl>
+                </div>
+
+                {# Date Preview #}
+
+                <div class="preview-content day-month-year-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">Question</h1>
+                      </legend>
+                      <div class="govuk-date-input" id="event-date">
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="event-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="event-date-day" name="event-date-day" type="text" pattern="[0-9]*" inputmode="numeric">
+                          </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="event-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="event-date-month" name="event-date-month" type="text" pattern="[0-9]*" inputmode="numeric">
+                          </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="event-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="event-date-year" name="event-date-year" type="text" pattern="[0-9]*" inputmode="numeric">
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+
+                <div class="preview-content month-year-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">Question</h1>
+                      </legend>
+                      <div class="govuk-date-input" id="event-date">
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="event-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="event-date-month" name="event-date-month" type="text" pattern="[0-9]*" inputmode="numeric">
+                          </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="event-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="event-date-year" name="event-date-year" type="text" pattern="[0-9]*" inputmode="numeric">
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+
+                {# Address Preview #}
+
+                <div class="preview-content address-preview" style="display: none;">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                      <h1 class="govuk-fieldset__heading">
+                        Question
+                      </h1>
+                    </legend>
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="address-line-1">
+                        Address line 1
+                      </label>
+                      <input class="govuk-input" id="address-line-1" name="addressLine1" type="text" autocomplete="address-line1">
+                    </div>
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="address-line-2">
+                        Address line 2 (optional)
+                      </label>
+                      <input class="govuk-input" id="address-line-2" name="addressLine2" type="text" autocomplete="address-line2">
+                    </div>
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="address-town">
+                        Town or city
+                      </label>
+                      <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="addressTown" type="text" autocomplete="address-level2">
+                    </div>
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="address-postcode">
+                        Postcode
+                      </label>
+                      <input class="govuk-input govuk-input--width-10" id="address-postcode" name="addressPostcode" type="text" autocomplete="postal-code">
+                    </div>
+                  </fieldset>
+                </div>
+
+                {# Phone Number Preview #}
+
+                <div class="preview-content phone-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--l" for="phone-number">
+                      Question
+                    </label>
+                    <input class="govuk-input govuk-input--width-20" id="phone-number" name="phoneNumber" type="tel" autocomplete="tel">
+                  </div>
+                </div>
+
+                {# Email Preview #}
+
+                <div class="preview-content email-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--l" for="email">
+                      Question
+                    </label>
+                    <input class="govuk-input" id="email" name="email" type="email" spellcheck="false" aria-describedby="email-hint" autocomplete="email">
+                  </div>
+                </div>
+
+                {# Radios Preview #}
+                <div class="preview-content radios-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        Question
+                      </legend>
+                      <div class="govuk-radios">
+                        <div class="govuk-radios__item">
+                          <input class="govuk-radios__input" id="radios-option-1" name="radios" type="radio" value="option1">
+                          <label class="govuk-label govuk-radios__label" for="radios-option-1">Option 1</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                          <input class="govuk-radios__input" id="radios-option-2" name="radios" type="radio" value="option2">
+                          <label class="govuk-label govuk-radios__label" for="radios-option-2">Option 2</label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+
+                {# Yes-No Preview #}
+                <div class="preview-content yes-no-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        Question
+                      </legend>
+                      <div class="govuk-radios">
+                        <div class="govuk-radios__item">
+                          <input class="govuk-radios__input" id="yesno-yes" name="yesno" type="radio" value="yes">
+                          <label class="govuk-label govuk-radios__label" for="yesno-yes">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                          <input class="govuk-radios__input" id="yesno-no" name="yesno" type="radio" value="no">
+                          <label class="govuk-label govuk-radios__label" for="yesno-no">No</label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+
+                {# Checkboxes Preview #}
+                <div class="preview-content checkboxes-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        Question
+                      </legend>
+                      <div class="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="option1">
+                          <label class="govuk-label govuk-checkboxes__label" for="waste">Option 1</label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="animal" name="animal" type="checkbox" value="option2">
+                          <label class="govuk-label govuk-checkboxes__label" for="animal">Option 2</label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+
+                {# Select Preview #}
+                <div class="preview-content select-preview" style="display: none;">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-label--l" for="select">
+                      Question
+                    </label>
+                    <select class="govuk-select" id="select" name="select">
+                      <option value="">Please select</option>
+                      <option value="option1">Option 1</option>
+                      <option value="option2">Option 2</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+        <!-- Guidance Paragraph -->
+        <p class="govuk-body" id="guidance-paragraph">{{ data['guidanceText'] or '' }}</p>
+
+
+{% set setName = data['setNameShorttext'] | default('') %}
+{% set overview0Shorttext = data['overview0Shorttext'] | default('') %}
+
+{% if overview0Shorttext == "morethan1" %}
+  {{ govukButton({
+    text: "Add another " ~ setName,
+    classes: "govuk-button govuk-!-margin-top-3",
+    id: "add-another-set-button",
+    disabled: true
+  }) }}
+{% else %}
+  {{ govukButton({
+    text: "Save and continue",
+    classes: "govuk-button govuk-!-margin-top-6",
+    id: "once-button",
+    disabled: true
+  }) }}
+{% endif %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("JavaScript Loaded");
+
+    // Function to show the relevant preview and hide others
+    function showPreview(selectedType) {
+      console.log("Showing preview for:", selectedType); // Debugging line
+      document.querySelectorAll(".preview-content").forEach((content) => {
+        content.classList.remove("active"); // Hide all previews
+      });
+
+      const selectedPreview = document.querySelector(`.${selectedType}-preview`);
+      if (selectedPreview) {
+        console.log("Found preview to show:", selectedPreview); // Debugging line
+        selectedPreview.classList.add("active"); // Show the selected preview
+      } else {
+        console.log("No matching preview found for:", selectedType);
+      }
+    }
+
+    // Listen for changes to the radio buttons in the `informationQuestion1` group
+    document.querySelectorAll("input[name='informationQuestion1']").forEach((radio) => {
+      radio.addEventListener("change", function () {
+        console.log("Radio changed:", this.value); // Debugging line
+        showPreview(this.value);
+      });
+    });
+
+    // Listen for changes to sub-options
+    document.querySelectorAll("input[name='written'], input[name='dateType'], input[name='listType']").forEach((subRadio) => {
+      subRadio.addEventListener("change", function () {
+        console.log("Sub-option changed:", this.value); // Debugging line
+        showPreview(this.value);
+      });
+    });
+
+    // Show the preview for the initially selected radio button (if any)
+    const initialSelection = document.querySelector("input[name='informationQuestion1']:checked");
+    if (initialSelection) {
+      console.log("Initial selection found:", initialSelection.value); // Debugging line
+      showPreview(initialSelection.value);
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+const dynamicCaption = document.getElementById("dynamic-caption");
+const setName = dynamicCaption.getAttribute("data-setname");
+
+if (!setName) {
+dynamicCaption.style.display = "none";
+}
+});
+
+</script>
+
+<style>
+  .highlight {
+    background-color: #ffe5cc;
+    border-bottom: 2px solid #ffb266;
+  }
+
+  #before-content {
+    position: absolute;
+    top: 0;
+    left: 10 !important;
+    right: 0;
+    width: 100%;
+    padding: 10px !important;
+    box-sizing: border-box;
+    z-index: 1;
+    border-bottom: 1px solid #008938;
+    padding-left: 10px;
+  }
+
+  #second-container {
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  #second-container > * {
+    padding-left: 0px;
+    z-index: 2;
+  }
+
+  .preview-content {
+    display: none;
+  }
+
+  .preview-content.active {
+    display: block !important;
+  }
+</style>
+
+{% endblock %}
+  </div>
+</div>

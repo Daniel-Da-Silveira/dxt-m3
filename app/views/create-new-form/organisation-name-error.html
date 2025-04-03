@@ -1,0 +1,109 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Content page template" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/form-designer-mvp2/onboarding/sign-out-confirmation",
+    navigationItems: [{
+      href: "/",
+      text: "Library",
+      id: "library"
+    }]
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+
+
+
+<!-- <main class="govuk-main-wrapper" id="main-content" role="main"> -->
+  <form class="form" action="/new-edition/policy-sme" method="post">
+
+    {{ govukRadios({
+      name: "organisation-name",
+      fieldset: {
+        legend: {
+          text: "Choose a lead organisation for this form",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "apha",
+          text: "Animal and Plant Health Agency - APHA"
+        },
+
+          {
+            value: "cefas",
+            text: "Centre for Environment, Fisheries and Aquaculture Science - Cefas"
+          },
+
+          {
+            value: "defra",
+            text: "Defra"
+          },
+
+          {
+            value: "ea",
+            text: "Environment agency"
+          },
+
+          {
+            value: "fc",
+            text: "Forrestry commision"
+          },
+
+          {
+            value: "mmo",
+            text: "Marine Management Organisaiton - MMO"
+          },
+
+
+          {
+            value: "ne",
+            text: "Natural England"
+          },
+
+          {
+            value: "rpa",
+            text: "Rural Payments Agency - RPA"
+          },
+
+          {
+            value: "vmd",
+            text: "Veterinary Medicines Directorate - VMD"
+          }
+
+          ]
+        }) }}
+
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+  </form>
+
+{% endblock %}

@@ -1,0 +1,131 @@
+<!-- New HTML content for before element -->
+<div id="before-content">
+  <p class="govuk-body-s" style="margin-bottom: 0">
+    <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Preview this
+      page in a new tab</a>
+  </p>
+</div>
+
+<!-- Additional Content Here -->
+<div class="additional-content">
+
+  <div>
+    <!-- Tag for Preview -->
+    {{ govukTag({ text: "Preview of page 2", classes: "govuk-tag--yellow
+    govuk-!-margin-bottom-2 govuk-!-margin-top-8" }) }}
+    <!-- Form for Preview -->
+    <!-- Dynamic Heading -->
+
+
+
+    <div id="heading-container">
+      {% set setName = data['setName'] or '' %}
+      <span id="dynamic-caption" class="govuk-caption-xl" data-setname="{{ setName }}">{{ data['setName'] or '' }}
+        1</span>
+
+      <h1 class="govuk-heading-xl" id="dynamic-heading-radios">{{ data['pageHeadingInputRadios'] or '' }}</h1>
+    </div>
+
+    <!-- Guidance Paragraph -->
+    <p class="govuk-body" id="guidance-paragraph">{{ data['guidanceTextareaRadios'] or '' }}</p>
+
+
+
+    <div class="border-left-container-radios">
+
+      <div id="radio-list">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <p class="govuk-fieldset__heading" id="question-label-legend-q1">
+              Question
+              </>
+          </legend>
+
+          <!-- Custom radios without govuk-form-group -->
+          <fieldset class="govuk-fieldset" aria-describedby="listPreview-hint">
+
+            <div id="listPreview-hint" class="govuk-hint">
+
+            </div>
+            <div class="govuk-radios" data-module="govuk-radios">
+              <!-- Dynamically generated radio items go here -->
+              <div class="govuk-radios__item">
+                {# <input class="govuk-radios__input" id="listPreview-option0" name="listPreview" type="radio"
+                  value="option0">
+                <label class="govuk-label govuk-radios__label" for="listPreview-option0">Option 1</label> #}
+              </div>
+              <!-- More radio options as needed -->
+            </div>
+          </fieldset>
+        </fieldset>
+      </div>
+
+
+      <details class="govuk-details govuk-!-margin-top-5" id="error-message-preview-summary">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">Error messages for this question</span>
+        </summary>
+        <div class="govuk-details__text">
+          <!-- Error Messages Section -->
+          <div class="govuk-error-summary" data-disable-auto-focus="true">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <ul class="govuk-list govuk-error-summary__list">
+              <!-- List of errors -->
+              <li>
+                <a id="empty-input-error-radios" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  Select <span id="error-dynamic-text-radios" style="text-transform: lowercase;">[Short
+                    description]</span>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    </form>
+
+
+    {% set setName = data['setName'] or '' %}
+    {% set overview0 = data['overview0'] or '' %}
+
+    {% if overview0 == "morethan1" %}
+    {{ govukButton({
+    text: "Add another " ~ setName,
+    classes: "govuk-button govuk-!-margin-top-3",
+    id: "add-another-set-button",
+    disabled: true
+    }) }}
+    {% else %}
+    {{ govukButton({
+    text: "Continue",
+    classes: "govuk-button govuk-!-margin-top-6 govuk-!-display-none",
+    id: "once-button",
+    disabled: true
+    }) }}
+    {% endif %}
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dynamicCaption = document.getElementById("dynamic-caption");
+    const setName = dynamicCaption.getAttribute("data-setname");
+
+    if (!setName) {
+      dynamicCaption.style.display = "none";
+    }
+  });
+
+</script>
+
+<style>
+  .border-left-container-radios {
+    border-left: 10px solid #ffb266;
+    padding-left: 20px;
+  }
+</style>

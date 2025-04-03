@@ -1,0 +1,84 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Guidance and policies - Apply for a county parish holding number in England" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/form-designer-v2/onboarding/sign-out-confirmation",
+    navigationItems: [{
+      href: "/cph-overview/draft.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/cph-overview/guidance-policies.html",
+    text: 'Guidance and policies',
+    id: 'policies'
+    }],
+    activeLinkId: "policies"
+  }) }}
+{% endblock %}
+
+
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <!-- <h1 class="govuk-heading-xl">Apply for a county parish holding number in England</h1> -->
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+<span class="govuk-caption-l">Apply for a county parish holding number in England</span><h1 class="govuk-heading-l">
+ Guidance and policies
+</h1>
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+ Provide contact details and a privacy notice
+</h2>
+{{ govukSummaryList({
+
+  rows: [
+    {
+ key: {
+        text: "Provide contact details for support"
+      },
+      value: {
+        html: '<a href="/cph-overview/support-details.html" class="govuk-link">Add contact details for support</a>'
+      }
+    },
+    {
+      key: {
+        text: "Privacy notice"
+      },
+      value: {
+        html: '<a href="/cph-overview/privacy-notice.html" class="govuk-link">Add a link to a privacy notice</a>'
+      }
+    }
+  ]
+}) }}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+<h2 class="govuk-heading-m govuk-!-padding-top-5">
+ Information about what happens next
+</h2>
+{{ govukSummaryList({
+
+  rows: [
+    {
+ key: {
+        text: "Tell users what happens next"
+      },
+      value: {
+        html: '<a href="/cph-overview/next-steps.html" class="govuk-link">Add information about what happens next</a>'
+      }
+    }
+  ]
+}) }}
+{% endblock %}

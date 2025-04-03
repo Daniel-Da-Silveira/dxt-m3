@@ -1,0 +1,58 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Check your answers - Forms Designer
+{% endblock %}
+
+{% block header %}
+{{ govukHeader({
+homepageUrl: "#",
+serviceName: form.name,
+serviceUrl: "#",
+navigation: [],
+containerClasses: "govuk-width-container--default"
+}) }}
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row govuk-width-container--default">
+    <div class="govuk-grid-column-two-thirds">
+        <div id="check-answers-container">
+            {# Notification banner will be dynamically inserted here #}
+            <h1 class="govuk-heading-l">Check your answers before submitting</h1>
+
+            {# Form pages will be dynamically rendered here as summary lists #}
+            <div id="summary-lists-container"></div>
+
+            <form action="#" method="post" novalidate>
+                <input type="hidden" name="answers-checked" value="true">
+                {{ govukButton({
+                text: "Accept and submit"
+                }) }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script>
+    console.log('Check answers page scripts starting...');
+
+    // Get form data from session storage
+    const formPagesData = sessionStorage.getItem('formPages');
+    if (formPagesData) {
+        try {
+            const formPages = JSON.parse(formPagesData);
+            console.log('Loaded form pages for check answers:', formPages);
+        } catch (error) {
+            console.error('Error parsing form pages:', error);
+        }
+    } else {
+        console.error('No form data found in session storage');
+    }
+</script>
+<script src="/public/javascripts/components/form-editor/check-answers.js"></script>
+{% endblock %}

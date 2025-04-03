@@ -1,0 +1,93 @@
+{%- if params.section.length %}
+  {% set section = (params.section + '/') %}
+{% else %}
+  {% set section = 'components/' %}
+{% endif -%}
+
+{%- if params.height %}
+  {% set height = params.height %}
+{% else %}
+  {% set height = 350 %}
+{% endif -%}
+
+{% set id = '' %}
+{%- if params.id %}
+  {% set id = params.id %}
+{% endif -%}
+
+{% set codeHref = './app/views/' + section + params.name + '/examples/' + params.example + '/template.html' %}
+{#% set cssHref = './app/views/' + section + params.name + '/examples/' + params.example + '/styles.css' %#}
+{% set jsHref = './app/views/' + section + params.name + '/examples/' + params.example + '/scripts.html' %}
+
+{% set exampleHref = '/' + section + params.name + '/examples/' + params.example %}
+
+{%- if section == 'components/' %}
+  {% set argumentsHref = 'https://github.com/ministryofjustice/moj-frontend/tree/main/src/moj/' + section + params.name + '#arguments' %}
+{% endif -%}
+
+{%- set nunjucksCode %}
+<pre><code class="hljs jinja">
+{{- getNunjucksCode(codeHref) | highlight('jinja') -}}
+</code></pre>
+{% endset -%}
+
+{%- set htmlCode %}
+<pre><code class="hljs html">
+{{- getHtmlCode(codeHref) | highlight('html') -}}
+</code></pre>
+{% endset -%}
+
+{%- set jsCode %}
+<pre><code class="hljs js">
+{{- getJsCode(jsHref) | highlight('js') -}}
+</code></pre>
+{% endset -%}
+
+{% set showJsCode = getJsCode(jsHref).length > 0 %}
+
+<div class="app-example">
+
+  <span class="app-example__new-window">
+    <a href="{{ exampleHref }}" target="_blank">Open this example in a new window</a>
+  </span>
+
+  <iframe class="app-example__frame" scrolling="auto" frameborder="0" height="{{ height }}" src="{{ exampleHref }}"></iframe>
+
+</div>
+
+<div class="app-tabs">
+
+  <ul class="app-tabs__list">
+    <li class="app-tabs__list-item"><a class="app-tabs__tab" href="#html{{'-' + params.example + '-' + id}}">HTML</a></li>
+    <li class="app-tabs__list-item"><a class="app-tabs__tab" href="#nunjucks{{'-' + params.example + '-' + id}}">Nunjucks</a></li>
+    {%- if showJsCode %}
+      <li class="app-tabs__list-item"><a class="app-tabs__tab" href="#js{{'-' + params.example + '-' + id}}">JavaScript</a></li>
+    {% endif -%}
+  </ul>
+
+  <div class="app-tabs__panel app-js-hidden" id="html{{ '-' + params.example + '-' + id}}" data-module="app-copy">
+    {{ htmlCode | indent(6) | safe }}
+  </div>
+
+  {#%- if cssCode.length %}
+  <div class="app-tabs__panel app-js-hidden" id="css{{ '-' + params.example }}" data-module="app-copy">
+    {{ cssCode | indent(4) | safe }}
+  </div>
+  {% endif -%#}
+
+  {%- if showJsCode %}
+  <div class="app-tabs__panel app-js-hidden" id="js{{ '-' + params.example + '-' + id}}" data-module="app-copy">
+    {{ jsCode | indent(6) | safe }}
+  </div>
+  {% endif -%}
+
+  <div class="app-tabs__panel app-js-hidden" id="nunjucks{{ '-' + params.example + '-' + id}}" data-module="app-copy">
+    {{ nunjucksCode | indent(6) | safe }}
+
+    {%- if argumentsHref %}
+    You can configure this component using the [Nunjucks macro arguments]({{ argumentsHref }})
+    {% endif -%}
+
+  </div>
+
+</div>

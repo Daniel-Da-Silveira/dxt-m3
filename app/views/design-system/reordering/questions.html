@@ -1,0 +1,429 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Re-order questions – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Kit of parts - Defra Forms Designer" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "Kit of parts",
+containerClasses: containerClasses,
+homepageLink: "/design-system/components.html",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/design-system/prototype-route.html", text: "Prototype", id: "prototype" },
+{ href: "/design-system/components.html", text: "Components", id: "components" },
+{ href: "/design-system/user-journeys/home.html", text: "User journeys", id: "user-journeys" }
+],
+activeLinkId: "components"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+
+        {# {{ govukBackLink({
+        classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+        text: "Back to add and edit pages",
+        href: "/form-editor/listing.html"
+        }) }} #}
+
+        {#
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom: 1px solid white; margin-bottom: 0;" /> #}
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    Component parts for the form editor
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-quarter">
+            <!-- Side Navigation Here -->
+            {% from "side-navigation/macro.njk" import dwpSideNavigation %}
+            <nav>
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Question editor</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-question-editor",
+                selectedItem: "",
+                items: [
+                { text: "Configuration panels", href: "/design-system/editor/configuration-panel.html", id:
+                "sn-config-panels"
+                },
+                { text: "Guided input", href: "/design-system/editor/guided-input.html", id: "sn-guided-input" },
+                { text: "Preview panels", href: "/design-system/editor/preview-panel.html", id: "sn-preview-panels" },
+                { text: "Previews in a new tab", href: "/design-system/editor/previews-in-new-tab.html", id:
+                "sn-previews-new-tab"
+                },
+                { text: "Question borders", href: "/design-system/editor/border.html", id: "sn-question-borders" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Information types</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-information-types",
+                selectedItem: "",
+                items: [
+                { text: "Answer limits", href: "/design-system/information-type/answer-limits.html", id:
+                "sn-answer-limits" },
+                { text: "Configuration for each type", href: "/design-system/information-type/configuration-types.html",
+                id:
+                "sn-configuration-types" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Re-ordering</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-reordering",
+                selectedItem: "/design-system/reordering/questions.html",
+                items: [
+                { text: "Lists", href: "/design-system/reordering/lists.html", id: "sn-lists" },
+                { text: "Pages", href: "/design-system/reordering/pages.html", id: "sn-pages" },
+                { text: "Questions", href: "/design-system/reordering/questions.html", id: "sn-questions" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Deletion</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-deletion",
+                selectedItem: "",
+                items: [
+                { text: "Pages", href: "/design-system/deletion/pages.html", id: "sn-deletion-pages" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Header</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-header",
+                selectedItem: "",
+                items: [
+                { text: "Mastheads", href: "/design-system/header/masthead.html", id: "sn-mastheads" }
+                ]
+                })
+                }}
+        </div>
+        </nav>
+        <div class="govuk-grid-column-three-quarters">
+            <span class="govuk-caption-xl">Re-ordering</span>
+            <h1 class="govuk-heading-xl">Questions</h1>
+
+            <section class="govuk-section">
+                <div class="govuk-body">
+                    <h2 class="govuk-heading-l">Re-ordering Questions Flow</h2>
+                    <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450"
+                        src="https://embed.figma.com/design/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?node-id=13384-95373&embed-host=share"
+                        allowfullscreen></iframe>
+
+                    <h2 class="govuk-heading-l govuk-!-margin-top-6">Summary of flow</h2>
+                    <h3 class="govuk-heading-m">1. Auto Focus First Option</h3>
+                    <p class="govuk-body">
+                        User selects to re-order questions and the first question in the list is automatically focused
+                        for
+                        immediate interaction.
+                    </p>
+                </div>
+
+                <div class="govuk-body">
+                    <h3 class="govuk-heading-m">2. Option in Focus</h3>
+                    <p class="govuk-body">
+                        The user selects a question for reordering, and the system highlights the active option,
+                        providing clear
+                        visual feedback.
+                    </p>
+                </div>
+
+                <div class="govuk-body">
+                    <h3 class="govuk-heading-m">3. Option Moved</h3>
+                    <p class="govuk-body">
+                        The user moves a question up or down using:
+                    </p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>The "Move Up" or "Move Down" buttons.</li>
+                        <li>Drag-and-drop functionality using SortableJS.</li>
+                    </ul>
+                    <p class="govuk-body">
+                        The updated sequence is reflected in real-time.
+                    </p>
+                </div>
+
+                <div class="govuk-body">
+                    <h3 class="govuk-heading-m">4. New Order Saved</h3>
+                    <p class="govuk-body">
+                        Once satisfied, the user clicks "Save changes." The reordered list is saved, and the updated
+                        order is
+                        confirmed.
+                    </p>
+                </div>
+
+
+                <h3 class="govuk-heading-m">Key Functionality (Overall)</h3>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><strong>Question Management:</strong> displays a list of questions with labels and actions
+                        (e.g.,
+                        move up, move down, remove). Includes a summary view and a reorder mode for rearranging
+                        questions.
+                        Dynamically updates a preview panel to reflect changes in the question order or content.
+                    </li>
+                    <li><strong>Reorder Mode:</strong> Enabled via the "Re-order questions" button.</li>
+                </ul>
+
+                <h4 class="govuk-heading-s">Actions for Each Question:</h4>
+
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><strong>Move Up:</strong> Moves the question one position up in the list.</li>
+                    <li><strong>Move Down:</strong> Moves the question one position down in the list.</li>
+                    <li><strong>Remove:</strong> Deletes the question by sending it to a confirmation
+                        screen.</li>
+                </ul>
+                </li>
+                <h4 class="govuk-heading-s">Preview synchronisation</h4>
+
+                <p class="govuk-body">The preview panel dynamically highlights
+                    corresponding
+                    questions as questions are focused, reordered, or removed.</p>
+            </section>
+        </div>
+
+
+        <style>
+            .link-container {
+                display: flex;
+                align-items: left;
+                margin-bottom: 15px;
+            }
+
+            .link-container a {
+                padding: 0px 10px;
+            }
+
+            .link-container a:first-child {
+                border-right: 1px solid #ccc;
+                padding-left: 0;
+            }
+
+
+            .govuk-card__flex-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px !important;
+                /* Spacing between cards */
+            }
+
+            .govuk-card__flex-item {
+                flex: 1 1 calc(33.333% - 20px);
+                /* 3 columns with spacing */
+                max-width: calc(33.333% - 20px);
+                /* Ensure cards don't grow too wide */
+                box-sizing: border-box;
+            }
+
+            @media (max-width: 768px) {
+                .govuk-card__flex-item {
+                    flex: 1 1 calc(50% - 20px);
+                    /* 2 columns on medium screens */
+                    max-width: calc(50% - 20px);
+                }
+            }
+
+            @media (max-width: 480px) {
+                .govuk-card__flex-item {
+                    flex: 1 1 100%;
+                    /* 1 column on small screens */
+                    max-width: 100%;
+                }
+            }
+
+            .govuk-card--selectable {
+                position: relative;
+                transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .govuk-card--selectable:hover {
+                background-color: #008938;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .govuk-card--selectable:hover .govuk-card__content h3,
+            .govuk-card--selectable:hover .govuk-card__content p {
+                color: #fff;
+            }
+
+            .govuk-card--selectable a {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                z-index: 0;
+            }
+
+            .govuk-card--selectable a:focus {
+                outline: 2px solid #ffdd00;
+                /* GOV.UK focus color */
+                background-color: initial !important;
+            }
+
+
+
+            .gem-c-related-navigation__section-link {
+                font-weight: bold;
+            }
+
+            .gem-c-related-navigation__section-link--other {
+                font-weight: normal;
+            }
+
+
+
+            .gem-c-related-navigation {
+                border-top: 2px solid #1d70b8;
+                margin-bottom: 60px;
+                color: #0b0c0c;
+            }
+
+            .gem-c-related-navigation__main-heading {
+                margin-top: 15px;
+                margin-bottom: 10px;
+                font-family: "GDS Transport", arial, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                font-weight: 700;
+                font-size: 1.1875rem;
+                line-height: 1.3157894737;
+            }
+
+            .gem-c-related-navigation__nav-section {
+                margin-bottom: 30px;
+            }
+
+            .gem-c-related-navigation__link-list {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                margin-bottom: 1.25em;
+            }
+
+            .gem-c-related-navigation__link {
+                list-style-type: none;
+                margin-top: 15px;
+                font-family: "GDS Transport", arial, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                font-weight: 400;
+                font-size: 1rem;
+                line-height: 1.45;
+            }
+
+            @media (min-width: 40.0625em) {
+                .gem-c-related-navigation__link {
+                    line-height: 1.28;
+                }
+            }
+
+            .iframe-container {
+                border: 5px solid black;
+                border-radius: 4px;
+                padding: 0;
+                overflow: hidden;
+                position: relative;
+                /* Ensure tabs stay relative to the container */
+            }
+
+            .iframe-tabs {
+                display: flex;
+                justify-content: flex-end;
+                border-bottom: 1px solid #ccc;
+                background-color: #f8f8f8;
+                position: absolute;
+                /* Tabs stay positioned above the iframe */
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 10;
+                padding: 10px;
+            }
+
+            .iframe-tab {
+                text-align: center;
+                padding: 10px;
+                font-size: 16px;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .iframe-tab:hover {
+                background-color: #e8e8e8;
+            }
+
+            .iframe-container.fullscreen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                z-index: 9999;
+                background-color: white;
+            }
+
+            .iframe-container.fullscreen .iframe-tabs {
+                position: fixed;
+                /* Keeps tabs at the top in fullscreen mode */
+                z-index: 9999;
+                background-color: white;
+                /* Ensures visibility */
+            }
+
+            .iframe-container.fullscreen .iframe-content {
+                height: calc(100vh - 50px);
+                /* Deduct tab height from viewport */
+                width: 100%;
+                border: none;
+            }
+        </style>
+
+        <script>
+            document.querySelector('.maximise-button').addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const iframeContainer = document.querySelector('.iframe-container');
+                const iframe = document.querySelector('.iframe-content');
+                const button = event.target;
+
+                // Toggle fullscreen mode
+                if (iframeContainer.classList.contains('fullscreen')) {
+                    iframeContainer.classList.remove('fullscreen');
+                    iframe.style.height = '400px'; // Reset iframe height
+                    button.textContent = 'Maximise';
+                } else {
+                    iframeContainer.classList.add('fullscreen');
+                    iframe.style.height = 'calc(100vh - 50px)';
+                    button.textContent = 'Minimise';
+                }
+            });
+
+
+        </script>
+
+        {% endblock %}

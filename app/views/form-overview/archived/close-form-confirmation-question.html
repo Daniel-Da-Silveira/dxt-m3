@@ -1,0 +1,82 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set formLibrary = require("data/form-library.json") %}
+
+{% switch data["sort"] %}
+  {% case "updated-oldest" %}
+    {% set sortBy = "updated.date" %}
+    {% set sortReverse = false %}
+  {% case "status" %}
+    {% set sortBy = "status" %}
+    {% set sortReverse = false %}
+  {% case "published-newest" %}
+    {% set filterBy = "published" %}
+    {% set sortBy = "published.date" %}
+    {% set sortReverse = true %}
+  {% case "published-oldest" %}
+    {% set filterBy = "published" %}
+    {% set sortBy = "published.date" %}
+    {% set sortReverse = false %}
+{% endswitch %}
+
+{% set formItems = formLibrary.items | selectattr(filterBy) if filterBy else formLibrary.items %}
+{% set formItems = formItems | sort(attribute="updated.date", reverse=true) %}
+
+{% set pageCount = (formItems.length / 25) | round(0, "ceil") %}
+{% set pageCurrent = data["page"] | abs if data["page"] and data["page"] | abs <= pageCount else 1 %}
+
+{% set pageName = "Close form? - Apply for a county parish holding number in England" %}
+
+
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/form-designer-v2/onboarding/sign-out-confirmation",
+    navigationItems: [{
+      href: "/cph-overview/draft.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/cph-overview/guidance-policies.html",
+    text: 'Guidance and policies',
+    id: 'policies'
+    }],
+    activeLinkId: ""
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <!-- <h1 class="govuk-heading-xl">Apply for a county parish holding number in England</h1> -->
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+    <span class="govuk-caption-xl">Apply for a county-parish-holding-number</span>
+<h1 class="govuk-heading-xl">Are you sure you want to close this form?</h1>
+<p class="govuk-body">Closing this form will redirect users to a <a href="https://design-system.service.gov.uk/patterns/service-unavailable-pages/no-replacement-service/" class="govuk-link" rel="noreferrer noopener" target="_blank">service unavailable page (opens in new tab)</a> and you will no longer receive form submissions. </p>
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div class="govuk-button-group">
+  <a href="/cph-overview/closed-success">
+    <button type="submit" class="govuk-button govuk-button--warning" data-module="govuk-button">
+      Close form
+    </button>
+  </a>
+
+  <a href="/cph-home/draft-notification-email-added.html">
+    <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button" >
+      Cancel
+    </button>
+  </a>
+</div>
+</div>
+</div>
+
+{% endblock %}

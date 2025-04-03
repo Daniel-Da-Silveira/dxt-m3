@@ -1,0 +1,119 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Phone number for support - Apply for a county parish holding number in England" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{
+href: "/library.html",
+text: "Forms library",
+id: "library"
+},
+{
+href: "/form-overview/draft/overview",
+text: "Overview",
+id: "overview"
+},{
+href: "/editor.html",
+text: 'Editor',
+id: 'editor'
+}],
+activeLinkId: "/"
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l">Apply for a county parish holding number in England</span>
+    <h1 class="govuk-heading-l">
+      Phone number and opening times
+    </h1>
+
+    <p class="govuk-body">
+      You can provide an optional phone number for support. You must include the opening times.
+    </p>
+
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+    <h2 class="govuk-heading-s">Example</h2>
+
+    {{ govukInsetText({
+    html: '
+    <ul class="govuk-list">
+      <li>Telephone: 020 7946 0101</li>
+      <li>Monday to Friday, 8am to 6pm</li>
+    </ul>'
+    }) }}
+
+    <form action="/form-overview/draft/support/phone" method="post">
+      {{ govukTextarea({
+      name: "moreDetail",
+      id: "more-detail",
+      label: {
+      text: "What's the phone number and opening times for users to get help?",
+      classes: "govuk-label--m",
+      isPageHeading: true
+      }
+      }) }}
+
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Save and continue
+        </button>
+        <a class="govuk-link" href="/form-overview/draft/overview">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      View error messages
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    {{ govukErrorSummary({
+    titleText: "There is a problem",
+    errorList: [
+    {
+    text: "Enter phone number and opening times for users to get help",
+    href: "#"
+    }
+    ]
+    }) }}
+
+    {{ govukTextarea({
+    name: "moreDetail",
+    id: "more-detail",
+    label: {
+    text: "What's the phone number and opening times for users to get help?",
+    classes: "govuk-label--m",
+    isPageHeading: true
+    },
+    errorMessage: {
+    text: "Enter phone number and opening times for users to get help"
+    }
+    }) }}
+  </div>
+</details>
+
+{% endblock %}

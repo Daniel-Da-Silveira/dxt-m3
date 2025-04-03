@@ -1,0 +1,38 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">Common Terms and Phrases</h1>
+
+        <dl class="govuk-summary-list">
+            {% for key, value in commonTerms %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    {{ key }}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ value }}
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
+
+
+    </div>
+</div>
+
+{% endblock %}

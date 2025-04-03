@@ -1,0 +1,15 @@
+{% macro get_label_size(page_heading, question_count, is_form_preview=false) -%}
+{%- if is_form_preview -%}
+{%- if page_heading -%}
+m
+{%- else -%}
+{%- if question_count == 1 -%}
+l
+{%- else -%}
+m
+{%- endif -%}
+{%- endif -%}
+{%- else -%}
+m
+{%- endif -%}
+{%- endmacro %}

@@ -1,0 +1,68 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Form home - Apply for a county parish holding number in England" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/form-designer-v2/onboarding/sign-out-confirmation",
+    navigationItems: [
+    {
+      href: "/library.html",
+      text: "Forms library",
+      id: "library"
+     },
+    {
+      href: "/cph-overview/draft.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/editor.html",
+    text: 'Editor',
+    id: 'editor'
+    }],
+    activeLinkId: "/"
+  }) }}
+{% endblock %}
+
+
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <!-- <h1 class="govuk-heading-xl">Apply for a county parish holding number in England</h1> -->
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+<span class="govuk-caption-xl">Apply for a county-parish-holding-number</span>
+<h1 class="govuk-heading-xl">What email address should completed forms be sent to?</h1>
+<p class="govuk-body">Provide an email address for completed forms to be sent to for processing.</p>
+<p class="govuk-body">It should be a shared government email inbox and you should test it before making a form live. The email address must end with ‘gov.uk’.</p>
+<div class="govuk-form-group">
+  <input class="govuk-input" id="email" name="email" type="email" spellcheck="false" aria-describedby="email-hint" autocomplete="email">
+
+</div>
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div class="govuk-button-group">
+  <a href="/cph-overview/draft+email.html">
+  <button type="submit" class="govuk-button" data-module="govuk-button">
+    Save and continue
+  </button>
+</a>
+<a href="/cph-overview/draft.html">
+  <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button" >
+    Cancel
+  </button>
+</a>
+</div>
+</div>
+</div>
+
+{% endblock %}

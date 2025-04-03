@@ -1,0 +1,701 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit page 1 - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/form-editor/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {# <span class="govuk-caption-l" style="color: white">
+            Apply for a county parish holding certificate
+          </span> #}
+          Apply for a county parish holding (CPH) number
+        </h1>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            {# <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#question-1">Page settings</a>
+                            </li> #}
+                            {# <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#overview-noquestions">Overview of questions</a>
+                            </li> #}
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#question-1-information-type">Page 5</a>
+                            </li>
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+                        {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+                        {{ govukErrorSummary({
+                        titleText: "There is a problem",
+                        errorList: [
+                        {
+                        text: "Enter a question",
+                        href: "#question-label-input-shorttext"
+
+                        }
+                        ]
+                        }) }}
+
+                        {# <span class="govuk-caption-l">Page 1</span> #}
+                        <h2 class="govuk-heading-l">Edit page 5</h2>
+
+                        <form method="post" id="options-form" action="/form-editor/question-type/shorttext/overview">
+                          {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                          <!-- Question Label Input -->
+                          <div class="govuk-form-group govuk-form-group--error">
+                            <label class="govuk-label govuk-label--m" for="question-label-input-shorttext">
+                              Question
+                            </label>
+
+                            <span id="question-error" class="govuk-error-message">
+                              <span class="govuk-visually-hidden">Error:</span> Enter a question
+                            </span>
+
+                            <input class="govuk-input govuk-input--error" id="question-label-input-shorttext"
+                              name="questionLabelInputShortText" type="text" value="" aria-describedby="question-error">
+                          </div>
+
+
+
+                          <!-- Hint Text Input -->
+                          {{ govukTextarea({
+                          label: {
+                          text: "Hint text (optional)",
+                          classes: "govuk-label--m"
+                          },
+                          id: "hint-text-input-shorttext",
+                          name: "hintTextInputShorttext",
+                          value: data['hint-text-input-shorttext'],
+                          classes: "govuk-textarea",
+                          rows: 3,
+                          describedBy: "hint-text-input-shorttext"
+                          }) }}
+
+                          <!-- Make Optional Checkbox -->
+                          <div class="govuk-form-group">
+                            <div class="govuk-checkboxes--small">
+                              <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="make-optional" name="makeOptional"
+                                  type="checkbox" value="optional">
+                                <label class="govuk-label govuk-checkboxes__label" for="make-optional">
+                                  Make this question optional
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+                          <!-- Add guidance above this question -->
+                          <details class="govuk-details" data-module="govuk-details">
+                            <summary class="govuk-details__summary">
+                              <span class="govuk-details__summary-text">
+                                Add guidance above this question (optional)
+                              </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                              <!-- Default Content for Question 1 -->
+                              <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+
+                                <!-- Page Heading Input -->
+                                {{ govukInput({
+                                label: {
+                                text: "Page heading",
+                                classes: "govuk-label govuk-label--m govuk-!-margin-top-0"
+                                },
+                                hint: {
+                                text: "Page headings should be a statement and not a question. For example, 'Passport
+                                information'",
+                                id: "page-heading-input-hint"
+                                },
+                                id: "page-heading-input-shorttext",
+                                name: "pageHeadingShorttext",
+                                type: "text",
+                                attributes: {
+                                'aria-describedby': "page-heading-input-hint",
+                                'data-preview-target': '#dynamic-heading'
+                                }
+                                }) }}
+                                <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+                                <!-- Guidance Text Textarea -->
+                                {{ govukTextarea({
+                                label: {
+                                text: "Guidance text (optional)",
+                                classes: "govuk-label govuk-label--m"
+                                },
+                                hint: {
+                                text: "Use Markdown to format the content or add hyperlinks",
+                                id: "guidance-textarea-hint"
+                                },
+                                id: "guidance-shorttext",
+                                name: "guidanceShorttext",
+                                rows: 5,
+                                attributes: {
+                                'aria-describedby': "guidance-shorttext-hint",
+                                'data-preview-target': '#guidance-paragraph'
+                                }
+                                }) }}
+
+                              </div>
+
+                              <details class="govuk-details">
+                                <summary class="govuk-details__summary">
+                                  <span class="govuk-details__summary-text">
+                                    Help with markdown
+                                  </span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                  <h3 class="govuk-heading-s">Headings and subheadings</h3>
+                                  <p class="govuk-body">Use one hash symbol followed by a space for a heading, for
+                                    example:</p>
+                                  <pre class="formatting-example"
+                                    style="background-color: white;"><code class="lang-md"># This is a heading</code></pre>
+                                  <p class="bottom-gutter-1-3">To add a subheading, use 2 hash symbols:</p>
+                                  <pre class="formatting-example"
+                                    style="background-color: white;"><code class="lang-md">## This is a subheading</code></pre>
+
+                                  <h3 class="govuk-heading-s" id="bullets">Bullet points</h3>
+                                  <p class="govuk-body">Use bullet points to help words or phrases stand out in your
+                                    emails and letters.</p>
+                                  <p class="govuk-body">Copy this example to add bullet points:</p>
+                                  <pre class="formatting-example" style="background-color: white;"><code class="lang-md">Introduce bullet points with a lead-in line ending in a colon:
+
+* leave one empty line space after the lead-in line
+* use an asterisk or a dash followed by a space to add an item
+* start each item with a lowercase letter, do not end with a full stop
+* leave one empty line space after the last item</code></pre>
+
+                                  <h3 class="govuk-heading-s" id="bullets">Numbered steps</h3>
+                                  <p class="govuk-body">Copy this example to add numbered steps:</p>
+                                  <pre class="formatting-example" style="background-color: white;"><code class="lang-md">1. Leave one empty line space before starting your list.
+2. Enter a number followed by a full stop and a space to add an item.
+3. Start each item with a capital letter and end it with a full stop.
+4. Leave one empty line space after the last item.</code></pre>
+
+                                  <h3 class="govuk-heading-s">Links and URLs</h3>
+                                  <p class="govuk-body">To convert text into a link, use square brackets around the link
+                                    text and round brackets around the full URL. Make sure there are no spaces between
+                                    the brackets or the link will not work. For example:</p>
+                                  <pre class="formatting-example"
+                                    style="background-color: white;"><code class="lang-md">[Apply now](https://www.gov.uk/example)</code></pre>
+
+                                </div>
+                              </details>
+
+                          </details>
+
+                          {{ govukInput({
+                          label: {
+                          text: "Short description",
+                          classes: "govuk-label--m",
+                          isPageHeading: false
+                          },
+                          hint: {
+                          text: "Enter a short description for this question like 'licence period'. Short descriptions
+                          are used in error messages and on the check your answers page."
+                          },
+                          id: "error-message-input-shorttext",
+                          name: "errorMessageInputShorttext"
+                          }) }}
+
+                          <!-- Answer limits -->
+                          <details class="govuk-details" data-module="govuk-details">
+                            <summary class="govuk-details__summary">
+                              <span class="govuk-details__summary-text">
+                                Set answer limits (optional)
+                              </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                              <!-- Default Content for Question 1 -->
+                              <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+                                <!-- Page Heading Input -->
+                                {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                                {{ govukInput({
+                                label: {
+                                text: "Minimum character length (optional)",
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                classes: "govuk-input--width-3",
+                                hint: {
+                                text: "The minimum number of characters users can enter"
+                                },
+                                id: "min-characters",
+                                name: "minCharacters",
+                                inputmode: "numeric",
+                                spellcheck: false
+                                }) }}
+
+                                {{ govukInput({
+                                label: {
+                                text: "Maximum character length (optional)",
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                classes: "govuk-input--width-3",
+                                hint: {
+                                text: "The maximum number of characters users can enter"
+                                },
+                                id: "max-characters",
+                                name: "minCharacters",
+                                inputmode: "numeric",
+                                spellcheck: false
+                                }) }}
+                              </div>
+                          </details>
+
+                          <!-- Section Break -->
+                          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                          <!-- Question Settings Summary List -->
+                          <h2 class="govuk-heading-m">Question settings</h2>
+
+                          {{ govukSummaryList({
+                          "rows": [
+                          {
+                          "key": {
+                          "text": "Type of information"
+                          },
+                          "value": {
+                          "html": "Short written answer"
+                          },
+                          "actions": {
+                          "items": [
+                          {
+                          "href": "/form-editor/question-type/information-type.html",
+                          "text": "Change",
+                          "visuallyHiddenText": " type"
+                          }
+                          ]
+                          }
+                          }
+                          ]
+                          }) }}
+
+                          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+
+                          <!-- Other form elements... -->
+
+                          <!-- Submit Button -->
+                          <div class="moj-button-action">
+                            {{ govukButton({
+                            text: 'Continue',
+                            type: 'submit'
+                            }) }}
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column for Preview -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+        <!-- Before content -->
+        <div id="before-content">
+          <p class="govuk-body-s" style="margin-bottom: 0">
+            <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener"
+              target="_blank">Preview this page in a new tab</a>
+          </p>
+        </div>
+        <!-- Include the preview template -->
+        {% include "/form-editor/question-type/text/previews/edit.html" %}
+
+        <!-- Consolidat
+</script>
+
+
+    </div>
+  </div>
+
+    <!-- JavaScript code -->
+        <!-- JavaScript code -->
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            // DOM Elements
+            const domElements = {
+              // Existing elements
+              questionLabelInputShorttext: document.getElementById('question-label-input-shorttext'),
+              questionLabelLegend: document.getElementById('question-label-legend'),
+              hintTextInputShorttext: document.getElementById('hint-text-input-shorttext'),
+              hintTextOutput: document.getElementById('hint-text-output'),
+              makeOptionalCheckbox: document.getElementById('make-optional'),
+
+              // New elements for page heading and guidance text
+              pageHeadingInputShorttext: document.getElementById('page-heading-input-shorttext'),
+              dynamicHeading: document.getElementById('dynamic-heading'),
+              guidanceShorttext: document.getElementById('guidance-shorttext'),
+              guidanceParagraph: document.getElementById('guidance-paragraph')
+            };
+
+            // Initialize event listeners
+            initializeEventListeners();
+
+            function initializeEventListeners() {
+              // Update question label
+              if (domElements.questionLabelInputShorttext && domElements.questionLabelLegend) {
+                domElements.questionLabelInputShorttext.addEventListener('input', updateQuestionLabel);
+              }
+
+              // Update hint text and handle placeholder
+              if (domElements.hintTextInputShorttext && domElements.hintTextOutput) {
+                domElements.hintTextInputShorttext.addEventListener('input', updateHintText);
+                domElements.hintTextInputShorttext.addEventListener('focus', showPlaceholderHint);
+                domElements.hintTextInputShorttext.addEventListener('blur', clearPlaceholderHint);
+              }
+
+              // Update page heading and handle placeholder
+              if (domElements.pageHeadingInputShorttext && domElements.dynamicHeading) {
+                domElements.pageHeadingInputShorttext.addEventListener('input', updatePageHeading);
+                domElements.pageHeadingInputShorttext.addEventListener('focus', showPlaceholderHeading);
+
+                domElements.pageHeadingInputShorttext.addEventListener('blur', clearPlaceholderHeading);
+              }
+
+              // Update optional label
+              if (domElements.makeOptionalCheckbox) {
+                domElements.makeOptionalCheckbox.addEventListener('change', updateQuestionLabel);
+              }
+
+              // Update page heading
+              if (domElements.pageHeadingInputShorttext && domElements.dynamicHeading) {
+                domElements.pageHeadingInputShorttext.addEventListener('input', updatePageHeading);
+              }
+
+              // Update guidance text and handle placeholder
+              if (domElements.guidanceShorttext && domElements.guidanceParagraph) {
+                domElements.guidanceShorttext.addEventListener('input', updateGuidanceText);
+                domElements.guidanceShorttext.addEventListener('focus', showPlaceholderGuidance);
+                domElements.guidanceShorttext.addEventListener('blur', clearPlaceholderGuidance);
+              }
+
+
+
+              // Apply focus/blur highlighting
+              applyHighlightOnFocus(domElements.questionLabelInputShorttext, domElements.questionLabelLegend);
+              applyHighlightOnFocus(domElements.hintTextInputShorttext, domElements.hintTextOutput);
+              applyHighlightOnFocus(domElements.pageHeadingInputShorttext, domElements.dynamicHeading);
+              applyHighlightOnFocus(domElements.guidanceShorttext, domElements.guidanceParagraph);
+            }
+            function updateQuestionLabel() {
+              const suffix = domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+              domElements.questionLabelLegend.textContent = domElements.questionLabelInputShorttext.value || 'Question';
+              domElements.questionLabelLegend.textContent += suffix;
+            }
+
+            function updateHintText() {
+              domElements.hintTextOutput.textContent = domElements.hintTextInputShorttext.value;
+            }
+
+            function updatePageHeading() {
+              domElements.dynamicHeading.textContent = domElements.pageHeadingInputShorttext.value;
+            }
+
+            function updateGuidanceText() {
+              domElements.guidanceParagraph.textContent = domElements.guidanceShorttext.value;
+            }
+
+            function applyHighlightOnFocus(inputElement, targetElement) {
+              if (inputElement && targetElement) {
+                inputElement.addEventListener('focus', function () {
+                  targetElement.classList.add('highlight');
+                });
+                inputElement.addEventListener('blur', function () {
+                  targetElement.classList.remove('highlight');
+                });
+
+                // If the input is already focused
+                if (document.activeElement === inputElement) {
+                  targetElement.classList.add('highlight');
+                }
+              }
+            }
+
+            // Placeholder handling for hint text
+            function showPlaceholderHint() {
+              if (!domElements.hintTextInputShorttext.value) {
+                domElements.hintTextOutput.textContent = 'Hint text';
+              }
+            }
+
+            function clearPlaceholderHint() {
+              if (!domElements.hintTextInputShorttext.value) {
+                domElements.hintTextOutput.textContent = '';
+              }
+            }
+
+            // Placeholder handling for page heading
+            function showPlaceholderHeading() {
+              if (!domElements.pageHeadingInputShorttext.value) {
+                domElements.dynamicHeading.textContent = 'Page heading';
+              }
+            }
+
+            function clearPlaceholderHeading() {
+              if (!domElements.pageHeadingInputShorttext.value) {
+                domElements.dynamicHeading.textContent = '';
+              }
+            }
+
+            // Placeholder handling for guidance text
+            function showPlaceholderGuidance() {
+              if (!domElements.guidanceShorttext.value) {
+                domElements.guidanceParagraph.textContent = 'Guidance text';
+              }
+            }
+
+            function clearPlaceholderGuidance() {
+              if (!domElements.guidanceShorttext.value) {
+                domElements.guidanceParagraph.textContent = '';
+              }
+            }
+          });
+        </script>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            // DOM Elements
+            const domElements = {
+              questionLabelInputShorttext: document.getElementById('question-label-input-shorttext'),
+              errorMessageInputShorttext: document.getElementById('error-message-input-shorttext'),
+              errorMessagePreviewElements: document.querySelectorAll("#error-dynamic-text, #error-dynamic-text-long, #error-dynamic-text-short, #error-dynamic-text-range"),
+              makeOptionalCheckbox: document.getElementById('make-optional'),
+              minCharactersInput: document.getElementById('min-characters'),
+              maxCharactersInput: document.getElementById('max-characters'),
+              minCharactersPreview: document.querySelectorAll("#min-characters, #min-length, #min-length-range"),
+              maxCharactersPreview: document.querySelectorAll("#max-characters, #max-length, #max-length-range")
+            };
+
+            // Initialize event listeners
+            initializeEventListeners();
+
+            function initializeEventListeners() {
+              // Update short description and apply highlighting
+              if (domElements.errorMessageInputShorttext && domElements.errorMessagePreviewElements.length) {
+                domElements.errorMessageInputShorttext.addEventListener('input', updateErrorMessages);
+                applyHighlightOnFocus(domElements.errorMessageInputShorttext, domElements.errorMessagePreviewElements);
+              }
+
+              // Apply focus/blur highlighting to other elements
+              applyHighlightOnFocus(domElements.questionLabelInputShorttext, document.getElementById('question-label-legend'));
+
+              // Update character limits dynamically
+              if (domElements.minCharactersInput && domElements.maxCharactersInput) {
+                domElements.minCharactersInput.addEventListener('input', updateCharacterLimits);
+                domElements.maxCharactersInput.addEventListener('input', updateCharacterLimits);
+              }
+            }
+
+            function updateErrorMessages() {
+              const shortDescription = domElements.errorMessageInputShorttext.value || '[Short description]';
+              domElements.errorMessagePreviewElements.forEach(element => {
+                element.textContent = shortDescription;
+              });
+            }
+
+            function updateCharacterLimits() {
+              const minCharacters = domElements.minCharactersInput.value || '[min length]';
+              const maxCharacters = domElements.maxCharactersInput.value || '[max length]';
+
+              domElements.minCharactersPreview.forEach(element => {
+                element.textContent = minCharacters;
+              });
+
+              domElements.maxCharactersPreview.forEach(element => {
+                element.textContent = maxCharacters;
+              });
+            }
+
+            function applyHighlightOnFocus(inputElement, targetElements) {
+              if (inputElement && targetElements) {
+                inputElement.addEventListener('focus', function () {
+                  targetElements.forEach(target => target.classList.add('highlight'));
+                });
+                inputElement.addEventListener('blur', function () {
+                  targetElements.forEach(target => target.classList.remove('highlight'));
+                });
+
+                // If the input is already focused, apply the highlight immediately
+                if (document.activeElement === inputElement) {
+                  targetElements.forEach(target => target.classList.add('highlight'));
+                }
+              }
+            }
+          });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            // Get the textarea and the output paragraph elements
+            const textarea = document.getElementById('guidance-shorttext');
+            const previewTarget = document.querySelector(textarea.getAttribute('data-preview-target'));
+
+            // Listen for input events on the textarea
+            textarea.addEventListener('input', function () {
+              // Convert the textarea content using the marked library
+              previewTarget.innerHTML = marked.parse(textarea.value);
+            });
+          });
+        </script>
+
+
+
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            // Get the input field
+            const inputField = document.getElementById('error-message-input-shorttext');
+
+            // Check if input field exists
+            if (!inputField) {
+              console.error('Input field not found.');
+              return;
+            }
+
+            // Get the error message placeholders
+            const errorDynamicTextElements = {
+              asIs: document.getElementById('error-dynamic-text'), // Use input as-is
+              capitalize: [
+                document.getElementById('error-dynamic-text-long'),
+                document.getElementById('error-dynamic-text-short'),
+                document.getElementById('error-dynamic-text-range')
+              ].filter(Boolean) // Apply capitalizeFirstLetter
+            };
+
+            // Function to capitalize only the first letter of the input
+            function capitalizeFirstLetter(str) {
+              if (!str) return '[Short description]';
+              return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+
+            // Function to update error messages
+            function updateErrorMessages() {
+              const userInput = inputField.value.trim() || '[Short description]';
+
+              // For the error message where we use input as-is
+              if (errorDynamicTextElements.asIs) {
+                errorDynamicTextElements.asIs.textContent = userInput;
+              }
+
+              // For the error messages where we capitalize the first letter
+              const transformedInput = capitalizeFirstLetter(userInput);
+              errorDynamicTextElements.capitalize.forEach(function (element) {
+                element.textContent = transformedInput;
+              });
+            }
+
+            // Add event listener to the input field
+            inputField.addEventListener('input', updateErrorMessages);
+
+            // Initialize error messages on page load
+            updateErrorMessages();
+          });
+        </script>
+
+
+
+
+
+
+        <!-- CSS for Highlighting -->
+        <style>
+          .highlight {
+            background-color: #ffe5cc;
+            border-bottom: 2px solid #ffb266;
+          }
+
+          #before-content {
+            position: absolute;
+            top: 0;
+            left: 10 !important;
+            right: 0;
+            width: 100%;
+            padding: 10px !important;
+            box-sizing: border-box;
+            z-index: 1;
+            border-bottom: 1px solid #008938;
+            padding-left: 10px;
+          }
+
+          #second-container {
+            padding: 0;
+            box-sizing: border-box;
+          }
+
+          #second-container>* {
+            padding-left: 0px;
+            z-index: 2;
+          }
+        </style>
+      </div>
+    </div>
+    {% endblock %}

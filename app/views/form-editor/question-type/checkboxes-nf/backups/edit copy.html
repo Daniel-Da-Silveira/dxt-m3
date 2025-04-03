@@ -1,0 +1,755 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit checkboxes question - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{# #}
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/redesigntest/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/redesigntest/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          <span class="govuk-caption-l" style="color: white">Apply for a county parish holding certificate</span>
+
+          Edit page 2
+        </h1>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#question-1">Page settings</a>
+                            </li>
+
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#overview-noquestions">Overview of questions</a>
+                            </li>
+
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#question-1-information-type">Question 1</a>
+                            </li>
+
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+
+                        <span class="govuk-caption-l">Page 1</span>
+                        <h2 class="govuk-heading-l">Question</h2>
+
+                        <form method="post" id="options-form"
+                          action="/redesigntest/templates/1-question/checkboxes/overview">
+
+                          {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                          {{ govukInput({
+                          label: {
+                          text: "Question",
+                          classes: "govuk-label--m",
+                          isPageHeading: false
+                          },
+                          id: "question-label-input-checkboxes",
+                          value: data['question-label-input-checkboxes'],
+                          name: "questionLabelInputCheckboxes",
+                          oninput: "updateHeading()"
+                          }) }}
+
+                          {{ govukTextarea({
+                          label: {
+                          text: "Hint text (optional)",
+                          classes: "govuk-label--m"
+                          },
+                          id: "hint-text-inputq1",
+                          name: "hintTextInputq1",
+                          value: data['hint-text-input'],
+                          classes: "govuk-textarea",
+                          rows: 3,
+                          describedBy: "hint-text-input-q1"
+                          }) }}
+
+
+
+
+                          <!-- List config -->
+
+                          <div class="govuk-form-group">
+
+
+                            <div data-module="moj-add-another">
+
+
+
+
+
+                              <h2 class="govuk-heading-m moj-add-another__heading" tabindex="-1">Create and edit your
+                                list of options</h2>
+
+
+
+                              {% call govukFieldset({
+                              classes: 'moj-add-another__item',
+                              legend: {
+                              text: 'Option',
+                              classes: 'moj-add-another__title govuk-fieldset__legend--m',
+                              isPageHeading: false
+                              }
+                              }) %}
+
+                              <div id="options-container">
+                                {{ govukInput({
+                                id: 'option[0][option_label]',
+                                value: data ['option[0][option_label'],
+                                name: 'option[0][option_label]',
+                                label: {
+                                html: 'Label',
+                                classes: 'govuk-!-font-weight-bold'
+                                },
+                                attributes: {
+                                'data-name': 'option[0][option_label]',
+                                'data-id': 'option[0][option_label]'
+                                }
+                                }) }}
+                              </div>
+
+                              {% endcall %}
+
+                              <div class="moj-button-action">
+                                {{ govukButton({
+                                text: 'Add another option',
+                                classes: 'govuk-button--inverse moj-add-another__add-button govuk-!-margin-bottom-4
+                                govuk-!-margin-top-6 govuk-!-margin-bottom-6',
+                                id: 'add-option-button'
+                                }) }}
+                              </div>
+
+
+
+                              <!-- Make Optional Checkbox -->
+                              <div class="govuk-form-group">
+                                <div class="govuk-checkboxes--small">
+                                  <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" type="checkbox" id="makeOptional"
+                                      name="makeOptional" value="{{ data['optional-label-q1'] }}">
+                                    <label class="govuk-label govuk-checkboxes__label" for="makeOptional">
+                                      Make this question optional
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- Add guidance above this question -->
+                              <details class="govuk-details" data-module="govuk-details">
+                                <summary class="govuk-details__summary">
+                                  <span class="govuk-details__summary-text">
+                                    Add guidance above this question (optional)
+                                  </span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                  <!-- Default Content for Question 1 -->
+                                  <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+                                    <!-- Page Heading Input -->
+                                    {{ govukInput({
+                                    label: {
+                                    text: "Page heading",
+                                    classes: "govuk-label govuk-label--m govuk-!-margin-top-0"
+                                    },
+                                    hint: {
+                                    text: "Page headings should be a statement and not a question. For example,
+                                    ‘Passport information’",
+                                    id: "page-heading-input-hint"
+                                    },
+                                    id: "page-heading-input-checkboxes",
+                                    name: "pageHeadingCheckboxes",
+                                    type: "text",
+                                    attributes: {
+                                    'aria-describedby': "page-heading-input-hint",
+                                    'data-preview-target': '#dynamic-heading'
+                                    }
+                                    }) }}
+
+                                    <!-- Guidance Text Textarea -->
+                                    {{ govukTextarea({
+                                    label: {
+                                    text: "Guidance text (optional)",
+                                    classes: "govuk-label govuk-label--m"
+                                    },
+                                    hint: {
+                                    text: "Use Markdown to format the content or add hyperlinks",
+                                    id: "guidance-textarea-hint"
+                                    },
+                                    id: "guidance-textarea-checkboxes",
+                                    name: "guidanceTextCheckboxes",
+                                    rows: 5,
+                                    attributes: {
+                                    'aria-describedby': "guidance-textarea-hint",
+                                    'data-preview-target': '#guidance-paragraph'
+                                    }
+                                    }) }}
+
+                                  </div>
+                                </div>
+                              </details>
+
+                              {{ govukInput({
+                              label: {
+                              text: "Short description",
+                              classes: "govuk-label--m",
+                              isPageHeading: false
+                              },
+                              hint: {
+                              text: "Enter a short description for this question like 'licence period'. Short
+                              descriptions are used in error messages and on the check your answers page."
+                              },
+                              id: "error-message-input-checkboxes",
+                              name: "errorMessageInputCheckboxes"
+                              }) }}
+
+                              <div id="summary-container">
+
+                                <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                                <!-- The dynamic summary list will be populated here -->
+                                <h2 class="govuk-heading-m">Question settings</h2>
+
+                                {{ govukSummaryList({
+                                classes: "govuk-summary-list govuk-section-break govuk-section-break--visible
+                                govuk-!-margin-bottom-6 ",
+                                rows: [
+                                {
+                                key: {
+                                text: "Type of information"
+                                },
+                                value: {
+                                text: "List: checkboxes"
+                                },
+                                actions: {
+                                items: [
+                                {
+                                href: "/redesigntest/templates/1-question/information-type.html",
+                                text: "Change",
+                                visuallyHiddenText: "name"
+                                }
+                                ]
+                                }
+                                }
+                                ]
+                                }) }}
+                              </div>
+                              <div class="moj-button-action">
+                                {{ govukButton({
+                                text: 'Save and continue',
+                                type: 'submit'
+                                }) }}
+                              </div>
+
+
+                        </form>
+
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Right Column for Preview -->
+  <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+    style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+    <!-- Before content -->
+    <div id="before-content">
+      <p class="govuk-body-s" style="margin-bottom: 0">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Preview
+          this page in a new tab</a>
+      </p>
+    </div>
+
+    <!-- Include the preview template -->
+    {% include "/redesigntest/templates/previews/checkboxes/edit.html" %}
+  </div>
+</div>
+
+<!-- JavaScript code -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let optionIndex = 1; // Start at 1 for dynamically added options, 0 is already present
+
+    // Get the input field by its ID
+    const inputField = document.getElementById('question-label-input-checkboxes');
+
+    // Ensure the input field exists before adding event listener
+    if (!inputField) {
+      console.error('Input field not found.');
+      return;
+    }
+
+    // Get the checkbox legend element
+    const checkboxLegend = document.querySelector('#checkbox-list fieldset legend');
+
+    if (!checkboxLegend) {
+      console.error('Checkbox legend not found.');
+      return;
+    }
+
+    // Add event listener to the input field to update the legend text
+    inputField.addEventListener('input', function (event) {
+      checkboxLegend.textContent = event.target.value || 'Question 1'; // Fallback to a default if input is empty
+    });
+
+    // Function to update the legend with the number
+    const updateLegend = (index, element) => {
+      element.innerHTML = `Option ${index + 1}`; // Append just the number
+    };
+
+    // Rest of your code...
+
+    // Updated functions
+    function applyHighlightOnFocus(inputElementId, checkboxElementId) {
+      const inputElement = document.getElementById(inputElementId);
+      const checkboxLabel = document.querySelector(`label[for="${checkboxElementId}"]`);
+
+      if (inputElement && checkboxLabel) {
+        console.log(`Applying focus/blur to input: ${inputElementId}, checkboxLabel: ${checkboxElementId}`);
+
+        // Immediately highlight on focus
+        inputElement.addEventListener('focus', function () {
+          checkboxLabel.classList.add('highlight');
+        });
+
+        // Remove highlight on blur
+        inputElement.addEventListener('blur', function () {
+          checkboxLabel.classList.remove('highlight');
+        });
+
+        // If the input is already in focus (for safety)
+        if (document.activeElement === inputElement) {
+          checkboxLabel.classList.add('highlight');
+        }
+      } else {
+        console.log(`Could not find input or checkbox label for ${inputElementId}, ${checkboxElementId}`);
+      }
+    }
+
+    const updateCheckboxLabel = (index, value) => {
+      const checkboxLabel = document.querySelector(`label[for="listPreview-option${index}"]`);
+      if (checkboxLabel) {
+        console.log(`Updating checkbox label for listPreview-option${index}`);
+        checkboxLabel.textContent = value ? value : `Option ${index + 1}`;
+      }
+    };
+
+    const addCheckboxOption = (index) => {
+      const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+      const newCheckboxHTML = `
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="listPreview-option${index}" name="listPreview" type="checkbox" value="option${index}">
+          <label class="govuk-label govuk-checkboxes__label" for="listPreview-option${index}">Option ${index + 1}</label>
+        </div>
+      `;
+      checkboxList.insertAdjacentHTML('beforeend', newCheckboxHTML);
+    };
+
+    // Handle dynamic input addition and apply listeners
+    const handleNewInput = (input, index, legend) => {
+      console.log(`Handling new input for index: ${index}`);
+
+      input.addEventListener('input', function () {
+        updateCheckboxLabel(index, this.value);
+      });
+
+      // Apply focus and blur highlighting using generated IDs
+      applyHighlightOnFocus(input.id, `listPreview-option${index}`);
+
+      // Update the legend with the number
+      updateLegend(index, legend);
+    };
+
+    // Set up the MutationObserver to monitor new options being added
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1 && node.classList.contains('moj-add-another__item')) {
+            const input = node.querySelector('input');
+            const label = node.querySelector('label');
+            const legend = node.querySelector('legend');
+
+            if (input && label && legend) {
+              console.log(`New input detected for index: ${optionIndex}`);
+
+              // Assign unique IDs to newly added input and label
+              input.id = `option[${optionIndex}][option_label]`;
+              input.name = `option[${optionIndex}][option_label]`;
+              label.setAttribute('for', `option[${optionIndex}][option_label]`);
+
+              // Add corresponding checkbox in the preview
+              addCheckboxOption(optionIndex);
+
+              // Handle new input event, focus/blur highlights, and update legend
+              handleNewInput(input, optionIndex, legend);
+
+              optionIndex++; // Increment index for the next added option
+            }
+          }
+        });
+      });
+    });
+
+    // Start observing the options container for added fields
+    const optionsContainer = document.querySelector('#options-form');
+    if (optionsContainer) {
+      observer.observe(optionsContainer, { childList: true, subtree: true });
+    }
+
+    // Delay to ensure DOM is fully rendered before handling the first input
+    setTimeout(() => {
+      const firstInput = document.getElementById('option[0][option_label]');
+      const firstLegend = document.querySelector('legend');
+      if (firstInput && firstLegend) {
+        console.log("Handling first input (option[0]) manually after delay");
+        handleNewInput(firstInput, 0, firstLegend); // Ensure first input behaves the same
+      } else {
+        console.log("First input (option[0][option_label]) or legend not found!");
+      }
+
+      // Add an initial checkbox option for the first field (option[0])
+      addCheckboxOption(0);
+    }, 100); // Delay by 100ms to ensure DOM readiness
+
+  });
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // DOM Elements
+    const domElements = {
+      questionLabelInputCheckboxes: document.getElementById('question-label-input-checkboxes'),
+      questionLabelLegend: document.getElementById('question-label-legend-checkboxes'), // Corrected ID
+      hintTextInput: document.getElementById('hint-text-inputq1'),
+      hintTextOutput: document.getElementById('hint-text-output'),
+      makeOptionalCheckbox: document.getElementById('makeOptional'),
+      pageHeadingInputCheckboxes: document.getElementById('page-heading-input-checkboxes'),
+      dynamicHeading: document.getElementById('dynamic-heading'),
+      guidanceTextareaCheckboxes: document.getElementById('guidance-textarea-checkboxes'),
+      guidanceParagraph: document.getElementById('guidance-paragraph')
+    };
+
+    // Log to check if all elements are correctly selected
+    console.log("DOM Elements:", domElements);
+
+    // Initialize event listeners
+    initializeEventListeners();
+
+    function initializeEventListeners() {
+      // Update question label
+      if (domElements.questionLabelInputCheckboxes && domElements.questionLabelLegend) {
+        console.log("Adding event listener to questionLabelInputCheckboxes");
+        domElements.questionLabelInputCheckboxes.addEventListener('input', updateQuestionLabel);
+        applyHighlightOnFocus(domElements.questionLabelInputCheckboxes, domElements.questionLabelLegend);
+      } else {
+        console.error("questionLabelInputCheckboxes or questionLabelLegend not found.");
+      }
+
+      // Update hint text
+      if (domElements.hintTextInput && domElements.hintTextOutput) {
+        console.log("Adding event listener to hintTextInput");
+        domElements.hintTextInput.addEventListener('input', updateHintText);
+        applyHighlightOnFocus(domElements.hintTextInput, domElements.hintTextOutput);
+        domElements.hintTextInput.addEventListener('focus', showPlaceholderHint);
+        domElements.hintTextInput.addEventListener('blur', clearPlaceholderHint);
+      } else {
+        console.error("hintTextInput or hintTextOutput not found.");
+      }
+
+      // Update page heading
+      if (domElements.pageHeadingInputCheckboxes && domElements.dynamicHeading) {
+        console.log("Adding event listener to pageHeadingInputCheckboxes");
+        domElements.pageHeadingInputCheckboxes.addEventListener('input', updatePageHeading);
+        applyHighlightOnFocus(domElements.pageHeadingInputCheckboxes, domElements.dynamicHeading);
+        domElements.pageHeadingInputCheckboxes.addEventListener('focus', showPlaceholderHeading);
+        domElements.pageHeadingInputCheckboxes.addEventListener('blur', clearPlaceholderHeading);
+      } else {
+        console.error("pageHeadingInputCheckboxes or dynamicHeading not found.");
+      }
+
+      // Update guidance text
+      if (domElements.guidanceTextareaCheckboxes && domElements.guidanceParagraph) {
+        console.log("Adding event listener to guidanceTextarea");
+        domElements.guidanceTextareaCheckboxes.addEventListener('input', updateGuidanceText);
+        applyHighlightOnFocus(domElements.guidanceTextareaCheckboxes, domElements.guidanceParagraph);
+        domElements.guidanceTextareaCheckboxes.addEventListener('focus', showPlaceholderGuidance);
+        domElements.guidanceTextareaCheckboxes.addEventListener('blur', clearPlaceholderGuidance);
+      } else {
+        console.error("guidanceTextareaCheckboxes or guidanceParagraph not found.");
+      }
+    }
+
+    function updateQuestionLabel() {
+      console.log("Updating question label");
+      const suffix = domElements.makeOptionalCheckbox && domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+      domElements.questionLabelLegend.textContent = domElements.questionLabelInputCheckboxes.value || 'Question';
+      domElements.questionLabelLegend.textContent += suffix;
+    }
+
+    function updateHintText() {
+      console.log("Updating hint text");
+      const defaultHint = "Hint text"; // Placeholder
+      domElements.hintTextOutput.textContent = domElements.hintTextInput.value.trim() || defaultHint;
+      console.log("Hint text updated to:", domElements.hintTextOutput.textContent);
+    }
+
+    function updatePageHeading() {
+      console.log("Updating page heading");
+      domElements.dynamicHeading.textContent = domElements.pageHeadingInputCheckboxes.value;
+    }
+
+    function updateGuidanceText() {
+      console.log("Updating guidance text");
+      domElements.guidanceParagraph.textContent = domElements.guidanceTextareaCheckboxes.value;
+    }
+
+    // Placeholder handling for hint text
+    function showPlaceholderHint() {
+      if (!domElements.hintTextInput.value) {
+        domElements.hintTextOutput.textContent = 'Hint text';
+      }
+    }
+
+    function clearPlaceholderHint() {
+      if (!domElements.hintTextInput.value) {
+        domElements.hintTextOutput.textContent = '';
+      }
+    }
+
+    // Placeholder handling for page heading
+    function showPlaceholderHeading() {
+      if (!domElements.pageHeadingInputCheckboxes.value) {
+        domElements.dynamicHeading.textContent = 'Page heading';
+      }
+    }
+
+    function clearPlaceholderHeading() {
+      if (!domElements.pageHeadingInputCheckboxes.value) {
+        domElements.dynamicHeading.textContent = '';
+      }
+    }
+
+    // Placeholder handling for guidance text
+    function showPlaceholderGuidance() {
+      if (!domElements.guidanceTextareaCheckboxes.value) {
+        domElements.guidanceParagraph.textContent = 'Guidance text';
+      }
+    }
+
+    function clearPlaceholderGuidance() {
+      if (!domElements.guidanceTextareaCheckboxes.value) {
+        domElements.guidanceParagraph.textContent = '';
+      }
+    }
+
+    // Function to apply focus/blur highlights dynamically to inputs and their corresponding targets
+    function applyHighlightOnFocus(inputElement, targetElement) {
+      if (inputElement && targetElement) {
+        inputElement.addEventListener('focus', function () {
+          console.log(`Highlighting ${targetElement.id} on focus`);
+          targetElement.classList.add('highlight');
+        });
+        inputElement.addEventListener('blur', function () {
+          console.log(`Removing highlight from ${targetElement.id} on blur`);
+          targetElement.classList.remove('highlight');
+        });
+
+        // Apply highlight immediately if input is already focused
+        if (document.activeElement === inputElement) {
+          targetElement.classList.add('highlight');
+        }
+      } else {
+        console.error(`Input or target element not found for IDs: ${inputElement?.id}, ${targetElement?.id}`);
+      }
+    }
+  });
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // DOM Elements
+    const domElements = {
+      multiQuestionLabelInputCheckboxes: document.getElementById('multi-question-label-input-checkboxes'),
+      errorMessageInputCheckboxes: document.getElementById('error-message-input-checkboxes'),
+      errorMessagePreviewElements: document.querySelectorAll("#error-dynamic-text, #error-dynamic-text-long, #error-dynamic-text-short, #error-dynamic-text-range"),
+      makeOptionalCheckbox: document.getElementById('make-optional'),
+      maxPastInput: document.getElementById('max-past'),
+      maxCharactersInput: document.getElementById('max-characters'),
+      minCharactersPreview: document.querySelectorAll("#min-characters, #min-length, #min-length-range"),
+      maxCharactersPreview: document.querySelectorAll("#max-characters, #max-length, #max-length-range"),
+      errorMessagePreviewSummary: document.getElementById('error-message-preview-summary') // Add the details component
+    };
+
+    // Initialize event listeners
+    initializeEventListeners();
+
+    function initializeEventListeners() {
+      // Update short description and apply highlighting
+      if (domElements.errorMessageInputCheckboxes && domElements.errorMessagePreviewElements.length) {
+        domElements.errorMessageInputCheckboxes.addEventListener('input', updateErrorMessages);
+        applyHighlightOnFocus(domElements.errorMessageInputCheckboxes, domElements.errorMessagePreviewElements);
+
+        // Activate the details component on focus and deactivate on blur
+        domElements.errorMessageInputCheckboxes.addEventListener('focus', openErrorMessagePreview);
+        domElements.errorMessageInputCheckboxes.addEventListener('blur', closeErrorMessagePreview);
+      }
+
+      // Apply focus/blur highlighting to other elements
+      applyHighlightOnFocus(domElements.multiQuestionLabelInputTextarea, document.getElementById('question-label-legend'));
+
+      // Update character limits dynamically
+      if (domElements.minCharactersInput && domElements.maxCharactersInput) {
+        domElements.minCharactersInput.addEventListener('input', updateCharacterLimits);
+        domElements.maxCharactersInput.addEventListener('input', updateCharacterLimits);
+      }
+    }
+
+    function updateErrorMessages() {
+      const shortDescription = domElements.errorMessageInputCheckboxes.value || '[Short description]';
+      domElements.errorMessagePreviewElements.forEach(element => {
+        element.textContent = shortDescription;
+      });
+    }
+
+    function updateCharacterLimits() {
+      const minCharacters = domElements.minCharactersInput.value || '[min length]';
+      const maxCharacters = domElements.maxCharactersInput.value || '[max length]';
+
+      domElements.minCharactersPreview.forEach(element => {
+        element.textContent = minCharacters;
+      });
+
+      domElements.maxCharactersPreview.forEach(element => {
+        element.textContent = maxCharacters;
+      });
+    }
+
+    function applyHighlightOnFocus(inputElement, targetElements) {
+      if (inputElement && targetElements) {
+        inputElement.addEventListener('focus', function () {
+          targetElements.forEach(target => target.classList.add('highlight'));
+        });
+        inputElement.addEventListener('blur', function () {
+          targetElements.forEach(target => target.classList.remove('highlight'));
+        });
+
+        // If the input is already focused, apply the highlight immediately
+        if (document.activeElement === inputElement) {
+          targetElements.forEach(target => target.classList.add('highlight'));
+        }
+      }
+    }
+
+    // Function to open the details component when the input is focused
+    function openErrorMessagePreview() {
+      if (domElements.errorMessagePreviewSummary) {
+        domElements.errorMessagePreviewSummary.setAttribute('open', 'open'); // Opens the details component
+      }
+    }
+
+    // Function to close the details component when the input loses focus
+    function closeErrorMessagePreview() {
+      if (domElements.errorMessagePreviewSummary) {
+        domElements.errorMessagePreviewSummary.removeAttribute('open'); // Closes the details component
+      }
+    }
+  });
+</script>
+
+
+
+<style>
+  .highlight {
+    background-color: #ffe5cc;
+    border-bottom: 2px solid #ffb266;
+    color: black;
+  }
+
+  #before-content {
+    position: absolute;
+    top: 0;
+    left: 10 !important;
+    right: 0;
+    width: 100%;
+    padding: 10px !important;
+    box-sizing: border-box;
+    z-index: 1;
+    border-bottom: 1px solid #008938;
+    padding-left: 10px;
+  }
+
+  #second-container {
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  #second-container>* {
+    padding-left: 0px;
+    z-index: 2;
+  }
+</style>
+
+</div>
+</div>
+{% endblock %}

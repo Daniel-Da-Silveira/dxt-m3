@@ -1,0 +1,188 @@
+{# <!-- New HTML content for before element -->
+<div id="before-content">
+  <p class="govuk-body-s" style="margin-bottom: 0">
+    <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Preview this
+      page in a new tab</a>
+  </p>
+</div> #}
+
+{# <!-- Additional Content Here -->
+<div class="additional-content">
+
+  <div>
+    <!-- Tag for Preview -->
+    {{ govukTag({ text: "Preview of page 3", classes: "govuk-tag--yellow
+    govuk-!-margin-bottom-2 govuk-!-margin-top-8" }) }}
+    <!-- Form for Preview -->
+    <!-- Dynamic Heading --> #}
+
+    {#
+
+    <div id="heading-container">
+      {% set setName = data['setName'] or '' %}
+      <span id="dynamic-caption" class="govuk-caption-xl" data-setname="{{ setName }}">{{ data['setName'] or '' }}
+        1</span>
+
+      <h1 class="govuk-heading-xl" id="dynamic-heading">{{ data['pageHeading'] or '' }}</h1>
+    </div>
+
+    <!-- Guidance Paragraph -->
+    <p class="govuk-body" id="guidance-paragraph">{{ data['guidanceText'] or '' }}</p> #}
+
+    <div class="border-left-container-date">
+
+      <!-- Date Input Group -->
+      <div class="govuk-form-group govuk-!-margin-top-6">
+        <fieldset class="govuk-fieldset" role="group">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l" id="question-label-legend">Question
+          </legend>
+          <div class="govuk-form-group">
+            <!-- Date Input Hint -->
+            <div id="hint-text-output" name="hintTextOutput" class="govuk-hint"></div>
+            <!-- Date Input Fields -->
+            <div class="govuk-date-input" id="date-input" data-module="govuk-date-input">
+              <!-- Day Input -->
+              <div class="govuk-date-input__item" id="day-input-wrapper">
+                <div class="govuk-form-group">
+                  <label class="govuk-label govuk-date-input__label" for="date-day">Day</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-day" name="date-day"
+                    type="text">
+                </div>
+              </div>
+              <!-- Month Input -->
+              <div class="govuk-date-input__item" id="month-input-wrapper">
+                <div class="govuk-form-group">
+                  <label class="govuk-label govuk-date-input__label" for="date-month">Month</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-month"
+                    name="date-month" type="text" pattern="[0-9]*">
+                </div>
+              </div>
+              <!-- Year Input -->
+              <div class="govuk-date-input__item" id="year-input-wrapper">
+                <div class="govuk-form-group">
+                  <label class="govuk-label govuk-date-input__label" for="date-year">Year</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-year"
+                    name="date-year" type="text" pattern="[0-9]*">
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      {# <details class="govuk-details" id="error-message-preview-summary">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">Error messages for this question</span>
+        </summary>
+        <div class="govuk-details__text">
+          <!-- Error Messages Section -->
+          <div class="govuk-error-summary" data-disable-auto-focus="true">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <ul class="govuk-list govuk-error-summary__list">
+              <!-- Empty input error -->
+              <li>
+
+                <a id="empty-input-error-textarea" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  Enter <span id="error-dynamic-text" style="text-transform: lowercase;">[short description]</span>
+                </a>
+              </li>
+
+              <li>
+
+                <a id="empty-input-error-textarea" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  <span id="error-dynamic-text">[Short description]</span> must include a day
+                </a>
+              </li>
+
+              <li>
+                <a id="empty-input-error-textarea" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  <span id="error-dynamic-text">[Short description]</span> must include a month
+                </a>
+
+              </li>
+
+              <li>
+                <a id="empty-input-error-textarea" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  <span id="error-dynamic-text">[Short description]</span> must include a year
+                </a>
+
+              </li>
+
+              <li>
+                <a id="empty-input-error-textarea" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  <span id="error-dynamic-text">[Short description]</span> must be a real date
+                </a>
+
+              </li>
+
+              <h3 class="govuk-heading-s">If you set answer limits:</h3>
+
+              <!-- Too long input error -->
+              <li>
+                <a id="too-long-input-error-textarea" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  <span id="error-dynamic-text-long">[Short description]</span> must be on or after
+                  <span id="max-past">[max days in the past]</span>
+                </a>
+              </li>
+
+              <!-- Too short input error -->
+              <li>
+                <a id="too-short-input-error-textarea" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  <span id="error-dynamic-text-short">[Short description]</span> must be on or before
+                  <span id="max-future">[max days in the future]</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </details> #}
+    </div>
+
+    {% set setName = data['setName'] or '' %}
+    {% set overview0 = data['overview0'] or '' %}
+
+    {% if overview0 == "morethan1" %}
+    {{ govukButton({
+    text: "Add another " ~ setName,
+    classes: "govuk-button govuk-!-margin-top-3",
+    id: "add-another-set-button",
+    disabled: true
+    }) }}
+    {% else %}
+    {{ govukButton({
+    text: "Continue",
+    classes: "govuk-button govuk-!-margin-top-6 govuk-!-display-none",
+    id: "once-button",
+    disabled: true
+    }) }}
+    {% endif %}
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const dynamicCaption = document.getElementById("dynamic-caption");
+        const setName = dynamicCaption.getAttribute("data-setname");
+
+        if (!setName) {
+          dynamicCaption.style.display = "none";
+        }
+      });
+
+    </script>
+
+
+
+
+    <style>
+      .border-left-container-date {
+        border-left: 10px solid #ffb266;
+        padding-left: 20px;
+      }
+    </style>

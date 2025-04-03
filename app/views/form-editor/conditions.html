@@ -1,0 +1,1122 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit long answer question - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text:
+    commonTerms.form_editor.navigation.back_to_add_edit_pages, href: "/form-editor/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {{ form.name }}
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+
+
+                  <!-- Dynamic Summary List -->
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2"
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="/edit-page/{{ currentPage.pageId }}">
+                                Page {{ pageNumber }}
+                              </a>
+                            </li>
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#question-1-information-type">Conditions</a>
+                            </li>
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+                        <span class="govuk-caption-l">{{ question.label }}</span>
+
+                        <!-- Notification Banner (Hidden by Default) -->
+                        <div id="success-banner" class="govuk-visually-hidden">
+                          {% set html %}
+                          <h3 class="govuk-notification-banner__heading">Condition successfully saved</h3>
+                          <p class="govuk-body">You can add more conditions or continue.</p>
+                          {% endset %}
+                          {{ govukNotificationBanner({ html: html, type: "success" }) }}
+                        </div>
+
+                        <!-- Display added conditions here -->
+                        <div id="conditions-list-container"
+                          class="{% if conditions and conditions | length %}govuk-!-margin-top-4{% else %}govuk-visually-hidden{% endif %}"
+                          style="background-color: white; padding: 15px; border-left: #008938 solid 5px; margin-bottom: 30px !important;">
+                          <h2 class="govuk-heading-m">
+                            <span id="condition-counter">{{ conditions | length }}</span> added conditions
+                          </h2>
+                          <dl id="conditions-list" class="govuk-summary-list">
+                            {% for condition in conditions %}
+                            <div class="govuk-summary-list__row" data-condition-id="{{ condition.id }}">
+                              <dt class="govuk-summary-list__key">
+                                <p class="govuk-body govuk-!-font-weight-bold">{{ condition.conditionName }}</p>
+                                <p class="govuk-body">
+                                  {% for rule in condition.rules %}
+                                  {% if loop.first %}
+                                  '{{ rule.questionText }}' {{ rule.operator | replace("-", " ") }} '{{ rule.value }}'
+                                  {% else %}
+                                  <span class="govuk-!-font-weight-bold">{{ rule.logicalOperator | default('AND')
+                                    }}</span>
+                                  '{{ rule.questionText }}' {{ rule.operator | replace("-", " ") }} '{{ rule.value }}'
+                                  {% endif %}
+                                  {% endfor %}
+                                </p>
+                              </dt>
+                              <dd class="govuk-summary-list__actions">
+                                <a href="#" class="govuk-link remove-condition">Remove</a>
+                              </dd>
+                            </div>
+                            {% endfor %}
+                          </dl>
+                        </div>
+
+
+
+                        <div id="conditions-wrapper" class="govuk-form-group">
+
+                          {# Step 1: Define the markup for the "new" condition #}
+                          {% set newConditionMarkup %}
+                          <span class="govuk-caption-m govuk-!-font-weight-bold govuk-!-margin-bottom-4">Show this page
+                            if</span>
+
+                          <!-- Wrap each field in its own .govuk-form-group -->
+                          <!-- In your select element -->
+                          <div class="govuk-form-group">
+                            <label class="govuk-label" for="condition-question">Select a question</label>
+                            <select class="govuk-select" id="condition-question" name="question">
+                              <option value="" selected>Select a question</option>
+                              {% for question in availableQuestions %}
+                              <option value="{{ question.value }}" data-type="{{ question.type }}"
+                                data-options="{{ question.options | dump | e }}">
+                                {{ question.text }}
+                              </option>
+                              {% endfor %}
+                            </select>
+
+                          </div>
+
+                          <div class="govuk-form-group">
+                            {{ govukSelect({
+                            label: { text: commonTerms.form_editor.conditions.operator.label },
+                            items: [
+                            { value: "", text: commonTerms.form_editor.conditions.operator.select, selected: true },
+                            { value: "is", text: commonTerms.form_editor.conditions.operator.is, selected: true },
+                            { value: "is-not", text: commonTerms.form_editor.conditions.operator.is_not }
+                            ]
+                            }) }}
+                          </div>
+
+                          <div class="govuk-form-group" id="condition-value-container">
+                            <label class="govuk-label" for="condition-value">Select a value</label>
+                            <select class="govuk-select" id="condition-value" name="value">
+                              <option value="">Select a value</option>
+                            </select>
+                          </div>
+
+
+
+                          <!-- Additional conditions will be added here -->
+                          <style>
+                            #additional-conditions:not(:empty) {
+                              /* outline: solid 1px #008938;
+                              padding: 15px; */
+                              margin-bottom: 10px;
+                            }
+
+                            #additional-conditions .condition-item {
+                              background: #f3f2f1;
+                              padding: 20px;
+                              margin-bottom: 15px;
+                              position: relative;
+                              border-left: 5px solid #008938;
+                            }
+                          </style>
+                          <div id="additional-conditions"></div>
+                          <div class="govuk-form-group">
+                            <button class="govuk-button govuk-button--inverse" id="add-condition-link">
+                              <svg class="govuk-!-margin-right-1" style="position: relative; top: 2px" width="12"
+                                height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 1V11" stroke="currentColor" stroke-width="2" />
+                                <path d="M1 6H11" stroke="currentColor" stroke-width="2" />
+                              </svg>
+                              Add another condition
+                            </button>
+                          </div>
+
+                          <!-- Condition Group Container -->
+                          <div id="condition-group-container">
+                            <!-- First condition is always visible -->
+                            <div class="condition-item">
+                              <div class="govuk-form-group">
+                                {{ govukInput({
+                                label: { text: commonTerms.form_editor.conditions.name.label },
+                                id: "condition-name",
+                                name: "conditionName",
+                                hint: { text: "Condition names help you to identify conditions in your form, for
+                                example, 'Not a farmer'. Users will not see condition
+                                names." }
+                                }) }}
+                              </div>
+                            </div>
+
+
+                          </div>
+
+                          <button class="govuk-button govuk-!-margin-top-6" id="add-new-condition">
+                            Save new condition
+                          </button>
+                          {% endset %}
+
+                          {# Step 2: Use newConditionMarkup in the "new" item of govukRadios #}
+                          {% set radioItems = [] %}
+                          {% set hasConditions = false %}
+                          {% for page in formPages %}
+                          {% if page.conditions and page.conditions | length > 0 %}
+                          {% set hasConditions = true %}
+                          {% endif %}
+                          {% endfor %}
+
+                          {% set _ = radioItems.push({
+                          value: "new",
+                          text: "Create a new condition",
+                          conditional: {
+                          html: newConditionMarkup | safe
+                          }
+                          }) %}
+                          {% if hasConditions %}
+                          {% set _ = radioItems.push({
+                          value: "existing",
+                          text: "Use existing conditions",
+                          conditional: {
+                          html: govukSelect({
+                          label: { text: commonTerms.form_editor.conditions.select_existing },
+                          id: "existing-condition",
+                          items: [
+                          { value: "", text: "Select existing condition" }
+                          ].concat(existingConditions)
+                          }) + govukButton({
+                          text: commonTerms.form_editor.conditions.add_existing_button,
+                          id: "add-existing-condition",
+                          classes: "govuk-button govuk-!-margin-top-6"
+                          })
+                          }
+                          }) %}
+                          {% endif %}
+
+                          {{ govukRadios({
+                          name: "conditionType",
+                          fieldset: {
+                          legend: {
+                          text: "Control who can see this page based on previous answers",
+                          isPageHeading: true,
+                          classes: "govuk-fieldset__legend--l"
+                          }
+                          },
+                          hint: {
+                          text: "Set the conditions for when this page is shown to users"
+                          },
+                          items: radioItems
+                          }) }}
+
+                        </div>
+
+
+                      </div>
+
+                      <a href="#tab-one" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                        data-module="govuk-skip-link">Skip to page preview</a>
+                    </div>
+                  </div>
+              </div>
+              </dd>
+          </div>
+          </dl>
+        </div>
+      </div>
+      {#
+    </div> #}
+
+    <!-- Right Column for Preview -->
+    <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+      style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+      <!-- Before content -->
+      <div id="before-content" style="background-color:  #cce2d8;">
+        <p class="govuk-body-s" style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+          Preview
+        </p>
+      </div>
+
+      <div style="margin-top: 60px!important;">
+        {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+        <div class="govuk-tabs" data-module="govuk-tabs">
+          <h2 class="govuk-tabs__title">Contents</h2>
+          <ul class="govuk-tabs__list">
+            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+              <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+            </li>
+          </ul>
+          <div class="govuk-tabs__panel" id="tab-one">
+            <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+              <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                Preview this page in a new tab
+              </a>
+            </p>
+
+            <div id="preview-container">
+              <div id="preview-items">
+                {% if currentPage.questions.length > 0 %}
+                {% for question in currentPage.questions %}
+                <div class="preview-item" data-id="question-{{ question.questionId }}">
+                  {% set previewTemplate = '/form-editor/question-type/questions/previews/' %}
+
+                  {% if question.type == 'phone' %}
+                  {% set previewTemplate = previewTemplate ~ 'phone-preview.html' %}
+
+                  {% elseif question.type == 'address' %}
+                  {% set previewTemplate = previewTemplate ~ 'address-preview.html' %}
+
+                  {% elseif question.type == 'email' %}
+                  {% set previewTemplate = previewTemplate ~ 'email-preview.html' %}
+
+                  {% elseif question.type == 'file' %}
+                  {% set previewTemplate = previewTemplate ~ 'fileupload-preview.html' %}
+
+                  {% elseif question.type == 'text' %}
+                  {% if question.subType == 'short-answer-nf' %}
+                  {% set previewTemplate = previewTemplate ~ 'shorttext-preview.html' %}
+                  {% elseif question.subType == 'long-answer' %}
+                  {% set previewTemplate = previewTemplate ~ 'textarea-preview.html' %}
+                  {% elseif question.subType == 'numbers' %}
+                  {% set previewTemplate = previewTemplate ~ 'numbers-preview.html' %}
+                  {% else %}
+                  {% set previewTemplate = previewTemplate ~ 'text-preview.html' %}
+                  {% endif %}
+
+                  {% elseif question.type == 'date' %}
+                  {% if question.subType == 'day-month-year' %}
+                  {% set previewTemplate = previewTemplate ~ 'date-preview.html' %}
+                  {% elseif question.subType == 'month-year' %}
+                  {% set previewTemplate = previewTemplate ~ 'date-mmyy-preview.html' %}
+                  {% else %}
+                  {% set previewTemplate = previewTemplate ~ 'date-preview.html' %}
+                  {% endif %}
+
+                  {% elseif question.type == "list" %}
+                  {% if question.subType == "yes-no" %}
+                  {% set previewTemplate = previewTemplate ~ "yesno-preview.html" %}
+                  {% elseif question.subType == "checkboxes" %}
+                  {% set previewTemplate = previewTemplate ~ "checkboxes-preview.html" %}
+                  {% elseif question.subType == "radios" %}
+                  {% set previewTemplate = previewTemplate ~ "radios-preview.html" %}
+                  {% elseif question.subType == "select" %}
+                  {% set previewTemplate = previewTemplate ~ "autocomplete-preview.html" %}
+                  {% else %}
+                  {% set previewTemplate = previewTemplate ~ "list-preview.html" %}
+                  {% endif %}
+
+                  {% else %}
+                  {% set previewTemplate = previewTemplate ~ 'default-preview.html' %}
+                  {% endif %}
+
+                  {% include previewTemplate %}
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No questions available to preview.</p>
+                {% endif %}
+              </div>
+            </div>
+
+            <a href="#edit-page" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+              data-module="govuk-skip-link">Skip to edit page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // DOM Elements
+        const successBanner = document.getElementById("success-banner");
+        const conditionsListContainer = document.getElementById("conditions-list-container");
+        const conditionsList = document.getElementById("conditions-list");
+        const questionSelect = document.getElementById("condition-question");
+        const valueContainer = document.getElementById("condition-value-container");
+        const valueSelect = document.getElementById("condition-value");
+
+        // Validate required elements
+        if (!questionSelect || !valueContainer || !valueSelect) {
+          console.error("Missing required elements in the DOM.");
+          return;
+        }
+
+        // Helper Functions
+        function showSuccessBanner() {
+          successBanner.classList.remove("govuk-visually-hidden");
+        }
+
+        function updateConditionCounter() {
+          const conditionRows = [...document.querySelectorAll(".govuk-summary-list__row")]
+            .filter(row => row.hasAttribute("data-condition-id"));
+          const count = conditionRows.length;
+
+          const conditionCounter = document.getElementById("condition-counter");
+          if (conditionCounter) {
+            conditionCounter.textContent = count;
+          }
+
+          conditionsListContainer.classList.toggle("govuk-visually-hidden", count === 0);
+        }
+
+        function clearInputs() {
+          document.getElementById("condition-name").value = "";
+          questionSelect.value = "";
+          document.getElementById("condition-operator").value = "";
+          const textInput = document.querySelector("#condition-value-container input[type='text']");
+          if (textInput) textInput.value = "";
+        }
+
+        function handleQuestionChange() {
+          const selectedOption = questionSelect.options[questionSelect.selectedIndex];
+          const questionType = selectedOption.getAttribute("data-type") || "";
+          const rawOptions = selectedOption.getAttribute("data-options");
+
+          console.log("Selected question type:", questionType);
+          console.log("Raw options data:", rawOptions);
+
+          // Clear existing options
+          valueContainer.innerHTML = ''; // Clear the entire container
+
+          try {
+            // Handle yes/no questions with dropdown
+            if (questionType === "yes-no") {
+              const select = document.createElement("select");
+              select.classList.add("govuk-select");
+              select.id = "condition-value";
+              select.name = "value";
+
+              select.innerHTML = `
+        <option value="">Select yes or no</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      `;
+
+              const label = document.createElement("label");
+              label.classList.add("govuk-label");
+              label.setAttribute("for", "condition-value");
+              label.textContent = "Select yes or no";
+
+              valueContainer.appendChild(label);
+              valueContainer.appendChild(select);
+              valueContainer.style.display = "block";
+              return;
+            }
+
+            // Handle radio questions with radio buttons
+            if (questionType === "radios") {
+              const options = rawOptions ? JSON.parse(rawOptions) : [];
+
+              if (Array.isArray(options) && options.length > 0) {
+                const fieldset = document.createElement("fieldset");
+                fieldset.classList.add("govuk-fieldset");
+
+                const legend = document.createElement("legend");
+                legend.classList.add("govuk-fieldset__legend", "govuk-fieldset__legend");
+                legend.textContent = "Select an option";
+                fieldset.appendChild(legend);
+
+                const radiosDiv = document.createElement("div");
+                radiosDiv.classList.add("govuk-radios--small");
+                radiosDiv.setAttribute("data-module", "govuk-radios");
+
+                options.forEach((option, index) => {
+                  const itemDiv = document.createElement("div");
+                  itemDiv.classList.add("govuk-radios__item");
+
+                  const radio = document.createElement("input");
+                  radio.classList.add("govuk-radios__input");
+                  radio.type = "radio";
+                  radio.id = `radio-${index}`;
+                  radio.name = "condition-value";
+                  radio.value = option.value || option.label;
+
+                  const label = document.createElement("label");
+                  label.classList.add("govuk-label", "govuk-radios__label");
+                  label.setAttribute("for", `radio-${index}`);
+                  label.textContent = option.label;
+
+                  itemDiv.appendChild(radio);
+                  itemDiv.appendChild(label);
+                  radiosDiv.appendChild(itemDiv);
+                });
+
+                fieldset.appendChild(radiosDiv);
+                valueContainer.appendChild(fieldset);
+                valueContainer.style.display = "block";
+                return;
+              }
+            }
+
+            // Handle checkbox questions with actual checkboxes
+            if (questionType === "checkboxes") {
+              const options = rawOptions ? JSON.parse(rawOptions) : [];
+
+              if (Array.isArray(options) && options.length > 0) {
+                const fieldset = document.createElement("fieldset");
+                fieldset.classList.add("govuk-fieldset");
+
+                const legend = document.createElement("legend");
+                legend.classList.add("govuk-fieldset__legend", "govuk-fieldset__legend");
+                legend.textContent = "Select all that apply";
+                fieldset.appendChild(legend);
+
+                const checkboxesDiv = document.createElement("div");
+                checkboxesDiv.classList.add("govuk-checkboxes", "govuk-checkboxes--small");
+                checkboxesDiv.setAttribute("data-module", "govuk-checkboxes");
+
+                options.forEach((option, index) => {
+                  const itemDiv = document.createElement("div");
+                  itemDiv.classList.add("govuk-checkboxes__item");
+
+                  const checkbox = document.createElement("input");
+                  checkbox.classList.add("govuk-checkboxes__input");
+                  checkbox.type = "checkbox";
+                  checkbox.id = `checkbox-${index}`;
+                  checkbox.name = "condition-value";
+                  checkbox.value = option.value || option.label;
+
+                  const label = document.createElement("label");
+                  label.classList.add("govuk-label", "govuk-checkboxes__label");
+                  label.setAttribute("for", `checkbox-${index}`);
+                  label.textContent = option.label;
+
+                  itemDiv.appendChild(checkbox);
+                  itemDiv.appendChild(label);
+                  checkboxesDiv.appendChild(itemDiv);
+                });
+
+                fieldset.appendChild(checkboxesDiv);
+                valueContainer.appendChild(fieldset);
+                valueContainer.style.display = "block";
+                return;
+              }
+            }
+
+            // Handle select questions with dropdown
+            if (questionType === "select") {
+              const select = document.createElement("select");
+              select.classList.add("govuk-select");
+              select.id = "condition-value";
+              select.name = "value";
+
+              const defaultOption = document.createElement("option");
+              defaultOption.value = "";
+              defaultOption.textContent = "Select from the list";
+              select.appendChild(defaultOption);
+
+              const options = rawOptions ? JSON.parse(rawOptions) : [];
+
+              if (Array.isArray(options) && options.length > 0) {
+                options.forEach(option => {
+                  const newOption = document.createElement("option");
+                  newOption.value = option.value || option.label;
+                  newOption.textContent = option.label;
+                  select.appendChild(newOption);
+                });
+
+                const label = document.createElement("label");
+                label.classList.add("govuk-label");
+                label.setAttribute("for", "condition-value");
+                label.textContent = "Select from the list";
+
+                valueContainer.appendChild(label);
+                valueContainer.appendChild(select);
+                valueContainer.style.display = "block";
+              }
+            }
+          } catch (e) {
+            console.error("Error parsing options:", e);
+          }
+        }
+
+        // Event Listeners
+        questionSelect.addEventListener("change", handleQuestionChange);
+
+        // Handle adding new conditions
+        const addButton = document.getElementById("add-new-condition");
+
+        addButton.addEventListener("click", function (event) {
+          event.preventDefault();
+
+          // Create a form to submit the data
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = '/conditions-add';
+
+          // Get the values for the first condition
+          const questionSelect = document.getElementById("condition-question");
+          const operatorSelect = document.getElementById("condition-operator");
+          const valueContainer = document.getElementById("condition-value-container");
+          const conditionNameInput = document.getElementById("condition-name");
+
+          // Initialize rules array
+          let rules = [];
+
+          // Add first condition
+          const firstQuestionText = questionSelect.options[questionSelect.selectedIndex].text.replace(/\s*\([^)]*\)/, '').trim();
+          const firstQuestionType = questionSelect.options[questionSelect.selectedIndex].getAttribute("data-type");
+          let firstValue = "";
+
+          if (firstQuestionType === "radios") {
+            const selectedRadio = valueContainer.querySelector('input[type="radio"]:checked');
+            firstValue = selectedRadio ? selectedRadio.value : "";
+          } else if (firstQuestionType === "checkboxes") {
+            // Get all checked checkboxes
+            const checkedBoxes = valueContainer.querySelectorAll('input[type="checkbox"]:checked');
+            firstValue = Array.from(checkedBoxes).map(cb => cb.value);
+          } else {
+            const selectElement = valueContainer.querySelector('select');
+            firstValue = selectElement ? selectElement.value : "";
+          }
+
+          rules.push({
+            questionText: firstQuestionText,
+            operator: operatorSelect ? operatorSelect.value : "is",
+            value: firstValue,
+            logicalOperator: null
+          });
+
+          // Get additional conditions
+          const additionalConditions = document.querySelectorAll('#additional-conditions .condition-item');
+          additionalConditions.forEach((condition, index) => {
+            const logicalOperator = condition.querySelector('select[name^="logical-operator"]')?.value || 'AND';
+            const questionSelect = condition.querySelector('.condition-question');
+            const operatorSelect = condition.querySelector('select[id^="condition-operator"]');
+            const valueContainer = condition.querySelector('.condition-value-container');
+
+            if (!questionSelect || !operatorSelect || !valueContainer) {
+              console.error('Missing required elements in additional condition:', { questionSelect, operatorSelect, valueContainer });
+              return;
+            }
+
+            const questionText = questionSelect.options[questionSelect.selectedIndex]?.text.replace(/\s*\([^)]*\)/, '').trim() || '';
+            const questionType = questionSelect.options[questionSelect.selectedIndex]?.getAttribute("data-type") || '';
+            let value = '';
+
+            if (questionType === "radios") {
+              const selectedRadio = valueContainer.querySelector('input[type="radio"]:checked');
+              value = selectedRadio ? selectedRadio.value : "";
+            } else if (questionType === "checkboxes") {
+              const checkedBoxes = valueContainer.querySelectorAll('input[type="checkbox"]:checked');
+              value = Array.from(checkedBoxes).map(cb => cb.value);
+            } else {
+              const selectElement = valueContainer.querySelector('select');
+              value = selectElement ? selectElement.value : "";
+            }
+
+            rules.push({
+              questionText: questionText,
+              operator: operatorSelect.value,
+              value: value,
+              logicalOperator: logicalOperator
+            });
+          });
+
+          console.log("All rules:", rules); // Debug log
+
+          // Create hidden inputs for the form data
+          const inputs = {
+            'conditionType': 'new',
+            'conditionName': conditionNameInput.value,
+            'rules': JSON.stringify(rules),
+            'currentPageId': '{{ currentPage.pageId }}'  // Add the current page ID
+          };
+
+          // Debug log
+          console.log("Submitting form with data:", inputs);
+
+          // Add all inputs to form
+          Object.entries(inputs).forEach(([name, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            input.value = value;
+            form.appendChild(input);
+          });
+
+          // Add the form to the document and submit it
+          document.body.appendChild(form);
+          form.submit();
+        });
+
+        // Handle condition removal
+        conditionsListContainer.addEventListener("click", async function (event) {
+          if (event.target.classList.contains("remove-condition")) {
+            event.preventDefault();
+
+            const row = event.target.closest(".govuk-summary-list__row");
+            const conditionId = row.getAttribute("data-condition-id");
+
+            if (!conditionId) {
+              console.error("No condition ID found");
+              return;
+            }
+
+            try {
+              const response = await fetch('/conditions-remove', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ conditionId: conditionId })
+              });
+
+              if (response.ok) {
+                row.remove();
+                updateConditionCounter();
+              } else {
+                console.error("Failed to remove condition");
+              }
+            } catch (error) {
+              console.error("Error removing condition:", error);
+            }
+          }
+        });
+
+        const addConditionLink = document.getElementById('add-condition-link');
+        const additionalConditions = document.getElementById('additional-conditions');
+        let conditionCount = 1;
+
+        // Function to update value options based on selected question
+        function updateValueOptions(questionSelect, valueSelect) {
+          const selectedOption = questionSelect.options[questionSelect.selectedIndex];
+          const questionType = selectedOption.getAttribute('data-type');
+          const rawOptions = selectedOption.getAttribute('data-options');
+
+          // Clear existing options
+          valueSelect.innerHTML = '<option value="">Select a value</option>';
+
+          try {
+            if (questionType === 'yes-no') {
+              valueSelect.innerHTML += `
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              `;
+            } else if (['radios', 'checkboxes', 'select'].includes(questionType)) {
+              const options = JSON.parse(rawOptions);
+              options.forEach(option => {
+                const value = option.value || option.text;
+                valueSelect.innerHTML += `
+                  <option value="${value}">${option.text}</option>
+                `;
+              });
+            }
+          } catch (e) {
+            console.error('Error parsing options:', e);
+          }
+        }
+
+        // Add event listener to first question select
+        const firstQuestionSelect = document.getElementById('condition-question');
+        const firstValueSelect = document.getElementById('condition-value');
+        firstQuestionSelect.addEventListener('change', () => {
+          updateValueOptions(firstQuestionSelect, firstValueSelect);
+        });
+
+        // Handle adding new conditions
+        addConditionLink.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          const newCondition = document.createElement('div');
+          newCondition.className = 'condition-item govuk-!-margin-top-4 govuk-!-padding-4';
+          newCondition.style.position = 'relative';
+          newCondition.style.background = '#f3f2f1';
+
+          newCondition.innerHTML = `
+              <!-- Remove link positioned absolutely in top right -->
+              <a href="#" class="govuk-link govuk-link--no-visited-state govuk-link--destructive govuk-!-font-size-16" 
+                 onclick="event.preventDefault(); removeCondition(this);"
+                 style="position: absolute; top: 15px; right: 15px;">
+                  <svg class="govuk-!-margin-right-1" style="position: relative; top: 2px" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10.5 1.5L1.5 10.5" stroke="currentColor" stroke-width="2"/>
+                      <path d="M1.5 1.5L10.5 10.5" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  Remove this condition
+              </a>
+
+              <div class="govuk-form-group">
+                  <label class="govuk-label">Combine with</label>
+                  <select class="govuk-select" name="logical-operator-${conditionCount}">
+                      <option value="AND">AND</option>
+                      <option value="OR">OR</option>
+                  </select>
+              </div>
+              
+              <div class="govuk-form-group">
+                  <label class="govuk-label" for="condition-question-${conditionCount}">Select a question</label>
+                  <select class="govuk-select condition-question" 
+                          id="condition-question-${conditionCount}" 
+                          name="question-${conditionCount}">
+                      ${firstQuestionSelect.innerHTML}
+                  </select>
+              </div>
+
+              <div class="govuk-form-group">
+                  <label class="govuk-label" for="condition-operator-${conditionCount}">Condition type</label>
+                  <select class="govuk-select" id="condition-operator-${conditionCount}" name="operator-${conditionCount}">
+                      <option value="">Select a condition type</option>
+                      <option value="is" selected>is</option>
+                      <option value="is-not">is not</option>
+                  </select>
+              </div>
+
+              <div class="govuk-form-group">
+                  <label class="govuk-label" for="condition-value-${conditionCount}">Select a value</label>
+                  <div class="condition-value-container">
+                    <select class="govuk-select condition-value" 
+                            id="condition-value-${conditionCount}" 
+                            name="value-${conditionCount}">
+                        <option value="">Select a value</option>
+                    </select>
+                  </div>
+              </div>
+          `;
+
+          // Add event listener to new question select
+          const newQuestionSelect = newCondition.querySelector('.condition-question');
+          const newValueContainer = newCondition.querySelector('.condition-value-container');
+          newQuestionSelect.addEventListener('change', () => {
+            const selectedOption = newQuestionSelect.options[newQuestionSelect.selectedIndex];
+            const questionType = selectedOption.getAttribute("data-type") || "";
+            const rawOptions = selectedOption.getAttribute("data-options");
+
+            // Clear existing options
+            newValueContainer.innerHTML = ''; // Clear the entire container
+
+            try {
+              // Handle yes/no questions with dropdown
+              if (questionType === "yes-no") {
+                const select = document.createElement("select");
+                select.classList.add("govuk-select");
+                select.id = `condition-value-${conditionCount}`;
+                select.name = `value-${conditionCount}`;
+
+                select.innerHTML = `
+                  <option value="">Select yes or no</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                `;
+
+                const label = document.createElement("label");
+                label.classList.add("govuk-label");
+                label.setAttribute("for", `condition-value-${conditionCount}`);
+                label.textContent = "Select yes or no";
+
+                newValueContainer.appendChild(label);
+                newValueContainer.appendChild(select);
+                newValueContainer.style.display = "block";
+                return;
+              }
+
+              // Handle radio questions with radio buttons
+              if (questionType === "radios") {
+                const options = rawOptions ? JSON.parse(rawOptions) : [];
+
+                if (Array.isArray(options) && options.length > 0) {
+                  const fieldset = document.createElement("fieldset");
+                  fieldset.classList.add("govuk-fieldset");
+
+                  const legend = document.createElement("legend");
+                  legend.classList.add("govuk-fieldset__legend", "govuk-fieldset__legend");
+                  legend.textContent = "Select an option";
+                  fieldset.appendChild(legend);
+
+                  const radiosDiv = document.createElement("div");
+                  radiosDiv.classList.add("govuk-radios--small");
+                  radiosDiv.setAttribute("data-module", "govuk-radios");
+
+                  options.forEach((option, index) => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.classList.add("govuk-radios__item");
+
+                    const radio = document.createElement("input");
+                    radio.classList.add("govuk-radios__input");
+                    radio.type = "radio";
+                    radio.id = `radio-${conditionCount}-${index}`;
+                    radio.name = `value-${conditionCount}`;
+                    radio.value = option.value || option.label;
+
+                    const label = document.createElement("label");
+                    label.classList.add("govuk-label", "govuk-radios__label");
+                    label.setAttribute("for", `radio-${conditionCount}-${index}`);
+                    label.textContent = option.label;
+
+                    itemDiv.appendChild(radio);
+                    itemDiv.appendChild(label);
+                    radiosDiv.appendChild(itemDiv);
+                  });
+
+                  fieldset.appendChild(radiosDiv);
+                  newValueContainer.appendChild(fieldset);
+                  newValueContainer.style.display = "block";
+                  return;
+                }
+              }
+
+              // Handle checkbox questions with actual checkboxes
+              if (questionType === "checkboxes") {
+                const options = rawOptions ? JSON.parse(rawOptions) : [];
+
+                if (Array.isArray(options) && options.length > 0) {
+                  const fieldset = document.createElement("fieldset");
+                  fieldset.classList.add("govuk-fieldset");
+
+                  const legend = document.createElement("legend");
+                  legend.classList.add("govuk-fieldset__legend", "govuk-fieldset__legend");
+                  legend.textContent = "Select all that apply";
+                  fieldset.appendChild(legend);
+
+                  const checkboxesDiv = document.createElement("div");
+                  checkboxesDiv.classList.add("govuk-checkboxes", "govuk-checkboxes--small");
+                  checkboxesDiv.setAttribute("data-module", "govuk-checkboxes");
+
+                  options.forEach((option, index) => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.classList.add("govuk-checkboxes__item");
+
+                    const checkbox = document.createElement("input");
+                    checkbox.classList.add("govuk-checkboxes__input");
+                    checkbox.type = "checkbox";
+                    checkbox.id = `checkbox-${conditionCount}-${index}`;
+                    checkbox.name = `value-${conditionCount}`;
+                    checkbox.value = option.value || option.label;
+
+                    const label = document.createElement("label");
+                    label.classList.add("govuk-label", "govuk-checkboxes__label");
+                    label.setAttribute("for", `checkbox-${conditionCount}-${index}`);
+                    label.textContent = option.label;
+
+                    itemDiv.appendChild(checkbox);
+                    itemDiv.appendChild(label);
+                    checkboxesDiv.appendChild(itemDiv);
+                  });
+
+                  fieldset.appendChild(checkboxesDiv);
+                  newValueContainer.appendChild(fieldset);
+                  newValueContainer.style.display = "block";
+                  return;
+                }
+              }
+
+              // Handle select questions with dropdown
+              if (questionType === "select") {
+                const select = document.createElement("select");
+                select.classList.add("govuk-select");
+                select.id = `condition-value-${conditionCount}`;
+                select.name = `value-${conditionCount}`;
+
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "Select from the list";
+                select.appendChild(defaultOption);
+
+                const options = rawOptions ? JSON.parse(rawOptions) : [];
+
+                if (Array.isArray(options) && options.length > 0) {
+                  options.forEach(option => {
+                    const newOption = document.createElement("option");
+                    newOption.value = option.value || option.label;
+                    newOption.textContent = option.label;
+                    select.appendChild(newOption);
+                  });
+
+                  const label = document.createElement("label");
+                  label.classList.add("govuk-label");
+                  label.setAttribute("for", `condition-value-${conditionCount}`);
+                  label.textContent = "Select from the list";
+
+                  newValueContainer.appendChild(label);
+                  newValueContainer.appendChild(select);
+                  newValueContainer.style.display = "block";
+                }
+              }
+            } catch (e) {
+              console.error("Error parsing options:", e);
+            }
+          });
+
+          additionalConditions.appendChild(newCondition);
+          conditionCount++;
+        });
+
+        function removeCondition(element) {
+          // Find the closest parent condition-item div and remove it
+          const conditionItem = element.closest('.condition-item');
+          if (conditionItem) {
+            conditionItem.remove();
+          }
+        }
+
+        // Add this inside your DOMContentLoaded event listener
+        const addExistingButton = document.getElementById("add-existing-condition");
+        const existingConditionSelect = document.getElementById("existing-condition");
+
+        addExistingButton.addEventListener("click", function (event) {
+          event.preventDefault();
+
+          const selectedConditionId = existingConditionSelect.value;
+          if (!selectedConditionId) {
+            console.log("No condition selected");
+            return;
+          }
+
+          // Create a form to submit the data
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = '/conditions-add';
+
+          // Create hidden inputs for the form data
+          const inputs = {
+            'conditionType': 'existing',
+            'existingConditionId': selectedConditionId,
+            'currentPageId': '{{ currentPage.pageId }}'  // Add the current page ID
+          };
+
+          // Add all inputs to form
+          Object.entries(inputs).forEach(([name, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            input.value = value;
+            form.appendChild(input);
+          });
+
+          // Add the form to the document and submit it
+          document.body.appendChild(form);
+          form.submit();
+        });
+
+        // Add click handlers to all remove condition links
+        document.addEventListener('click', function (event) {
+          const removeLink = event.target.closest('.govuk-link--destructive');
+          if (removeLink && removeLink.textContent.trim() === 'Remove this condition') {
+            event.preventDefault();
+            const conditionItem = removeLink.closest('.condition-item');
+            if (conditionItem) {
+              conditionItem.remove();
+            }
+          }
+        });
+      });
+    </script>
+
+    <!-- CSS for Highlighting -->
+    <style>
+      .highlight {
+        background-color: #ffe5cc;
+        border-bottom: 2px solid #ffb266;
+        color: black;
+      }
+
+      #before-content {
+        position: absolute;
+        top: 0;
+        left: 10 !important;
+        right: 0;
+        width: 100%;
+        padding: 10px !important;
+        box-sizing: border-box;
+        z-index: 1;
+        border-bottom: 1px solid #008938;
+        padding-left: 10px;
+      }
+
+      #second-container {
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #second-container>* {
+        padding-left: 0px;
+        z-index: 2;
+      }
+    </style>
+  </div>
+</div>
+
+<style>
+  .with-arrow {
+    position: relative;
+    border: none;
+    height: 2px;
+    background-color: #b1b4b6;
+    margin: 1.5em 0;
+  }
+
+  .with-arrow::after {
+    content: "▼";
+    display: block;
+    position: absolute;
+    left: 2%;
+    transform: translateX(-50%);
+    top: -4px;
+    font-size: 18px;
+    color: #b1b4b6;
+    z-index: 10;
+  }
+
+  .govuk-summary-list__key p {
+    display: block !important;
+  }
+</style>
+{% endblock %}

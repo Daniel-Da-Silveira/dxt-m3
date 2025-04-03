@@ -1,0 +1,37 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+{{ pageName }} - GOV.UK Forms
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h1 class="govuk-heading-l">{{ pageName }}</h1>
+
+                <form action="/form-overview/draft/support/email" method="post">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="emailAddress">
+                            Email address
+                        </label>
+                        <div id="emailAddress-hint" class="govuk-hint">
+                            Enter the email address users can contact for support
+                        </div>
+                        <input class="govuk-input" id="emailAddress" name="emailAddress" type="email"
+                            autocomplete="email" value="{{ form.support.email }}" aria-describedby="emailAddress-hint">
+                    </div>
+
+                    <div class="govuk-button-group">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">
+                            Save and continue
+                        </button>
+                        <a class="govuk-link" href="/form-overview/draft/overview">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

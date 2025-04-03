@@ -1,0 +1,71 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Preview form - Forms Designer
+{% endblock %}
+
+{% block header %}
+{{ govukHeader({
+homepageUrl: "#",
+serviceName: form.name,
+serviceUrl: "#",
+navigation: [],
+containerClasses: "govuk-width-container--default"
+}) }}
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{# {% block beforeContent %}
+{{ govukBackLink({
+text: "Back to form editor",
+href: "/form-editor/listing"
+}) }}
+{% endblock %} #}
+
+{% block content %}
+<div class="govuk-grid-row govuk-width-container--default">
+    <div class="govuk-grid-column-two-thirds">
+        <div id="form-preview-container">
+            <h1 class="govuk-heading-l">Loading preview...</h1>
+        </div>
+    </div>
+</div>
+
+{# Add a hidden element to store the form data #}
+<script type="application/json" id="form-data">
+{{ data['formPages'] | dump | safe }}
+</script>
+
+{# Debug output #}
+<pre id="debug-output" style="display: none;">
+Template data: {{ data | dump(2) | safe }}
+</pre>
+{% endblock %}
+
+{% block pageScripts %}
+<script>
+    console.log('Page scripts starting...');
+
+    // Transfer form data from server-side session to client-side sessionStorage
+    const formDataElement = document.getElementById('form-data');
+    console.log('Form data element:', formDataElement);
+
+    if (formDataElement) {
+        console.log('Form data content:', formDataElement.textContent);
+        try {
+            const formPages = JSON.parse(formDataElement.textContent);
+            console.log('Parsed form pages:', formPages);
+            if (formPages) {
+                sessionStorage.setItem('formPages', JSON.stringify(formPages));
+                console.log('Data stored in sessionStorage');
+            }
+        } catch (error) {
+            console.error('Error parsing form data:', error);
+        }
+    } else {
+        console.error('Form data element not found');
+    }
+</script>
+<script src="/public/javascripts/components/form-editor/form-preview.js"></script>
+{% endblock %}

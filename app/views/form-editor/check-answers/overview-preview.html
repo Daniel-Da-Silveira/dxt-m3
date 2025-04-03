@@ -1,0 +1,34 @@
+
+<div>
+  <!-- Tag for Preview -->
+  {# {{ govukTag({ text: "Preview of page 2", classes: "govuk-tag--yellow
+  govuk-!-margin-bottom-2 govuk-!-margin-top-8" }) }} #}
+  <!-- Form for Preview -->
+  <form>
+    <!-- Dynamic Heading -->
+
+    <div id="heading-container">
+      <span id="dynamic-caption" style="display: none;" class="govuk-caption-l">{{ (data['setName'] or '') + ' 1' }}</span>
+
+      <h1 class="govuk-heading-l" id="dynamic-heading-more-than-1">{{ data['guidanceOnlyHeadingInput'] or '' }}</h1>
+
+    </div>
+
+    <!-- Guidance Paragraph -->
+    <p class="govuk-body" id="guidance-paragraph">{{ data['guidanceOnlyGuidanceTextInput'] or '' }}</p>
+
+    {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+
+    {% set setName = data['setName'] or '' %}
+
+
+
+    {{ govukButton({
+      text: "Continue",
+      classes: "govuk-button govuk-!-margin-top-6",
+      id: "once-button",
+      disabled: true
+    }) }}
+
+</div>

@@ -1,0 +1,59 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "View list" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "", text: "Lists", id: "lists" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "lists"
+}) }}
+<div class="x-govuk-masthead x-govuk-masthead--large">
+	<div class="govuk-width-container">
+		<h1 class="govuk-heading-l--inverse x-govuk-masthead__title">
+			Preview list
+		</h1>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+	<main class="govuk-main-wrapper">
+		{{ govukBackLink({
+		text: "Back to lists",
+		href: "/form-editor/list-manager"
+		}) }}
+
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-two-thirds">
+				<h2 class="govuk-heading-l">{{ name }}</h2>
+				{{ govukButton({
+				text: "Edit this list",
+				href: "/form-editor/edit-list/" + name,
+				classes: "govuk-button--secondary govuk-!-margin-top-6"
+				}) }}
+				<div class="govuk-body">
+					<ol class="govuk-list govuk-list--number">
+						{% for item in items %}
+						<li>{{ item }}</li>
+						{% endfor %}
+					</ol>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+{% endblock %}

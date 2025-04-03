@@ -1,0 +1,308 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Provide contact details for support - Apply for a county parish holding number in England" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/form-designer-v2/onboarding/sign-out-confirmation",
+    navigationItems: [
+    {
+      href: "/library.html",
+      text: "Forms library",
+      id: "library"
+     },
+    {
+      href: "/cph-overview/draft.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/editor.html",
+    text: 'Editor',
+    id: 'editor'
+    }],
+    activeLinkId: "/"
+  }) }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <!-- <h1 class="govuk-heading-xl">Apply for a county parish holding number in England</h1> -->
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: "Enter telephone number and its opening times",
+      href: "#contact-by-phone-textarea"
+    },
+    {
+      text: "Enter email address",
+      href: "#contact-by-email"
+    },
+       {
+      text: "Enter response times for email",
+      href: "#response-times"
+    },
+    {
+      text: "Enter contact link",
+      href: "#contact-link"
+    },
+     {
+      text: "Enter text to describe this link",
+      href: "#contact-link-description"
+    },
+    {
+      text: "Enter address line 1, typically the building and street",
+      href: "#address-line-1"
+    },
+    {
+      text: "Enter town or city",
+      href: "#address-town"
+    },
+    {
+      text: "Enter postcode",
+      href: "#address-postcode"
+    }
+  ]
+}) }}
+
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+<span class="govuk-caption-l">Apply for a county parish holding number in England</span><h1 class="govuk-heading-l">
+ Provide contact details for support
+</h1>
+
+<p class="govuk-body-l">You need to provide at least one way for people to get help if they get stuck.</p>
+<p class="govuk-body">The contact information you provide will be shown:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>at the bottom of every page of the form</li>
+  <li>in the confirmation email, which will also state the date and time a form was submitted</li>
+</ul>
+
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{{ govukInsetText({
+  html: 'Follow the<a href="https://design-system.service.gov.uk/patterns/contact-a-department-or-service-team/" class="govuk-link" rel="noreferrer noopener" target="_blank"> GOV.UK design system pattern (opens in new tab)</a> for contacting a department or service team.'
+}) }}
+
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+
+{% set emailHtml %}
+{{ govukInput({
+    id: "contact-by-email",
+    name: "contactByEmail",
+    type: "email",
+    autocomplete: "email",
+    spellcheck: false,
+    classes: "govuk-!-width-full",
+    label: {
+      text: "Email address"
+    },
+    errorMessage: {
+      text: "Enter email address"
+    }
+  }) }}
+
+
+   {{ govukInput({
+    id: "response-times",
+    name: "responseTimes",
+    autocomplete: "tel",
+    classes: "govuk-!-width-full",
+    label: {
+      text: "Response times"
+    },
+    hint: {
+      text: "For example, ‘we aim to respond within 2 working days’"
+       },
+    errorMessage: {
+      text: "Enter response times"
+
+    }
+  }) }}
+{% endset %}
+
+{% set contactHtml %}
+  {{ govukTextarea({
+    id: "contact-by-phone-textarea",
+    name: "contactByPhoneTextarea",
+    classes: "govuk-!-width-full",
+    label: {
+      text: "Telephone number and its opening times"
+    },
+    errorMessage: {
+      text: "Enter telephone number and opening times"
+    }
+  }) }}
+{% endset %}
+
+
+{% set linkHtml %}
+  {{ govukInput({
+    id: "contact-link",
+    name: "contactLink",
+    classes: "govuk-!-width-full",
+    label: {
+      text: "Contact link"
+    },
+    hint: {
+      text: "For example, ‘https://www.gov.uk/guidance/contact-defra’"
+       },
+    errorMessage: {
+      text: "Enter contact link"
+    }
+  }) }}
+  {{ govukInput({
+    id: "contact-link-description",
+    name: "contactLinkDescription",
+    classes: "govuk-!-width-full",
+    label: {
+      text: "Text to describe this link"
+    },
+    hint: {
+      text: "For example, ‘Online contact form’"
+       },
+    errorMessage: {
+      text: "Enter text to describe the link"
+
+    }
+  }) }}
+{% endset %}
+
+{% set addressHtml %}
+{{ govukInput({
+    label: {
+      text: "Address line 1"
+     },
+    errorMessage: {
+      text: "Enter address line 1, typically the building and street"
+    },
+    id: "address-line-1",
+    name: "addressLine1",
+    autocomplete: "address-line1"
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Address line 2 (optional)"
+    },
+    id: "address-line-2",
+    name: "addressLine2",
+    autocomplete: "address-line2"
+  }) }}
+
+  {{ govukInput({
+    label: {
+      text: "Town or city"
+    },
+      errorMessage: {
+      text: "Enter town or city"
+    },
+    classes: "govuk-!-width-two-thirds",
+    id: "address-town",
+    name: "addressTown",
+    autocomplete: "address-level2"
+  }) }}
+
+  {# {{ govukInput({
+    label: {
+      text: "County (optional)"
+    },
+    classes: "govuk-!-width-two-thirds",
+    id: "address-county",
+    name: "addressCounty"
+  }) }} #}
+
+  {{ govukInput({
+    label: {
+      text: "Postcode"
+    },
+      errorMessage: {
+      text: "Enter postcode"
+    },
+    classes: "govuk-input--width-10",
+    id: "address-postcode",
+    name: "addressPostcode",
+    autocomplete: "postal-code"
+  }) }}
+{% endset %}
+
+{{ govukCheckboxes({
+  name: "contact",
+    formGroup: {
+    classes: "govuk-form-group--error"
+  },
+  fieldset: {
+    legend: {
+      text: "How can people get help with filling in this form?",
+      isPageHeading: false,
+      classes: "govuk-!-padding-top-2 govuk-fieldset__legend--m "
+    }
+  },
+  hint: {
+    text: "Select at least one option."
+  },
+  items: [
+    {
+      value: "telephone",
+      text: "Telephone",
+      checked: true,
+      conditional: {
+        html: contactHtml
+      }
+    },
+    {
+      value: "email",
+      text: "Email",
+      checked: true,
+      conditional: {
+        html: emailHtml
+      }
+    },
+    {
+      value: "online_link",
+      text: "Online contact link",
+      checked: true,
+      conditional: {
+        html: linkHtml
+      }
+    },
+    {
+      value: "address",
+      text: "Address",
+      checked: true,
+      conditional: {
+        html: addressHtml
+      }
+    }
+  ]
+}) }}
+
+ {{ govukButton({
+    text: "Save",
+    href: "/cph-overview/draft+email+support.html",
+    classes: "govuk-button"
+  }) }}
+
+{% endblock %}

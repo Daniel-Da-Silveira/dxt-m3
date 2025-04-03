@@ -1,0 +1,122 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "What happens next - Apply for a county parish holding number in England" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{
+href: "/library.html",
+text: "Forms library",
+id: "library"
+},
+{
+href: "/form-overview/draft/overview",
+text: "Overview",
+id: "overview"
+},{
+href: "/editor.html",
+text: 'Editor',
+id: 'editor'
+}],
+activeLinkId: "/"
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "/form-overview/draft/overview"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+    {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+
+    <span class="govuk-caption-l">Apply for a county parish holding number in England</span>
+    <h1 class="govuk-heading-l">Tell users what happens after they submit their form</h1>
+
+    <p class="govuk-body-l">
+      Add some information to tell people what will happen after they've submitted their form, and when - so they know
+      what to expect.
+    </p>
+
+    <h2 class="govuk-heading-s">Example</h2>
+    {{ govukInsetText({ text: "We'll send you an email to let you know the outcome. You'll usually get a response within
+    10 working days." }) }}
+
+    <p class="govuk-body">
+      The email confirmation will also include the contact details you provide for the form, and the date and time of
+      submission.
+    </p>
+
+    <form action="/form-overview/draft/support/next-steps" method="post">
+      {{ govukTextarea({
+      name: "nextSteps",
+      id: "next-steps",
+      label: {
+      text: "What will happen after a user submits a form?",
+      classes: "govuk-label--m govuk-!-padding-top-4",
+      isPageHeading: true
+      },
+      value: form.nextSteps
+      }) }}
+
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Save and continue
+        </button>
+        <a href="/form-overview/draft/overview" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      View error messages
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    {{ govukErrorSummary({
+    titleText: "There is a problem",
+    errorList: [
+    {
+    text: "Enter what will happen after a user submits a form",
+    href: "#next-steps"
+    }
+    ]
+    }) }}
+
+    {{ govukTextarea({
+    name: "nextSteps",
+    id: "next-steps",
+    label: {
+    text: "What will happen after a user submits a form?",
+    classes: "govuk-label--m",
+    isPageHeading: true
+    },
+    errorMessage: {
+    text: "Enter what will happen after a user submits a form"
+    }
+    }) }}
+  </div>
+</details>
+{% endblock %}

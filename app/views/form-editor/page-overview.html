@@ -1,0 +1,1368 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Page " + pageNumber + " overview - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: commonTerms.form_editor.navigation.forms_library, id: "nav-library" },
+{ href: "/form-overview/draft/complete-clean.html", text: commonTerms.form_editor.navigation.overview, id:
+"nav-overview" },
+{ href: "/form-editor/listing", text: commonTerms.form_editor.navigation.editor, id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+    classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+    text: commonTerms.form_editor.navigation.back_to_add_edit_pages,
+    href: "/form-editor/listing.html"
+    }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {{ form.name }}
+        </h1>
+
+        <a href="/form-editor/page-type.html" role="button" draggable="false" class="govuk-button govuk-button--inverse"
+          data-module="govuk-button">
+          Add new page
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2"
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page" id="overviewquestions"
+                                href="#overview-noquestions">
+                                Page {{ pageNumber }} overview
+                              </a>
+                            </li>
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link"
+                                href="/form-editor/conditions/{{ currentPage.pageId }}">
+                                Conditions
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+
+
+                        <h2 class="govuk-heading-l govuk-!-margin-top-4">Page {{ pageNumber }} overview</h2>
+                        {# <h2 class="govuk-heading-m" id="page-heading">Questions</h2> #}
+
+                        <ul id="question-list" class="govuk-list">
+                          {% for question in currentPage.questions %}
+                          <li class="question-item govuk-summary-list__row" data-id="question-{{ question.questionId }}"
+                            tabindex="-1">
+                            {{ govukSummaryList({
+                            classes: "govuk-summary-list",
+                            rows: [
+                            {
+                            classes: "govuk-summary-list__row--force-border",
+                            key: { text: "Question " ~ loop.index },
+                            value: { html: question.label or 'Untitled Question' },
+                            actions: {
+                            items: [
+                            {
+                            href: "/edit-question?questionId=" ~ question.questionId, text: "Change",
+                            visuallyHiddenText: "Edit " ~ question.label,
+                            classes: "govuk-link govuk-link--no-visited-state hide-when-edit-mode"
+                            }
+                            ]
+                            }
+                            }
+                            ]
+                            }) | safe }}
+
+                            <!-- Action buttons for up/down/delete -->
+                            <!-- Example: question-actions container floats right -->
+                            <div class="question-actions">
+                              <button class="govuk-button govuk-button--secondary move-up" type="button">
+                                Up
+                              </button>
+                              <button class="govuk-button govuk-button--secondary move-down" type="button">
+                                Down
+                              </button>
+                              <a href="#" class="govuk-link govuk-link--destructive delete" role="button">
+                                Delete
+                              </a>
+                            </div>
+                          </li>
+                          {% endfor %}
+                        </ul>
+
+                        <div class="govuk-button-group govuk-!-margin-top-6">
+                          <a href="/form-editor/information-type-nf.html"
+                            class="govuk-button hide-in-reorder-mode hide-when-edit-mode">
+                            Add another question
+                          </a>
+
+
+                          {% if currentPage.questions.length > 1 %}
+                          <button id="reorder-questions-button" class="govuk-button govuk-button--inverse"
+                            type="button">
+                            Re-order questions
+                          </button>
+                          {% endif %}
+
+                          <p class="govuk-body">
+                            <a href="/form-editor/delete/{{ currentPage.pageId }}"
+                              class="govuk-link govuk-link--no-visited-state govuk-link--destructive hide-in-reorder-mode hide-when-edit-mode">
+                              Delete page
+                            </a>
+                          </p>
+                        </div>
+
+                        <a href="#tab-one" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                          data-module="govuk-skip-link">
+                          Skip to page preview
+                        </a>
+
+                        <a href="#tab-two" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                          data-module="govuk-skip-link">
+                          Skip to error messages preview
+                        </a>
+
+                        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+
+                        <form action="/form-overview/draft/overview" method="post">
+                          <h1 class="govuk-heading-l">Settings</h1>
+
+                          <!-- Question Settings -->
+                          <div class="govuk-form-group">
+                            {% if currentPage.questions.length < 2 %} <fieldset class="govuk-fieldset"
+                              aria-describedby="contact-hint">
+                              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                <h1 class="govuk-fieldset__heading">
+                                  Page heading and guidance text
+                                </h1>
+                              </legend>
+                              <div id="contact-hint" class="govuk-hint">
+                                Add a page heading if you have multiple questions on a page or add guidance to help
+                                users answer questions
+                              </div>
+                              {% endif %}
+
+                              {% if currentPage.questions.length > 1 %}
+                              {# When more than one question exists, simply show the inputs automatically #}
+                              <div id="conditional-guidance">
+                                <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+                                  {{ govukInput({
+                                  label: {
+                                  text: commonTerms.form_editor.page_settings.heading,
+                                  classes: "govuk-label govuk-label--m govuk-!-margin-top-0"
+                                  },
+                                  hint: {
+                                  text: "Page headings should be a statement and not a question. For example, 'Passport
+                                  information'",
+                                  id: "page-heading-input-hint"
+                                  },
+                                  id: "page-heading-input",
+                                  name: "pageHeading",
+                                  value: currentPage.pageHeading or "",
+                                  type: "text",
+                                  attributes: { 'aria-describedby': "page-heading-input-hint" }
+                                  }) }}
+
+                                  {{ govukTextarea({
+                                  label: { text: commonTerms.form_editor.guidance.title, classes: "govuk-label
+                                  govuk-label--m" },
+                                  hint: { text: commonTerms.form_editor.guidance.hint },
+                                  id: "guidance-text",
+                                  name: "guidanceText",
+                                  rows: 5,
+                                  value: currentPage.guidanceTextarea or "",
+                                  attributes: { 'aria-describedby': "guidance-textarea-hint", 'data-preview-target':
+                                  '#guidance-paragraph' }
+                                  }) }}
+                                </div>
+                              </div>
+                              {% else %}
+                              {# When only one question exists, show a checkbox that toggles the guidance fields #}
+                              <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                  <input class="govuk-checkboxes__input" id="guidance" name="guidance" type="checkbox"
+                                    value="guidance" data-aria-controls="conditional-guidance" {% if
+                                    currentPage.hasGuidance %}checked{% endif %}>
+                                  <label class="govuk-label govuk-checkboxes__label" for="guidance">
+                                    Add a page heading, guidance or both
+                                  </label>
+                                </div>
+
+                                <!-- Conditional Guidance Section -->
+                                <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                  id="conditional-guidance">
+                                  <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+                                    {# Build an inputOptions object to pass to govukInput #}
+                                    {% set inputOptions = {
+                                    label: {
+                                    text: commonTerms.form_editor.page_settings.heading,
+                                    classes: "govuk-label govuk-label--m govuk-!-margin-top-0"
+                                    },
+                                    hint: {
+                                    text: "Page headings should be a statement and not a question. For example,
+                                    'Passport information'",
+                                    id: "page-heading-input-hint"
+                                    },
+                                    id: "page-heading-input",
+                                    name: "pageHeading",
+                                    type: "text",
+                                    value: currentPage.pageHeading or "", attributes: { 'aria-describedby':
+                                    "page-heading-input-hint" }
+                                    } %}
+
+
+                                    {{ govukInput(inputOptions) }}
+
+                                    {{ govukTextarea({
+                                    label: { text: commonTerms.form_editor.guidance.title, classes: "govuk-label
+                                    govuk-label--m" },
+                                    hint: { text: commonTerms.form_editor.guidance.hint },
+                                    id: "guidance-text",
+                                    name: "guidanceText",
+                                    rows: 5,
+                                    value: currentPage.guidanceTextarea or "",
+                                    attributes: { 'aria-describedby':
+                                    "guidance-textarea-hint", 'data-preview-target':
+                                    '#guidance-paragraph' }
+                                    }) }}
+                                  </div>
+                                </div>
+                              </div>
+                              {% endif %}
+
+                              {# Close the fieldset only if it was opened (i.e. when one question exists) #}
+                              {% if currentPage.questions.length == 1 %}
+                              </fieldset>
+                              {% endif %}
+                          </div>
+
+
+
+                          <div class="govuk-!-margin-top-6">
+                            <div class="govuk-form-group">
+                              <fieldset class="govuk-fieldset" aria-describedby="multiple-responses-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                  <h1 class="govuk-fieldset__heading">
+                                    Multiple responses
+                                  </h1>
+                                </legend>
+                                <div id="multiple-responses-hint" class="govuk-hint">
+                                  For scenarios where users need to give multiple responses to the same question(s)
+                                </div>
+                                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                  <!-- Add a hidden field for a default value -->
+                                  <input type="hidden" name="allowMultipleResponses" value="false">
+                                  <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="allow-multiple-responses"
+                                      name="allowMultipleResponses" type="checkbox" value="true"
+                                      aria-controls="responses-settings" aria-expanded="false" {% if
+                                      currentPage.allowMultipleResponses %}checked{% endif %}>
+                                    <label class="govuk-label govuk-checkboxes__label" for="allow-multiple-responses">
+                                      Allow multiple responses to questions on this page
+                                    </label>
+                                  </div>
+                                  <!-- Conditional Response Settings Section -->
+                                  <!-- Conditional settings -->
+                                  <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                    id="responses-settings">
+                                    <div class="govuk-form-group">
+                                      <fieldset class="govuk-fieldset" role="group"
+                                        aria-describedby="response-range-hint">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend">
+                                          <h1 class="govuk-fieldset__heading">
+                                            Set the minimum and maximum times a user can answer questions
+                                          </h1>
+                                        </legend>
+                                        <div id="response-range-hint" class="govuk-hint">
+                                          The range must be between 2 and 25
+                                        </div>
+                                        <div class="govuk-date-input" id="response-range">
+                                          <div class="govuk-date-input__item">
+                                            <div class="govuk-form-group">
+                                              <label class="govuk-label govuk-date-input__label"
+                                                for="min-response-count">Min</label>
+                                              <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                                id="min-response-count" name="minResponseCount" type="text"
+                                                inputmode="numeric">
+                                            </div>
+                                          </div>
+                                          <div class="govuk-date-input__item">
+                                            <div class="govuk-form-group">
+                                              <label class="govuk-label govuk-date-input__label"
+                                                for="max-response-count">Max</label>
+                                              <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                                id="max-response-count" name="maxResponseCount" type="text"
+                                                inputmode="numeric">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </fieldset>
+                                    </div>
+
+                                    <!-- Set Name Input for the response group -->
+                                    {{ govukInput({
+                                    label: {
+                                    text: commonTerms.form_editor.page_settings.question_set_name,
+                                    classes: "govuk-label",
+                                    isPageHeading: true
+                                    },
+                                    hint: {
+                                    text: "Use a word to describe what these questions are asking about. For example,
+                                    'cow', 'pet'. This will be
+                                    used to categorize the answers, for example 'cow 1', 'cow 2'"
+                                    },
+                                    id: "question-set-name",
+                                    name: "questionSetName",
+                                    value: currentPage.questionSetName or ""
+                                    }) }}
+                                  </div>
+                                </div>
+                              </fieldset>
+                            </div>
+                          </div>
+
+
+                          <div class="govuk-button-group govuk-!-margin-top-6">
+                            <button class="govuk-button" type="submit" name="saveChanges">
+                              {{ commonTerms.form_editor.common.save }}
+                            </button>
+
+
+
+                        </form>
+
+
+
+                        <a href="#tab-one" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                          data-module="govuk-skip-link">
+                          Skip to page preview
+                        </a>
+                      </div>
+
+                      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+
+                      <h1 class="govuk-heading-l">
+                        Page conditions
+                      </h1>
+
+                      <p class="govuk-body">
+                        Control whether this page is shown to users based on their answer to a previous question
+                      </p>
+
+                      {% if currentPage.conditions and currentPage.conditions.length > 0 %}
+                      <div class="govuk-inset-text">
+                        <h2 class="govuk-heading-m">Current conditions</h2>
+                        <ul class="govuk-list">
+                          {% for condition in currentPage.conditions %}
+                          <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                            <svg style="min-width: 24px; margin-right: 10px;" width="24" height="24" viewBox="0 0 24 24"
+                              fill="none" stroke="#00703c" stroke-width="2">
+                              <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            {% set cleanText = condition.text | replace(" (radios)", "") %}
+                            {{ cleanText }}
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                      {% else %}
+                      <div class="govuk-inset-text">
+                        <p class="govuk-body">No conditions have been added to this page yet.</p>
+                      </div>
+                      {% endif %}
+
+                      {% from "govuk/components/button/macro.njk" import govukButton %}
+
+                      {{ govukButton({
+                      text: commonTerms.form_editor.page_settings.manage_conditions,
+                      href: "/form-editor/conditions/" + currentPage.pageId
+                      }) }}
+
+                    </div>
+                  </div>
+              </div>
+              </dd>
+          </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column for Preview -->
+    <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+      style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+      <!-- Before content -->
+      <div id="before-content" style="background-color: #cce2d8;">
+        <p class="govuk-body-s" style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+          Preview
+        </p>
+      </div>
+
+      <div style="margin-top: 60px!important;">
+        {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+
+        <div class="govuk-tabs" data-module="govuk-tabs">
+          <h2 class="govuk-tabs__title">Contents</h2>
+          <ul class="govuk-tabs__list">
+            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+              <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+            </li>
+            {% if currentPage.questions.length == 1 %}
+            <li class="govuk-tabs__list-item">
+              <a class="govuk-tabs__tab" href="#tab-two">Error messages</a>
+            </li>
+            {% endif %}
+          </ul>
+
+          <div class="govuk-tabs__panel" id="tab-one">
+            <!-- Page Preview Content -->
+            <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+              <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                Preview this page in a new tab
+              </a>
+            </p>
+
+            <div id="heading-container">
+              <!-- Set Name Preview Caption -->
+              <!-- The dynamic caption that is toggled by JS -->
+              <span id="dynamic-caption" class="govuk-caption-xl" style="display: none;">
+                {{ currentPage.questionSetName | capitalize }} 1
+              </span>
+
+              <h1 class="govuk-heading-xl"
+                style="word-wrap: break-word; white-space: normal; overflow-wrap: break-word;" id="dynamic-heading">
+                {{ currentPage.pageHeading }}
+              </h1>
+            </div>
+
+            <!-- Guidance Paragraph -->
+            <p class="govuk-body" style="word-wrap: break-word; white-space: normal; overflow-wrap: break-word;"
+              id="guidance-paragraph">
+              {{ currentPage.guidanceTextarea }} </p>
+
+
+
+            <div id="preview-container">
+              <div id="preview-items">
+                {% if currentPage.questions.length > 0 %}
+                {% for question in currentPage.questions %}
+                <div class="preview-item" data-id="question-{{ question.questionId }}">
+                  {% set previewTemplate = '/form-editor/question-type/questions/previews/' %}
+
+                  {% if question.type == 'phone' %}
+                  {% set previewTemplate = previewTemplate ~ 'phone-preview.html' %}
+
+                  {% elseif question.type == 'address' %}
+                  {% set previewTemplate = previewTemplate ~ 'address-preview.html' %}
+
+                  {% elseif question.type == 'email' %}
+                  {% set previewTemplate = previewTemplate ~ 'email-preview.html' %}
+
+                  {% elseif question.type == 'file' %}
+                  {% set previewTemplate = previewTemplate ~ 'fileupload-preview.html' %}
+
+                  {% elseif question.type == 'text' %}
+                  {% if question.subType == 'short-answer-nf' %}
+                  {% set previewTemplate = previewTemplate ~ 'shorttext-preview.html' %}
+                  {% elseif question.subType == 'long-answer' %}
+                  {% set previewTemplate = previewTemplate ~ 'textarea-preview.html' %}
+                  {% elseif question.subType == 'numbers' %}
+                  {% set previewTemplate = previewTemplate ~ 'numbers-preview.html' %}
+                  {% else %}
+                  {% set previewTemplate = previewTemplate ~ 'text-preview.html' %}
+                  {% endif %}
+
+                  {% elseif question.type == 'date' %}
+                  {% if question.subType == 'day-month-year' %}
+                  {% set previewTemplate = previewTemplate ~ 'date-preview.html' %}
+                  {% elseif question.subType == 'month-year' %}
+                  {% set previewTemplate = previewTemplate ~ 'date-mmyy-preview.html' %}
+                  {% else %}
+                  {% set previewTemplate = previewTemplate ~ 'date-preview.html' %}
+                  {% endif %}
+
+                  {% elseif question.type == "list" %}
+                  {% if question.subType == "yes-no" %}
+                  {% set previewTemplate = previewTemplate ~ "yesno-preview.html" %}
+                  {% elseif question.subType == "checkboxes" %}
+                  {% set previewTemplate = previewTemplate ~ "checkboxes-preview.html" %}
+                  {% elseif question.subType == "radios" %}
+                  {% set previewTemplate = previewTemplate ~ "radios-preview.html" %}
+                  {% elseif question.subType == "select" %}
+                  {% set previewTemplate = previewTemplate ~ "autocomplete-preview.html" %}
+                  {% else %}
+                  {% set previewTemplate = previewTemplate ~ "list-preview.html" %}
+                  {% endif %}
+
+                  {% else %}
+                  {% set previewTemplate = previewTemplate ~ 'default-preview.html' %}
+                  {% endif %}
+
+                  {% include previewTemplate %}
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No questions available to preview.</p>
+                {% endif %}
+              </div>
+            </div>
+
+
+            <!-- "Add Another" Button -->
+            <button class="govuk-button" id="add-another-set-button" style="display: none;">
+              Add another
+              <span style="text-transform: lowercase;">
+                {{ currentPage.questionSetName or '[question set name]' }}
+              </span>
+            </button>
+
+            <a href="#overviewquestions" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+              data-module="govuk-skip-link">
+              Skip to page overview
+            </a>
+          </div>
+          {#
+        </div> #}
+
+        {% if currentPage.questions.length == 1 %}
+        <div class="govuk-tabs__panel" id="tab-two">
+          <!-- Error Messages Content -->
+          <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+            <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+              Preview error messages in a new tab
+            </a>
+          </p>
+
+          <div class="govuk-error-summary" data-disable-auto-focus="true" data-disable-auto-focus="true">
+            <h2 class="govuk-error-summary__title">There is a problem</h2>
+            <ul class="govuk-list govuk-error-summary__list">
+              <li>
+                <a id="empty-input-error-shorttext" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  Enter
+                  <span id="error-dynamic-text" style="text-transform: lowercase;">
+                    [Short description]
+                  </span>
+                </a>
+              </li>
+              <h3 class="govuk-heading-s">If you set answer limits:</h3>
+              <li>
+                <a id="too-long-input-error-shorttext" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  <span id="error-dynamic-text-long">[Short description]</span>
+                  must be
+                  <span id="max-length">[max length]</span> characters or less
+                </a>
+              </li>
+              <li>
+                <a id="too-short-input-error-shorttext" class="govuk-error-message">
+                  <span class="govuk-visually-hidden">Error:</span>
+                  <span id="error-dynamic-text-short">[Short description]</span>
+                  must be
+                  <span id="min-length">[min length]</span> characters or more
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#overviewquestions" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+            data-module="govuk-skip-link">
+            Skip to page overview
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- Include SortableJS Library -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const questionsContainer = document.getElementById("question-list");
+    const reorderQuestionsButton = document.getElementById("reorder-questions-button");
+
+    let editMode = false;
+
+    reorderQuestionsButton.addEventListener("click", () => {
+      editMode = !editMode;
+
+      if (editMode) {
+        reorderQuestionsButton.textContent = "Save changes";
+        reorderQuestionsButton.classList.remove("govuk-button--inverse");
+      } else {
+        reorderQuestionsButton.textContent = "Re-order questions";
+        reorderQuestionsButton.classList.add("govuk-button--inverse");
+        clearAllPreviewHighlights();
+      }
+
+      if (sortableInstance) {
+        sortableInstance.option("disabled", !editMode);
+      }
+
+      if (editMode) {
+        questionsContainer.classList.add("edit-mode");
+
+        document.querySelectorAll(".hide-in-reorder-mode").forEach(el => {
+          el.style.display = "none";
+        });
+
+        setTimeout(() => {
+          const firstItem = questionsContainer.querySelector(".question-item");
+          if (firstItem) {
+            const firstActionButton = firstItem.querySelector(".question-actions button, .question-actions a");
+            if (firstActionButton) {
+              firstActionButton.focus();
+            }
+          }
+        }, 100);
+
+      } else {
+        questionsContainer.classList.remove("edit-mode");
+
+        document.querySelectorAll(".hide-in-reorder-mode").forEach(el => {
+          el.style.display = "";
+        });
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const questionsContainer = document.getElementById("question-list");
+    const previewContainer = document.getElementById("preview-items");
+    const reorderQuestionsButton = document.getElementById("reorder-questions-button");
+
+    let sortableInstance;
+    let editMode = false;
+
+    // ======================
+    //  1. Initialize Sortable
+    // ======================
+    function initializeSortable() {
+      sortableInstance = new Sortable(questionsContainer, {
+        animation: 150,
+        draggable: ".question-item",
+        ghostClass: "sortable-ghost",
+        disabled: true, // Disabled until edit mode is active
+
+        onStart: function (evt) {
+          clearAllPreviewHighlights();
+          const draggedItem = evt.item;
+          const dataId = draggedItem.getAttribute("data-id");
+          const previewItem = previewContainer.querySelector(`.preview-item[data-id="${dataId}"]`);
+          if (previewItem) {
+            previewItem.classList.add("highlight");
+          }
+          draggedItem.classList.add("sortable-chosen");
+        },
+
+        onEnd: function (evt) {
+          updateQuestionNumbering();
+          synchronizePreview();
+
+          const droppedItem = evt.item;
+          const dataId = droppedItem.getAttribute("data-id");
+          const previewItem = previewContainer.querySelector(`.preview-item[data-id="${dataId}"]`);
+          if (previewItem) {
+            previewItem.classList.add("highlight");
+          }
+
+          // Keep focus on the item that was just dropped
+          setTimeout(() => {
+            const actionButton = droppedItem.querySelector(".question-actions button, .question-actions a");
+            if (actionButton) {
+              actionButton.focus();
+            } else {
+              droppedItem.focus();
+            }
+          }, 100);
+
+          droppedItem.addEventListener("blur", function removeChosenClass() {
+            droppedItem.classList.remove("sortable-chosen", "sortable-ghost");
+            droppedItem.removeEventListener("blur", removeChosenClass);
+          });
+
+          manageUpDownButtons();            // ← NEW
+        },
+      });
+    }
+
+    function enableClickHighlighting() {
+      document.querySelectorAll(".question-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          clearAllPreviewHighlights();
+          const dataId = item.getAttribute("data-id");
+          const previewItem = previewContainer.querySelector(`.preview-item[data-id="${dataId}"]`);
+          if (previewItem) {
+            previewItem.classList.add("highlight");
+          }
+        });
+      });
+    }
+
+    function clearAllPreviewHighlights() {
+      document.querySelectorAll(".preview-item").forEach((preview) => {
+        preview.classList.remove("highlight");
+      });
+    }
+
+    // =========================
+    //  2. Toggling "edit mode"
+    // =========================
+    reorderQuestionsButton.addEventListener("click", () => {
+      editMode = !editMode;
+      reorderQuestionsButton.textContent = editMode ? "Save changes" : "Re-order questions";
+
+      if (sortableInstance) {
+        sortableInstance.option("disabled", !editMode);
+      }
+
+      if (editMode) {
+        questionsContainer.classList.add("edit-mode");
+        document.querySelectorAll(".hide-in-reorder-mode").forEach(el => el.style.display = "none");
+
+        // ✅ Ensure the first item is refocused every time reorder mode is entered
+        setTimeout(() => {
+          const firstItem = questionsContainer.querySelector(".question-item");
+          if (firstItem) {
+            const firstActionButton = firstItem.querySelector(".question-actions button, .question-actions a");
+            if (firstActionButton) {
+              firstActionButton.focus();
+            }
+          }
+        }, 100);
+
+      } else {
+        questionsContainer.classList.remove("edit-mode");
+        // Show "Add next question" and "Delete page" buttons again
+        document.querySelectorAll(".hide-in-reorder-mode").forEach(el => {
+          el.style.display = "";
+        });
+
+        clearAllPreviewHighlights();
+      }
+    });
+
+    // ===============================
+    //  3. Move Up / Move Down / Delete
+    // ===============================
+    function attachMoveButtons() {
+      const questionItems = Array.from(document.querySelectorAll(".question-item"));
+      questionItems.forEach((item) => {
+        const upButton = item.querySelector(".move-up");
+        const downButton = item.querySelector(".move-down");
+        const deleteButton = item.querySelector(".delete");
+
+        if (upButton) {
+          upButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (!editMode) return;
+            moveUp(item);
+          });
+        }
+
+        if (downButton) {
+          downButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (!editMode) return;
+            moveDown(item);
+          });
+        }
+
+        if (deleteButton) {
+          deleteButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (!editMode) return;
+            alert("Delete clicked (not implemented).");
+          });
+        }
+      });
+    }
+
+    function moveUp(item) {
+      const prev = item.previousElementSibling;
+      if (prev) {
+        questionsContainer.insertBefore(item, prev);
+        updateSessionWithNewOrder();
+        synchronizePreview();
+        updateQuestionNumbering();
+        manageUpDownButtons();     // keeps first/last button logic up-to-date
+        showSuccessBanner();
+
+        setTimeout(() => {
+          const actionButtons = item.querySelectorAll(".question-actions button, .question-actions a");
+          if (!item.previousElementSibling) {
+            const downButton = item.querySelector(".move-down");
+            if (downButton) downButton.focus();
+          } else if (actionButtons.length) {
+            actionButtons[0].focus();
+          }
+        }, 0);
+      }
+    }
+
+    function moveDown(item) {
+      const next = item.nextElementSibling;
+      if (next) {
+        questionsContainer.insertBefore(next, item);
+        updateSessionWithNewOrder();
+        synchronizePreview();
+        updateQuestionNumbering();
+        manageUpDownButtons();
+        showSuccessBanner();
+
+        setTimeout(() => {
+          const actionButtons = item.querySelectorAll(".question-actions button, .question-actions a");
+          if (!item.nextElementSibling) {
+            const upButton = item.querySelector(".move-up");
+            if (upButton) upButton.focus();
+          } else if (actionButtons.length) {
+            actionButtons[0].focus();
+          }
+        }, 0);
+      }
+    }
+
+    // ================================
+    //  4. Sync the preview's order
+    // ================================
+    function synchronizePreview() {
+      const orderedItems = Array.from(questionsContainer.children);
+      const previewItems = Array.from(previewContainer.children);
+
+      const previewMap = {};
+      previewItems.forEach((preview) => {
+        const dataId = preview.getAttribute("data-id");
+        previewMap[dataId] = preview;
+      });
+
+      orderedItems.forEach((li) => {
+        const questionId = li.getAttribute("data-id");
+        const matchingPreview = previewMap[questionId];
+        if (matchingPreview) {
+          previewContainer.appendChild(matchingPreview);
+        }
+      });
+    }
+
+    // =================================
+    //  5. Update session or server
+    // =================================
+    function updateSessionWithNewOrder() {
+      const orderedIds = Array.from(questionsContainer.children).map((item) =>
+        item.getAttribute("data-id")
+      );
+      fetch("/update-question-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderedIds }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log("Updated session order:", data))
+        .catch((error) => console.error("Error updating session:", error));
+    }
+
+    // ================================
+    //  6. Show success banner
+    // ================================
+    function showSuccessBanner() {
+      const successBanner = document.createElement("div");
+      successBanner.innerHTML = `
+      <div class="govuk-notification-banner govuk-notification-banner--success" role="alert">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title">Success</h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <p>The list of questions and preview have been updated.</p>
+        </div>
+      </div>
+    `;
+      document.querySelector(".govuk-grid-column-full").prepend(successBanner);
+      setTimeout(() => successBanner.remove(), 3000);
+    }
+
+    // =======================================
+    //  7. Updating question numbering
+    // =======================================
+    function updateQuestionNumbering() {
+      const items = questionsContainer.querySelectorAll(".question-item");
+      items.forEach((item, index) => {
+        const questionKey = item.querySelector(".govuk-summary-list__key");
+        if (questionKey) {
+          questionKey.textContent = `Question ${index + 1}`;
+        }
+      });
+    }
+
+    // ===================================
+    //  8. Show/hide "Up" & "Down" buttons
+    // ===================================
+    function manageUpDownButtons() {
+      const items = questionsContainer.querySelectorAll(".question-item");
+
+      items.forEach((item, index) => {
+        const upBtn = item.querySelector(".move-up");
+        const downBtn = item.querySelector(".move-down");
+        if (!upBtn || !downBtn) return;
+
+        // Only show the Down button for the first item
+        if (index === 0) {
+          upBtn.style.display = "none";
+          downBtn.style.display = "inline-block";
+        }
+        // Only show the Up button for the last item
+        else if (index === items.length - 1) {
+          upBtn.style.display = "inline-block";
+          downBtn.style.display = "none";
+        }
+        // All middle items get both
+        else {
+          upBtn.style.display = "inline-block";
+          downBtn.style.display = "inline-block";
+        }
+      });
+    }
+
+    // =========================
+    //  9. Focus highlight logic
+    // =========================
+    function attachFocusListeners() {
+      const questionItems = document.querySelectorAll(".question-item");
+      questionItems.forEach((item) => {
+        const dataId = item.getAttribute("data-id");
+        const previewItem = document.querySelector(`.preview-item[data-id="${dataId}"]`);
+        if (!previewItem) return;
+
+        const actionButtons = item.querySelectorAll(".move-up, .move-down, .delete");
+        actionButtons.forEach((btn) => {
+          btn.addEventListener("focus", () => previewItem.classList.add("highlight"));
+          btn.addEventListener("blur", () => previewItem.classList.remove("highlight"));
+        });
+      });
+    }
+
+    // Initialize everything
+    initializeSortable();
+    enableClickHighlighting();
+    attachMoveButtons();
+    attachFocusListeners();
+  });
+</script>
+
+<!-- Keep this inside the script section -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get references to your elements
+    const checkbox = document.getElementById('guidance');               // "Add a page heading, guidance or both"
+    const guidanceSection = document.getElementById('conditional-guidance');
+    const pageHeadingInput = document.getElementById('page-heading-input');
+    const dynamicHeading = document.getElementById('dynamic-heading');
+    const guidanceTextarea = document.getElementById('guidance-text');
+    const guidanceParagraph = document.getElementById('guidance-paragraph');
+
+    // Placeholders
+    const headingPlaceholder = "Page heading";
+    const guidancePlaceholder = "Guidance text";
+
+    //-------------------------------------------------
+    // 1) Set the preview heading/guidance on page load
+    //-------------------------------------------------
+    function initializePreview() {
+      // If the user has typed a heading, display it
+      // else if the box is checked, show the placeholder
+      // else blank
+      if (checkbox && checkbox.checked) {
+        if (pageHeadingInput.value.trim()) {
+          dynamicHeading.textContent = pageHeadingInput.value.trim();
+        } else {
+          dynamicHeading.textContent = headingPlaceholder;
+        }
+      } else {
+        // For multiple questions or if box un-checked
+        // you might want to show heading if more than 1 question
+        // or nothing if the box is not checked. Example below:
+
+        // Example: If not using multiple questions logic:
+        dynamicHeading.textContent = pageHeadingInput.value.trim() || "";
+      }
+
+      // Guidance:
+      if (guidanceTextarea.value.trim()) {
+        guidanceParagraph.textContent = guidanceTextarea.value.trim();
+      } else {
+        // Either set it to the placeholder or blank
+        guidanceParagraph.textContent = "";
+      }
+    }
+
+    //-------------------------------------------------
+    // 2) toggleVisibility() for "Add heading/guidance" checkbox
+    //-------------------------------------------------
+    function toggleVisibility() {
+      if (!checkbox) return; // In multiple-questions scenario, no checkbox
+
+      if (checkbox.checked) {
+        // Show the conditional fields
+        guidanceSection.classList.remove('govuk-checkboxes__conditional--hidden');
+
+        // If no heading typed, show the placeholder
+        if (!pageHeadingInput.value.trim()) {
+          dynamicHeading.textContent = headingPlaceholder;
+        }
+      } else {
+        // Hide the fields
+        guidanceSection.classList.add('govuk-checkboxes__conditional--hidden');
+
+        // If no heading typed, remove from preview
+        if (!pageHeadingInput.value.trim()) {
+          dynamicHeading.textContent = "";
+        }
+        // If they *have* typed text but uncheck the box,
+        // you might want to remove it or keep it. Currently we keep it.
+      }
+    }
+
+    //-------------------------------------------------
+    // 3) Input listeners: Live updates to preview
+    //-------------------------------------------------
+    function attachInputListeners() {
+      pageHeadingInput.addEventListener('input', () => {
+        if (pageHeadingInput.value.trim()) {
+          dynamicHeading.textContent = pageHeadingInput.value;
+        } else if (checkbox && checkbox.checked) {
+          // If box is checked but user empties the field
+          dynamicHeading.textContent = headingPlaceholder;
+        } else {
+          // If box is not checked or user is not typed anything
+          dynamicHeading.textContent = "";
+        }
+      });
+
+      guidanceTextarea.addEventListener('input', () => {
+        if (guidanceTextarea.value.trim()) {
+          guidanceParagraph.textContent = guidanceTextarea.value;
+        } else {
+          // If removed all text, fallback to empty
+          guidanceParagraph.textContent = "";
+        }
+      });
+    }
+
+    //-------------------------------------------------
+    // 4) (Optional) Focus highlight logic
+    //-------------------------------------------------
+    function applyHighlightOnFocus(inputElement, targetElement) {
+      if (!inputElement || !targetElement) return;
+      inputElement.addEventListener('focus', () => {
+        targetElement.classList.add('highlight');
+      });
+      inputElement.addEventListener('blur', () => {
+        targetElement.classList.remove('highlight');
+      });
+      if (document.activeElement === inputElement) {
+        targetElement.classList.add('highlight');
+      }
+    }
+
+    //-------------------------------------------------
+    // 5) Run everything now
+    //-------------------------------------------------
+    initializePreview();                 // Show placeholders if needed
+    attachInputListeners();             // Keep preview updated
+
+    if (checkbox) {
+      checkbox.addEventListener('change', toggleVisibility);
+      toggleVisibility();               // Show/hide fields on load
+    } else {
+      // If multiple questions exist, might always show the guidance section
+      guidanceSection.classList.remove('govuk-checkboxes__conditional--hidden');
+    }
+
+    // optional highlight
+    applyHighlightOnFocus(pageHeadingInput, dynamicHeading);
+    applyHighlightOnFocus(guidanceTextarea, guidanceParagraph);
+  });
+</script>
+
+<script>
+  // Multiple responses toggling
+  document.addEventListener("DOMContentLoaded", function () {
+    const domElements = {
+      multipleResponsesCheckbox: document.getElementById("allow-multiple-responses"),
+      responsesSettings: document.getElementById("responses-settings"),
+      setNameInput: document.getElementById("question-set-name"),
+      dynamicCaption: document.getElementById("dynamic-caption"),
+      addAnotherSetButton: document.getElementById("add-another-set-button"),
+      addAnotherSetText: document.querySelector("#add-another-set-button span")
+    };
+
+    initQuestionSetNameLogic();
+
+    // -------------------------------------
+    // 1. Initialize everything on page load
+    // -------------------------------------
+    function initQuestionSetNameLogic() {
+      // Show/hide the conditional block if the box is checked
+      toggleVisibility();
+      // Update the caption & button text using the current input (or placeholders)
+      updateDynamicCaptionAndButton();
+
+      // Attach event listeners
+      domElements.multipleResponsesCheckbox.addEventListener("change", toggleVisibility);
+      domElements.setNameInput.addEventListener("input", updateDynamicCaptionAndButton);
+
+      // Optional: highlight the caption & button on focus
+      domElements.setNameInput.addEventListener("focus", applyHighlight);
+      domElements.setNameInput.addEventListener("blur", removeHighlight);
+    }
+
+    // -----------------------------------------
+    // 2. Show/hide the "responsesSettings" block
+    // -----------------------------------------
+    function toggleVisibility() {
+      const isChecked = domElements.multipleResponsesCheckbox.checked;
+      // Show or hide the conditional block
+      domElements.responsesSettings.classList.toggle("govuk-checkboxes__conditional--hidden", !isChecked);
+      // Show/hide the dynamic caption and "Add another" button
+      domElements.dynamicCaption.style.display = isChecked ? "inline-block" : "none";
+      domElements.addAnotherSetButton.style.display = isChecked ? "inline-block" : "none";
+
+      // Re-run update logic if user just checked the box
+      if (isChecked) {
+        updateDynamicCaptionAndButton();
+      }
+    }
+
+    // ------------------------------------------------
+    // 3. Update the caption & "Add another" button text
+    // ------------------------------------------------
+    function updateDynamicCaptionAndButton() {
+      // If the user typed something, display that. Otherwise show placeholders.
+      const setName = domElements.setNameInput.value.trim();
+      if (setName) {
+        // For example: "Cow 1"
+        domElements.dynamicCaption.textContent = `${setName} 1`;
+        // "Add another cow"
+        domElements.addAnotherSetText.textContent = setName;
+      } else {
+        // If nothing typed, fallback to placeholders
+        domElements.dynamicCaption.textContent = "Question set name";
+        domElements.addAnotherSetText.textContent = "[question set name]";
+      }
+    }
+
+    // ---------------------------------------
+    // 4. Optional highlight logic on focus/blur
+    // ---------------------------------------
+    function applyHighlight() {
+      domElements.dynamicCaption.classList.add("highlight");
+      domElements.addAnotherSetText.classList.add("highlight");
+    }
+
+    function removeHighlight() {
+      domElements.dynamicCaption.classList.remove("highlight");
+      domElements.addAnotherSetText.classList.remove("highlight");
+    }
+  });
+</script>
+<style>
+  /* Default state: Show elements */
+  .hide-in-reorder-mode {
+    display: inline-block;
+  }
+
+  /* Hide elements when edit mode (reorder mode) is active */
+  .edit-mode .hide-in-reorder-mode {
+    display: none !important;
+  }
+
+
+  /* Hide certain elements in edit mode */
+  .hide-when-edit-mode {
+    display: inline-block;
+  }
+
+  .edit-mode .hide-when-edit-mode {
+    display: none !important;
+  }
+
+  /* ========== NORMAL (non-edit) MODE ========== */
+
+  /* By default, minimal styling so the summary list remains normal */
+
+
+  /* .question-actions are hidden by default */
+  .question-actions {
+    display: none;
+  }
+
+  /* ========== EDIT MODE STYLING ========== */
+
+  /* In edit mode, .question-item transforms into a "gem-c-like" flex container */
+  .edit-mode .question-item {
+    display: flex !important;
+    /* Switch to flex layout */
+    align-items: center;
+    /* Vertically center content vs actions */
+    margin-bottom: 15px;
+    /* Some spacing below each item */
+    border-left: 5px solid #008938;
+    /* Green border on the left */
+    outline: 1px solid #b1b4b6;
+    /* Grey outline like gem-c */
+    padding: 15px;
+    /* White background area */
+    background-color: #fff;
+    transition: background-color 0.2s ease;
+  }
+
+  /* Show the .question-actions in edit mode, stacked on the right */
+  .edit-mode .question-actions {
+    display: flex !important;
+    /* Reveal them in edit mode */
+    flex-direction: column;
+    /* Stack Up/Down/Delete vertically */
+    margin-left: 15px;
+    /* Gap between question content & actions */
+  }
+
+  /* Extra styling for the Up/Down buttons in .question-actions */
+  .edit-mode .question-actions .govuk-button {
+    display: block;
+    /* stack each button */
+    margin-bottom: 10px;
+    /* spacing between Up/Down/Delete? */
+    width: 100%;
+    /* if you want them to fill the column width */
+  }
+
+  /* If "Delete" is a link: keep it inline or block */
+  .edit-mode .question-actions .delete {
+    margin-bottom: 0;
+  }
+
+  /* ========== HOVER & DRAG STATES IN EDIT MODE ========== */
+
+  /* Hover State in Edit Mode */
+  .edit-mode .question-item:hover {
+    background-color: #f0f0f0 !important;
+    cursor: move;
+    /* indicates we can drag */
+  }
+
+  /* Dragging item (sortable-chosen) */
+  .edit-mode .question-item.sortable-chosen {
+    background-color: #e5f5ff !important;
+    outline: 4px solid #ffdd00;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Ghost (placeholder) while dragging */
+  .edit-mode .sortable-ghost {
+    opacity: 0.4;
+    background-color: #ddd;
+    border: 1px dashed #999;
+  }
+
+  /* ========== PREVIEW HIGHLIGHTING ========== */
+
+  /* When we focus a question's actions, highlight the matching preview item */
+  .preview-item.highlight {
+    background-color: #ffe5cc;
+    border-bottom: 2px solid #ffb266;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  /* Additional "highlight" usage if you like */
+  .highlight {
+    background-color: #ffe5cc;
+    color: black !important;
+    border-bottom: 2px solid #ffb266;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  /* ========== LAYOUT FOR PREVIEW CONTAINER, ETC. ========== */
+
+  #before-content {
+    position: absolute;
+    top: 0;
+    left: 10 !important;
+    right: 0;
+    width: 100%;
+    padding: 10px !important;
+    box-sizing: border-box;
+    z-index: 1;
+    border-bottom: 1px solid #008938;
+    padding-left: 10px;
+  }
+
+  #second-container {
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  #second-container>* {
+    padding-left: 0px;
+    z-index: 2;
+  }
+
+  /* Apply the forced border only if the row is the only child */
+  .govuk-summary-list__row--force-border:only-child {
+    border-bottom: 1px solid #b1b4b6 !important;
+  }
+
+  /* Remove the forced border if the row is NOT the only child */
+  .govuk-summary-list__row--force-border:not(:only-child) {
+    border-bottom: none !important;
+  }
+</style>
+{% endblock %}

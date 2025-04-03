@@ -1,0 +1,35 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+    {{ commonTerms.form_editor.overview.sections.next_steps.title }}
+</h2>
+
+{% set nextStepsHtml %}
+<a href="/form-overview/support/next-steps.html" class="govuk-link govuk-link--no-visited-state">
+    {{ commonTerms.form_editor.overview.sections.next_steps.add }}
+</a>
+{% endset %}
+
+{% set nextStepsActions = {
+items: [
+{
+href: "/form-overview/support/next-steps.html",
+text: commonTerms.form_editor.overview.sections.next_steps.change,
+visuallyHiddenText: commonTerms.form_editor.overview.sections.next_steps.label
+}
+]
+} if form.nextSteps else null %}
+
+{{ govukSummaryList({
+rows: [
+{
+key: {
+text: commonTerms.form_editor.overview.sections.next_steps.label
+},
+value: {
+html: form.nextSteps or nextStepsHtml
+},
+actions: nextStepsActions
+}
+]
+}) }}

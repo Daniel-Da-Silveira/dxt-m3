@@ -1,0 +1,189 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Lead organisation for this form" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms designer",
+serviceName: "",
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/form-designer-mvp2/onboarding/sign-out-confirmation",
+navigationItems: [{
+href: "#",
+text: "Library",
+id: "library"
+}]
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ govukBackLink({
+text: commonTerms.form_editor.create_new_form.organisation.back,
+href: "javascript:window.history.back()"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+<!-- <main class="govuk-main-wrapper" id="main-content" role="main"> -->
+<form class="form" action="/create-new-form/organisation-name" method="post">
+
+  {{ govukRadios({
+  name: "organisationName",
+  fieldset: {
+  legend: {
+  text: commonTerms.form_editor.create_new_form.organisation.title,
+  isPageHeading: true,
+  classes: "govuk-fieldset__legend--l"
+  }
+  },
+  items: [
+  {
+  value: "apha",
+  text: "Animal and Plant Health Agency - APHA"
+  },
+
+  {
+  value: "cefas",
+  text: "Centre for Environment, Fisheries and Aquaculture Science - Cefas"
+  },
+
+  {
+  value: "defra",
+  text: "Defra"
+  },
+
+  {
+  value: "ea",
+  text: "Environment Agency"
+  },
+
+  {
+  value: "fc",
+  text: "Forestry Commission"
+  },
+
+  {
+  value: "mmo",
+  text: "Marine Management Organisation - MMO"
+  },
+
+
+  {
+  value: "ne",
+  text: "Natural England"
+  },
+
+  {
+  value: "rpa",
+  text: "Rural Payments Agency - RPA"
+  },
+
+  {
+  value: "vmd",
+  text: "Veterinary Medicines Directorate - VMD"
+  }
+
+  ]
+  }) }}
+
+  {{ govukButton({
+  text: commonTerms.form_editor.create_new_form.organisation.continue
+  }) }}
+
+</form>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      View error messages
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    <p class="govuk-body-l">Missing selection</p>
+
+    {{ govukErrorSummary({
+    titleText: commonTerms.form_editor.create_new_form.organisation.error.title,
+    errorList: [
+    {
+    text: commonTerms.form_editor.create_new_form.organisation.error.missing_selection,
+    href: "#"
+    }
+    ]
+    }) }}
+    {{ govukRadios({
+    name: "organisationName",
+    fieldset: {
+    legend: {
+    text: commonTerms.form_editor.create_new_form.organisation.title,
+    isPageHeading: true,
+    classes: "govuk-fieldset__legend--l"
+    }
+    },
+    items: [
+    {
+    value: "apha",
+    text: "Animal and Plant Health Agency - APHA"
+    },
+
+    {
+    value: "cefas",
+    text: "Centre for Environment, Fisheries and Aquaculture Science - Cefas"
+    },
+
+    {
+    value: "defra",
+    text: "Defra"
+    },
+
+    {
+    value: "ea",
+    text: "Environment Agency"
+    },
+
+    {
+    value: "fc",
+    text: "Forestry Commission"
+    },
+
+    {
+    value: "mmo",
+    text: "Marine Management Organisation - MMO"
+    },
+
+
+    {
+    value: "ne",
+    text: "Natural England"
+    },
+
+    {
+    value: "rpa",
+    text: "Rural Payments Agency - RPA"
+    },
+
+    {
+    value: "vmd",
+    text: "Veterinary Medicines Directorate - VMD"
+    }
+    ],
+    errorMessage: {
+    text: commonTerms.form_editor.create_new_form.organisation.error.missing_selection
+    }
+    }) }}
+
+  </div>
+</details>
+
+{% endblock %}

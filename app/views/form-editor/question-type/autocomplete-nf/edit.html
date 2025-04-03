@@ -1,0 +1,887 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName %}Edit page {{ pageNumber }}: question {{ questionNumber }} - {{ form.name }}{% endset %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{# #}
+
+{% block header %}
+
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/redesigntest/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text:
+    commonTerms.form_editor.information_type.back, href: "/redesigntest/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {{ form.name }}
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#question-1-information-type">Question {{ questionNumber }}</a>
+                            </li>
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+                        <span class="govuk-caption-l">Page {{ pageNumber }}</span>
+                        <h2 class="govuk-heading-l">Edit question {{ questionNumber }}</h2>
+
+                        <form id="s" action="/question-configuration-save" method="post">
+
+                          {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                          {{ govukInput({
+                          label: {
+                          text: "Question",
+                          classes: "govuk-label--m",
+                          isPageHeading: false
+                          },
+                          id: "question-label-input-autocomplete",
+                          value: data['question-label-input-autocomplete'],
+                          name: "questionLabelInputAutocomplete",
+                          oninput: "updateHeading()"
+                          }) }}
+
+                          <!-- Hint Text Area -->
+                          {{ govukTextarea({
+                          label: {
+                          text: "Hint text (optional)",
+                          classes: "govuk-label--m"
+                          },
+                          id: "hint-text-input-autocomplete",
+                          name: "hintTextInputAutocomplete",
+                          value: data['hint-text-input-autocomplete'],
+                          classes: "govuk-textarea",
+                          rows: 3,
+                          describedBy: "hint-text-input-autocomplete"
+                          }) }}
+
+                          <!-- List config -->
+                          <div class="govuk-form-group">
+                            <h2 class="govuk-heading-m moj-add-another__heading" tabindex="-1">{{
+                              commonTerms.form_editor.information_type.list.autocomplete.options.title }}</h2>
+
+                            <!-- autocomplete -->
+                            <div class="govuk-form-group">
+                              <label class="govuk-label govuk-label--s" for="csv-input">
+                                {{ commonTerms.form_editor.information_type.list.autocomplete.options.hint }}
+                              </label>
+                              <div class="govuk-hint">{{
+                                commonTerms.form_editor.information_type.list.autocomplete.options.value_hint }}</div>
+                              <textarea id="csv-input" class="govuk-textarea" rows="10"></textarea>
+                              <div id="options-entry"></div>
+                            </div>
+
+                            <!-- Make Optional Checkbox -->
+                            <div class="govuk-form-group">
+                              <div class="govuk-checkboxes--small">
+                                <div class="govuk-checkboxes__item">
+                                  <input class="govuk-checkboxes__input" type="checkbox" id="makeOptional"
+                                    name="makeOptional" value="{{ data['optional-label-q1'] }}">
+                                  <label class="govuk-label govuk-checkboxes__label" for="makeOptional">
+                                    {{ commonTerms.form_editor.information_type.list.autocomplete.options.optional }}
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+
+
+                            <!-- Error Message Input -->
+                            {{ govukInput({
+                            label: {
+                            text: commonTerms.form_editor.information_type.list.autocomplete.options.error.label,
+                            classes: "govuk-label--m",
+                            isPageHeading: false
+                            },
+                            hint: {
+                            text: commonTerms.form_editor.information_type.list.autocomplete.options.error.hint
+                            },
+                            id: "error-message-input-autocomplete",
+                            name: "errorMessageInputAutocomplete"
+                            }) }}
+
+
+
+
+                            <div id="summary-container">
+                              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                              <!-- The dynamic summary list will be populated here -->
+                              <h2 class="govuk-heading-m">Question settings</h2>
+
+                              {{ govukSummaryList({
+                              classes: "govuk-summary-list govuk-section-break govuk-section-break--visible
+                              govuk-!-margin-bottom-6",
+                              rows: [
+                              {
+                              key: { text: "Type of information" },
+                              value: { html: "List: autocomplete" },
+                              actions: {
+                              items: [
+                              {
+                              href: "/redesigntest/templates/1-question/information-type.html",
+                              text: "Change",
+                              visuallyHiddenText: "name"
+                              }
+                              ]
+                              }
+                              }
+                              ]
+                              }) }}
+                            </div>
+                            <div class="moj-button-action">
+                              {{ govukButton({
+                              text: 'Save and continue',
+                              type: 'submit'
+                              }) }}
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Right Column for Preview -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+        <!-- Before content -->
+        <div id="before-content" style=" background-color:  #cce2d8;">
+          <p class="govuk-body-s" style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px;
+          text-align: center;"> Previews
+          </p>
+        </div>
+        <div style="margin-top: 60px;">
+          {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+
+          <div class="govuk-tabs" data-module="govuk-tabs">
+            <h2 class="govuk-tabs__title">
+              Contents
+            </h2>
+            <ul class="govuk-tabs__list">
+              <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+              </li>
+              <li class="govuk-tabs__list-item">
+                <a class="govuk-tabs__tab" href="#tab-two">Error messages</a>
+              </li>
+            </ul>
+
+            <div class="govuk-tabs__panel" id="tab-one">
+              <!-- Page Preview Content -->
+
+
+              <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview this page in a new tab
+                </a>
+              </p>
+
+              <!-- Include the preview template -->
+              {% include "/form-editor/question-type/autocomplete-nf/previews/edit.html" %}
+
+              <a href="#edit-page" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to edit page
+              </a>
+            </div>
+
+
+            <div class="govuk-tabs__panel" id="tab-two">
+              <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview error messages in a new tab
+                </a>
+              </p>
+              <!-- Error Messages Content -->
+              <div class="govuk-error-summary" data-disable-auto-focus="true">
+                <h2 class="govuk-error-summary__title">There is a problem</h2>
+                <ul class="govuk-list govuk-error-summary__list">
+                  <!-- List of errors -->
+                  <li><a id="empty-input-error-shorttext" class="govuk-error-message">Select <span
+                        id="error-dynamic-text">[short
+                        description]</span></a></li>
+                </ul>
+              </div>
+              <a href="#error-message-input-shorttext" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to edit short description
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+
+        <script src="https://unpkg.com/accessible-autocomplete@2.0.4/dist/accessible-autocomplete.min.js"></script>
+
+        <script>
+
+
+          // Process CSV and create an array of options
+          function processCSV(csvText) {
+            return csvText
+              .split("\n")  // Split by newline to get individual items
+              .map((option) => option.trim())  // Trim any extra spaces
+              .filter((option) => option.length > 0)  // Filter out any empty values
+              .map((option) => {
+                // Check if the option contains a colon character
+                if (option.includes(":")) {
+                  const [label, value] = option.split(":").map((part) => part.trim());
+                  return { label, value };  // Return an object with label and value
+                } else {
+                  return { label: option, value: option };  // If no colon, use the same value for label and value
+                }
+              });
+          }
+
+          // Initialise or reinitialise the autocomplete
+          function initialiseAutocomplete(options) {
+            // Clear the container before reinitialising
+            const container = document.querySelector("#autocomplete-container");
+            container.innerHTML = "";
+
+            // Initialise the accessible autocomplete with the given options
+            accessibleAutocomplete({
+              element: container,
+              id: "autocomplete-input",  // To match it to the label
+              source: options.map(option => option.label),  // Use only the labels for the autocomplete
+              displayMenu: "inline",  // Optional: Modify how the menu displays, if needed
+            });
+
+            // Update a status label with the green check emoji and the count of items added
+            const label = document.getElementById("options-entry");
+            if (options.length > 0) {
+              label.innerHTML = `Autocomplete updated  - ${options.length} items added`;
+            } else {
+              label.innerHTML = "";  // Reset label if no options
+            }
+          }
+
+          // initialise the autocomplete with an empty array initially
+          initialiseAutocomplete([]);
+
+          // Event listener for changes in the textarea
+          document.getElementById("csv-input").addEventListener("input", function () {
+            // Get CSV input from textarea
+            const csvInput = this.value;
+
+            // Process the CSV and get options
+            const options = processCSV(csvInput);
+
+            // Reinitialise the autocomplete with the new options
+            initialiseAutocomplete(options);
+          });
+
+          // help text
+
+          document.addEventListener("DOMContentLoaded", function () {
+            // Select all elements with the `data-help` attribute
+            const helpTextElements = document.querySelectorAll('[data-help]');
+
+            helpTextElements.forEach(function (element) {
+              // Create popover element
+              const popover = document.createElement('div');
+              popover.classList.add('popover');
+
+              // Get the help text and insert it as plain text (no HTML parsing)
+              const helpText = element.getAttribute('data-help');
+              const textNode = document.createTextNode(helpText);  // Create a text node with the content
+              popover.appendChild(textNode); // Append the text node to the popover
+
+              // Add accessibility roles and attributes
+              popover.setAttribute('role', 'tooltip');
+              popover.setAttribute('aria-hidden', 'true');  // Initially hidden
+
+              // Link the element to the popover for screen readers
+              element.setAttribute('aria-describedby', `popover-${Date.now()}`);
+              popover.setAttribute('id', `popover-${Date.now()}`);
+
+              document.body.appendChild(popover);
+
+              // Toggle popover visibility on click
+              element.addEventListener('click', function (event) {
+                const isPopoverVisible = popover.style.display === 'block';
+                popover.style.display = isPopoverVisible ? 'none' : 'block';
+                popover.setAttribute('aria-hidden', isPopoverVisible ? 'true' : 'false');
+
+                // Position popover near the text
+                const rect = element.getBoundingClientRect();
+                popover.style.left = `${rect.left + rect.width / 2 - popover.offsetWidth / 2}px`;
+                popover.style.top = `${rect.bottom + window.scrollY + 5}px`;
+
+                // Prevent click event from closing popover immediately
+                event.stopPropagation();
+              });
+            });
+
+            // Hide the popover when clicking anywhere else on the page
+            document.addEventListener('click', function (event) {
+              const openPopover = document.querySelector('.popover[aria-hidden="false"]');
+              if (openPopover && !openPopover.contains(event.target) && !event.target.closest('[data-help]')) {
+                openPopover.style.display = 'none';
+                openPopover.setAttribute('aria-hidden', 'true');
+              }
+            });
+          });
+
+        </script>
+
+      </div>
+    </div>
+
+    <!-- Include SortableJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+
+    <!-- Updated Scripts -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const domElements = {
+          questionLabelInputAutocomplete: document.getElementById('question-label-input-autocomplete'),
+          hintTextInputAutocomplete: document.getElementById('hint-text-input-autocomplete'),
+          hintTextOutput: document.getElementById('listPreview-hint'),
+          makeOptionalCheckbox: document.getElementById('makeOptional'),
+
+          editOptionsButton: document.getElementById('edit-options-button'),
+          optionsContainer: document.getElementById('options-container'),
+          radioList: document.getElementById('radio-list')
+        };
+
+        let optionIndex = 0; // Start at 0 for the first option
+
+        // initialise event listeners
+        initialiseEventListeners();
+
+        function initialiseEventListeners() {
+          // Update question label and apply highlight to legend
+          if (domElements.questionLabelInputAutocomplete) {
+            domElements.questionLabelInputAutocomplete.addEventListener('input', updateQuestionLabel);
+            applyHighlightOnFocus(domElements.questionLabelInputAutocomplete, getQuestionLabelLegend());
+          }
+
+          // initialise the reordering functionality
+          initialiseOptionsReordering();
+        }
+
+        // Dynamically fetch the legend element to ensure it exists
+        function getQuestionLabelLegend() {
+          return document.querySelector('legend[for="question-label-input-autocomplete"]');
+        }
+
+        function updateQuestionLabel() {
+          const questionLabelLegend = getQuestionLabelLegend();
+          if (questionLabelLegend) {
+            const suffix = domElements.makeOptionalCheckbox && domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+            questionLabelLegend.textContent = (domElements.questionLabelInputAutocomplete.value || 'Question') + suffix;
+          }
+        }
+
+
+        function applyHighlightOnFocus(inputElement, targetElement) {
+          if (inputElement && targetElement) {
+            inputElement.addEventListener('focus', () => targetElement.classList.add('highlight'));
+            inputElement.addEventListener('blur', () => targetElement.classList.remove('highlight'));
+            if (document.activeElement === inputElement) targetElement.classList.add('highlight');
+          }
+        }
+
+        function initialiseOptionsReordering() {
+          let editMode = false;
+
+          function createOptionItem(index, labelValue = '') {
+            const li = document.createElement('li');
+            li.className = 'gem-c-reorderable-list__item';
+            li.setAttribute('draggable', 'true');
+            li.setAttribute('data-index', index);
+
+            li.innerHTML = `
+        <div class="gem-c-reorderable-list__wrapper">
+          <div class="gem-c-reorderable-list__content">
+            <p class="gem-c-reorderable-list__title">
+              <span class="option-number">Option ${index + 1}:</span>
+              <input class="govuk-input option-label-input" type="text" id="option-${index}-label" name="options[${index}][label]" value="${labelValue}" placeholder="Option label">
+            </p>
+          </div>
+          <div class="gem-c-reorderable-list__actions">
+            <button class="gem-c-button govuk-button govuk-button--secondary js-reorderable-list-up" type="button">Up</button>
+            <button class="gem-c-button govuk-button govuk-button--secondary js-reorderable-list-down" type="button">Down</button>
+            <button class="gem-c-button govuk-button govuk-button--warning js-remove-option" type="button">Remove</button>
+          </div>
+        </div>
+      `;
+            return li;
+          }
+
+          function updateOptionNumbers() {
+            const items = document.querySelectorAll('#options-container .gem-c-reorderable-list__item');
+            const previewContainer = document.getElementById('radio-list');
+            previewContainer.innerHTML = '';
+
+            items.forEach((item, index) => {
+              const optionNumberSpan = item.querySelector('.option-number');
+              optionNumberSpan.textContent = `Option ${index + 1}:`;
+              item.setAttribute('data-index', index);
+              const input = item.querySelector('.option-label-input');
+              input.setAttribute('name', `options[${index}][label]`);
+              input.id = `option-${index}-label`;
+
+              const labelValue = input.value || `Option ${index + 1}`;
+              addOptionToPreview(index, labelValue);
+              applyHighlightOnFocusForOptions(input.id, `listPreview-option${index}`);
+            });
+
+            optionIndex = items.length;
+            manageUpDownButtons();
+          }
+
+          function manageUpDownButtons() {
+            const items = document.querySelectorAll('#options-container .gem-c-reorderable-list__item');
+            items.forEach((item, index) => {
+              const upButton = item.querySelector('.js-reorderable-list-up');
+              const downButton = item.querySelector('.js-reorderable-list-down');
+              upButton.style.display = index === 0 ? 'none' : 'inline-block';
+              downButton.style.display = index === items.length - 1 ? 'none' : 'inline-block';
+            });
+          }
+
+          let sortableInstance;
+          function initialiseSortable() {
+            sortableInstance = new Sortable(document.getElementById('options-container'), {
+              animation: 150,
+              handle: ".gem-c-reorderable-list__wrapper",
+              draggable: ".gem-c-reorderable-list__item",
+              ghostClass: "sortable-ghost",
+              onEnd: updateOptionNumbers,
+              disabled: true
+            });
+          }
+
+          function addOptionEventListeners(item) {
+            const upButton = item.querySelector('.js-reorderable-list-up');
+            const downButton = item.querySelector('.js-reorderable-list-down');
+            const removeButton = item.querySelector('.js-remove-option');
+
+            upButton.addEventListener('click', () => {
+              const prevItem = item.previousElementSibling;
+              if (prevItem) item.parentNode.insertBefore(item, prevItem);
+              updateOptionNumbers();
+            });
+
+            downButton.addEventListener('click', () => {
+              const nextItem = item.nextElementSibling;
+              if (nextItem) item.parentNode.insertBefore(nextItem, item);
+              updateOptionNumbers();
+            });
+
+            removeButton.addEventListener('click', () => {
+              item.parentNode.removeChild(item);
+              updateOptionNumbers();
+            });
+
+            const inputElement = item.querySelector('.option-label-input');
+            inputElement.addEventListener('input', () => {
+              updateOptionPreview(item.getAttribute('data-index'), inputElement.value);
+            });
+
+            applyHighlightOnFocusForOptions(inputElement.id, `listPreview-option${item.getAttribute('data-index')}`);
+          }
+
+          function updateOptionPreview(index, value) {
+            const previewOptionLabel = document.querySelector(`label[for="listPreview-option${index}"]`);
+            if (previewOptionLabel) {
+              previewOptionLabel.textContent = value || `Option ${parseInt(index) + 1}`;
+              previewOptionLabel.classList.add('highlight');
+              setTimeout(() => previewOptionLabel.classList.remove('highlight'), 300);
+            }
+          }
+
+          function addOptionToPreview(index, labelValue) {
+            const radioList = document.getElementById('radio-list');
+            const newRadioHTML = `
+        <div class="govuk-radios__item" id="preview-option-${index}">
+          <input class="govuk-radios__input" id="listPreview-option${index}" name="listPreview" type="radio" value="option${index}">
+          <label class="govuk-label govuk-radios__label" for="listPreview-option${index}">${labelValue || `Option ${parseInt(index) + 1}`}</label>
+        </div>
+      `;
+            radioList.insertAdjacentHTML('beforeend', newRadioHTML);
+          }
+
+          document.getElementById('add-option-button').addEventListener('click', () => {
+            const newItem = createOptionItem(optionIndex);
+            document.getElementById('options-container').appendChild(newItem);
+            addOptionEventListeners(newItem);
+            addOptionToPreview(optionIndex, newItem.querySelector('.option-label-input').value);
+            optionIndex++;
+            manageUpDownButtons();
+          });
+
+          const initialItem = createOptionItem(optionIndex);
+          document.getElementById('options-container').appendChild(initialItem);
+          addOptionEventListeners(initialItem);
+          addOptionToPreview(optionIndex, '');
+          optionIndex++;
+
+          initialiseSortable();
+
+          domElements.editOptionsButton.addEventListener('click', () => {
+            editMode = !editMode;
+            domElements.editOptionsButton.textContent = editMode ? 'Save changes' : 'Re-order list';
+            document.querySelectorAll('.gem-c-reorderable-list__actions').forEach(actions => {
+              actions.style.display = editMode ? 'flex' : 'none';
+            });
+            sortableInstance.option('disabled', !editMode);
+            manageUpDownButtons();
+          });
+        }
+
+        function applyHighlightOnFocusForOptions(inputElementId, radioElementId) {
+          const inputElement = document.getElementById(inputElementId);
+          const radioLabel = document.querySelector(`label[for="${radioElementId}"]`);
+          if (inputElement && radioLabel) {
+            inputElement.addEventListener('focus', () => radioLabel.classList.add('highlight'));
+            inputElement.addEventListener('blur', () => radioLabel.classList.remove('highlight'));
+            if (document.activeElement === inputElement) radioLabel.classList.add('highlight');
+          }
+        }
+      });
+
+
+    </script>
+
+    {# TESTING #}
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const domElements = {
+          questionInput: document.getElementById('question-label-input-autocomplete'),
+          questionOutput: document.getElementById('question-label-legend-q1'),
+
+          hintTextInputAutocomplete: document.getElementById('hint-text-input-autocomplete'),
+          hintTextOutput: document.getElementById('listPreview-hint'),
+
+          pageHeadingInputAutocomplete: document.getElementById('page-heading-input-autocomplete'),
+          pageHeadingOutput: document.getElementById('dynamic-heading-radios'),
+
+          guidanceTextareaAutocomplete: document.getElementById('guidance-textarea-autocomplete'),
+          guidanceOutput: document.getElementById('guidance-paragraph')
+        };
+
+        // initialise event listeners
+        initialiseEventListeners();
+
+        function initialiseEventListeners() {
+          const inputListeners = [
+            { element: domElements.questionInput, event: 'input', handler: updateQuestion },
+            { element: domElements.hintTextInputAutocomplete, event: 'input', handler: updateHintText },
+            { element: domElements.pageHeadingInputAutocomplete, event: 'input', handler: updatePageHeading },
+            { element: domElements.guidanceTextareaAutocomplete, event: 'input', handler: updateGuidanceText }
+          ];
+
+          inputListeners.forEach(bindListener);
+
+          // Add focus and blur listeners for placeholders
+          domElements.hintTextInputAutocomplete.addEventListener('focus', showPlaceholderHint);
+          domElements.hintTextInputAutocomplete.addEventListener('blur', clearPlaceholderHint);
+
+          domElements.pageHeadingInputAutocomplete.addEventListener('focus', showPlaceholderHeading);
+          domElements.pageHeadingInputAutocomplete.addEventListener('blur', clearPlaceholderHeading);
+
+          domElements.guidanceTextareaAutocomplete.addEventListener('focus', showPlaceholderGuidance);
+          domElements.guidanceTextareaAutocomplete.addEventListener('blur', clearPlaceholderGuidance);
+
+          // Apply focus/blur highlighting
+          applyHighlightOnFocus('question-label-input-autocomplete', 'question-label-legend-q1');
+          applyHighlightOnFocus('hint-text-input-autocomplete', 'listPreview-hint');
+          applyHighlightOnFocus('page-heading-input-autocomplete', 'dynamic-heading-radios');
+          applyHighlightOnFocus('guidance-textarea-autocomplete', 'guidance-paragraph');
+
+          // initialise content on page load
+          updateQuestion();
+          updateHintText();
+          updatePageHeading();
+          updateGuidanceText();
+        }
+
+        function bindListener({ element, event, handler }) {
+          if (element) {
+            element.addEventListener(event, handler);
+          } else {
+            console.error(`Element not found for event listener: ${event}`);
+          }
+        }
+
+        // Update the question label
+        function updateQuestion() {
+          setTextContent(domElements.questionOutput, domElements.questionInput.value.trim(), 'Question');
+        }
+
+        // Update hint text
+        function updateHintText() {
+          setTextContent(domElements.hintTextOutput, domElements.hintTextInputAutocomplete.value.trim());
+        }
+
+        // Update page heading
+        function updatePageHeading() {
+          setTextContent(domElements.pageHeadingOutput, domElements.pageHeadingInputAutocomplete.value.trim(), '');
+        }
+
+        // Update guidance text
+        function updateGuidanceText() {
+          setTextContent(domElements.guidanceOutput, domElements.guidanceTextareaAutocomplete.value.trim(), '');
+        }
+
+        // Show placeholder for hint text only on focus
+        function showPlaceholderHint() {
+          if (!domElements.hintTextInputAutocomplete.value.trim()) {
+            domElements.hintTextOutput.textContent = 'Hint text';
+          }
+        }
+
+        // Clear placeholder for hint text on blur
+        function clearPlaceholderHint() {
+          if (!domElements.hintTextInputAutocomplete.value.trim()) {
+            domElements.hintTextOutput.textContent = '';
+          }
+        }
+
+        // Show placeholder for page heading only on focus
+        function showPlaceholderHeading() {
+          if (!domElements.pageHeadingInputAutocomplete.value.trim()) {
+            domElements.pageHeadingOutput.textContent = 'Page heading';
+          }
+        }
+
+        // Clear placeholder for page heading on blur
+        function clearPlaceholderHeading() {
+          if (!domElements.pageHeadingInputAutocomplete.value.trim()) {
+            domElements.pageHeadingOutput.textContent = '';
+          }
+        }
+
+        // Show placeholder for guidance text only on focus
+        function showPlaceholderGuidance() {
+          if (!domElements.guidanceTextareaAutocomplete.value.trim()) {
+            domElements.guidanceOutput.textContent = 'Guidance text';
+          }
+        }
+
+        // Clear placeholder for guidance text on blur
+        function clearPlaceholderGuidance() {
+          if (!domElements.guidanceTextareaAutocomplete.value.trim()) {
+            domElements.guidanceOutput.textContent = '';
+          }
+        }
+
+        // Utility function to set text content with default
+        function setTextContent(element, value, defaultValue = '') {
+          element.textContent = value || defaultValue;
+        }
+
+        // Function to apply focus/blur highlights to inputs and their corresponding targets
+        function applyHighlightOnFocus(inputElementId, targetElementId) {
+          const inputElement = document.getElementById(inputElementId);
+          const targetElement = document.getElementById(targetElementId);
+
+          if (inputElement && targetElement) {
+            inputElement.addEventListener('focus', () => targetElement.classList.add('highlight'));
+            inputElement.addEventListener('blur', () => targetElement.classList.remove('highlight'));
+
+            // If input is already focused, apply the highlight immediately
+            if (document.activeElement === inputElement) {
+              targetElement.classList.add('highlight');
+            }
+          } else {
+            console.error(`Input or target element not found: ${inputElementId}, ${targetElementId}`);
+          }
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const errorMessageInputAutocomplete = document.getElementById('error-message-input-autocomplete');
+        const errorMessagePreviewSummary = document.getElementById('error-message-preview-summary');
+        const errorDynamicTextSpan = document.getElementById('error-dynamic-text-autocomplete');
+
+        if (errorMessageInputAutocomplete && errorMessagePreviewSummary && errorDynamicTextSpan) {
+          // Open details and highlight the span when input is focused
+          errorMessageInputAutocomplete.addEventListener('focus', function () {
+            errorMessagePreviewSummary.setAttribute('open', 'open');
+            errorDynamicTextSpan.classList.add('highlight');
+          });
+
+          // Close details and remove highlight when input loses focus
+          errorMessageInputAutocomplete.addEventListener('blur', function () {
+            errorMessagePreviewSummary.removeAttribute('open');
+            errorDynamicTextSpan.classList.remove('highlight');
+          });
+
+          // Update the span content dynamically based on user input
+          errorMessageInputAutocomplete.addEventListener('input', function () {
+            const userInput = errorMessageInputAutocomplete.value.trim();
+            errorDynamicTextSpan.textContent = userInput || '[short description]';
+          });
+
+          // Initial state: if input is already focused, open details and highlight span
+          if (document.activeElement === errorMessageInputAutocomplete) {
+            errorMessagePreviewSummary.setAttribute('open', 'open');
+            errorDynamicTextSpan.classList.add('highlight');
+          }
+        } else {
+          console.error('Required DOM elements not found.');
+        }
+      });
+    </script>
+
+
+
+
+
+    <style>
+      /* Styles for the reorderable list */
+      .gem-c-reorderable-list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .gem-c-reorderable-list__item {
+        margin-bottom: 15px;
+        border-left: 5px solid #008938;
+        outline: 1px solid #b1b4b6;
+        padding: 15px;
+        background-color: #fff;
+      }
+
+      .gem-c-reorderable-list__wrapper {
+        display: flex;
+        align-items: center;
+      }
+
+      .gem-c-reorderable-list__content {
+        flex-grow: 1;
+      }
+
+      .gem-c-reorderable-list__actions {
+        display: none;
+        /* Hide by default */
+        flex-direction: column;
+        margin-left: 15px;
+      }
+
+      .gem-c-reorderable-list__actions .govuk-button {
+        margin-bottom: 5px;
+      }
+
+      .sortable-ghost {
+        opacity: 0.4;
+      }
+
+      .sortable-chosen {
+        background-color: #e5f5ff;
+      }
+
+      .highlight {
+        background-color: #ffe5cc;
+        border-bottom: 2px solid #ffb266;
+        color: black;
+      }
+
+      /* Style for hover state of the list item */
+      .gem-c-reorderable-list__item:hover {
+        background-color: #f0f0f0;
+        /* Light grey background on hover */
+
+        /* Change border color on hover */
+        cursor: move;
+        /* Change cursor to pointer on hover */
+      }
+
+      /* Style for the chosen item (when selected) */
+      .gem-c-reorderable-list__item.sortable-chosen {
+        background-color: #e5f5ff;
+        outline: 4px solid #ffdd00;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+      }
+
+      #before-content {
+        position: absolute;
+        top: 0;
+        left: 10 !important;
+        right: 0;
+        width: 100%;
+        padding: 10px !important;
+        box-sizing: border-box;
+        z-index: 1;
+        border-bottom: 1px solid #008938;
+        padding-left: 10px;
+      }
+
+      #second-container {
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #second-container>* {
+        padding-left: 0px;
+        z-index: 2;
+      }
+    </style>
+
+    {% endblock %}

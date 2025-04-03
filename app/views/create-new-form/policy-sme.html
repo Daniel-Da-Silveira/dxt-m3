@@ -1,0 +1,213 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Team details" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [{
+href: "/library.html",
+text: "Forms library",
+id: "overview"
+}],
+activeLinkId: ""
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: commonTerms.form_editor.create_new_form.team_details.back,
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+<!-- <main class="govuk-main-wrapper" id="main-content" role="main"> -->
+<form class="form" action="/create-new-form/policy-sme" method="post">
+
+  {% from "govuk/components/input/macro.njk" import govukInput %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ commonTerms.form_editor.create_new_form.team_details.title }}</h1>
+
+      {{ govukInput({
+      label: {
+      text: commonTerms.form_editor.create_new_form.team_details.team_name.label
+      },
+      hint: {
+      text: commonTerms.form_editor.create_new_form.team_details.team_name.hint
+      },
+      id: "team-name",
+      name: "teamName"
+      }) }}
+
+      {{ govukInput({
+      label: {
+      text: commonTerms.form_editor.create_new_form.team_details.email.label
+      },
+      hint: {
+      text: commonTerms.form_editor.create_new_form.team_details.email.hint
+      },
+      id: "email",
+      name: "email",
+      type: "email",
+      autocomplete: "email",
+      spellcheck: false
+      }) }}
+
+      {{ govukButton({
+      text: commonTerms.form_editor.create_new_form.team_details.save,
+      type: "submit"
+      }) }}
+</form>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      View error messages
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    <p class="govuk-body-l">Missing string</p>
+
+    {{ govukErrorSummary({
+    titleText: commonTerms.form_editor.create_new_form.team_details.error.title,
+    errorList: [
+    {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.error.missing,
+    href: "#"
+    },
+    {
+    text: commonTerms.form_editor.create_new_form.team_details.email.error.missing,
+    href: "#"
+    }
+    ]
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.label
+    },
+    errorMessage: {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.error.missing
+    },
+    hint: {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.hint
+    },
+    id: "team-name",
+    name: "teamName"
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: commonTerms.form_editor.create_new_form.team_details.email.label
+    },
+    errorMessage: {
+    text: commonTerms.form_editor.create_new_form.team_details.email.error.missing
+    },
+    hint: {
+    text: commonTerms.form_editor.create_new_form.team_details.email.hint
+    },
+    id: "email",
+    name: "email",
+    type: "email",
+    autocomplete: "email",
+    spellcheck: false
+    }) }}
+
+    <p class="govuk-body-l">Incorrect email format</p>
+    {{ govukErrorSummary({
+    titleText: commonTerms.form_editor.create_new_form.team_details.error.title,
+    errorList: [
+    {
+    text: commonTerms.form_editor.create_new_form.team_details.email.error.invalid_format,
+    href: "#"
+    }
+    ]
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.label
+    },
+    hint: {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.hint
+    },
+    id: "team-name",
+    name: "teamName"
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: commonTerms.form_editor.create_new_form.team_details.email.label
+    },
+    errorMessage: {
+    text: commonTerms.form_editor.create_new_form.team_details.email.error.invalid_format
+    },
+    hint: {
+    text: commonTerms.form_editor.create_new_form.team_details.email.hint
+    },
+    id: "email",
+    name: "email",
+    type: "email",
+    autocomplete: "email",
+    spellcheck: false
+    }) }}
+
+    <p class="govuk-body-l">100 characters or more for team name</p>
+
+    {{ govukErrorSummary({
+    titleText: commonTerms.form_editor.create_new_form.team_details.error.title,
+    errorList: [
+    {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.error.too_long,
+    href: "#"
+    }
+    ]
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.label
+    },
+    errorMessage: {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.error.too_long
+    },
+    hint: {
+    text: commonTerms.form_editor.create_new_form.team_details.team_name.hint
+    },
+    id: "team-name",
+    name: "teamName"
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: commonTerms.form_editor.create_new_form.team_details.email.label
+    },
+    hint: {
+    text: commonTerms.form_editor.create_new_form.team_details.email.hint
+    },
+    id: "email",
+    name: "email",
+    type: "email",
+    autocomplete: "email",
+    spellcheck: false
+    }) }}
+  </div>
+</details>
+
+{% endblock %}

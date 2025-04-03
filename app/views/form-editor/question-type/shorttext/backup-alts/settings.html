@@ -1,0 +1,371 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit page 1 - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{# #}
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/redesigntest/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/redesigntest/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          <span class="govuk-caption-l" style="color: white">Apply for a county parish holding certificate</span>
+
+          Edit page 2
+        </h1>
+
+        {# <p class="govuk-body" style="color: white">Last saved at <time>5:24pm</time></p> #}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation" aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page" href="#question-1">Page
+                                settings</a>
+                            </li>
+
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+
+
+
+                        <span class="govuk-caption-l">Page 1</span>
+                        <h1 class="govuk-heading-l">Page settings</h1>
+
+                        <form class="form" action="/overview-0-shorttext" method="post">
+
+
+
+                          {% set morethan1Html %}
+                          <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="dob-hint">
+                              <legend class="govuk-fieldset__legend govuk-fieldset__legend">
+                                <h1 class="govuk-fieldset__heading">Set the minimum and maximum times a user can
+                                  answer questions</h1>
+                              </legend>
+                              <div id="dob-hint" class="govuk-hint">The range must be between 2 and 25</div>
+                              <div class="govuk-date-input" id="dob">
+                                <div class="govuk-date-input__item">
+                                  <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="dob-day">Min</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day"
+                                      name="dob-day" type="text" autocomplete="bday-day" inputmode="numeric">
+                                  </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                  <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="dob-month">Max</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                      id="dob-month" name="dob-month" type="text" autocomplete="bday-month"
+                                      inputmode="numeric">
+                                  </div>
+                                </div>
+                              </div>
+                            </fieldset>
+                          </div>
+
+                          {{ govukInput({
+                          label: {
+                          text: "Give this set of questions a name",
+                          classes: "govuk-label",
+                          isPageHeading: true
+                          },
+                          hint: {
+                          text: "Use a word to describe what these questions are asking about. For example, 'cow',
+                          'pet'. This will be used to categorise the answers, for example 'cow 1', cow 2'"
+                          },
+                          id: "set-name-shorttext",
+                          name: "setNameShorttext"
+                          }) }}
+                          {% endset -%}
+
+                          {{ govukRadios({
+                          name: "overview0Shorttext",
+                          fieldset: {
+                          legend: {
+                          text: "How many times can people answer the question on this page?",
+                          isPageHeading: true,
+                          classes: "govuk-fieldset__legend--m"
+                          }
+                          },
+                          hint: {
+                          text: "Turn the questions on this page into a set of questions that users can answer
+                          multiple
+                          times"
+                          },
+                          items: [
+                          {
+                          value: "once",
+                          text: "Once",
+                          id: "once",
+                          conditional: {
+                          html: onceHtml
+                          }
+                          },
+                          {
+                          value: "morethan1",
+                          text: "More than once",
+                          id: "more-than-1",
+                          conditional: {
+                          html: morethan1Html
+                          }
+                          }
+                          ]
+                          }) }}
+
+
+
+                          <div class="govuk-button-group">
+                            {{ govukButton({
+                            text: "Save and continue",
+                            type: "submit",
+                            id: "Save and continue-button"
+                            }) }}
+
+                            <p class="govuk-body">
+                              <a href="#" class="govuk-link govuk-link--no-visited-state">Delete page</a>
+                            </p>
+                          </div>
+
+
+                        </form>
+
+
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column for Additional Content -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container" style="
+          outline: solid 1px #008938;
+          height: 100%;
+          position: sticky;
+          top: 0;
+          padding: 20px;
+          box-shadow: 5px 10px #008938;
+        ">
+        <!-- New HTML content for before element -->
+        <div id="before-content">
+          <p class="govuk-body-s" style="margin-bottom: 0">
+            <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener"
+              target="_blank">Preview this page in a new tab</a>
+          </p>
+        </div>
+
+        <!-- Additional Content Here -->
+        <div class="additional-content">
+
+          <div>
+            <!-- Tag for Preview -->
+            {{ govukTag({ text: "Preview of page 2", classes: "govuk-tag--yellow
+            govuk-!-margin-bottom-2 govuk-!-margin-top-8" }) }}
+            <!-- Form for Preview -->
+            <form>
+              <!-- Dynamic Heading -->
+
+
+              <div id="heading-container">
+                <span id="dynamic-caption" style="display: none;" class="govuk-caption-l">{{ (data['setNameShorttext']
+                  or '') + ' 1' }}</span>
+
+
+
+
+                <h1 class="govuk-heading-l" id="dynamic-heading">{{ data['pageHeading'] or '' }}</h1>
+
+              </div>
+
+              <!-- Guidance Paragraph -->
+              <p class="govuk-body" id="guidance-paragraph">{{ data['guidanceText'] or '' }}</p>
+
+              {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+
+              {{ govukButton({
+              text: "Save and continue",
+              classes: "govuk-button govuk-!-margin-top-3",
+              id: "once-button",
+              disabled: true
+              }) }}
+
+              {{ govukButton({
+              text: "Add another [question set name]",
+              classes: "govuk-button govuk-!-margin-top-3",
+              id: "add-another-set-button",
+              disabled: true,
+              attributes: { style: "display:none;" }
+              }) }}
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const domElements = {
+          moreThanOnceRadio: document.getElementById("more-than-1"),
+          onceRadio: document.getElementById("once"),
+          addAnotherSetButton: document.getElementById("add-another-set-button"),
+          onceButton: document.getElementById("once-button"),
+          setNameShorttext: document.getElementById("set-name-shorttext"),
+          dynamicCaption: document.getElementById("dynamic-caption"),
+        };
+
+        initializeEventListeners();
+
+        function initializeEventListeners() {
+          domElements.moreThanOnceRadio.addEventListener("change", toggleCaptionAndButtons);
+          domElements.onceRadio.addEventListener("change", toggleCaptionAndButtons);
+          domElements.setNameShorttext.addEventListener("focus", onFocusUpdate);
+          domElements.setNameShorttext.addEventListener("input", updateDynamicCaptionAndButton);
+          domElements.setNameShorttext.addEventListener("blur", removeButtonHighlight);
+        }
+
+        function onFocusUpdate() {
+          updateDynamicCaptionAndButton();
+          domElements.dynamicCaption.classList.add("highlight");
+        }
+
+        function updateDynamicCaptionAndButton() {
+          const setNameShorttext = domElements.setNameShorttext.value.trim();
+
+          // Update dynamic caption
+          domElements.dynamicCaption.textContent = setNameShorttext ? `${setNameShorttext} 1` : "Question set name";
+          domElements.dynamicCaption.style.display = "block";
+
+          // Highlight part of 'Add another' button text
+          const highlightedText = `<span class="highlight" style="color: black;">${setNameShorttext || "[question set name]"}</span>`;
+          domElements.addAnotherSetButton.innerHTML = `Add another ${highlightedText}`;
+          domElements.addAnotherSetButton.disabled = !setNameShorttext && domElements.setNameShorttext !== document.activeElement;
+        }
+
+        function removeButtonHighlight() {
+          // Remove highlight from button text on blur
+          const setNameShorttext = domElements.setNameShorttext.value.trim();
+          domElements.addAnotherSetButton.innerHTML = `Add another ${setNameShorttext || "[question set name]"}`;
+          domElements.dynamicCaption.classList.remove("highlight");
+        }
+
+        function toggleCaptionAndButtons() {
+          if (domElements.moreThanOnceRadio.checked) {
+            showCaptionWithPlaceholder();
+            domElements.addAnotherSetButton.style.display = "inline-block";
+            domElements.onceButton.style.display = "none";
+          } else if (domElements.onceRadio.checked) {
+            hideCaptionAndClearInput();
+            domElements.addAnotherSetButton.style.display = "none";
+            domElements.onceButton.style.display = "inline-block";
+          }
+          domElements.onceButton.disabled = true;
+        }
+
+        function showCaptionWithPlaceholder() {
+          domElements.dynamicCaption.textContent = "Question set name";
+          domElements.dynamicCaption.style.display = "block";
+        }
+
+        function hideCaptionAndClearInput() {
+          domElements.dynamicCaption.style.display = "none";
+          domElements.dynamicCaption.classList.remove("highlight");
+        }
+      });
+
+    </script>
+
+
+    <style>
+      .highlight {
+        background-color: #ffe5cc;
+        border-bottom: 2px solid #ffb266;
+        color: black;
+      }
+
+      #before-content {
+        position: absolute;
+        top: 0;
+        left: 10 !important;
+        right: 0;
+        /* Ensure the right side is aligned with the container edge */
+        width: 100%;
+        padding: 10px !important;
+
+        /* Remove padding to avoid affecting the width */
+        box-sizing: border-box;
+        /* Ensure content, padding, and borders are within width */
+        z-index: 1;
+        border-bottom: 1px solid #008938;
+        padding-left: 10px;
+        /* Add padding-left specifically for content */
+      }
+
+      #second-container {
+        padding: 0;
+        /* Ensure no padding on the container itself */
+        box-sizing: border-box;
+        /* Ensure container handles padding/border correctly */
+      }
+
+      #second-container>* {
+        padding-left: 0px;
+        z-index: 2;
+        /* Ensure content is above the #before-content */
+      }
+    </style>
+
+    {% endblock %}
+  </div>
+</div>

@@ -1,0 +1,384 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Guided input – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Kit of parts - Defra Forms Designer" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "Kit of parts",
+containerClasses: containerClasses,
+homepageLink: "/design-system/components.html",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/design-system/prototype-route.html", text: "Prototype", id: "prototype" },
+{ href: "/design-system/components.html", text: "Components", id: "components" },
+{ href: "/design-system/user-journeys/home.html", text: "User journeys", id: "user-journeys" }
+],
+activeLinkId: "components"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+
+        {# {{ govukBackLink({
+        classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+        text: "Back to add and edit pages",
+        href: "/form-editor/listing.html"
+        }) }} #}
+
+        {#
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom: 1px solid white; margin-bottom: 0;" /> #}
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    Component parts for the form editor
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <!-- ============================================= -->
+        <!-- Side Navigation Section -->
+        <!-- ============================================= -->
+        <div class="govuk-grid-column-one-quarter">
+            {% from "side-navigation/macro.njk" import dwpSideNavigation %}
+            <nav>
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Question editor</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-question-editor",
+                selectedItem: "/design-system/editor/guided-input.html",
+                items: [
+                { text: "Configuration panels", href: "/design-system/editor/configuration-panel.html", id:
+                "sn-config-panels"
+                },
+                { text: "Guided input", href: "/design-system/editor/guided-input.html", id: "sn-guided-input" },
+                { text: "Preview panels", href: "/design-system/editor/preview-panel.html", id: "sn-preview-panels" },
+                { text: "Previews in a new tab", href: "/design-system/editor/previews-in-new-tab.html", id:
+                "sn-previews-new-tab"
+                },
+                { text: "Question borders", href: "/design-system/editor/border.html", id: "sn-question-borders" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Information types</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-information-types",
+                selectedItem: "",
+                items: [
+                { text: "Answer limits", href: "/design-system/information-type/answer-limits.html", id:
+                "sn-answer-limits" },
+                { text: "Configuration for each type", href: "/design-system/information-type/configuration-types.html",
+                id:
+                "sn-configuration-types" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Re-ordering</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-reordering",
+                selectedItem: "",
+                items: [
+                { text: "Lists", href: "/design-system/reordering/lists.html", id: "sn-lists" },
+                { text: "Pages", href: "/design-system/reordering/pages.html", id: "sn-pages" },
+                { text: "Questions", href: "/design-system/reordering/questions.html", id: "sn-questions" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Deletion</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-deletion",
+                selectedItem: "",
+                items: [
+                { text: "Pages", href: "/design-system/deletion/pages.html", id: "sn-deletion-pages" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Header</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-header",
+                selectedItem: "",
+                items: [
+                { text: "Mastheads", href: "/design-system/header/masthead.html", id: "sn-mastheads" }
+                ]
+                })
+                }}
+        </div>
+        </nav>
+
+        <!-- ============================================= -->
+        <!-- Main Content Section -->
+        <!-- ============================================= -->
+        <div class="govuk-grid-column-two-thirds">
+            <!-- Section: Information Types -->
+            <span class="govuk-caption-xl">Editor</span>
+            <h1 class="govuk-heading-xl">Guided input</h1>
+
+            <!-- Section: When this component is used -->
+            <h2 class="govuk-heading-l">When this component is used</h2>
+            <p class="govuk-body">Use the guided input component to highlight the content currently being edited in the
+                page preview panel.</p>
+
+            <!-- Section: Editing a Question -->
+            <h2 class="govuk-heading-l">How it works while editing a question</h2>
+
+
+            <p class="govuk-body">
+                When users focus on an input field, the related content in the preview area gets highlighted</p>
+
+            <p class="govuk-body">As users type into the input fields for question labels, hint text, page headings, or
+                guidance text, the corresponding
+                display areas on the page update in real time. This gives users instant feedback, so they know exactly
+                how their content
+                will look.</p>
+
+            <p class="govuk-body">
+                Highlights are added and removed with focus and blur events, giving users a clear indication of which
+                field they are
+                interacting with.</p>
+
+            <p class="govuk-body">
+                This component is similar to <a href="https://design.homeoffice.gov.uk/components?name=Highlight"
+                    class="govuk-link">the Home Office's Highlight component</a>.</p>
+
+
+
+            <h2 class="govuk-heading-l">Example of guided input</h2>
+
+            <div class="govuk-grid-row">
+
+                <!-- Input Section -->
+                <div class="govuk-grid-column-one-half">
+                    <div style="outline: 1px solid grey; padding: 30px; height: 100;">
+                        <h3 class="govuk-heading-m">Type your input</h3>
+
+                        <label class="govuk-label govuk-label--m" for="question-label-input-shorttext">
+                            Question
+                        </label>
+                        <input class="govuk-input" id="question-label-input-shorttext"
+                            name="questionLabelInputShortText" type="text" value="">
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="govuk-grid-column-one-half">
+                    <h3 class="govuk-heading-m">Preview of your input</h3>
+                    <div class="border-left-container-yesno">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper">
+                                <label class="govuk-label govuk-label--l" id="question-label-legend">
+                                    Question
+                                </label>
+                            </h1>
+                            {# <div id="hint-text-output" class="govuk-hint"></div> #}
+                            <input class="govuk-input" id="text-input-field" name="textInputField" type="text"
+                                aria-describedby="hint-text-output">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h2 class="govuk-heading-l govuk-!-margin-top-6">Placeholders</h2>
+            <p class="govuk-body">When users click into an empty input field, and if the preview panel doesn't show
+                that preview by default, a placeholder appears in the
+                preview area to guide them on what to enter: </p>
+            <ul class="govuk-list govuk-list--bullet">
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>"Hint text" for hints</li>
+                    <li>"Page heading" for headings</li>
+                    <li>"Guidance text" for guidance content</li>
+                </ul>
+                </li>
+                <li>this helps users understand the expected content type and format without needing additional
+                    instructions.</li>
+                <li>if users leave the input field empty and click away, the placeholder is removed.</li>
+            </ul>
+
+            <h3 class="govuk-heading-m">Example of guided input with placeholder</h3>
+            <p class="govuk-body">Once the hint text input is in focus, you will see the hint text placeholder appear in
+                the preview.</p>
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-half">
+                    <div style="outline: 1px solid grey; padding: 30px; height: 100;">
+
+                        <h3 class="govuk-heading-m">Type your input</h3>
+
+
+                        {{ govukTextarea({
+                        label: {
+                        text: "Hint text (optional)",
+                        classes: "govuk-label--m"
+                        },
+                        id: "hint-text-input-shorttext",
+                        name: "hintTextInputShorttext",
+                        value: data['hint-text-input-shorttext'],
+                        classes: "govuk-textarea",
+                        rows: 3,
+                        describedBy: "hint-text-input-shorttext"
+                        }) }}
+                    </div>
+                </div>
+
+
+                <div class="govuk-grid-column-one-half">
+
+                    <h3 class="govuk-heading-m">Preview of your input</h3>
+
+
+                    <div class="border-left-container-yesno">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper">
+                                <label class="govuk-label govuk-label--l" id="question-label-legend">
+                                    Question
+                                </label>
+                            </h1>
+                            <div id="hint-text-output-example" class="govuk-hint"></div>
+                            <input class="govuk-input" id="text-input-field" name="textInputField" type="text"
+                                aria-describedby="hint-text-output">
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+            <!-- ============================================= -->
+            <!-- Styles Section -->
+            <!-- ============================================= -->
+            <style>
+                .border-left-container-yesno {
+                    border-left: 10px solid #ffb266;
+                    padding-left: 20px;
+                }
+
+                .govuk-label,
+                .govuk-hint {
+                    word-wrap: break-word;
+                    /* Allows long words to break */
+                    word-break: break-word;
+                    /* Ensures words break at appropriate places */
+                    white-space: normal;
+                    /* Prevents text from staying on a single line */
+                }
+            </style>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // DOM Elements
+                    const domElements = {
+                        questionLabelInput: document.getElementById('question-label-input-shorttext'),
+                        questionLabelLegend: document.getElementById('question-label-legend'),
+                        hintTextInput: document.getElementById('hint-text-input-shorttext'),
+                        hintTextOutput: document.getElementById('hint-text-output'),
+                        hintTextOutputExample: document.getElementById('hint-text-output-example')
+                    };
+
+                    // Initialize event listeners
+                    initializeEventListeners();
+
+                    function initializeEventListeners() {
+                        // Update question label preview
+                        if (domElements.questionLabelInput && domElements.questionLabelLegend) {
+                            domElements.questionLabelInput.addEventListener('input', updateQuestionLabel);
+                            applyHighlightOnFocus(domElements.questionLabelInput, domElements.questionLabelLegend);
+                        }
+
+                        // Update hint text preview and placeholder behavior
+                        if (domElements.hintTextInput) {
+                            domElements.hintTextInput.addEventListener('input', updateHintText);
+                            domElements.hintTextInput.addEventListener('focus', () => {
+                                showPlaceholderHint();
+                                addHighlight(domElements.hintTextOutputExample);
+                            });
+                            domElements.hintTextInput.addEventListener('blur', () => {
+                                clearPlaceholderHint();
+                                removeHighlight(domElements.hintTextOutputExample);
+                            });
+                        }
+                    }
+
+                    function updateQuestionLabel() {
+                        const labelText = domElements.questionLabelInput.value || 'Question';
+                        domElements.questionLabelLegend.textContent = labelText;
+                    }
+
+                    function updateHintText() {
+                        const hintText = domElements.hintTextInput.value || 'Hint text';
+                        updateHintOutputs(hintText);
+                    }
+
+                    function showPlaceholderHint() {
+                        if (!domElements.hintTextInput.value) {
+                            updateHintOutputs('Hint text');
+                        }
+                    }
+
+                    function clearPlaceholderHint() {
+                        if (!domElements.hintTextInput.value) {
+                            updateHintOutputs('');
+                        }
+                    }
+
+                    function updateHintOutputs(hintText) {
+                        if (domElements.hintTextOutput) {
+                            domElements.hintTextOutput.textContent = hintText;
+                        }
+                        if (domElements.hintTextOutputExample) {
+                            domElements.hintTextOutputExample.textContent = hintText;
+                        }
+                    }
+
+                    function addHighlight(targetElement) {
+                        if (targetElement) {
+                            targetElement.classList.add('highlight');
+                        }
+                    }
+
+                    function removeHighlight(targetElement) {
+                        if (targetElement) {
+                            targetElement.classList.remove('highlight');
+                        }
+                    }
+
+                    function applyHighlightOnFocus(inputElement, targetElement) {
+                        if (inputElement && targetElement) {
+                            inputElement.addEventListener('focus', () => addHighlight(targetElement));
+                            inputElement.addEventListener('blur', () => removeHighlight(targetElement));
+
+                            // Apply highlight if the input is already focused
+                            if (document.activeElement === inputElement) {
+                                addHighlight(targetElement);
+                            }
+                        }
+                    }
+                });
+            </script>
+
+            {% endblock %}

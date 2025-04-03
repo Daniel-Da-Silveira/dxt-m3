@@ -1,0 +1,414 @@
+{
+  "back_to": "",
+  "form_editor": {
+    "common": {
+      "back": "Back",
+      "continue": "Save and continue",
+      "save": "Save changes",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Change",
+      "add": "Add",
+      "preview": "Preview this page in a new tab",
+      "skip_to_edit": "Skip to edit page",
+      "previews": "Previews",
+      "contents": "Contents",
+      "page_preview": "Page preview",
+      "error_messages": "Error messages",
+      "preview_error": "Preview error messages in a new tab",
+      "skip_to_short_description": "Skip to edit short description",
+      "there_is_a_problem": "There is a problem",
+      "no_options": "No checkbox options added yet",
+      "add_another_option": "Add another option",
+      "add_option": "Add item",
+      "edit_list": "Re-order",
+      "move_up": "Move option up",
+      "move_down": "Move option down",
+      "remove_option": "Remove option",
+      "option_number": "option number"
+    },
+    "navigation": {
+      "forms_library": "Forms library",
+      "overview": "Overview",
+      "editor": "Editor",
+      "back_to_overview": "Back to overview",
+      "back_to_edit_page": "Back to edit page #",
+      "back_to_add_edit_pages": "Back to add and edit pages"
+    },
+    "conditions": {
+      "title": "Create or use existing conditions",
+      "add_existing": "Add an existing condition",
+      "create_new": "Create a new condition",
+      "select_existing": "Select an existing condition",
+      "add_existing_button": "Add existing condition",
+      "operator": {
+        "label": "Condition type",
+        "select": "Select a condition type",
+        "is": "is",
+        "is_not": "is not"
+      },
+      "name": {
+        "label": "Condition name"
+      }
+    },
+    "preview": {
+      "title": "Previews",
+      "page_preview": "Page preview",
+      "error_messages": "Error messages",
+      "preview_in_new_tab": "Preview this page in a new tab",
+      "preview_error_in_new_tab": "Preview error messages in a new tab",
+      "skip_to_edit": "Skip to edit page",
+      "skip_to_short_description": "Skip to edit short description",
+      "preview_page": "Preview of page"
+    },
+    "guidance": {
+      "title": "Guidance text (optional)",
+      "hint": "Use Markdown to format the content or add hyperlinks"
+    },
+    "page_settings": {
+      "heading": "Page heading",
+      "question_set_name": "Give this set of questions a name",
+      "manage_conditions": "Manage conditions"
+    },
+    "actions": {
+      "accept_and_send": "Accept and send",
+      "send": "Send",
+      "continue": "Continue",
+      "add_another": "Add another"
+    },
+    "filters": {
+      "show_all_pages": "Show all pages",
+      "filter_by_condition": "Filter pages by condition"
+    },
+    "page_type": {
+      "back": "Back to add and edit pages",
+      "title": "What type of page do you want to add?",
+      "question_page": "Question page",
+      "question_page_hint": "A page to hold one or more related questions",
+      "guidance_page": "Guidance page",
+      "guidance_page_hint": "If you need to add guidance without asking a question"
+    },
+    "information_type": {
+      "back": "Back to add and edit pages",
+      "title": "What information do you need from users?",
+      "hint": "You can ask for more information later",
+      "written": {
+        "title": "Written answer",
+        "hint": "A short or long answer as text or number",
+        "types": {
+          "title": "Type of written answer",
+          "short": "Short answer (a single line)",
+          "long": "Long answer (more than a single line)",
+          "numbers": "Numbers only"
+        }
+      },
+      "date": {
+        "title": "Date",
+        "hint": "A day, month and year or month and year only",
+        "types": {
+          "title": "Type of date",
+          "full": "Day, month and year",
+          "partial": "Month and year"
+        }
+      },
+      "address": {
+        "title": "UK address",
+        "hint": "A street address, town or city and postcode"
+      },
+      "phone": {
+        "title": "Phone number",
+        "hint": "A UK phone number, for example, 07700 900 982 or +44 808 157 0192"
+      },
+      "file": {
+        "title": "Supporting evidence",
+        "hint": "A document, for example, DOC, PDF, CSV, Excel",
+        "select_title": "Select the file types you accept",
+        "types": {
+          "documents": "Documents",
+          "images": "Images",
+          "tabular": "Tabular data"
+        },
+        "options": {
+          "documents": {
+            "title": "Document types",
+            "hint": "Select the document types you accept",
+            "types": {
+              "pdf": "PDF",
+              "doc": "DOC",
+              "docx": "DOCX",
+              "odt": "ODT",
+              "txt": "TXT"
+            }
+          },
+          "images": {
+            "title": "Image types",
+            "hint": "Select the image types you accept",
+            "types": {
+              "jpeg": "JPEG",
+              "jpg": "JPG",
+              "png": "PNG"
+            }
+          },
+          "tabular": {
+            "title": "Tabular data types",
+            "hint": "Select the tabular data types you accept",
+            "types": {
+              "xls": "XLS",
+              "xlsx": "XLSX",
+              "csv": "CSV",
+              "ods": "ODS"
+            }
+          }
+        }
+      },
+      "email": {
+        "title": "Email address",
+        "hint": "An email address, for example, name@example.com"
+      },
+      "list": {
+        "title": "A list of options that users can choose from",
+        "types": {
+          "title": "Type of list",
+          "yes_no": {
+            "title": "Yes or No",
+            "hint": "Allow users to answer either 'Yes' or 'No'"
+          },
+          "checkboxes": {
+            "title": "Checkboxes",
+            "hint": "A list for users to select multiple answers",
+            "add_option": "Add item",
+            "edit_title": "List items",
+            "hint_text": "Use single short sentence without a full stop",
+            "option": {
+              "text": {
+                "label": "Item",
+                "hint": ""
+              },
+              "hint": {
+                "label": "Hint text (optional)",
+                "hint": "Use single short sentence without a full stop  "
+              },
+              "value": {
+                "label": "Unique identifier (optional)",
+                "hint": "Used in databases to identify the item"
+              }
+            }
+          },
+          "radios": {
+            "title": "Radios",
+            "hint": "A list for users to select one answer",
+            "add_option": "Add item",
+            "edit_title": "List items",
+            "hint_text": "Use single short sentence without a full stop",
+            "option": {
+              "text": {
+                "label": "Item",
+                "hint": ""
+              },
+              "hint": {
+                "label": "Hint text (optional)",
+                "hint": "Use single short sentence without a full stop"
+              },
+              "value": {
+                "label": "Unique identifier (optional)",
+                "hint": "Used in databases to identify the item"
+              }
+            }
+          },
+          "select": {
+            "title": "Autocomplete",
+            "hint": "A list of options revealed to users as they type"
+          }
+        },
+        "autocomplete": {
+          "title": "Autocomplete",
+          "hint": "A list of options revealed to users as they type",
+          "options": {
+            "title": "Create and edit your list of autocomplete options",
+            "hint": "Add each option on a new line",
+            "value_hint": "To optionally set an input value for each item, separate the option text and value with a colon (e.g English:en-gb)",
+            "optional": "Make this question optional",
+            "error": {
+              "label": "Short description",
+              "hint": "Enter a short description for this question like 'fave animal'. Short descriptions are used in error messages and on the check your answers page."
+            }
+          }
+        }
+      }
+    },
+    "listing": {
+      "title": "Form pages",
+      "add_page": "Add a new page",
+      "reorder_pages": "Reorder pages",
+      "preview_form": "Preview form",
+      "no_pages": "No pages added yet"
+    },
+    "delete": {
+      "title": "Delete this page",
+      "confirm_message": "Are you sure you want to delete this page?",
+      "warning": "You cannot recover deleted pages",
+      "confirm_button": "Yes, delete this page",
+      "cancel_button": "Cancel"
+    },
+    "question_settings": {
+      "title": "Question settings",
+      "question": "Question",
+      "hint": "Hint text (optional)",
+      "optional": "Make this question optional",
+      "short_description": {
+        "title": "Short description",
+        "hint": "Enter a short description for this question like 'fave animal'. Short descriptions are used in error messages and on the check your answers page."
+      },
+      "answer_limits": {
+        "title": "Set answer limits (optional)",
+        "min_length": {
+          "title": "Minimum character length (optional)",
+          "hint": "The minimum number of characters users can enter"
+        },
+        "max_length": {
+          "title": "Maximum character length (optional)",
+          "hint": "The maximum number of characters users can enter"
+        },
+        "classes": {
+          "title": "Classes (optional)",
+          "hint": "Apply CSS classes to this field. For example, 'govuk-input govuk-!-width-full'"
+        },
+        "regex": {
+          "title": "Regex (optional)",
+          "hint": "Specifies a regular expression to validate users' inputs. Use JavaScript syntax"
+        },
+        "max_words": {
+          "title": "Max words (optional)",
+          "hint": "Specifies the maximum number of words users can enter"
+        },
+        "rows": {
+          "title": "Rows (optional)",
+          "hint": "Specifies the number of textarea rows (default is 5 rows)"
+        }
+      }
+    },
+    "create_new_form": {
+      "form_name": {
+        "title": "Enter name of your form please",
+        "hint": "Use an appropriate name for your form. You cannot change the form name once your form is live",
+        "back": "Back",
+        "continue": "Save and continue",
+        "error": {
+          "title": "There is a problem",
+          "exists": "The name your entered already exists",
+          "message": "This name already exists. Enter a different name"
+        }
+      },
+      "organisation": {
+        "title": "Choose a lead organisation for this form",
+        "back": "Back",
+        "continue": "Save and continue",
+        "error": {
+          "title": "There is a problem",
+          "missing_selection": "Select a lead organisation"
+        }
+      },
+      "team_details": {
+        "title": "Team details",
+        "team_name": {
+          "label": "Name of team",
+          "hint": "Enter the name of the policy team or business area responsible for this form",
+          "error": {
+            "missing": "Enter name of team",
+            "too_long": "Name of team must be 100 characters or less"
+          }
+        },
+        "email": {
+          "label": "Shared team email address",
+          "hint": "You can only create forms using a shared team email address. Don't enter your personal email address.",
+          "error": {
+            "missing": "Enter a shared team email address",
+            "invalid_format": "Enter a shared team email address in the correct format"
+          }
+        },
+        "save": "Save and continue",
+        "back": "Back",
+        "error": {
+          "title": "There is a problem"
+        }
+      }
+    },
+    "overview": {
+      "title": "Overview",
+      "back_to_library": "Back to forms library",
+      "sections": {
+        "form_status": {
+          "title": "Form status",
+          "status": "Status",
+          "updated": "Updated",
+          "created": "Created",
+          "preview_link": "Preview link"
+        },
+        "submission": {
+          "title": "Where submitted forms are sent",
+          "email_label": "Submitted forms sent to",
+          "change": "Change"
+        },
+        "support": {
+          "title": "Contact details for support",
+          "description": "You must provide at least one way for users to get help.",
+          "footer_note": "The contact details are shown in the footer of every page of the form.",
+          "phone": {
+            "label": "Phone",
+            "add": "Enter phone number for support",
+            "change": "Change"
+          },
+          "email": {
+            "label": "Email address",
+            "add": "Enter email address for support",
+            "change": "Change"
+          },
+          "link": {
+            "label": "Online contact link",
+            "add": "Enter online contact link for support",
+            "change": "Change"
+          }
+        },
+        "next_steps": {
+          "title": "What happens next",
+          "label": "Tell users what happens after they submit their form",
+          "add": "Enter what happens next",
+          "change": "Change"
+        },
+        "data_protection": {
+          "title": "Data protection",
+          "privacy_notice": {
+            "label": "Privacy notice",
+            "add": "Enter link to privacy notice",
+            "change": "Change"
+          }
+        },
+        "organisation": {
+          "title": "Organisation details",
+          "form_name": {
+            "label": "Form name",
+            "change": "Change"
+          },
+          "lead_org": {
+            "label": "Lead organisation",
+            "change": "Change"
+          }
+        }
+      },
+      "manage_form": {
+        "title": "Manage form",
+        "edit_draft": "Edit draft",
+        "make_live": "Make draft live",
+        "delete_draft": "Delete draft"
+      },
+      "internal_notes": {
+        "title": "Internal notes",
+        "add_note": "Add internal note",
+        "new_form": {
+          "label": "New form created",
+          "text": "Created this forms as requested by Policy Team."
+        }
+      }
+    }
+  }
+}

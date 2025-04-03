@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "text": "Draft",
+      "value": "draft"
+    },
+    {
+      "text": "Live",
+      "value": "live"
+    }
+  ]
+}

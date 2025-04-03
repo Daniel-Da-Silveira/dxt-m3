@@ -1,0 +1,384 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit yes-no question - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/redesigntest/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse", text: "Back to add and edit pages", href:
+    "/september/listing/2.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          <span class="govuk-caption-l" style="color: white">Apply for a county parish holding certificate</span>
+          Edit page 2
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2"
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#question-1">Page settings</a>
+                            </li>
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#overview-noquestions">Overview of questions</a>
+                            </li>
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#question-1-information-type">Question</a>
+                            </li>
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+                        <span class="govuk-caption-l">Page 1</span>
+                        <h2 class="govuk-heading-l">Question</h2>
+
+                        <form method="post" id="options-form"
+                          action="/redesigntest/templates/1-question/yesno/overview">
+
+                          {% from "govuk/components/input/macro.njk" import govukInput %}
+                          {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+                          {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+                          {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+                          {% from "govuk/components/button/macro.njk" import govukButton %}
+                          {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+                          {{ govukInput({
+                          label: {
+                          text: "Question",
+                          classes: "govuk-label--m",
+                          isPageHeading: false
+                          },
+                          id: "question-label-input-q1",
+                          value: data["question-label-input-q1"],
+                          name: "questionLabelInputQ1",
+                          attributes: {
+                          'data-preview-target': '#question-label-legend-q1'
+                          }
+                          }) }}
+
+                          {{ govukTextarea({
+                          label: {
+                          text: "Hint text (optional)",
+                          classes: "govuk-label--m"
+                          },
+                          id: "hint-text-inputq1",
+                          name: "hintTextInputq1",
+                          value: data['hint-text-input'],
+                          classes: "govuk-textarea",
+                          rows: 3,
+                          describedBy: "hint-text-input-q1",
+                          attributes: {
+                          'data-preview-target': '#generic-question-hint'
+                          }
+                          }) }}
+
+                          {{ govukCheckboxes({
+                          name: "makeOptional",
+                          classes: "govuk-checkboxes--small",
+                          fieldset: {
+                          legend: {
+                          text: "Manage how the question is displayed",
+                          isPageHeading: true,
+                          classes: "govuk-fieldset__legend--m"
+                          }
+                          },
+                          items: [
+                          {
+                          value: data["optional-label-q1"],
+                          id: "makeOptional",
+                          name: "makeOptional",
+                          text: "Make this question optional",
+                          attributes: {
+                          'data-toggle-class': 'optional',
+                          'data-target': '#question-label-legend-q1'
+                          }
+                          }
+                          ]
+                          }) }}
+
+                          <!-- Add guidance above this question -->
+                          <details class="govuk-details" data-module="govuk-details">
+                            <summary class="govuk-details__summary">
+                              <span class="govuk-details__summary-text">
+                                Add guidance above this question (optional)
+                              </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                              <!-- Default Content for Question 1 -->
+                              <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+                                <!-- Page Heading Input -->
+                                {{ govukInput({
+                                label: {
+                                text: "Page heading",
+                                classes: "govuk-label govuk-label--m govuk-!-margin-top-0"
+                                },
+                                hint: {
+                                text: "Page headings should be a statement and not a question. For example, ‘Passport
+                                information’",
+                                id: "page-heading-input-hint"
+                                },
+                                id: "page-heading-input",
+                                name: "pageHeading",
+                                type: "text",
+                                attributes: {
+                                'aria-describedby': "page-heading-input-hint",
+                                'data-preview-target': '#dynamic-heading'
+                                }
+                                }) }}
+
+                                <!-- Guidance Text Textarea -->
+                                {{ govukTextarea({
+                                label: {
+                                text: "Guidance text (optional)",
+                                classes: "govuk-label govuk-label--m"
+                                },
+                                hint: {
+                                text: "Use Markdown to format the content or add hyperlinks",
+                                id: "guidance-textarea-hint"
+                                },
+                                id: "guidance-textarea",
+                                name: "guidanceText",
+                                rows: 5,
+                                attributes: {
+                                'aria-describedby': "guidance-textarea-hint",
+                                'data-preview-target': '#guidance-paragraph'
+                                }
+                                }) }}
+
+                              </div>
+                            </div>
+                          </details>
+
+
+                          <!-- Yes/no questions don't have answer limits /Answer Limits -->
+
+
+
+                          <div id="summary-container">
+                            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                            <!-- The dynamic summary list will be populated here -->
+                            <h2 class="govuk-heading-m">Question settings</h2>
+
+                            {{ govukSummaryList({
+                            classes: "govuk-summary-list govuk-section-break govuk-section-break--visible
+                            govuk-!-margin-bottom-6",
+                            rows: [
+                            {
+                            key: {
+                            text: "Type of information"
+                            },
+                            value: {
+                            html: data['radios']
+                            },
+                            actions: {
+                            items: [
+                            {
+                            href: "javascript:window.history.back()",
+                            text: "Change",
+                            visuallyHiddenText: "name"
+                            }
+                            ]
+                            }
+                            }
+                            ]
+                            }) }}
+                          </div>
+                          <div class="moj-button-action">
+                            {{ govukButton({
+                            text: 'Save and continue',
+                            type: 'submit'
+                            }) }}
+                          </div>
+
+                        </form>
+
+                      </div>
+                    </div>
+                  </div>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column for Preview -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+        <!-- Before content -->
+        <div id="before-content">
+          <p class="govuk-body-s" style="margin-bottom: 0">
+            <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener"
+              target="_blank">Preview this page in a new tab</a>
+          </p>
+        </div>
+
+        <!-- Include the preview template -->
+        {% include "/redesigntest/preview.html" %}
+      </div>
+    </div>
+
+    <!-- JavaScript code -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Handle inputs with data-preview-target
+        const inputs = document.querySelectorAll('[data-preview-target]');
+
+        inputs.forEach(function (inputElement) {
+          const previewTargetSelector = inputElement.getAttribute('data-preview-target');
+          const previewElement = document.querySelector(previewTargetSelector);
+
+          if (previewElement) {
+            // Update the preview element on input
+            inputElement.addEventListener('input', function () {
+              const value = inputElement.value.trim();
+              previewElement.textContent = value || previewElement.getAttribute('data-default-text') || '';
+
+              // Show or hide elements based on input value
+              if (previewElement.classList.contains('govuk-hint') || previewElement.id === 'error-dynamic-text' || previewElement.id === 'guidance-paragraph') {
+                if (value) {
+                  previewElement.style.display = '';
+                  if (previewElement.parentElement.classList.contains('govuk-error-message')) {
+                    previewElement.parentElement.style.display = '';
+                  }
+                } else {
+                  previewElement.style.display = 'none';
+                  if (previewElement.parentElement.classList.contains('govuk-error-message')) {
+                    previewElement.parentElement.style.display = 'none';
+                  }
+                }
+              }
+            });
+
+            // Apply focus/blur highlighting
+            inputElement.addEventListener('focus', function () {
+              previewElement.classList.add('highlight');
+            });
+
+            inputElement.addEventListener('blur', function () {
+              previewElement.classList.remove('highlight');
+            });
+
+            // If input is already focused
+            if (document.activeElement === inputElement) {
+              previewElement.classList.add('highlight');
+            }
+          } else {
+            console.error('Preview element not found for selector:', previewTargetSelector);
+          }
+        });
+
+        // Handle checkboxes with data-toggle-class or data-toggle-visibility
+        const checkboxes = document.querySelectorAll('[data-toggle-class], [data-toggle-visibility]');
+        checkboxes.forEach(function (checkbox) {
+          const targetSelector = checkbox.getAttribute('data-target') || checkbox.getAttribute('data-toggle-visibility');
+          const toggleClass = checkbox.getAttribute('data-toggle-class');
+          const toggleVisibility = checkbox.hasAttribute('data-toggle-visibility');
+          const targetElement = document.querySelector(targetSelector);
+
+          if (targetElement) {
+            checkbox.addEventListener('change', function () {
+              if (toggleVisibility) {
+                targetElement.style.display = checkbox.checked ? '' : 'none';
+              }
+              if (toggleClass) {
+                // Remove existing '(optional)' suffix
+                let labelText = targetElement.textContent.replace(/\s*\(optional\)$/, '');
+                if (checkbox.checked) {
+                  labelText += ' (optional)';
+                }
+                targetElement.textContent = labelText;
+              }
+            });
+
+            // Initialize on page load
+            checkbox.dispatchEvent(new Event('change'));
+          } else {
+            console.error('Target element not found for selector:', targetSelector);
+          }
+        });
+      });
+    </script>
+
+
+    <style>
+      .highlight {
+        background-color: #ffe5cc;
+        border-bottom: 2px solid #ffb266;
+        color: black;
+      }
+
+      #before-content {
+        position: absolute;
+        top: 0;
+        left: 10 !important;
+        right: 0;
+        width: 100%;
+        padding: 10px !important;
+        box-sizing: border-box;
+        z-index: 1;
+        border-bottom: 1px solid #008938;
+        padding-left: 10px;
+      }
+
+      #second-container {
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #second-container>* {
+        padding-left: 0px;
+        z-index: 2;
+      }
+    </style>
+
+  </div>
+</div>
+{% endblock %}

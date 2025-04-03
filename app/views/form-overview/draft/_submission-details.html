@@ -1,0 +1,35 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+    {{ commonTerms.form_editor.overview.sections.submission.title }}
+</h2>
+
+{% set emailHtml %}
+<a href="/form-overview/support/notification-email.html" class="govuk-link govuk-link--no-visited-state">
+    Enter email address
+</a>
+{% endset %}
+
+{% set emailActions = {
+items: [
+{
+href: "/form-overview/support/notification-email.html",
+text: commonTerms.form_editor.overview.sections.submission.change,
+visuallyHiddenText: commonTerms.form_editor.overview.sections.submission.email_label
+}
+]
+} if form.notificationEmail else null %}
+
+{{ govukSummaryList({
+rows: [
+{
+key: {
+text: commonTerms.form_editor.overview.sections.submission.email_label
+},
+value: {
+html: form.notificationEmail or emailHtml
+},
+actions: emailActions
+}
+]
+}) }}

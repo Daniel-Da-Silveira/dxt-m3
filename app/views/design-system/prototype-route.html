@@ -1,0 +1,62 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Question page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="/prototype-answer" method="post">
+      {{ govukRadios({
+      name: "prototype",
+      value: data['prototype'],
+      fieldset: {
+      legend: {
+      html: 'Where do you want the prototype to start?',
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+      }
+      },
+      items: [
+      {
+      value: "signIn",
+      html: 'Sign-in'
+      },
+      {
+      value: "library",
+      text: "Forms library"
+      },
+      {
+      value: "newForm",
+      text: "Create new form"
+      },
+      {
+      value: "overview",
+      text: "Overview pages"
+      },
+      {
+      value: "editor",
+      text: "Editor"
+      }
+      ]
+      }) }}
+      {{ govukButton({
+      text: "Start prototype",
+      isStartButton: true
+      }) }}
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

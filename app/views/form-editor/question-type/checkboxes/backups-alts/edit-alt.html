@@ -1,0 +1,371 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit radios question - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{#  #}
+{% block header %}
+{{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    containerClasses: containerClasses,
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/onboarding/sign-out-confirmation",
+    navigationItems: [
+      { href: "/library.html", text: "Forms library", id: "nav-library" },
+      { href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+      { href: "/redesigntest/listing", text: "Editor", id: "nav-editor" }    ],
+    activeLinkId: "nav-editor"
+  }) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/redesigntest/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          <span class="govuk-caption-l" style="color: white">Apply for a county parish holding certificate</span>
+          Edit page 2
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 " aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#question-1">Page settings</a>
+                            </li>
+
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#overview-noquestions">Overview of questions</a>
+                            </li>
+
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page" href="#question-1-information-type">Question</a>
+                            </li>
+
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+
+                        <span class="govuk-caption-l">Page 1</span>
+                        <h2 class="govuk-heading-l">Question</h2>
+
+                          {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                          <!-- List config -->
+
+                          <div class="govuk-form-group">
+
+
+                            <div>
+                                
+                                <!-- alex -->
+                                
+                                <style>
+                                    
+                                    .form-item {
+                                        display: flex;
+                                        align-items: center;
+                                        margin-bottom: 10px;
+                                    }
+                                    
+                                    .form-item input[type="text"] {
+                                        margin-right: 0;
+                                    }
+                                    
+                                    .move-buttons, .delete-button {
+                                        display: none; /* Hide by default */
+                                    }
+                                    
+                                    .edit-mode .move-buttons,
+                                    .edit-mode .delete-button {
+                                        display: flex; /* Show when in edit mode */
+                                        flex-direction: column;
+                                    }
+                                    
+                                    .form-item button {
+                                        margin: 0 0 0 10px;
+                                    }
+                                    
+                                    .button-container {
+                                      margin-top:10px;
+                                    }
+                                    
+                                    #preview {
+                                        
+                                    }
+                                    
+                                    #preview-panel {
+                                      margin-top: 40px;
+                                    }
+                                    
+                                    .buttons {
+                                        margin-top: 10px;
+                                    }
+                                    
+                                   /* Initially hide the edit buttons */
+                                   .move-buttons, .delete-button {
+                                       display: none;
+                                   }
+                                   
+                                   /* When in edit mode, show the buttons */
+                                   .edit-mode .move-buttons,
+                                   .edit-mode .delete-button {
+                                       display: inline-block;
+                                   }
+                                    
+                                   /* Regular drop zone styling */
+                                   .highlight-drop-zone {
+                                       outline: 1px dashed #007cba; /* Regular blue dashed border for available drop zones */
+                                       background-color: rgba(0, 123, 186, 0.1); /* Light blue background for available drop zones */
+                                   }
+                                   
+                                   /* Active drop zone styling (when hovering an item) */
+                                   .highlight-drop-zone-active {
+                                       outline: 2px solid #174e17; /* Solid green border to make it more obvious */
+                                       background-color: rgba(8, 119, 19, 0.2); /* Green background for the active drop zone */
+                                       transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+                                   }
+
+                                  
+                                </style>
+                                
+                                <div id="builder-panel">
+                                    
+                                    <!-- Input field for setting the legend text -->
+                                    <div class="settings-panel govuk-!-margin-bottom-4">
+                                        <label class="govuk-label govuk-label--m" for="legend-input">Question</label>
+                                        <input class="govuk-input" type="text" id="legend-input">
+                                    </div>
+                                    
+                                    <div class="govuk-!-margin-bottom-4">
+                                        <label class="govuk-label govuk-label--m" for="hint-input">Hint Text</label>
+                                        <input class="govuk-input" type="text" id="hint-input">
+                                    </div>
+                                    
+                                    <h2 class="govuk-heading-m" tabindex="-1">Create and edit your
+                                    list of options</h2>
+                                
+                                    <div id="form-builder"></div>
+                                    
+                                    <div class="buttons">
+                                        <button class="govuk-button" id="add-radio-button">Add Radio Button</button>
+                                        <button class="govuk-button govuk-button--secondary" id="toggle-edit-mode">Edit</button> <!-- Edit button -->
+                                    </div>
+                                </div>
+                                
+                                <!-- end alex -->
+
+                              <!-- Make Optional Checkbox -->
+                              <div class="govuk-form-group">
+                                <div class="govuk-checkboxes--small">
+                                  <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" type="checkbox" id="makeOptional" name="makeOptional" value="{{ data['optional-label-q1'] }}">
+                                    <label class="govuk-label govuk-checkboxes__label" for="makeOptional">
+                                      Make this question optional
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- Add guidance above this question -->
+                              <details class="govuk-details" data-module="govuk-details">
+                                <summary class="govuk-details__summary">
+                                  <span class="govuk-details__summary-text">
+                                    Add guidance above this question (optional)
+                                  </span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                  <!-- Default Content for Question 1 -->
+                                  <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+                                    <!-- Page Heading Input -->
+                                    {{ govukInput({
+                                    label: {
+                                    text: "Page heading",
+                                    classes: "govuk-label govuk-label--m govuk-!-margin-top-0"
+                                    },
+                                    hint: {
+                                    text: "Page headings should be a statement and not a question. For example,
+                                    ‘Passport information’",
+                                    id: "page-heading-input-hint"
+                                    },
+                                    id: "page-heading-input-radios",
+                                    name: "pageHeadingInputRadios",
+                                    type: "text",
+                                    attributes: {
+                                    'aria-describedby': "page-heading-input-hint",
+                                    'data-preview-target': '#dynamic-heading'
+                                    }
+                                    }) }}
+
+                                    <!-- Guidance Text Textarea -->
+                                    {{ govukTextarea({
+                                    label: {
+                                    text: "Guidance text (optional)",
+                                    classes: "govuk-label govuk-label--m"
+                                    },
+                                    hint: {
+                                    text: "Use Markdown to format the content or add hyperlinks",
+                                    id: "guidance-textarea-hint"
+                                    },
+                                    id: "guidance-textarea-radios",
+                                    name: "guidanceTextareaRadios",
+                                    rows: 5,
+                                    attributes: {
+                                    'aria-describedby': "guidance-textarea-hint",
+                                    'data-preview-target': '#guidance-paragraph'
+                                    }
+                                    }) }}
+
+                                  </div>
+                                </div>
+                              </details>
+
+                              <div id="summary-container">
+
+                                <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                                <!-- The dynamic summary list will be populated here -->
+                                <h2 class="govuk-heading-m">Question settings</h2>
+
+                                {{ govukSummaryList({
+                                classes: "govuk-summary-list govuk-section-break govuk-section-break--visible
+                                govuk-!-margin-bottom-6 ",
+                                rows: [
+                                {
+                                key: {
+                                text: "Type of information"
+                                },
+                                value: {
+                                html: "List: radios"
+                                },
+                                actions: {
+                                items: [
+                                {
+                                href: "/redesigntest/templates/1-question/information-type.html",
+                                text: "Change",
+                                visuallyHiddenText: "name"
+                                }
+                                ]
+                                }
+                                }
+                                ]
+                                }) }}
+                              </div>
+                              <div class="">
+                                {{ govukButton({
+                                text: 'Save and continue',
+                                type: 'submit'
+                                }) }}
+                              </div>
+
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Right Column for Preview -->
+  <div class="govuk-grid-column-one-half-from-desktop" id="second-container" style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+    <!-- Before content -->
+    <div id="before-content">
+      <p class="govuk-body-s" style="margin-bottom: 0">
+        <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Preview
+          this page in a new tab</a>
+      </p>
+    </div>
+
+    <!-- Include the preview template -->
+    
+    <!-- alex preview -->
+    
+    <div class="additional-content">
+    
+    <div id="preview-panel">
+        <h3 class="govuk-heading-m">Preview</h3>
+        <div id="preview"></div>
+        <button type="button" class="govuk-button" data-module="govuk-button">
+      Save and Save and continue
+    </button>
+    </div>
+    
+    </div>
+    
+    <!-- alex preview -->
+    
+  </div>
+</div>
+
+<style>
+  .highlight {
+    background-color: #ffe5cc;
+    border-bottom: 2px solid #ffb266;
+  }
+
+  #before-content {
+    position: absolute;
+    top: 0;
+    left: 10 !important;
+    right: 0;
+    width: 100%;
+    padding: 10px !important;
+    box-sizing: border-box;
+    z-index: 1;
+    border-bottom: 1px solid #008938;
+    padding-left: 10px;
+  }
+
+  #second-container {
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  #second-container>* {
+    padding-left: 0px;
+    z-index: 2;
+  }
+</style>
+
+</div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+  <script src="/public/javascripts/radios.js"></script>
+{% endblock %}

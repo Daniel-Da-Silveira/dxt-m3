@@ -1,0 +1,252 @@
+// app/assets/sass/patterns/_flow-builder.scss
+
+.flow-builder-app {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: govuk-colour("white");
+  display: flex;
+  flex-direction: column;
+  font-family: "GDS Transport", arial, sans-serif;
+
+  // Adjust for GDS header and footer
+  top: 55px; // Header height
+  bottom: 85px; // Footer height
+}
+
+.flow-builder-toolbar {
+  background: govuk-colour("white");
+  border-bottom: 1px solid $govuk-border-colour;
+  padding: govuk-spacing(2) 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+
+  .govuk-button-group {
+    display: inline-flex;
+    align-items: center;
+    margin-right: govuk-spacing(6);
+    vertical-align: middle;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .govuk-button--small {
+    padding: 8px 15px 7px;
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+
+  input[type="range"] {
+    width: 100px;
+    vertical-align: middle;
+  }
+
+  #zoom-level {
+    display: inline-block;
+    width: 48px;
+    text-align: center;
+    margin: 0 govuk-spacing(1);
+  }
+
+  .help-button {
+    vertical-align: middle;
+  }
+}
+
+.flow-builder-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: govuk-colour("white");
+  background-image: 
+    linear-gradient(rgba(177, 201, 215, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(177, 201, 215, 0.2) 1px, transparent 1px);
+  background-size: 20px 20px;
+
+  &.drawing-connection {
+    cursor: crosshair;
+  }
+  
+  &.panning {
+    cursor: grabbing;
+  }
+}
+
+.flow-builder-canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
+}
+
+.canvas-node {
+  position: absolute;
+  width: 200px;
+  background: govuk-colour("white");
+  border: 2px solid govuk-colour("dark-grey");
+  border-radius: 4px;
+  padding: govuk-spacing(2);
+  font-family: "GDS Transport", arial, sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  
+  &.dragging {
+    cursor: grabbing;
+    opacity: 0.9;
+  }
+
+  .node-header {
+    color: govuk-colour("black");
+    margin-bottom: govuk-spacing(2);
+    font-weight: 700;
+    padding-right: govuk-spacing(4);
+    cursor: grab;
+  }
+
+  .node-content {
+    padding: 0 govuk-spacing(1);
+  }
+  
+  &[data-type="condition"] {
+    border-color: govuk-colour("dark-grey");
+    background: govuk-tint(govuk-colour("light-grey"), 50);
+
+    .govuk-select,
+    .govuk-input {
+      width: 160px;
+      margin-bottom: govuk-spacing(2);
+    }
+  }
+  
+  &[data-type="end"] {
+    border-color: govuk-colour("red");
+    
+    .govuk-select,
+    .govuk-input {
+      width: 160px;
+      margin-bottom: govuk-spacing(2);
+    }
+  }
+
+  .govuk-input,
+  .govuk-select {
+    font-family: "GDS Transport", arial, sans-serif;
+    width: 170px;
+    font-size: 16px;
+    margin-bottom: govuk-spacing(2);
+    cursor: text;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  input, select, button, .connection-point {
+    cursor: default;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+}
+
+.connection-line {
+  stroke: govuk-colour("dark-grey");
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke; // Maintains stroke width when scaled
+  fill: none;
+  z-index: 50;
+}
+
+.connection-points {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.connection-point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: govuk-colour("white");
+  border: 2px solid govuk-colour("dark-grey");
+  border-radius: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: crosshair;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  
+  &.left {
+    left: -1px;
+  }
+  
+  &.right {
+    right: -17px;
+  }
+}
+
+.canvas-node:hover .connection-point,
+.connection-point:hover,
+.drawing-connection .connection-point {
+  opacity: 1;
+}
+
+.drawing-connection {
+  cursor: crosshair;
+  
+  .connection-point {
+    pointer-events: auto;
+  }
+}
+
+.help-panel {
+  position: fixed;
+  bottom: 85px; // Footer height
+  right: 0;
+  width: 300px;
+  background: govuk-colour("white");
+  border-left: 4px solid govuk-colour("dark-grey");
+  padding: govuk-spacing(4);
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+  z-index: 200;
+  max-height: calc(100vh - 140px); // Account for header and footer
+  overflow-y: auto;
+
+  .govuk-list--bullet {
+    margin-bottom: 0;
+  }
+}
+
+.delete-node-btn {
+  position: absolute;
+  top: govuk-spacing(1);
+  right: govuk-spacing(1);
+  padding: govuk-spacing(1);
+  background: none;
+  border: none;
+  color: govuk-colour("dark-grey");
+  cursor: pointer;
+  font-family: "GDS Transport", arial, sans-serif;
+  
+  &:hover {
+    color: govuk-colour("red");
+  }
+}
+
+// When space is held down for panning
+.can-pan {
+  cursor: grab !important;
+  
+  &.panning {
+    cursor: grabbing !important;
+  }
+}

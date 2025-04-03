@@ -1,0 +1,127 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Guidance and policies - Apply for a county parish holding number in England" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/form-designer-v2/onboarding/sign-out-confirmation",
+    navigationItems: [{
+      href: "/cph-overview/draft.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/cph-overview/guidance-policies.html",
+    text: 'Guidance and policies',
+    id: 'policies'
+    }],
+    activeLinkId: "policies"
+  }) }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back to overview",
+href: "/cph-overview/draft"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+  {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set html %}
+  <h3 class="govuk-notification-banner__heading">
+    Information about what happens next has been added
+  </h3>
+{% endset %}
+
+{{ govukNotificationBanner({
+  html: html,
+  type: "success"
+}) }}
+    <!-- <h1 class="govuk-heading-xl">Apply for a county parish holding number in England</h1> -->
+
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+ Provide privacy and contact details
+</h2>
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Provide contact details for support"
+      },
+      value: {
+        html: "Telephone: 020 7946 0101<br>Textphone: 020 7946 0102..."
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "Change contact details for support"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Privacy notice"
+      },
+      value: {
+        text: "https://www.gov.uk/help/privacy-notice"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "Change privacy notice"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+<h2 class="govuk-heading-m govuk-!-padding-top-5">
+ Information about what happens next
+</h2>
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Tell users what happens next"
+      },
+      value: {
+        html: 'We’ll send you an email to let you know the outcome...whi'
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "Change information about what happens next"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+{% endblock %}

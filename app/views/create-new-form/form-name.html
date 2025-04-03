@@ -1,0 +1,39 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+{{ commonTerms.form_editor.create_new_form.form_name.title }} - Create a new form
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: commonTerms.form_editor.create_new_form.form_name.back,
+href: "/library"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/create-new-form/form-name" method="post">
+      {{ govukInput({
+      label: {
+      text: commonTerms.form_editor.create_new_form.form_name.title,
+      classes: "govuk-label--l",
+      isPageHeading: true
+      },
+      hint: {
+      text: commonTerms.form_editor.create_new_form.form_name.hint
+      },
+      id: "form-name",
+      name: "formName",
+      value: data.formName,
+      errorMessage: errors.formName
+      }) }}
+
+      {{ govukButton({
+      text: commonTerms.form_editor.create_new_form.form_name.continue
+      }) }}
+    </form>
+  </div>
+</div>
+{% endblock %}

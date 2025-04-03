@@ -1,0 +1,88 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+    {{ commonTerms.form_editor.overview.sections.support.title }}
+</h2>
+
+<p class="govuk-body">{{ commonTerms.form_editor.overview.sections.support.description }}</p>
+<p class="govuk-body">{{ commonTerms.form_editor.overview.sections.support.footer_note }}</p>
+
+{% set phoneHtml %}
+<a href="/form-overview/support/add-telephone.html" class="govuk-link govuk-link--no-visited-state">
+    {{ commonTerms.form_editor.overview.sections.support.phone.add }}
+</a>
+{% endset %}
+
+{% set emailHtml %}
+<a href="/form-overview/support/add-email.html" class="govuk-link govuk-link--no-visited-state">
+    {{ commonTerms.form_editor.overview.sections.support.email.add }}
+</a>
+{% endset %}
+
+{% set linkHtml %}
+<a href="/form-overview/support/add-contact-link.html" class="govuk-link govuk-link--no-visited-state">
+    {{ commonTerms.form_editor.overview.sections.support.link.add }}
+</a>
+{% endset %}
+
+{% set phoneActions = {
+items: [
+{
+href: "/form-overview/support/add-telephone.html",
+text: commonTerms.form_editor.overview.sections.support.phone.change,
+visuallyHiddenText: commonTerms.form_editor.overview.sections.support.phone.label
+}
+]
+} if form.support.phone else null %}
+
+{% set emailActions = {
+items: [
+{
+href: "/form-overview/support/add-email.html",
+text: commonTerms.form_editor.overview.sections.support.email.change,
+visuallyHiddenText: commonTerms.form_editor.overview.sections.support.email.label
+}
+]
+} if form.support.email else null %}
+
+{% set linkActions = {
+items: [
+{
+href: "/form-overview/support/add-contact-link.html",
+text: commonTerms.form_editor.overview.sections.support.link.change,
+visuallyHiddenText: commonTerms.form_editor.overview.sections.support.link.label
+}
+]
+} if form.support.link else null %}
+
+{{ govukSummaryList({
+rows: [
+{
+key: {
+text: commonTerms.form_editor.overview.sections.support.phone.label
+},
+value: {
+html: form.support.phone or phoneHtml
+},
+actions: phoneActions
+},
+{
+key: {
+text: commonTerms.form_editor.overview.sections.support.email.label
+},
+value: {
+html: form.support.email or emailHtml
+},
+actions: emailActions
+},
+{
+key: {
+text: commonTerms.form_editor.overview.sections.support.link.label
+},
+value: {
+html: form.support.link or linkHtml
+},
+actions: linkActions
+}
+]
+}) }}

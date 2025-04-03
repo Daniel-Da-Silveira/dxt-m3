@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{{ govukHeader({
+homepageUrl: "#",
+serviceName: "Form Editor",
+serviceUrl: "#",
+navigation: [
+{
+href: "/library.html",
+text: "Forms library",
+active: true
+},
+{
+href: "/cph-overview/draft/complete-clean.html",
+text: "Overview"
+},
+{
+href: "/form-editor/listing",
+text: "Editor"
+}
+]
+}) }}
+
+<div class="govuk-width-container">
+  {{ govukBackLink({
+  text: "Back to add and edit pages",
+  href: "/form-editor/listing.html"
+  }) }}
+
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Radio options overview</h1>
+
+      <form class="form" action="/form-editor/templates/1-question/radios/edit" method="post">
+        {{ govukSummaryList({
+        rows: [
+        {
+        key: {
+        text: "Option 1"
+        },
+        value: {
+        text: data["option-1"] or "Option text"
+        },
+        actions: {
+        items: [
+        {
+        href: "/form-editor/templates/1-question/radios/edit.html?optionIndex=1",
+        text: "Change",
+        visuallyHiddenText: "Option 1"
+        }
+        ]
+        }
+        }
+        ]
+        }) }}
+
+        {{ govukButton({
+        text: "Add another option",
+        type: "submit",
+        classes: "govuk-button--secondary"
+        }) }}
+
+        {{ govukButton({
+        text: "Save and continue",
+        type: "submit"
+        }) }}
+
+        <a href="/form-editor/templates/1-question/radios/settings.html"
+          class="govuk-button govuk-button--secondary">Page settings</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const addOptionButton = document.querySelector('.govuk-button--secondary');
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (e.submitter === addOptionButton) {
+          window.location.href = '/form-editor/templates/1-question/radios/add.html';
+        } else {
+          window.location.href = '/form-editor/templates/1-question/radios/overview.html';
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}

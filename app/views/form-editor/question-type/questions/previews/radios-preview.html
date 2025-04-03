@@ -1,0 +1,69 @@
+{% from "./_label_size_macro.html" import get_label_size -%}
+
+{%- set page_heading = data['pageHeadingInputRadios'] if data is defined and data['pageHeadingInputRadios'] else false
+-%}
+{%- set question_count = total_questions if total_questions is defined else 1 -%}
+{%- set labelSize = get_label_size(page_heading, question_count, true) -%}
+
+<!-- Debug info -->
+<!-- Page heading: {{ page_heading }} -->
+<!-- Question count: {{ question_count }} -->
+<!-- Label size: {{ labelSize }} -->
+
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--{{ labelSize }}">{{ question.label }}</legend>
+        {%- if question.hint -%}
+        <div id="radios-hint-{{ question.questionId }}" class="govuk-hint">{{ question.hint }}</div>
+        {%- endif -%}
+        <div class="govuk-radios" data-module="govuk-radios">
+            {%- if question.options and question.options.length > 0 -%}
+            {%- for option in question.options -%}
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="radio-{{ question.questionId }}-{{ loop.index }}"
+                    name="radio-group-{{ question.questionId }}" type="radio" value="{{ option.value }}" {%- if
+                    option.hint %}aria-describedby="radio-{{ question.questionId }}-{{ loop.index }}-hint" {% endif -%}>
+                <label class="govuk-label govuk-radios__label" for="radio-{{ question.questionId }}-{{ loop.index }}">{{
+                    option.label }}</label>
+                {%- if option.hint -%}
+                <div id="radio-{{ question.questionId }}-{{ loop.index }}-hint" class="govuk-hint govuk-radios__hint">{{
+                    option.hint }}</div>
+                {%- endif -%}
+            </div>
+            {%- endfor -%}
+            {%- else -%}
+            <p class="govuk-body">No options available.</p>
+            {%- endif -%}
+        </div>
+    </fieldset>
+</div>
+
+
+{# {% for question in currentPage.questions %}
+<div class="preview-item" data-id="question-{{ question.questionId }}">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            {{ question.label }}
+        </legend>
+        <div class="govuk-radios">
+            {% set options = question.options or [] %}
+            {% if options | length > 0 %}
+            {% for option in options %}
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="option-{{ question.questionId }}-{{ loop.index }}"
+                    name="previewRadios-{{ question.questionId }}" type="radio" value="{{ option.label }}">
+                <label class="govuk-label govuk-radios__label" for="option-{{ question.questionId }}-{{ loop.index }}">
+                    {{ option.label }}
+                </label>
+                {% if option.hint %}
+                <div class="govuk-hint govuk-radios__hint">{{ option.hint }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="govuk-body">No options available.</p>
+            {% endif %}
+        </div>
+    </fieldset>
+</div>
+{% endfor %} #}

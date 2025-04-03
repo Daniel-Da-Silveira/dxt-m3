@@ -1,0 +1,918 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Preview panel – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Kit of parts - Defra Forms Designer" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "Kit of parts",
+containerClasses: containerClasses,
+homepageLink: "/design-system/components.html",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/design-system/prototype-route.html", text: "Prototype", id: "prototype" },
+{ href: "/design-system/components.html", text: "Components", id: "components" },
+{ href: "/design-system/user-journeys/home.html", text: "User journeys", id: "user-journeys" }
+],
+activeLinkId: "components"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+
+        {# {{ govukBackLink({
+        classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+        text: "Back to add and edit pages",
+        href: "/form-editor/listing.html"
+        }) }} #}
+
+        {#
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom: 1px solid white; margin-bottom: 0;" /> #}
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    Component parts for the form editor
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <!-- ============================================= -->
+        <!-- Side Navigation Section -->
+        <!-- ============================================= -->
+        <div class="govuk-grid-column-one-quarter">
+            {% from "side-navigation/macro.njk" import dwpSideNavigation %}
+            <nav>
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Question editor</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-question-editor",
+                selectedItem: "/design-system/editor/preview-panel.html",
+                items: [
+                { text: "Configuration panels", href: "/design-system/editor/configuration-panel.html", id:
+                "sn-config-panels"
+                },
+                { text: "Guided input", href: "/design-system/editor/guided-input.html", id: "sn-guided-input" },
+                { text: "Preview panels", href: "/design-system/editor/preview-panel.html", id: "sn-preview-panels" },
+                { text: "Previews in a new tab", href: "/design-system/editor/previews-in-new-tab.html", id:
+                "sn-previews-new-tab"
+                },
+                { text: "Question borders", href: "/design-system/editor/border.html", id: "sn-question-borders" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Information types</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-information-types",
+                selectedItem: "",
+                items: [
+                { text: "Answer limits", href: "/design-system/information-type/answer-limits.html", id:
+                "sn-answer-limits" },
+                { text: "Configuration for each type", href: "/design-system/information-type/configuration-types.html",
+                id:
+                "sn-configuration-types" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Re-ordering</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-reordering",
+                selectedItem: "",
+                items: [
+                { text: "Lists", href: "/design-system/reordering/lists.html", id: "sn-lists" },
+                { text: "Pages", href: "/design-system/reordering/pages.html", id: "sn-pages" },
+                { text: "Questions", href: "/design-system/reordering/questions.html", id: "sn-questions" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Deletion</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-deletion",
+                selectedItem: "",
+                items: [
+                { text: "Pages", href: "/design-system/deletion/pages.html", id: "sn-deletion-pages" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Header</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-header",
+                selectedItem: "",
+                items: [
+                { text: "Mastheads", href: "/design-system/header/masthead.html", id: "sn-mastheads" }
+                ]
+                })
+                }}
+        </div>
+        </nav>
+
+        <!-- ============================================= -->
+        <!-- Main Content Section -->
+        <!-- ============================================= -->
+        <div class="govuk-grid-column-two-thirds">
+            <!-- Section: Information Types -->
+            <span class="govuk-caption-xl">Editor</span>
+            <h1 class="govuk-heading-xl">Preview panel</h1>
+
+            <!-- ============================================= -->
+            <!-- Preview panel code -->
+            <!-- ============================================= -->
+
+            <!-- ============================================= -->
+            <!-- How it works -->
+            <!-- ============================================= -->
+            <div class="govuk-grid-row">
+                <!-- <div class="govuk-grid-column-two-thirds-from-desktop"> -->
+                <h2 class="govuk-heading-l">How it works</h2>
+
+                <div id="second-container-1" class="govuk-grid-column-one-half"
+                    style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+                    <!-- Before content -->
+                    <div id="before-content" style="background-color: #cce2d8;">
+                        <p class="govuk-body-s"
+                            style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+                            Previews</p>
+                    </div>
+
+                    <div style="margin-top: 60px;">
+                        <div class="govuk-tabs" data-module="govuk-tabs">
+                            <h2 class="govuk-tabs__title">Contents</h2>
+                            <ul class="govuk-tabs__list">
+                                <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                    <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+                                </li>
+                                <li class="govuk-tabs__list-item">
+                                    <a class="govuk-tabs__tab" href="#tab-two">Error messages</a>
+                                </li>
+                            </ul>
+
+                            <div class="govuk-tabs__panel" id="tab-one">
+                                <!-- Page Preview Content -->
+                                <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                    <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                        rel="noreferrer noopener" target="_blank">Preview this page in a new tab</a>
+                                </p>
+                                {% include "/form-editor/previews/numbers/edit.html" %}
+                                <a href="#edit-page" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                                    data-module="govuk-skip-link">Skip to edit page</a>
+                            </div>
+
+                            <div class="govuk-tabs__panel" id="tab-two">
+                                <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                    <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                        rel="noreferrer noopener" target="_blank">Preview error messages in a new
+                                        tab</a>
+                                </p>
+                                <!-- Error Messages Content -->
+                                <div class="govuk-error-summary" data-module="govuk-error-summary" div
+                                    data-disable-auto-focus="true">
+                                    <h2 class="govuk-error-summary__title">There is a problem</h2>
+                                    <ul class="govuk-list govuk-error-summary__list">
+                                        <li><a id="empty-input-error-shorttext" class="govuk-error-message">Enter
+                                                <span id="error-dynamic-text">[short description]</span></a></li>
+                                        <li><a id="empty-input-error-shorttext" class="govuk-error-message"><span
+                                                    id="error-dynamic-text">[Short description]</span> must be a
+                                                whole number</a></li>
+                                        <h3 class="govuk-heading-s">If you set answer limits:</h3>
+                                        <li><a id="too-long-input-error-shorttext" class="govuk-error-message"><span
+                                                    id="error-dynamic-text-long">[Short description]</span> must
+                                                <span id="max-length">[lowest number]</span> or more</a></li>
+                                        <li><a id="too-short-input-error-shorttext" class="govuk-error-message"><span
+                                                    id="error-dynamic-text-short">[Short description]</span> must be
+                                                <span id="min-length">[highest number]</span> or fewer</a></li>
+                                    </ul>
+                                </div>
+
+                                <a href="#error-message-input-shorttext" class="govuk-skip-link"
+                                    style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                    Skip to edit short description</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+            </div>
+
+            <div class="govuk-grid-row">
+                <div class="govuk-!-margin-top-8">
+                    <h3 class="govuk-heading-m">Panel layout</h3>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>The panel is styled to be visually distinct with a green outline, shadow, and sticky
+                            positioning to stay visible when scrolling.</li>
+                        <li>It's split into two main sections: a "Previews" header at the top and tabbed content
+                            below.</li>
+                    </ul>
+
+                    <h3 class="govuk-heading-m">Tabs navigation</h3>
+                    <p class="govuk-body">There are two tabs:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li><strong>Page preview:</strong> Displays a preview of the current question being edited
+                            and includes a link to open the preview in a new tab.</li>
+                        <li><strong>Error messages:</strong> Lists the error messages related to the question.</li>
+                    </ul>
+
+                    <h3 class="govuk-heading-m">Skip links</h3>
+                    <p class="govuk-body">Both tabs include "skip links" for accessibility, allowing users to jump
+                        directly to edit sections related to the content, such as editing the page or correcting
+                        error messages.</p>
+                    <p class="govuk-body">To view the skip link, click inside this example above and press tab.</p>
+
+                    <!-- ============================================= -->
+                    <!-- By context -->
+                    <!-- ============================================= -->
+
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-two-thirds">
+                            <h2 class="govuk-heading-l">Preview panels by context</h2>
+                            <h3 class="govuk-heading-m">Question editor</h3>
+
+                            <h4 class="govuk-heading-s">Question editor: single question on a page</h4>
+
+                            <div id="second-container-2"
+                                style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+                                <!-- Before content -->
+                                <div id="before-content" style="background-color: #cce2d8;">
+                                    <p class="govuk-body-s"
+                                        style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+                                        Previews</p>
+                                </div>
+
+                                <div style="margin-top: 60px;">
+                                    <div class="govuk-tabs" data-module="govuk-tabs">
+                                        <h2 class="govuk-tabs__title">Contents</h2>
+                                        <ul class="govuk-tabs__list">
+                                            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                                <a class="govuk-tabs__tab" href="#tab-one-editor">Page preview</a>
+                                            </li>
+                                            <li class="govuk-tabs__list-item">
+                                                <a class="govuk-tabs__tab" href="#tab-two-editor">Error messages</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="govuk-tabs__panel" id="tab-one-editor">
+                                            <!-- Page Preview Content -->
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">Preview this page in a new
+                                                    tab</a>
+                                            </p>
+                                            <div class="border-left-container-numbers">
+                                                <div class="govuk-form-group">
+                                                    <h1 class="govuk-label-wrapper">
+                                                        <label class="govuk-label govuk-label--l"
+                                                            id="question-label-legend-numbers">
+                                                            Question
+                                                        </label>
+                                                    </h1>
+                                                    <div id="hint-text-output-numbers" class="govuk-hint"></div>
+                                                    <input class="govuk-input govuk-input--width-10" id="numbers"
+                                                        name="Numbers" type="text" spellcheck="false"
+                                                        aria-describedby="numbers-hint" inputmode="numeric">
+                                                </div>
+                                            </div>
+
+                                            <a href="#edit-page" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                                Skip to edit page</a>
+                                        </div>
+
+                                        <div class="govuk-tabs__panel" id="tab-two-editor">
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">
+                                                    Preview error messages in a new tab</a>
+                                            </p>
+                                            <!-- Error Messages Content -->
+                                            <div class="govuk-error-summary" data-module="govuk-error-summary"
+                                                data-disable-auto-focus="true">
+                                                <h2 class="govuk-error-summary__title">There is a problem</h2>
+                                                <ul class="govuk-list govuk-error-summary__list">
+                                                    <li><a id="empty-input-error-shorttext"
+                                                            class="govuk-error-message">Enter <span
+                                                                id="error-dynamic-text">[short description]</span></a>
+                                                    </li>
+                                                    <li><a id="empty-input-error-shorttext"
+                                                            class="govuk-error-message"><span
+                                                                id="error-dynamic-text">[Short description]</span> must
+                                                            be a whole number</a></li>
+                                                    <h3 class="govuk-heading-s">If you set answer limits:</h3>
+                                                    <li><a id="too-long-input-error-shorttext"
+                                                            class="govuk-error-message"><span
+                                                                id="error-dynamic-text-long">[Short description]</span>
+                                                            must
+                                                            be <span id="max-length">[lowest number]</span> or more</a>
+                                                    </li>
+                                                    <li><a id="too-short-input-error-shorttext"
+                                                            class="govuk-error-message"><span
+                                                                id="error-dynamic-text-short">[Short description]</span>
+                                                            must
+                                                            be <span id="min-length">[highest number]</span> or
+                                                            fewer</a></li>
+                                                </ul>
+                                            </div>
+
+                                            <a href="#error-message-input-shorttext" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                                Skip to edit short description</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="govuk-grid-row govuk-!-margin-top-8">
+                        <div class="govuk-grid-column-two-thirds">
+                            <h4 class="govuk-heading-s">Question editor: single question on a page with a seperate page
+                                heading
+                            </h4>
+
+                            <div id="second-container-3"
+                                style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+                                <!-- Before content -->
+                                <div id="before-content" style="background-color: #cce2d8;">
+                                    <p class="govuk-body-s"
+                                        style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+                                        Previews</p>
+                                </div>
+
+                                <div style="margin-top: 60px;">
+                                    <div class="govuk-tabs" data-module="govuk-tabs">
+                                        <h2 class="govuk-tabs__title">Contents</h2>
+                                        <ul class="govuk-tabs__list">
+                                            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                                <a class="govuk-tabs__tab" href="#tab-one-editor-heading">Page
+                                                    preview</a>
+                                            </li>
+                                            <li class="govuk-tabs__list-item">
+                                                <a class="govuk-tabs__tab" href="#tab-two-editor-heading">Error
+                                                    messages</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="govuk-tabs__panel" id="tab-one-editor-heading">
+                                            <!-- Page Preview Content -->
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">Preview this page in a new
+                                                    tab</a>
+                                            </p>
+
+                                            <h1 class="govuk-heading-l">
+                                                Page heading
+                                            </h1>
+
+                                            <div class="border-left-container-numbers">
+                                                <div class="govuk-form-group">
+                                                    <h1 class="govuk-label-wrapper">
+                                                        <label class="govuk-label govuk-label--m"
+                                                            id="question-label-legend-numbers">
+                                                            Question
+                                                        </label>
+                                                    </h1>
+                                                    <div id="hint-text-output-numbers" class="govuk-hint"></div>
+                                                    <input class="govuk-input govuk-input--width-10" id="numbers"
+                                                        name="Numbers" type="text" spellcheck="false"
+                                                        aria-describedby="numbers-hint" inputmode="numeric">
+                                                </div>
+                                            </div>
+
+                                            <a href="#edit-page" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                                Skip to edit page</a>
+                                        </div>
+
+                                        <div class="govuk-tabs__panel" id="tab-two-editor-heading">
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">Preview error messages in
+                                                    a new tab</a>
+                                            </p>
+                                            <!-- Error Messages Content -->
+                                            <div class="govuk-error-summary" data-module="govuk-error-summary"
+                                                data-disable-auto-focus="true">
+                                                <h2 class="govuk-error-summary__title">There is a problem</h2>
+                                                <ul class="govuk-list govuk-error-summary__list">
+                                                    <li><a id="empty-input-error-shorttext"
+                                                            class="govuk-error-message">Enter <span
+                                                                id="error-dynamic-text">[short description]</span></a>
+                                                    </li>
+                                                    <li><a id="empty-input-error-shorttext"
+                                                            class="govuk-error-message"><span
+                                                                id="error-dynamic-text">[Short description]</span> must
+                                                            be a whole number</a></li>
+                                                    <h3 class="govuk-heading-s">If you set answer limits:</h3>
+                                                    <li><a id="too-long-input-error-shorttext"
+                                                            class="govuk-error-message"><span
+                                                                id="error-dynamic-text-long">[Short description]</span>
+                                                            must
+                                                            be <span id="max-length">[lowest number]</span> or more</a>
+                                                    </li>
+                                                    <li><a id="too-short-input-error-shorttext"
+                                                            class="govuk-error-message"><span
+                                                                id="error-dynamic-text-short">[Short description]</span>
+                                                            must
+                                                            be <span id="min-length">[highest number]</span> or
+                                                            fewer</a></li>
+                                                </ul>
+                                            </div>
+
+                                            <a href="#error-message-input-shorttext" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                                Skip to edit short description</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="govuk-grid-row govuk-!-margin-top-8">
+                        <div class="govuk-grid-column-two-thirds">
+                            <h4 class="govuk-heading-s">Question editor: single question on a page with a seperate
+                                page heading and guidance text
+                            </h4>
+
+                            <div id="second-container-4"
+                                style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+                                <!-- Before content -->
+                                <div id="before-content" style="background-color: #cce2d8;">
+                                    <p class="govuk-body-s"
+                                        style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+                                        Previews</p>
+                                </div>
+
+                                <div style="margin-top: 60px;">
+                                    <div class="govuk-tabs" data-module="govuk-tabs">
+                                        <h2 class="govuk-tabs__title">Contents</h2>
+                                        <ul class="govuk-tabs__list">
+                                            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                                <a class="govuk-tabs__tab" href="#tab-one-editor-guidance">Page
+                                                    preview</a>
+                                            </li>
+                                            <li class="govuk-tabs__list-item">
+                                                <a class="govuk-tabs__tab" href="#tab-two-editor-guidance">Error
+                                                    messages</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="govuk-tabs__panel" id="tab-one-editor-guidance">
+                                            <!-- Page Preview Content -->
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">Preview this page in a new
+                                                    tab</a>
+                                            </p>
+
+                                            <h1 class="govuk-heading-l">
+                                                Page heading
+                                            </h1>
+
+                                            <p class="govuk-body">
+                                                Guidance text.
+                                            </p>
+
+                                            <div class="border-left-container-numbers">
+                                                <div class="govuk-form-group">
+                                                    <h1 class="govuk-label-wrapper">
+                                                        <label class="govuk-label govuk-label--m"
+                                                            id="question-label-legend-numbers">
+                                                            Question
+                                                        </label>
+                                                    </h1>
+                                                    <div id="hint-text-output-numbers" class="govuk-hint"></div>
+                                                    <input class="govuk-input govuk-input--width-10" id="numbers"
+                                                        name="Numbers" type="text" spellcheck="false"
+                                                        aria-describedby="numbers-hint" inputmode="numeric">
+                                                </div>
+                                            </div>
+
+                                            <a href="#edit-page" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                                Skip to edit page</a>
+                                        </div>
+
+                                        <div class="govuk-tabs__panel" id="tab-two-editor-guidance">
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">
+                                                    Preview error messages in a new tab</a>
+                                            </p>
+                                            <!-- Error Messages Content -->
+                                            <div class="govuk-error-summary" data-module="govuk-error-summary"
+                                                data-disable-auto-focus="true">
+                                                <h2 class="govuk-error-summary__title">There is a problem</h2>
+                                                <ul class="govuk-list govuk-error-summary__list">
+                                                    <li><a id="empty-input-error-shorttext"
+                                                            class="govuk-error-message">Enter <span
+                                                                id="error-dynamic-text">[short description]</span></a>
+                                                    </li>
+                                                    <li><a id="empty-input-error-shorttext"
+                                                            class="govuk-error-message"><span
+                                                                id="error-dynamic-text">[Short description]</span> must
+                                                            be a whole number</a></li>
+                                                    <h3 class="govuk-heading-s">If you set answer limits:</h3>
+                                                    <li><a id="too-long-input-error-shorttext"
+                                                            class="govuk-error-message"><span
+                                                                id="error-dynamic-text-long">[Short description]</span>
+                                                            must
+                                                            be <span id="max-length">[lowest number]</span> or more</a>
+                                                    </li>
+                                                    <li><a id="too-short-input-error-shorttext"
+                                                            class="govuk-error-message"><span
+                                                                id="error-dynamic-text-short">[Short description]</span>
+                                                            must
+                                                            be <span id="min-length">[highest number]</span> or
+                                                            fewer</a></li>
+                                                </ul>
+                                            </div>
+
+                                            <a href="#error-message-input-shorttext" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                                Skip to edit short description</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="govuk-grid-row govuk-!-margin-top-8">
+                        <div class="govuk-grid-column-two-thirds">
+                            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                            <h3 class="govuk-heading-m">Page overview</h3>
+                            <p class="govuk-body">
+                                The preview panel on a page overview does not include a highlight.
+                                Additionally, if the page contains multiple questions, the error messages tab is not
+                                available.
+                            </p>
+
+                            <h4 class="govuk-heading-s">Page overview: single question on a page</h4>
+
+                            <div id="second-container-5"
+                                style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+                                <!-- Before content -->
+                                <div id="before-content" style="background-color: #cce2d8;">
+                                    <p class="govuk-body-s"
+                                        style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+                                        Previews</p>
+                                </div>
+
+                                <div style="margin-top: 60px;">
+                                    <div class="govuk-tabs" data-module="govuk-tabs">
+                                        <h2 class="govuk-tabs__title">Contents</h2>
+                                        <ul class="govuk-tabs__list">
+                                            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                                <a class="govuk-tabs__tab" href="#tab-one-single">Page preview</a>
+                                            </li>
+                                            <li class="govuk-tabs__list-item">
+                                                <a class="govuk-tabs__tab" href="#tab-two-single">Error messages</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="govuk-tabs__panel" id="tab-one-single">
+                                            <!-- Page Preview Content -->
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">Preview this page in a new
+                                                    tab</a>
+                                            </p>
+                                            <div class="govuk-form-group">
+                                                <h1 class="govuk-label-wrapper">
+                                                    <label class="govuk-label govuk-label--l"
+                                                        id="question-label-legend-numbers">
+                                                        Reference number
+                                                    </label>
+                                                </h1>
+                                                <div id="hint-text-output-numbers" class="govuk-hint"></div>
+                                                <input class="govuk-input govuk-input--width-10" id="numbers"
+                                                    name="Numbers" type="text" spellcheck="false"
+                                                    aria-describedby="numbers-hint" inputmode="numeric">
+                                            </div>
+
+                                            <a href="#edit-page" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;"
+                                                data-module="govuk-skip-link">Skip to page overview</a>
+                                        </div>
+
+                                        <div class="govuk-tabs__panel" id="tab-two-single">
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">
+                                                    Preview error messages in a new tab</a>
+                                            </p>
+                                            <!-- Error Messages Content -->
+                                            <div class="govuk-error-summary" data-module="govuk-error-summary"
+                                                data-disable-auto-focus="true">
+                                                <h2 class="govuk-error-summary__title">There is a problem</h2>
+                                                <ul class="govuk-list govuk-error-summary__list">
+                                                    <li><a id="empty-input-error-shorttext" class="govuk-error-message">
+                                                            Enter <span id="error-dynamic-text">your reference
+                                                                number</span></a></li>
+                                                    <li><a id="empty-input-error-shorttext" class="govuk-error-message">
+                                                            <span id="error-dynamic-text">Your reference number</span>
+                                                            must be a whole number</a></li>
+                                                    <h3 class="govuk-heading-s">If you set answer limits:</h3>
+                                                    <li><a id="too-long-input-error-shorttext"
+                                                            class="govuk-error-message">
+                                                            <span id="error-dynamic-text-long">Your reference
+                                                                number</span> must
+                                                            be <span id="max-length">[lowest number]</span> or more</a>
+                                                    </li>
+                                                    <li><a id="too-short-input-error-shorttext"
+                                                            class="govuk-error-message">
+                                                            <span id="error-dynamic-text-short">Your reference
+                                                                number</span> must
+                                                            be <span id="min-length">[highest number]</span> or
+                                                            fewer</a></li>
+                                                </ul>
+                                            </div>
+
+                                            <a href="#error-message-input-shorttext" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                                Skip to page overview</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="govuk-grid-row govuk-!-margin-top-8">
+                        <div class="govuk-grid-column-two-thirds">
+                            <h3 class="govuk-heading-s">Page overview: multiple questions</h3>
+                            <!-- Preview Container -->
+                            <div id="second-container-6"
+                                style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+                                <!-- Before content -->
+                                <div id="before-content" style="background-color: #cce2d8;">
+                                    <p class="govuk-body-s"
+                                        style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+                                        Previews
+                                    </p>
+                                </div>
+
+                                <div style="margin-top: 60px;">
+                                    <div class="govuk-tabs" data-module="govuk-tabs">
+                                        <h2 class="govuk-tabs__title">Contents</h2>
+                                        <ul class="govuk-tabs__list">
+                                            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                                <a class="govuk-tabs__tab" href="#tab-one-b">Page preview</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="govuk-tabs__panel" id="tab-one-b">
+                                            <!-- Page Preview Content -->
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">Preview this page in a new
+                                                    tab</a>
+                                            </p>
+                                            <h1 class="govuk-heading-l">Passport details</h1>
+
+                                            <div class="govuk-form-group">
+                                                <label class="govuk-label govuk-label--m" for="passport-number">
+                                                    Passport number
+                                                </label>
+                                                <div id="passport-number-hint" class="govuk-hint">
+                                                    For example, 502135326
+                                                </div>
+                                                <input class="govuk-input govuk-input--width-10" id="passport-number"
+                                                    name="passportNumber" type="text"
+                                                    aria-describedby="passport-number-hint">
+                                            </div>
+                                            <div class="govuk-form-group">
+                                                <fieldset class="govuk-fieldset" role="group"
+                                                    aria-describedby="expiry-hint">
+                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                                        Expiry date
+                                                    </legend>
+                                                    <div id="expiry-hint" class="govuk-hint">
+                                                        For example, 31 3 1980
+                                                    </div>
+                                                    <div class="govuk-date-input" id="expiry">
+                                                        <div class="govuk-date-input__item">
+                                                            <div class="govuk-form-group">
+                                                                <label class="govuk-label govuk-date-input__label"
+                                                                    for="expiry-day">
+                                                                    Day
+                                                                </label>
+                                                                <input
+                                                                    class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                                                    id="expiry-day" name="expiry-day" type="text"
+                                                                    inputmode="numeric">
+                                                            </div>
+                                                        </div>
+                                                        <div class="govuk-date-input__item">
+                                                            <div class="govuk-form-group">
+                                                                <label class="govuk-label govuk-date-input__label"
+                                                                    for="expiry-month">
+                                                                    Month
+                                                                </label>
+                                                                <input
+                                                                    class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                                                    id="expiry-month" name="expiry-month" type="text"
+                                                                    inputmode="numeric">
+                                                            </div>
+                                                        </div>
+                                                        <div class="govuk-date-input__item">
+                                                            <div class="govuk-form-group">
+                                                                <label class="govuk-label govuk-date-input__label"
+                                                                    for="expiry-year">
+                                                                    Year
+                                                                </label>
+                                                                <input
+                                                                    class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                                                    id="expiry-year" name="expiry-year" type="text"
+                                                                    inputmode="numeric">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <a href="#edit-page" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                                Skip to page overview</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="govuk-grid-row govuk-!-margin-top-8">
+                        <div class="govuk-grid-column-two-thirds">
+                            <h4 class="govuk-heading-s">Page overview: multiple questions with 'Add another' pattern
+                            </h4>
+
+                            <!-- Preview Container -->
+                            <div id="second-container-7"
+                                style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+                                <!-- Before content -->
+                                <div id="before-content" style="background-color: #cce2d8;">
+                                    <p class="govuk-body-s"
+                                        style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+                                        Previews
+                                    </p>
+                                </div>
+
+                                <div style="margin-top: 60px;">
+                                    <div class="govuk-tabs" data-module="govuk-tabs">
+                                        <h2 class="govuk-tabs__title">Contents</h2>
+                                        <ul class="govuk-tabs__list">
+                                            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                                <a class="govuk-tabs__tab" href="#tab-one-b">Page preview</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="govuk-tabs__panel" id="tab-one-b">
+                                            <!-- Page Preview Content -->
+                                            <p class="govuk-body-s"
+                                                style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                                                <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                    rel="noreferrer noopener" target="_blank">Preview this page in a new
+                                                    tab</a>
+                                            </p>
+                                            <span class="govuk-caption-l">Passenger 1</span>
+
+                                            <h1 class="govuk-heading-l">Passport details</h1>
+
+                                            <div class="govuk-form-group">
+                                                <label class="govuk-label govuk-label--m" for="passport-number">
+                                                    Passport number
+                                                </label>
+                                                <div id="passport-number-hint" class="govuk-hint">
+                                                    For example, 502135326
+                                                </div>
+                                                <input class="govuk-input govuk-input--width-10" id="passport-number"
+                                                    name="passportNumber" type="text"
+                                                    aria-describedby="passport-number-hint">
+                                            </div>
+                                            <div class="govuk-form-group">
+                                                <fieldset class="govuk-fieldset" role="group"
+                                                    aria-describedby="expiry-hint">
+                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                                        Expiry date
+                                                    </legend>
+                                                    <div id="expiry-hint" class="govuk-hint">
+                                                        For example, 31 3 1980
+                                                    </div>
+                                                    <div class="govuk-date-input" id="expiry">
+                                                        <div class="govuk-date-input__item">
+                                                            <div class="govuk-form-group">
+                                                                <label class="govuk-label govuk-date-input__label"
+                                                                    for="expiry-day">
+                                                                    Day
+                                                                </label>
+                                                                <input
+                                                                    class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                                                    id="expiry-day" name="expiry-day" type="text"
+                                                                    inputmode="numeric">
+                                                            </div>
+                                                        </div>
+                                                        <div class="govuk-date-input__item">
+                                                            <div class="govuk-form-group">
+                                                                <label class="govuk-label govuk-date-input__label"
+                                                                    for="expiry-month">
+                                                                    Month
+                                                                </label>
+                                                                <input
+                                                                    class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                                                    id="expiry-month" name="expiry-month" type="text"
+                                                                    inputmode="numeric">
+                                                            </div>
+                                                        </div>
+                                                        <div class="govuk-date-input__item">
+                                                            <div class="govuk-form-group">
+                                                                <label class="govuk-label govuk-date-input__label"
+                                                                    for="expiry-year">
+                                                                    Year
+                                                                </label>
+                                                                <input
+                                                                    class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                                                    id="expiry-year" name="expiry-year" type="text"
+                                                                    inputmode="numeric">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <button type="submit" class="govuk-button" data-module="govuk-button">
+                                                Add another passenger
+                                            </button>
+                                            <a href="#edit-page" class="govuk-skip-link"
+                                                style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                                Skip to page overview</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="govuk-grid-row govuk-!-margin-top-8">
+                        <div class="govuk-grid-column-two-thirds">
+                            <h2 class="govuk-heading-l">Screens in Figma</h2>
+
+                            <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450"
+                                src="https://embed.figma.com/design/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?node-id=13394-310183&embed-host=share"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <!-- ============================================= -->
+                    <!-- Styles Section -->
+                    <!-- ============================================= -->
+                    <style>
+                        .border-left-container-yesno {
+                            border-left: 10px solid #ffb266;
+                            padding-left: 20px;
+                        }
+                    </style>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

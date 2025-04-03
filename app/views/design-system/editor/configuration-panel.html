@@ -1,0 +1,540 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Configuration panel – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Kit of parts - Defra Forms Designer" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "Kit of parts",
+containerClasses: containerClasses,
+homepageLink: "/design-system/components.html",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/design-system/prototype-route.html", text: "Prototype", id: "prototype" },
+{ href: "/design-system/components.html", text: "Components", id: "components" },
+{ href: "/design-system/user-journeys/home.html", text: "User journeys", id: "user-journeys" }
+],
+activeLinkId: "components"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+
+        {# {{ govukBackLink({
+        classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+        text: "Back to add and edit pages",
+        href: "/form-editor/listing.html"
+        }) }} #}
+
+        {#
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom: 1px solid white; margin-bottom: 0;" /> #}
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    Component parts for the form editor
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <!-- ============================================= -->
+        <!-- Side Navigation Section -->
+        <!-- ============================================= -->
+        <div class="govuk-grid-column-one-quarter">
+            {% from "side-navigation/macro.njk" import dwpSideNavigation %}
+            <nav>
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Question editor</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-question-editor",
+                selectedItem: "/design-system/editor/configuration-panel.html",
+                items: [
+                { text: "Configuration panels", href: "/design-system/editor/configuration-panel.html", id:
+                "sn-config-panels"
+                },
+                { text: "Guided input", href: "/design-system/editor/guided-input.html", id: "sn-guided-input" },
+                { text: "Preview panels", href: "/design-system/editor/preview-panel.html", id: "sn-preview-panels" },
+                { text: "Previews in a new tab", href: "/design-system/editor/previews-in-new-tab.html", id:
+                "sn-previews-new-tab"
+                },
+                { text: "Question borders", href: "/design-system/editor/border.html", id: "sn-question-borders" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Information types</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-information-types",
+                selectedItem: "",
+                items: [
+                { text: "Answer limits", href: "/design-system/information-type/answer-limits.html", id:
+                "sn-answer-limits" },
+                { text: "Configuration for each type", href: "/design-system/information-type/configuration-types.html",
+                id:
+                "sn-configuration-types" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Re-ordering</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-reordering",
+                selectedItem: "",
+                items: [
+                { text: "Lists", href: "/design-system/reordering/lists.html", id: "sn-lists" },
+                { text: "Pages", href: "/design-system/reordering/pages.html", id: "sn-pages" },
+                { text: "Questions", href: "/design-system/reordering/questions.html", id: "sn-questions" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Deletion</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-deletion",
+                selectedItem: "",
+                items: [
+                { text: "Pages", href: "/design-system/deletion/pages.html", id: "sn-deletion-pages" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Header</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-header",
+                selectedItem: "",
+                items: [
+                { text: "Mastheads", href: "/design-system/header/masthead.html", id: "sn-mastheads" }
+                ]
+                })
+                }}
+        </div>
+        </nav>
+
+        <!-- ============================================= -->
+        <!-- Main Content Section -->
+        <!-- ============================================= -->
+        <div class="govuk-grid-column-two-thirds">
+            <!-- Section: Information Types -->
+            <span class="govuk-caption-xl">Editor</span>
+            <h1 class="govuk-heading-xl">Configuration panel</h1>
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+
+                    <p class="govuk-body">The configuration panel allows users to edit a question within a structured
+                        form. It is
+                        designed to
+                        work as part of a larger form-building interface, with or without <a class="govuk-link"
+                            href="/">a preview panel</a>.</p>
+
+                    <p class="govuk-body">It is an extension of the <a
+                            href="https://design-system.service.gov.uk/components/summary-list/"
+                            class="govuk-link">GOV.UK
+                            summary list card component</a>.</p>
+
+                    <h2 class="govuk-heading-l">Component Parts</h2>
+                    <dl class="govuk-summary-list govuk-!-margin-bottom-6">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Main Container</dt>
+                            <dd class="govuk-summary-list__value">
+                                A flexible container that holds the question editing interface. It is scrollable for
+                                easier
+                                navigation when there is more content.
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Summary Card</dt>
+                            <dd class="govuk-summary-list__value">
+                                A bordered card with a green highlight on the left to visually separate it from the rest
+                                of the
+                                page. Used to group the question settings and editing form.
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Sub-navigation</dt>
+                            <dd class="govuk-summary-list__value">
+                                A small navigation bar at the top of the card to help users move between related pages
+                                or sections.
+                                Includes a link to the current question page. This uses an extenstion of the <a
+                                    class="govuk-link" href="">'MoJ's sub-navigation component</a>.
+                            </dd>
+                        </div>
+                        <div class=" govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Question Title</dt>
+                            <dd class="govuk-summary-list__value">
+                                Displays the question's context with a caption (e.g., "Page 1") and a heading (e.g.,
+                                "Edit question
+                                2") for clarity.
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Form</dt>
+                            <dd class="govuk-summary-list__value">
+                                The form is structured to guide users through editing their question. It includes:
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li><strong>Question Label Input:</strong> A text field for entering the main
+                                        question.</li>
+                                    <li><strong>Hint Text Input:</strong> A textarea for providing optional guidance or
+                                        context for
+                                        the question.</li>
+                                    <li><strong>Optional Checkbox:</strong> A checkbox to make the question optional.
+                                    </li>
+                                    <li><strong>Short Description Input:</strong> A field for adding a description to be
+                                        used in
+                                        error messages or summaries.</li>
+                                    <li><strong>Answer Limits:</strong> A collapsible section for setting minimum and
+                                        maximum
+                                        character limits, along with additional templates for regex validation.</li>
+                                </ul>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Accessibility (Skip Links)</dt>
+                            <dd class="govuk-summary-list__value">
+                                Skip links allow users to jump directly to specific parts of the interface, such as
+                                error message
+                                previews or page previews. When Javascript is disabled, skips links are replaced by
+                                buttons that are visible by default.
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Section Breaks</dt>
+                            <dd class="govuk-summary-list__value">
+                                Clear visual dividers to separate parts of the form and improve readability.
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Question Settings Summary</dt>
+                            <dd class="govuk-summary-list__value">
+                                A summary list that shows key details about the question, such as its type (e.g., "Short
+                                written
+                                answer"). Includes a "Change" link to adjust the question type.
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">Submit Button</dt>
+                            <dd class="govuk-summary-list__value">
+                                A primary action button labeled "Save and continue" to submit the changes. Includes a
+                                skip link for
+                                navigating directly to the page preview.
+                            </dd>
+                        </div>
+                    </dl>
+
+
+                </div>
+            </div>
+
+            <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+                <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+                    <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row">
+                                <dd class="govuk-summary-list__value">
+                                    <!-- Dynamic Summary List -->
+                                    <!-- Question Settings Container -->
+                                    <div class="govuk-grid-row" id="page-settings-container-1">
+                                        <div id="question-1">
+                                            <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                                                <!-- Sub Navigation for Question -->
+                                                <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                                                    aria-label="Sub navigation">
+                                                    <ul class="moj-sub-navigation__list" id="nav-list2">
+
+                                                        <li class="moj-sub-navigation__item">
+                                                            <a class="moj-sub-navigation__link" aria-current="page"
+                                                                id="edit-page" href="#question-1-information-type">Page
+                                                                5</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+
+                                                <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0">
+                                                </div>
+
+                                                <span class="govuk-caption-l">Page 1</span>
+                                                <h2 class="govuk-heading-l">Edit question 2</h2>
+
+                                                <form method="post" id="options-form"
+                                                    action="/form-editor/question-type/shorttext/overview">
+                                                    {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                                                    <!-- Question Label Input -->
+                                                    <div class="govuk-form-group">
+                                                        <label class="govuk-label govuk-label--m"
+                                                            for="question-label-input-shorttext">
+                                                            Question
+                                                        </label>
+                                                        <input class="govuk-input" id="question-label-input-shorttext"
+                                                            name="questionLabelInputShortText" type="text" value="">
+                                                    </div>
+
+
+                                                    <!-- Hint Text Input -->
+                                                    {{ govukTextarea({
+                                                    label: {
+                                                    text: "Hint text (optional)",
+                                                    classes: "govuk-label--m"
+                                                    },
+                                                    id: "hint-text-input-shorttext",
+                                                    name: "hintTextInputShorttext",
+                                                    value: data['hint-text-input-shorttext'],
+                                                    classes: "govuk-textarea",
+                                                    rows: 3,
+                                                    describedBy: "hint-text-input-shorttext"
+                                                    }) }}
+
+                                                    <!-- Make Optional Checkbox -->
+                                                    <div class="govuk-form-group">
+                                                        <div class="govuk-checkboxes--small">
+                                                            <div class="govuk-checkboxes__item">
+                                                                <input class="govuk-checkboxes__input"
+                                                                    id="make-optional" name="makeOptional"
+                                                                    type="checkbox" value="optional">
+                                                                <label class="govuk-label govuk-checkboxes__label"
+                                                                    for="make-optional">
+                                                                    Make this question optional
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {{ govukInput({
+                                                    label: {
+                                                    text: "Short description",
+                                                    classes: "govuk-label--m",
+                                                    isPageHeading: false
+                                                    },
+                                                    hint: {
+                                                    text: "Enter a short description for this question like 'licence
+                                                    period'. Short
+                                                    descriptions are used in error messages and on the check your
+                                                    answers page."
+                                                    },
+                                                    id: "error-message-input-shorttext",
+                                                    name: "errorMessageInputShorttext"
+                                                    }) }}
+
+                                                    <!-- Answer limits -->
+                                                    <details class="govuk-details" data-module="govuk-details">
+                                                        <summary class="govuk-details__summary">
+                                                            <span class="govuk-details__summary-text">
+                                                                Set answer limits (optional)
+                                                            </span>
+                                                        </summary>
+                                                        <div class="govuk-details__text">
+                                                            <!-- Default Content for Question 1 -->
+                                                            <div id="question-1-content" class="question-content"
+                                                                style="margin-top: 10px;">
+
+                                                                <!-- Page Heading Input -->
+                                                                {% from "govuk/components/input/macro.njk" import
+                                                                govukInput %}
+
+                                                                {{ govukInput({
+                                                                label: {
+                                                                text: "Minimum character length (optional)",
+                                                                classes: "govuk-label--m",
+                                                                isPageHeading: false
+                                                                },
+                                                                classes: "govuk-input--width-3",
+                                                                hint: {
+                                                                text: "The minimum number of characters users can enter"
+                                                                },
+                                                                id: "min-characters",
+                                                                name: "minCharacters",
+                                                                inputmode: "numeric",
+                                                                spellcheck: false
+                                                                }) }}
+
+                                                                {{ govukInput({
+                                                                label: {
+                                                                text: "Maximum character length (optional)",
+                                                                classes: "govuk-label--m",
+                                                                isPageHeading: false
+                                                                },
+                                                                classes: "govuk-input--width-3",
+                                                                hint: {
+                                                                text: "The maximum number of characters users can enter"
+                                                                },
+                                                                id: "max-characters",
+                                                                name: "minCharacters",
+                                                                inputmode: "numeric",
+                                                                spellcheck: false
+                                                                }) }}
+
+                                                                {% include "/form-editor/answer-limits/regex.html" %}
+                                                                {% include "/form-editor/answer-limits/classes.html" %}
+
+                                                            </div>
+                                                    </details>
+
+                                                    <a href="#tab-two" class="govuk-skip-link"
+                                                        style="margin-bottom: 30px!important;"
+                                                        data-module="govuk-skip-link">Skip to
+                                                        error messages preview</a>
+
+
+                                                    <!-- Section Break -->
+                                                    <hr
+                                                        class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                                                    <!-- Question Settings Summary List -->
+                                                    <h2 class="govuk-heading-m">Question settings</h2>
+
+                                                    {{ govukSummaryList({
+                                                    "rows": [
+                                                    {
+                                                    "key": {
+                                                    "text": "Type of information"
+                                                    },
+                                                    "value": {
+                                                    "html": "Short written answer"
+                                                    },
+                                                    "actions": {
+                                                    "items": [
+                                                    {
+                                                    "href": "/form-editor/question-type/information-type.html",
+                                                    "text": "Change",
+                                                    "visuallyHiddenText": " type"
+                                                    }
+                                                    ]
+                                                    }
+                                                    }
+                                                    ]
+                                                    }) }}
+
+                                                    <hr
+                                                        class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+
+                                                    <!-- Other form elements... -->
+
+                                                    <!-- Submit Button -->
+                                                    <div class="moj-button-action">
+                                                        {{ govukButton({
+                                                        text: 'Save and continue',
+                                                        type: 'submit'
+                                                        }) }}
+
+                                                        <a href="#tab_tab-one" class="govuk-skip-link"
+                                                            style="margin-bottom: 30px!important;"
+                                                            data-module="govuk-skip-link">
+                                                            Skip to page preview
+                                                        </a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+
+                    <!-- Section: When this component is used -->
+                    <h2 class="govuk-heading-l">When Javascript is disabled</h2>
+                    <p class="govuk-body">If Javascript is disabled, skip links are replaced with buttons that are
+                        visible by default.
+                    </p>
+                    <div
+                        style="background-color: #f3f2f1; padding: 15px 15px 0px 15px; width: fit-content; margin-bottom: 30px;">
+                        <button type=" submit" class="govuk-button govuk-button--inverse" data-module="govuk-button">
+                            <span class="icon-wrapper">
+                                <!-- Your SVG icon -->
+                                <svg width="24" height="17" viewBox="0 0 24 17" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M23.42 8.57175L23.4145 8.58481L23.4097 8.59816C23.3429 8.78328 23.238 9.00239 23.0886 9.2573C22.9298 9.52824 22.7228 9.87643 22.4673 10.3023C22.2277 10.7014 21.9331 11.1051 21.5814 11.5128C21.2252 11.9258 20.8204 12.3494 20.3664 12.7835C19.9256 13.205 19.4124 13.6141 18.8247 14.01C18.244 14.4012 17.6245 14.7357 16.9657 15.0134C16.3098 15.29 15.5465 15.5293 14.6726 15.729C13.8178 15.9244 12.9302 16.0145 12.0089 15.9981C11.0758 15.9815 10.1762 15.8904 9.30954 15.7253C8.44417 15.5605 7.70002 15.3321 7.07186 15.045C6.42176 14.7479 5.78632 14.4008 5.1655 14.0035C4.54798 13.6084 4.04112 13.2115 3.63933 12.8147C3.21885 12.3994 2.81352 11.9589 2.42339 11.4929C2.03009 11.023 1.7314 10.6298 1.52201 10.3108C1.30821 9.98506 1.10923 9.64233 0.92516 9.28242C0.730757 8.9023 0.621902 8.67581 0.583944 8.58135C0.571792 8.55111 0.559969 8.52204 0.548485 8.49418L0.556069 8.478C0.680152 8.28917 0.809181 8.00974 0.943944 7.67437C1.06885 7.36354 1.25291 7.0437 1.50227 6.71517C1.77608 6.35442 2.08956 5.93435 2.44256 5.45519C2.77046 5.01009 3.15984 4.59421 3.61254 4.20795C4.08069 3.80851 4.60573 3.39882 5.18832 2.97899C5.74736 2.57613 6.36096 2.23646 7.0305 1.96057C7.70215 1.6838 8.46464 1.45309 9.32031 1.27056C10.1633 1.09076 11.0561 1 12 1C12.9439 1 13.8367 1.09076 14.6797 1.27056C15.5349 1.45299 16.2879 1.68332 16.9417 1.959C17.5985 2.23593 18.2251 2.57814 18.8218 2.9861C19.4309 3.40252 19.9476 3.80621 20.3746 4.19663C20.8036 4.58877 21.2021 5.01376 21.5703 5.47185C21.9486 5.94264 22.2512 6.3486 22.4806 6.6911C22.7091 7.03241 22.9058 7.37151 23.0712 7.70836C23.2466 8.0655 23.3704 8.31228 23.4393 8.44078C23.4466 8.45441 23.4533 8.46723 23.4594 8.47928L23.42 8.57175ZM9.53856 8.98622H12H13.1542L12.3647 8.14422L10.5845 6.24555C11.0023 5.89618 11.459 5.75365 11.9687 5.78563C12.6631 5.82919 13.2545 6.09335 13.762 6.59079C14.2469 7.066 14.5 7.6826 14.5 8.48622C14.5 9.28973 14.2467 9.91814 13.7569 10.4124C13.2531 10.9206 12.6715 11.1717 11.9895 11.1859C11.3247 11.1998 10.7544 10.9573 10.2527 10.4223C9.86397 10.0077 9.62632 9.53328 9.53856 8.98622ZM8.44014 4.76879C7.4897 5.80124 7.01332 7.0475 7.012 8.48028C6.97841 9.95273 7.45622 11.2176 8.44952 12.2392C9.43354 13.2512 10.6222 13.7794 11.9931 13.7984C13.3754 13.8175 14.5714 13.2835 15.5567 12.2326C16.5414 11.1824 17.0295 9.92278 17.012 8.48013C16.9945 7.04689 16.5101 5.80106 15.5599 4.76879C14.6022 3.72848 13.4053 3.19961 12 3.19961C10.5947 3.19961 9.39782 3.72848 8.44014 4.76879Z"
+                                        fill="#1D70B8" stroke="black" />
+                                </svg>
+
+                            </span>
+                            <span class="button-text">Preview page</span>
+                        </button>
+
+                        <button type="submit" class="govuk-button govuk-button--inverse" data-module="govuk-button">
+                            <span class="icon-wrapper">
+                                <!-- Your SVG icon -->
+                                <svg width="24" height="17" viewBox="0 0 24 17" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M23.42 8.57175L23.4145 8.58481L23.4097 8.59816C23.3429 8.78328 23.238 9.00239 23.0886 9.2573C22.9298 9.52824 22.7228 9.87643 22.4673 10.3023C22.2277 10.7014 21.9331 11.1051 21.5814 11.5128C21.2252 11.9258 20.8204 12.3494 20.3664 12.7835C19.9256 13.205 19.4124 13.6141 18.8247 14.01C18.244 14.4012 17.6245 14.7357 16.9657 15.0134C16.3098 15.29 15.5465 15.5293 14.6726 15.729C13.8178 15.9244 12.9302 16.0145 12.0089 15.9981C11.0758 15.9815 10.1762 15.8904 9.30954 15.7253C8.44417 15.5605 7.70002 15.3321 7.07186 15.045C6.42176 14.7479 5.78632 14.4008 5.1655 14.0035C4.54798 13.6084 4.04112 13.2115 3.63933 12.8147C3.21885 12.3994 2.81352 11.9589 2.42339 11.4929C2.03009 11.023 1.7314 10.6298 1.52201 10.3108C1.30821 9.98506 1.10923 9.64233 0.92516 9.28242C0.730757 8.9023 0.621902 8.67581 0.583944 8.58135C0.571792 8.55111 0.559969 8.52204 0.548485 8.49418L0.556069 8.478C0.680152 8.28917 0.809181 8.00974 0.943944 7.67437C1.06885 7.36354 1.25291 7.0437 1.50227 6.71517C1.77608 6.35442 2.08956 5.93435 2.44256 5.45519C2.77046 5.01009 3.15984 4.59421 3.61254 4.20795C4.08069 3.80851 4.60573 3.39882 5.18832 2.97899C5.74736 2.57613 6.36096 2.23646 7.0305 1.96057C7.70215 1.6838 8.46464 1.45309 9.32031 1.27056C10.1633 1.09076 11.0561 1 12 1C12.9439 1 13.8367 1.09076 14.6797 1.27056C15.5349 1.45299 16.2879 1.68332 16.9417 1.959C17.5985 2.23593 18.2251 2.57814 18.8218 2.9861C19.4309 3.40252 19.9476 3.80621 20.3746 4.19663C20.8036 4.58877 21.2021 5.01376 21.5703 5.47185C21.9486 5.94264 22.2512 6.3486 22.4806 6.6911C22.7091 7.03241 22.9058 7.37151 23.0712 7.70836C23.2466 8.0655 23.3704 8.31228 23.4393 8.44078C23.4466 8.45441 23.4533 8.46723 23.4594 8.47928L23.42 8.57175ZM9.53856 8.98622H12H13.1542L12.3647 8.14422L10.5845 6.24555C11.0023 5.89618 11.459 5.75365 11.9687 5.78563C12.6631 5.82919 13.2545 6.09335 13.762 6.59079C14.2469 7.066 14.5 7.6826 14.5 8.48622C14.5 9.28973 14.2467 9.91814 13.7569 10.4124C13.2531 10.9206 12.6715 11.1717 11.9895 11.1859C11.3247 11.1998 10.7544 10.9573 10.2527 10.4223C9.86397 10.0077 9.62632 9.53328 9.53856 8.98622ZM8.44014 4.76879C7.4897 5.80124 7.01332 7.0475 7.012 8.48028C6.97841 9.95273 7.45622 11.2176 8.44952 12.2392C9.43354 13.2512 10.6222 13.7794 11.9931 13.7984C13.3754 13.8175 14.5714 13.2835 15.5567 12.2326C16.5414 11.1824 17.0295 9.92278 17.012 8.48013C16.9945 7.04689 16.5101 5.80106 15.5599 4.76879C14.6022 3.72848 13.4053 3.19961 12 3.19961C10.5947 3.19961 9.39782 3.72848 8.44014 4.76879Z"
+                                        fill="#1D70B8" stroke="black" />
+                                </svg>
+
+                            </span>
+                            <span class="button-text">Preview error messages</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <h2 class="govuk-heading-l">See more details in Figma</h2>
+
+            <h3 class="govuk-heading-m">With Javascript disabled</h3>
+
+            <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450"
+                src="https://embed.figma.com/design/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?node-id=13385-245749&embed-host=share"
+                allowfullscreen></iframe>
+
+            <h3 class="govuk-heading-m govuk-!-margin-top-6">With Javascript enabled</h3>
+
+            <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450"
+                src="https://embed.figma.com/design/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?node-id=13384-89841&embed-host=share"
+                allowfullscreen></iframe>
+
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- Styles Section -->
+    <!-- ============================================= -->
+    <style>
+        .border-left-container-yesno {
+            border-left: 10px solid #ffb266;
+            padding-left: 20px;
+        }
+
+        .icon-wrapper {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 0.5rem;
+            /* adjust as needed */
+        }
+
+        .button-text {
+            display: inline-flex;
+            align-items: center;
+        }
+    </style>
+
+
+
+    {% endblock %}

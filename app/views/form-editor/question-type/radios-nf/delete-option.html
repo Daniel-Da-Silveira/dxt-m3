@@ -1,0 +1,119 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Are you sure you want to delete page # - Apply for a county parish holding number in England" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to edit page 2", href:
+    "javascript:window.history.back()" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {# <span class="govuk-caption-l" style="color: white">
+            Apply for a county parish holding certificate
+          </span> #}
+          {{ form.name }}
+        </h1>
+
+        {# #}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds" id="container">
+    <form class="form" action="/form-editor/templates/1-question/radios/edit" method="post">
+      <span class="govuk-caption-l">
+        Option text: {{ data['optionText'] or 'N/A' }}
+      </span>
+      <h2 class="govuk-heading-l">
+        Are you sure you want to delete this radio option?
+      </h2>
+
+      <span id="option-to-delete"></span>
+
+      <p class="govuk-body govuk-!-margin-bottom-6">You cannot recover deleted options.</p>
+
+      <div class="govuk-button-group">
+        <button type="submit" id="confirm-delete" class="govuk-button govuk-button--warning" data-module="govuk-button"
+          data-govuk-button-init="">
+          Delete radio option
+        </button>
+        <a href="/form-editor/templates/1-question/radios/edit.html" id="cancel-delete"
+          class="govuk-button govuk-button--secondary">Cancel</a>
+      </div>
+    </form>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const optionIndex = urlParams.get('index'); // Get the index from the query string
+
+        const deleteButton = document.querySelector('.govuk-button--warning');
+        const cancelButton = document.querySelector('.govuk-button--secondary');
+
+        deleteButton.addEventListener('click', function () {
+          // Redirect back to edit.html with the deleteIndex parameter
+          const redirectUrl = `/form-editor/templates/1-question/radios/edit.html?deleteIndex=${optionIndex}`;
+          window.location.href = redirectUrl;
+        });
+
+        cancelButton.addEventListener('click', function () {
+          // Cancel and go back to the edit.html page without deletion
+          const redirectUrl = `/form-editor/templates/1-question/radios/edit.html`;
+          window.location.href = redirectUrl;
+        });
+      });
+    </script>
+
+    <script>
+      document.querySelector('.govuk-button--warning').addEventListener('click', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const optionIndex = urlParams.get('index');
+
+        if (optionIndex) {
+          const redirectUrl = `/form-editor/templates/1-question/radios/edit.html?deleteIndex=${optionIndex}`;
+          console.log("Redirecting to edit.html with deleteIndex:", optionIndex);
+          window.location.href = redirectUrl;
+        } else {
+          console.error("No index found in the URL");
+        }
+      });
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const optionIndex = urlParams.get('index');
+
+        console.log("Received index in delete-option.html:", optionIndex);
+      });
+    </script>
+    {% endblock %}

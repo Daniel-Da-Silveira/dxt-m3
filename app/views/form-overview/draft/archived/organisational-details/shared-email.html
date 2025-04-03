@@ -1,0 +1,219 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Change team details - Apply for a county parish holding number in England" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/onboarding/sign-out-confirmation",
+    navigationItems: [
+    {
+      href: "/library.html",
+      text: "Forms library",
+      id: "library"
+     },
+    {
+      href: "/cph-overview/draft/complete-clean.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/editor/0",
+    text: 'Editor',
+    id: 'editor'
+    }],
+    activeLinkId: ""
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+text: "Back",
+href: "/cph-overview/draft/complete-clean.html"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+  {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+  {% from "govuk/components/table/macro.njk" import govukTable %}
+
+  <!-- <main class="govuk-main-wrapper" id="main-content" role="main"> -->
+  <form class="form" action="/cph-overview/draft/organisational-details/overview/shared-email-changed" method="post">
+
+    {% from "govuk/components/input/macro.njk" import govukInput %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">Team details</h1>
+
+        {{ govukInput({
+        label: {
+          text: "Name of team"
+        },
+        hint: {
+          text: "Enter the name of the policy team or business area responsible for this form"
+        },
+        id: "team-name",
+        value: "Policy directorate",
+        name: "teamName"
+      }) }}
+
+        {{ govukInput({
+        label: {
+          text: "Shared team email address"
+        },
+
+        id: "email",
+        name: "email",
+        type: "email",
+        value: "SM-Defra-Not-Real@defra.gov.uk",
+        autocomplete: "email",
+        spellcheck: false
+      }) }}
+
+        {{ govukButton({
+      text: "Save and continue"
+      }) }}
+      </form>
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            View error messages
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+          {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+          <p class="govuk-body-l">Missing string</p>
+
+          {{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: "Enter name of team",
+      href: "#"
+  },
+    {
+      text: "Enter a shared team email address",
+      href: "#"
+    }
+  ]
+}) }}
+
+          {{ govukInput({
+        label: {
+          text: "Name of team"
+  },
+  errorMessage: {
+    text: "Enter name of team"
+  },
+        hint: {
+          text: "Enter the name of the policy team or business area responsible for this form"
+        },
+        id: "team-name",
+        name: "teamName"
+      }) }}
+
+          {{ govukInput({
+        label: {
+          text: "Shared team email address"
+
+  },
+  errorMessage: {
+    text: "Enter a shared team email address"
+  },
+        id: "email",
+        name: "email",
+        type: "email",
+        autocomplete: "email",
+        spellcheck: false
+      }) }}
+
+          <p class="govuk-body-l">Incorrect email format</p>
+          {{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: "Enter a shared team email address in the correct format",
+      href: "#"
+
+    }
+  ]
+}) }}
+
+          {{ govukInput({
+        label: {
+          text: "Name of team"
+  },
+
+        hint: {
+          text: "Enter the name of the policy team or business area responsible for this form"
+        },
+        id: "team-name",
+        name: "teamName"
+      }) }}
+
+          {{ govukInput({
+        label: {
+          text: "Shared team email address"
+
+  },
+  errorMessage: {
+    text: "Enter a shared team email address in the correct format"
+  },
+        id: "email",
+        name: "email",
+        type: "email",
+        autocomplete: "email",
+        spellcheck: false
+      }) }}
+
+          <p class="govuk-body-l">100 characters or more for team name</p>
+
+          {{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: "Name of team must be 100 characters or less",
+      href: "#"
+    }
+  ]
+}) }}
+
+          {{ govukInput({
+        label: {
+          text: "Name of team"
+  },
+  errorMessage: {
+    text: "Name of team must be 100 characters or less"
+  },
+        hint: {
+          text: "Enter the name of the policy team or business area responsible for this form"
+        },
+        id: "team-name",
+        name: "teamName"
+      }) }}
+
+          {{ govukInput({
+        label: {
+          text: "Shared team email address"
+  },
+        id: "email",
+        name: "email",
+        type: "email",
+        autocomplete: "email",
+        spellcheck: false
+      }) }}
+        </div>
+      </details>
+
+    {% endblock %}

@@ -1,0 +1,159 @@
+{% extends "layouts/main.html" %}
+{# {% set containerClasses = "app-width-container--full-width" %} #}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Manage lists" %}
+
+{% block header %}
+
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "", text: "Lists", id: "lists" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/redesigntest/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "lists"
+}) }}
+
+<script>
+  window.onload = function() {
+    window.location.href = 'list-manager.html';
+  };
+</script>
+
+
+        <div class="x-govuk-masthead x-govuk-masthead--large">
+            <div class="govuk-width-container">
+            {{ govukBackLink({
+                classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+                text: "Back to overview",
+                href: "#"
+            }) }}
+
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+                style="border-bottom:1px solid white; margin-bottom: 0;">
+
+            <h1 class="govuk-heading-l--inverse x-govuk-masthead__title">
+                <span class="govuk-caption-l" style="color: white;">Manage lists</span>
+                Add and edit lists
+            </h1>
+
+            <div class="govuk-button-group">
+                <a href="/redesigntest/questionnumber.html" role="button" draggable="false"
+                    class="govuk-button govuk-button--inverse" data-module="govuk-button">
+                    Add new list
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- manage lists -->
+    
+    <div class="govuk-width-container">
+      
+      <main class="govuk-main-wrapper">
+    
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h1 class="govuk-heading-l">Saved lists</h1>
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+    
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Name
+              </dt>
+              <dd class="govuk-summary-list__value">
+                Sarah Philips
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> name</span></a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Date of birth
+              </dt>
+              <dd class="govuk-summary-list__value">
+                5 January 1978
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> date of birth</span></a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Address
+              </dt>
+              <dd class="govuk-summary-list__value">
+                72 Guild Street<br>London<br>SE23 6FH
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> address</span></a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Contact details
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <p class="govuk-body">07700 900457</p>
+                <p class="govuk-body">sarah.phillips@example.com</p>
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <ul class="govuk-summary-list__actions-list">
+                  <li class="govuk-summary-list__actions-list-item">
+                    <a class="govuk-link" href="#">Add<span class="govuk-visually-hidden"> contact details</span></a>
+                  </li>
+                  <li class="govuk-summary-list__actions-list-item">
+                    <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> contact details</span></a>
+                  </li>
+                </ul>
+              </dd>
+            </div>
+          </dl>
+    
+        </div>
+      </div>
+      
+      </main>
+    </div>
+    
+    <!-- manage lists -->
+
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .app-header--full-width-border {
+        border-bottom: 10px solid #1f70b8;
+    }
+
+    .x-govuk-masthead {
+        background-color: #008531 !important;
+    }
+
+    .preview-container {
+        display: none;
+        outline: solid 1px #008938;
+        position: sticky;
+        top: 0;
+        padding: 20px;
+        box-shadow: 5px 10px #008938;
+        margin-bottom: 30px;
+    }
+</style>
+
+
+{% endblock %}

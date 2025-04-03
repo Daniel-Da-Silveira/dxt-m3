@@ -1,0 +1,795 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName %}Edit page {{ pageNumber }}: question {{ questionNumber }} - {{ form.name }}{% endset %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text:
+    commonTerms.form_editor.information_type.back, href: "/form-editor/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {# <span class="govuk-caption-l" style="color: white">
+            Apply for a county parish holding certificate
+          </span> #}
+          {{ form.name }}
+        </h1>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            {# <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#question-1">Page settings</a>
+                            </li> #}
+                            {# <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#overview-noquestions">Overview of questions</a>
+                            </li> #}
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#question-1-information-type">Question {{ questionNumber }}</a>
+                            </li>
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+                        <span class="govuk-caption-l">Page {{ pageNumber }}</span>
+                        <h2 class="govuk-heading-l">Edit question {{ questionNumber }}</h2>
+
+                        <form id="s" action="/question-configuration-save" method="post">
+
+                          <!-- Question Label Input -->
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m" for="question-label-input-file">
+                              {{ commonTerms.form_editor.question_settings.question }}
+                            </label>
+                            <input class="govuk-input" id="question-label-input-file" name="questionLabelInputFile"
+                              type="text" value="">
+                          </div>
+
+
+                          <!-- Hint Text Input -->
+                          {{ govukTextarea({
+                          label: {
+                          text: commonTerms.form_editor.question_settings.hint,
+                          classes: "govuk-label--m"
+                          },
+                          id: "hint-text-input-file",
+                          name: "hintTextInputFile",
+                          value: data['hint-text-input-file'],
+                          classes: "govuk-textarea",
+                          rows: 3,
+                          describedBy: "hint-text-input-file"
+                          }) }}
+
+                          <!-- Make Optional Checkbox -->
+                          <div class="govuk-form-group">
+                            <div class="govuk-checkboxes--small">
+                              <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="make-optional" name="makeOptional"
+                                  type="checkbox" value="optional">
+                                <label class="govuk-label govuk-checkboxes__label" for="make-optional">
+                                  {{ commonTerms.form_editor.question_settings.optional }}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+
+
+                          <!-- Answer Limits -->
+
+
+                          {% set documentsHtml %}
+                          {{ govukCheckboxes({
+                          name: "contactByDocuments",
+                          items: [
+                          {
+                          value: "documents",
+                          text: commonTerms.form_editor.information_type.file.types.documents
+                          }
+                          ]
+                          }) }}
+                          {% endset -%}
+
+                          {% set imagesHtml %}
+                          {{ govukCheckboxes({
+                          name: "contactByImages",
+                          items: [
+                          {
+                          value: "images",
+                          text: commonTerms.form_editor.information_type.file.types.images
+                          }
+                          ]
+                          }) }}
+                          {% endset -%}
+
+                          {% set tabularHtml %}
+                          {{ govukCheckboxes({
+                          name: "contactByTabular",
+                          items: [
+                          {
+                          value: "tabular",
+                          text: commonTerms.form_editor.information_type.file.types.tabular
+                          }
+                          ]
+                          }) }}
+                          {% endset -%}
+
+                          {% set documentslHtml %}
+                          {{ govukCheckboxes({
+                          name: "documentsOptions",
+                          items: [
+                          {
+                          value: "pdf",
+                          text: commonTerms.form_editor.information_type.file.options.documents.types.pdf,
+                          id: "documents-option-pdf"
+                          },
+                          {
+                          value: "doc",
+                          text: commonTerms.form_editor.information_type.file.options.documents.types.doc,
+                          id: "documents-option-doc"
+                          },
+                          {
+                          value: "docx",
+                          text: commonTerms.form_editor.information_type.file.options.documents.types.docx,
+                          id: "documents-option-docx"
+                          },
+                          {
+                          value: "odt",
+                          text: commonTerms.form_editor.information_type.file.options.documents.types.odt,
+                          id: "documents-option-odt"
+                          },
+                          {
+                          value: "txt",
+                          text: commonTerms.form_editor.information_type.file.options.documents.types.txt,
+                          id: "documents-option-txt"
+                          }
+                          ]
+                          }) }}
+                          {% endset %}
+
+
+                          {% set imagesHtml %}
+                          {{ govukCheckboxes({
+                          name: "imagesOptions",
+                          items: [
+                          {
+                          value: "jpeg",
+                          text: commonTerms.form_editor.information_type.file.options.images.types.jpeg,
+                          id: "images-option-jpeg"
+                          },
+                          {
+                          value: "jpg",
+                          text: commonTerms.form_editor.information_type.file.options.images.types.jpg,
+                          id: "images-option-jpg"
+                          },
+                          {
+                          value: "png",
+                          text: commonTerms.form_editor.information_type.file.options.images.types.png,
+                          id: "images-option-png"
+                          }
+                          ]
+                          }) }}
+                          {% endset %}
+
+
+                          {% set tabularHtml %}
+                          {{ govukCheckboxes({
+                          name: "tabularOptions",
+                          items: [
+                          {
+                          value: "xls",
+                          text: commonTerms.form_editor.information_type.file.options.tabular.types.xls,
+                          id: "tabular-option-xls"
+                          },
+                          {
+                          value: "xlsx",
+                          text: commonTerms.form_editor.information_type.file.options.tabular.types.xlsx,
+                          id: "tabular-option-xlsx"
+                          },
+                          {
+                          value: "csv",
+                          text: commonTerms.form_editor.information_type.file.options.tabular.types.csv,
+                          id: "tabular-option-csv"
+                          },
+                          {
+                          value: "ods",
+                          text: commonTerms.form_editor.information_type.file.options.tabular.types.ods,
+                          id: "tabular-option-ods"
+                          }
+                          ]
+                          }) }}
+                          {% endset %}
+
+
+                          {{ govukCheckboxes({
+                          name: "contact",
+                          fieldset: {
+                          legend: {
+                          text: commonTerms.form_editor.information_type.file.select_title,
+                          isPageHeading: true,
+                          classes: "govuk-fieldset__legend--m"
+                          }
+                          },
+                          items: [
+                          {
+                          value: "documents",
+                          id: "top-level-documents",
+                          dataGroup: "documents",
+                          text: commonTerms.form_editor.information_type.file.types.documents,
+                          conditional: {
+                          html: documentslHtml
+                          }
+                          },
+                          {
+                          value: "images",
+                          id: "top-level-images",
+                          dataGroup: "images",
+                          text: commonTerms.form_editor.information_type.file.types.images,
+                          conditional: {
+                          html: imagesHtml
+                          }
+                          },
+                          {
+                          value: "tabular",
+                          id: "top-level-tabular",
+                          dataGroup: "tabular",
+                          text: commonTerms.form_editor.information_type.file.types.tabular,
+                          conditional: {
+                          html: tabularHtml
+                          }
+                          }
+                          ]
+                          }) }}
+
+
+                          {{ govukInput({
+                          label: {
+                          text: commonTerms.form_editor.question_settings.short_description.title,
+                          classes: "govuk-label--m",
+                          isPageHeading: false
+                          },
+                          hint: {
+                          text: commonTerms.form_editor.question_settings.short_description.hint
+                          },
+                          id: "error-message-input-shorttext",
+                          name: "errorMessageInputShorttext"
+                          }) }}
+
+
+                          <!-- Answer limits -->
+                          <details class="govuk-details" data-module="govuk-details">
+                            <summary class="govuk-details__summary">
+                              <span class="govuk-details__summary-text">
+                                {{ commonTerms.form_editor.question_settings.answer_limits.title }}
+                              </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                              <!-- Default Content for Question 1 -->
+                              <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+                                <!-- Page Heading Input -->
+                                {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                                {{ govukInput({
+                                label: {
+                                text: commonTerms.form_editor.question_settings.answer_limits.min_length.title,
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                classes: "govuk-input--width-3",
+                                hint: {
+                                text: commonTerms.form_editor.question_settings.answer_limits.min_length.hint
+                                },
+                                id: "min-files",
+                                name: "minFiles",
+                                inputmode: "numeric",
+                                spellcheck: false
+                                }) }}
+
+                                {{ govukInput({
+                                label: {
+                                text: commonTerms.form_editor.question_settings.answer_limits.max_length.title,
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                classes: "govuk-input--width-3",
+                                hint: {
+                                text: commonTerms.form_editor.question_settings.answer_limits.max_length.hint
+                                },
+                                id: "min-files",
+                                name: "minFiles",
+                                inputmode: "numeric",
+                                spellcheck: false
+                                }) }}
+                              </div>
+                          </details>
+
+
+
+                          <!-- Section Break -->
+                          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                          <!-- Question Settings Summary List -->
+                          <h2 class="govuk-heading-m">{{ commonTerms.form_editor.question_settings.title }}</h2>
+
+                          {{ govukSummaryList({
+                          "rows": [
+                          {
+                          "key": {
+                          "text": "Type of information"
+                          },
+                          "value": {
+                          "html": commonTerms.form_editor.information_type.file.title
+                          },
+                          "actions": {
+                          "items": [
+                          {
+                          "href": "/form-editor/templates/1-question/information-type.html",
+                          "text": commonTerms.form_editor.common.edit,
+                          "visuallyHiddenText": " type"
+                          }
+                          ]
+                          }
+                          }
+                          ]
+                          }) }}
+
+                          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+
+                          <!-- Other form elements... -->
+
+                          <!-- Submit Button -->
+                          <div class="moj-button-action">
+                            {{ govukButton({
+                            text: commonTerms.form_editor.common.continue,
+                            type: 'submit'
+                            }) }}
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column for Preview -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+        <!-- Before content -->
+        <div id="before-content" style=" background-color:  #cce2d8;">
+          <p class="govuk-body-s" style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px;
+  text-align: center;"> Previews
+          </p>
+        </div>
+
+        <div style="margin-top: 60px;">
+          {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+
+          <div class="govuk-tabs" data-module="govuk-tabs">
+            <h2 class="govuk-tabs__title">
+              Contents
+            </h2>
+            <ul class="govuk-tabs__list">
+              <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+              </li>
+              <li class="govuk-tabs__list-item">
+                <a class="govuk-tabs__tab" href="#tab-two">Error messages</a>
+              </li>
+            </ul>
+
+            <div class="govuk-tabs__panel" id="tab-one">
+              <!-- Page Preview Content -->
+              <p class="govuk-body-s" style="margin-bottom: 30px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview this page in a new tab
+                </a>
+              </p>
+
+              {% include "/form-editor/question-type/fileupload/previews/edit.html" %}
+
+              <a href="#edit-page" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to edit page
+              </a>
+            </div>
+
+            <div class="govuk-tabs__panel" id="tab-two">
+              <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview error messages in a new tab
+                </a>
+              </p>
+              <!-- Error Messages Content -->
+              <div class="govuk-error-summary" data-disable-auto-focus="true">
+                <h2 class="govuk-error-summary__title">There is a problem</h2>
+                <ul class="govuk-list govuk-error-summary__list">
+                  <!-- Error: No file selected -->
+                  <li>
+                    <a id="no-file-selected-error" class="govuk-error-message" href="#file-upload-input">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      Select a <span id="file-type-description">[short description]</span>
+                    </a>
+                  </li>
+
+                  <!-- Error: Wrong file type -->
+                  <li>
+                    <a id="wrong-file-type-error" class="govuk-error-message" href="#file-upload-input">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      The selected file must be a <span id="allowed-file-types">files you accept</span>
+                    </a>
+                  </li>
+
+
+                  <!-- Error: File too large -->
+                  <li>
+                    <a id="file-too-large-error" role="presentation" class="govuk-error-message"
+                      href="#file-upload-input">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      The selected file must be smaller than <span id="max-file-size">[largest file size]</span>
+                    </a>
+                  </li>
+
+                  <!-- Error: File is empty -->
+                  <li>
+                    <a id="file-empty-error" class="govuk-error-message" href="#file-upload-input">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      The selected file is empty
+                    </a>
+                  </li>
+
+                  <!-- Error: File contains a virus -->
+                  <li>
+                    <a id="file-virus-error" class="govuk-error-message" href="#file-upload-input">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      The selected file contains a virus
+                    </a>
+                  </li>
+
+                  <!-- Error: File is password protected -->
+                  <li>
+                    <a id="file-password-protected-error" class="govuk-error-message" href="#file-upload-input">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      The selected file is password protected
+                    </a>
+                  </li>
+
+                  <!-- Error: File could not be uploaded -->
+                  <li>
+                    <a id="file-upload-problem-error" class="govuk-error-message" href="#file-upload-input">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      The selected file could not be uploaded – try again
+                    </a>
+                  </li>
+
+                  <!-- Error: Too many files selected -->
+                  <li>
+                    <a id="too-many-files-error" class="govuk-error-message" href="#file-upload-input">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      You can only select up to <span id="max-files">1</span> file at the same time.
+                    </a>
+                  </li>
+
+
+                </ul>
+                <h3 class="govuk-heading-s">If you set answer limits:</h3>
+                <ul class="govuk-list govuk-error-summary__list">
+                  <!-- Too long input error -->
+
+                  <!-- Too short input error -->
+                  <li>
+                    <a id="too-short-input-error-textarea" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      <span id="error-dynamic-text-short">You must upload [min file count] files or more</span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a id="too-long-input-error-textarea" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      <span id="error-dynamic-text-max">You can only upload [max file count] or less</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <a href="#error-message-input-shorttext" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to edit short description
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- JavaScript code -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // DOM Elements
+          const domElements = {
+            // Existing elements
+            questionLabelInputFile: document.getElementById('question-label-input-file'),
+            questionLabelLegend: document.getElementById('question-label-legend'),
+            hintTextInputFile: document.getElementById('hint-text-input-file'),
+            hintTextOutput: document.getElementById('hint-text-output'),
+            makeOptionalCheckbox: document.getElementById('make-optional'),
+
+            // New elements for page heading and guidance text
+            pageHeadingInputFile: document.getElementById('page-heading-input-file'),
+            dynamicHeading: document.getElementById('dynamic-heading'),
+            guidanceFile: document.getElementById('guidance-file'),
+            guidanceParagraph: document.getElementById('guidance-paragraph'),
+
+            // New elements for short description
+            errorMessageInputShorttext: document.getElementById('error-message-input-shorttext'),
+            fileTypeDescriptionSpan: document.getElementById('file-type-description'),
+          };
+
+          // Initialize event listeners
+          initializeEventListeners();
+
+          function initializeEventListeners() {
+            // Update question label
+            if (domElements.questionLabelInputFile && domElements.questionLabelLegend) {
+              domElements.questionLabelInputFile.addEventListener('input', updateQuestionLabel);
+            }
+
+            // Update hint text and handle placeholder
+            if (domElements.hintTextInputFile && domElements.hintTextOutput) {
+              domElements.hintTextInputFile.addEventListener('input', updateHintText);
+              domElements.hintTextInputFile.addEventListener('focus', showPlaceholderHint);
+              domElements.hintTextInputFile.addEventListener('blur', clearPlaceholderHint);
+            }
+
+            // Update page heading and handle placeholder
+            if (domElements.pageHeadingInputFile && domElements.dynamicHeading) {
+              domElements.pageHeadingInputFile.addEventListener('input', updatePageHeading);
+              domElements.pageHeadingInputFile.addEventListener('focus', showPlaceholderHeading);
+              domElements.pageHeadingInputFile.addEventListener('blur', clearPlaceholderHeading);
+            }
+
+            // Update optional label
+            if (domElements.makeOptionalCheckbox) {
+              domElements.makeOptionalCheckbox.addEventListener('change', updateQuestionLabel);
+            }
+
+            // Update guidance text and handle placeholder
+            if (domElements.guidanceFile && domElements.guidanceParagraph) {
+              domElements.guidanceFile.addEventListener('input', updateGuidanceText);
+              domElements.guidanceFile.addEventListener('focus', showPlaceholderGuidance);
+              domElements.guidanceFile.addEventListener('blur', clearPlaceholderGuidance);
+            }
+
+            // Update short description dynamically
+            if (domElements.errorMessageInputShorttext && domElements.fileTypeDescriptionSpan) {
+              domElements.errorMessageInputShorttext.addEventListener('input', updateFileTypeDescription);
+            }
+
+            // Apply focus/blur highlighting
+            applyHighlightOnFocus(domElements.questionLabelInputFile, domElements.questionLabelLegend);
+            applyHighlightOnFocus(domElements.hintTextInputFile, domElements.hintTextOutput);
+            applyHighlightOnFocus(domElements.pageHeadingInputFile, domElements.dynamicHeading);
+            applyHighlightOnFocus(domElements.guidanceFile, domElements.guidanceParagraph);
+            applyHighlightOnFocus(domElements.errorMessageInputShorttext, domElements.fileTypeDescriptionSpan);
+          }
+
+          function updateQuestionLabel() {
+            const suffix = domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+            domElements.questionLabelLegend.textContent =
+              domElements.questionLabelInputFile.value || 'Question';
+            domElements.questionLabelLegend.textContent += suffix;
+          }
+
+          function updateHintText() {
+            domElements.hintTextOutput.textContent = domElements.hintTextInputFile.value;
+          }
+
+          function updatePageHeading() {
+            domElements.dynamicHeading.textContent = domElements.pageHeadingInputFile.value;
+          }
+
+          function updateGuidanceText() {
+            domElements.guidanceParagraph.textContent = domElements.guidanceFile.value;
+          }
+
+          function updateFileTypeDescription() {
+            domElements.fileTypeDescriptionSpan.textContent =
+              domElements.errorMessageInputShorttext.value || '[short description]';
+
+            // Add highlight class
+            domElements.fileTypeDescriptionSpan.classList.add('highlight');
+
+            // Remove highlight after a short delay
+            setTimeout(() => {
+              domElements.fileTypeDescriptionSpan.classList.remove('highlight');
+            }, 500); // Highlight lasts for 500ms
+          }
+
+          function applyHighlightOnFocus(inputElement, targetElement) {
+            if (inputElement && targetElement) {
+              inputElement.addEventListener('focus', function () {
+                targetElement.classList.add('highlight');
+              });
+              inputElement.addEventListener('blur', function () {
+                targetElement.classList.remove('highlight');
+              });
+
+              // If the input is already focused
+              if (document.activeElement === inputElement) {
+                targetElement.classList.add('highlight');
+              }
+            }
+          }
+
+          // Placeholder handling for hint text
+          function showPlaceholderHint() {
+            if (!domElements.hintTextInputFile.value) {
+              domElements.hintTextOutput.textContent = 'Hint text';
+            }
+          }
+
+          function clearPlaceholderHint() {
+            if (!domElements.hintTextInputFile.value) {
+              domElements.hintTextOutput.textContent = '';
+            }
+          }
+
+          // Placeholder handling for page heading
+          function showPlaceholderHeading() {
+            if (!domElements.pageHeadingInputFile.value) {
+              domElements.dynamicHeading.textContent = 'Page heading';
+            }
+          }
+
+          function clearPlaceholderHeading() {
+            if (!domElements.pageHeadingInputFile.value) {
+              domElements.dynamicHeading.textContent = '';
+            }
+          }
+
+          // Placeholder handling for guidance text
+          function showPlaceholderGuidance() {
+            if (!domElements.guidanceFile.value) {
+              domElements.guidanceParagraph.textContent = 'Guidance text';
+            }
+          }
+
+          function clearPlaceholderGuidance() {
+            if (!domElements.guidanceFile.value) {
+              domElements.guidanceParagraph.textContent = '';
+            }
+          }
+        });
+
+
+
+      </script>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          // DOM elements
+          const errorMessageInput = document.getElementById('error-message-input-shorttext');
+          const fileTypeDescriptionSpan = document.getElementById('file-type-description');
+
+          /**
+           * Update the file type description dynamically and add highlight
+           */
+          function updateFileTypeDescription() {
+            if (errorMessageInput && fileTypeDescriptionSpan) {
+              // Update the span content
+              fileTypeDescriptionSpan.textContent = errorMessageInput.value || '[short description]';
+
+              // Add highlight class
+              fileTypeDescriptionSpan.classList.add('highlight');
+
+              // Remove highlight after a short delay
+              setTimeout(() => {
+                fileTypeDescriptionSpan.classList.remove('highlight');
+              }, 500); // Highlight lasts for 500ms
+            } else {
+              console.error('Error message input or file type description span not found.');
+            }
+          }
+
+          // Attach input event listener
+          if (errorMessageInput) {
+            errorMessageInput.addEventListener('input', updateFileTypeDescription);
+          }
+        });
+
+      </script>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          window.scrollTo(0, 0);
+        });
+
+      </script>
+
+      <!-- CSS for Highlighting -->
+      <style>
+        .highlight {
+          background-color: #ffe5cc;
+          border-bottom: 2px solid #ffb266;
+        }
+
+        #before-content {
+          position: absolute;
+          top: 0;
+          left: 10 !important;
+          right: 0;
+          width: 100%;
+          padding: 10px !important;
+          box-sizing: border-box;
+          z-index: 1;
+          border-bottom: 1px solid #008938;
+          padding-left: 10px;
+        }
+
+        #second-container {
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        #second-container>* {
+          padding-left: 0px;
+          z-index: 2;
+        }
+      </style>
+    </div>
+  </div>
+  {% endblock %}

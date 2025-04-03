@@ -1,0 +1,37 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+{{ pageName }} - GOV.UK Forms
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h1 class="govuk-heading-l">{{ pageName }}</h1>
+
+                <form action="/form-overview/draft/support/link" method="post">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="contactLink">
+                            Online contact link
+                        </label>
+                        <div id="contactLink-hint" class="govuk-hint">
+                            Enter the URL where users can find online support
+                        </div>
+                        <input class="govuk-input" id="contactLink" name="contactLink" type="url" autocomplete="url"
+                            value="{{ form.support.link }}" aria-describedby="contactLink-hint">
+                    </div>
+
+                    <div class="govuk-button-group">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">
+                            Save and continue
+                        </button>
+                        <a class="govuk-link" href="/form-overview/draft/overview">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

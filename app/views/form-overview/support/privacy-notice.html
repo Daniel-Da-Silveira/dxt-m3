@@ -1,0 +1,158 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Provide a link to privacy information for this form - Apply for a county parish holding number in
+England" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{
+href: "/library.html",
+text: "Forms library",
+id: "library"
+},
+{
+href: "/form-overview/draft/overview",
+text: "Overview",
+id: "overview"
+},{
+href: "/editor.html",
+text: 'Editor',
+id: 'editor'
+}],
+activeLinkId: "/"
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "/form-overview/draft/overview"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+    {% from "govuk/components/input/macro.njk" import govukInput %}
+
+    <span class="govuk-caption-l">Apply for a county parish holding number in England</span>
+    <h1 class="govuk-heading-l">
+      Privacy notice for this form
+    </h1>
+
+    <p class="govuk-body-l">To comply with the UK General Data Protection Regulation (UK GDPR), you must provide privacy
+      information for the people who will enter their data into your form.</p>
+
+    <form action="/form-overview/draft/support/privacy-notice" method="post">
+      {{ govukInput({
+      label: {
+      text: "Link to privacy notice for this form",
+      classes: "govuk-label--m govuk-!-padding-top-4",
+      isPageHeading: true
+      },
+      hint: {
+      text: "For example, https://www.gov.uk/help/privacy-notice"
+      },
+      id: "privacy-link",
+      name: "privacyLink",
+      type: "url",
+      autocomplete: "off",
+      spellcheck: false,
+      value: form.privacyNotice
+      }) }}
+
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Save and continue
+        </button>
+        <a href="/form-overview/draft/overview" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      View error messages
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    <p class="govuk-body-l">Empty string</p>
+
+    {{ govukErrorSummary({
+    titleText: "There is a problem",
+    errorList: [
+    {
+    text: "Enter a link to a privacy notice for this form",
+    href: "#privacy-link"
+    }
+    ]
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: "Link to privacy notice for this form",
+    classes: "govuk-label--m govuk-!-padding-top-4",
+    isPageHeading: true
+    },
+    hint: {
+    text: "For example, https://www.gov.uk/help/privacy-notice"
+    },
+    id: "privacy-link",
+    name: "privacyLink",
+    type: "url",
+    autocomplete: "off",
+    spellcheck: false,
+    errorMessage: {
+    text: "Enter a link to a privacy notice for this form"
+    }
+    }) }}
+
+    <p class="govuk-body-l">Incorrect URL format</p>
+
+    {{ govukErrorSummary({
+    titleText: "There is a problem",
+    errorList: [
+    {
+    text: "Enter a link to a privacy notice for this form in the correct format",
+    href: "#privacy-link"
+    }
+    ]
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: "Link to privacy notice for this form",
+    classes: "govuk-label--m govuk-!-padding-top-4",
+    isPageHeading: true
+    },
+    hint: {
+    text: "For example, https://www.gov.uk/help/privacy-notice"
+    },
+    id: "privacy-link",
+    name: "privacyLink",
+    type: "url",
+    autocomplete: "off",
+    spellcheck: false,
+    errorMessage: {
+    text: "Enter a link to a privacy notice for this form in the correct format"
+    }
+    }) }}
+  </div>
+</details>
+{% endblock %}

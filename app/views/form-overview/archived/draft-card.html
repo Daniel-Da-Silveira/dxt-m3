@@ -1,0 +1,323 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set formLibrary = require("data/form-library.json") %}
+
+{% switch data["sort"] %}
+  {% case "updated-oldest" %}
+    {% set sortBy = "updated.date" %}
+    {% set sortReverse = false %}
+  {% case "status" %}
+    {% set sortBy = "status" %}
+    {% set sortReverse = false %}
+  {% case "published-newest" %}
+    {% set filterBy = "published" %}
+    {% set sortBy = "published.date" %}
+    {% set sortReverse = true %}
+  {% case "published-oldest" %}
+    {% set filterBy = "published" %}
+    {% set sortBy = "published.date" %}
+    {% set sortReverse = false %}
+{% endswitch %}
+
+{% set formItems = formLibrary.items | selectattr(filterBy) if filterBy else formLibrary.items %}
+{% set formItems = formItems | sort(attribute="updated.date", reverse=true) %}
+
+{% set pageCount = (formItems.length / 25) | round(0, "ceil") %}
+{% set pageCurrent = data["page"] | abs if data["page"] and data["page"] | abs <= pageCount else 1 %}
+
+{% set pageName = "Form home - Apply for a county parish holding number in England" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms designer",
+    serviceName: "Apply for a county parish holding number in England",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/form-designer-v2/onboarding/sign-out-confirmation",
+    navigationItems: [{
+      href: "/",
+      text: "Overview",
+      id: "overview"
+    }],
+    activeLinkId: "overview"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back to form library",
+href: "/index.html"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <!-- <h1 class="govuk-heading-xl">Apply for a county parish holding number in England</h1> -->
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+<h1 class="govuk-heading-l">Forms</h1>
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% set titleTag = govukTag({ text: "Draft", classes: "govuk-tag--orange" }) %}
+
+
+{{ govukSummaryList({
+  card: {
+    title: {
+      html: "Status " + titleTag | safe
+    },
+
+    actions: {
+      items: [
+        {
+          href: "#",
+          text: "Edit draft",
+          visuallyHiddenText: "of University of Gloucestershire"
+        },
+        {
+          href: "#",
+          text: "Delete draft",
+          visuallyHiddenText: "from University of Gloucestershire"
+        }
+      ]
+    }
+  },
+  rows: [
+    {
+      key: {
+        text: "Updated"
+      },
+      value: {
+        html: "22 Mar 2024 by Chris Smith"
+      }
+    },
+    {
+      key: {
+        text: "Created"
+      },
+      value: {
+        html: "11 Oct 2023 by Waylon Brady"
+      }
+    },
+    {
+      key: {
+        text: "Preview link"
+      },
+      value: {
+        html: '<a href="https://preview.submit-a-form-to-defra.gov.uk/apply-for-a county-parish-holding-number" class="govuk-link">https://preview.submit-a-form-to-defra.gov.uk/apply-for-a county-parish-holding-number</a>'
+      }
+    }
+  ]
+}) }}
+
+
+
+
+<!--
+
+<div class="govuk-summary-card">
+  <div class="govuk-summary-card__title-wrapper">
+    <h2 class="govuk-summary-card__title">
+        Status
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <strong class="govuk-tag govuk-tag--orange">
+          Draft
+        </strong>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Action
+      </dt>
+
+      <dd class="govuk-summary-list__actions" >
+        <ul class="govuk-summary-list__actions-list" style="text-align: left; font-weight: 600;>
+          <li class="govuk-summary-list__actions-list-item">
+            <a class="govuk-link govuk-link--no-visited-state" href="https://www.figma.com/proto/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?page-id=1330%3A51984&type=design&node-id=3671-492534&viewport=-13228%2C-8300%2C0.51&t=qoFA3GbdpLPRNHNU-8&scaling=scale-down-width&starting-point-node-id=3551%3A376245&hide-ui=1" class="govuk-link" rel="noreferrer noopener" target="_blank">Edit<span class="govuk-visually-hidden"> contact details</span></a>
+          </li>
+        </ul>
+      </dd>
+
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Updated
+      </dt>
+      <dd class="govuk-summary-list__value">
+
+      </dd>
+
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Created
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <p class="govuk-body">11 Oct 2023 by Waylon Brady</p>
+      </dd>
+
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Preview link
+      </dt>
+      <dd class="govuk-summary-list__value" style="padding-right:0!important;">
+        <p class="govuk-body">https://preview.submit-a-form-to-defra.gov.uk/apply-for-a county-parish-holding-number</p>
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <ul class="govuk-summary-list__actions-list">
+          <li class="govuk-summary-list__actions-list-item">
+            <a class="govuk-link" href="#">Copy<span class="govuk-visually-hidden"> contact details</span></a>
+          </li>
+          <li class="govuk-summary-list__actions-list-item">
+            <a class="govuk-link" href="#">View<span class="govuk-visually-hidden"> contact details</span></a>
+          </li>
+        </ul>
+      </dd>
+
+
+
+    </div>
+  </dl> -->
+
+
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+      <h2 class="govuk-heading-m govuk-!-padding-top-4">Organisation details</h2>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Completed forms sent to
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <a href="/cph-home/notification-email.html" class="govuk-link">Enter email address</a>
+
+          </dd>
+
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Form name
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Apply for a county parish holding number in England
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> date of birth</span></a>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Lead organisation
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Center for Environment, Fisheries and Aquaculture Science - Cefas
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> date of birth</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Team name
+          </dt>
+          <dd class="govuk-summary-list__value">
+            Policy directorate
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> date of birth</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Shared email address
+          </dt>
+          <dd class="govuk-summary-list__value">
+            SM-Defra-Not-Real@defra.gov.uk
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> date of birth</span></a>
+          </dd>
+        </div>
+      </dl>
+
+
+</div>
+
+
+  <div class="govuk-grid-column-one-third">
+
+    <div style="background-color: #f7f7f7; padding: 15px;">
+      <h2 class="govuk-heading-m">Manage form</h2>
+      <a href="/cph-home/make-draft-live-no-email.html">
+        <button type="submit" class="govuk-button" data-module="govuk-button" style="width: 100%; margin-bottom: 15px;">
+            Make draft live
+        </button>
+    </a>
+
+<!--
+      <button type="submit" class="govuk-button govuk-button--warning" data-module="govuk-button" style="width: 100%;margin-bottom: 15px;">
+        Close live form
+      </button> -->
+      <a href="#" class="govuk-link">Delete draft</a>
+  </div>
+
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    <h2 class="govuk-heading-m">Internal notes</h2>
+    {{ govukButton({
+      text: "Add internal note",
+      classes: "govuk-button--secondary"
+    }) }}
+
+
+
+
+
+          {%- from "moj/components/timeline/macro.njk" import mojTimeline -%}
+
+
+          {{ mojTimeline({
+            items: [
+              {
+                label: {
+                  text:  "Changed field validation behaviour"
+                },
+                text: "Updated the email address input field to include a more sophisticated validation check, reducing the incidence of users entering incorrect email formats.",
+                datetime: {
+                  timestamp: "2019-06-07T12:32:00.000Z",
+                  type: "datetime"
+                },
+                byline: {
+                  text: "Chris Smith"
+                }
+              },
+              {
+                label: {
+                  text:  "New form created"
+                },
+                text: "Name of form: Report a dead wild bird. Lead organisation: Defra. SME/Policy team: Policy directorate.",
+                datetime: {
+                  timestamp: "2019-06-07T12:32:00.000Z",
+                  type: "datetime"
+                },
+                byline: {
+                  text: "Moshe Pitt"
+                }
+              }
+            ]
+          }) }}
+
+        </div>
+  </div>
+</div>
+
+{% endblock %}

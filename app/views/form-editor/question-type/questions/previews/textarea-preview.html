@@ -1,0 +1,13 @@
+{% from "./_label_size_macro.html" import get_label_size -%}
+
+{%- set page_heading = data['pageHeadingTextarea'] if data is defined and data['pageHeadingTextarea'] else false -%}
+{%- set question_count = currentPage.questions | length if currentPage and currentPage.questions else 1 -%}
+{%- set labelSize = get_label_size(page_heading, question_count, true) -%}
+
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-label--{{ labelSize }}" for="textarea">{{ question.label }}</label>
+    {%- if question.hint -%}
+    <div id="textarea-hint" class="govuk-hint">{{ question.hint }}</div>
+    {%- endif -%}
+    <textarea class="govuk-textarea" id="textarea" name="textarea" rows="5" aria-describedby="textarea-hint"></textarea>
+</div>

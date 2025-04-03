@@ -1,0 +1,186 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Contact link for support - Apply for a county parish holding number in England" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{
+href: "/library.html",
+text: "Forms library",
+id: "library"
+},
+{
+href: "/form-overview/draft/overview",
+text: "Overview",
+id: "overview"
+},{
+href: "/editor.html",
+text: 'Editor',
+id: 'editor'
+}],
+activeLinkId: "/"
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "/form-overview/draft/overview"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <!-- <h1 class="govuk-heading-xl">Apply for a county parish holding number in England</h1> -->
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+    {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+    {% from "govuk/components/input/macro.njk" import govukInput %}
+    {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+    {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+    <span class="govuk-caption-l">Apply for a county parish holding number in England</span>
+    <h1 class="govuk-heading-l">
+      Contact link for support
+    </h1>
+
+    <form action="/form-overview/draft/support/link" method="post">
+      {{ govukInput({
+      id: "contactLink",
+      name: "contactLink",
+      classes: "govuk-label--l",
+      isPageHeading: true,
+      label: {
+      text: "Contact link"
+      },
+      hint: {
+      text: "For example, 'https://www.gov.uk/guidance/contact-defra'"
+      },
+      value: form.support.link
+      }) }}
+
+      {{ govukInput({
+      id: "contactLinkDescription",
+      name: "contactLinkDescription",
+      classes: "govuk-!-width-full",
+      label: {
+      text: "Text to describe the contact link"
+      },
+      hint: {
+      text: "For example, 'Online contact form'"
+      }
+      }) }}
+
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Save and continue
+        </button>
+        <a href="/form-overview/draft/overview" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      View error messages
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    <p class="govuk-body-l">Empty string</p>
+
+    {{ govukErrorSummary({
+    titleText: "There is a problem",
+    errorList: [
+    {
+    text: "Enter a contact link for support",
+    href: "#contactLink"
+    },
+    {
+    text: "Enter text to describe the contact link for support",
+    href: "#contactLinkDescription"
+    }
+    ]
+    }) }}
+
+    {{ govukInput({
+    id: "contactLink",
+    name: "contactLink",
+    classes: "govuk-label--l",
+    isPageHeading: true,
+    label: {
+    text: "Contact link"
+    },
+    hint: {
+    text: "For example, 'https://www.gov.uk/guidance/contact-defra'"
+    },
+    errorMessage: {
+    text: "Enter a contact link for support"
+    }
+    }) }}
+
+    {{ govukInput({
+    id: "contactLinkDescription",
+    name: "contactLinkDescription",
+    classes: "govuk-!-width-full",
+    label: {
+    text: "Text to describe the contact link"
+    },
+    hint: {
+    text: "For example, 'Online contact form'"
+    },
+    errorMessage: {
+    text: "Enter text to describe the contact link for support"
+    }
+    }) }}
+
+    <p class="govuk-body-l">Incorrect URL format</p>
+
+    {{ govukErrorSummary({
+    titleText: "There is a problem",
+    errorList: [
+    {
+    text: "Enter a contact link for support in the correct format",
+    href: "#contactLink"
+    }
+    ]
+    }) }}
+
+    {{ govukInput({
+    id: "contactLink",
+    name: "contactLink",
+    classes: "govuk-label--l",
+    isPageHeading: true,
+    label: {
+    text: "Contact link"
+    },
+    hint: {
+    text: "For example, 'https://www.gov.uk/guidance/contact-defra'"
+    },
+    errorMessage: {
+    text: "Enter a contact link for support in the correct format"
+    }
+    }) }}
+
+  </div>
+</details>
+
+{% endblock %}

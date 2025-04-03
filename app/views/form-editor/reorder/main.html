@@ -1,0 +1,431 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Add and edit your pages - Apply for a county parish holding number in England" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing.html", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+        {{ govukBackLink({
+        classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+        text: "Back to add and edit pages",
+        href: "/form-editor/listing.html"
+        }) }}
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom:1px solid white; margin-bottom: 0;">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    <span class="govuk-caption-l" style="color: white;">Apply for a county parish holding number</span>
+                    Re-order pages
+                </h1>
+                <p class="x-govuk-masthead__description">
+                    Use the up and down buttons or drag and drop pages to re-order them.
+                </p>
+                <div class="govuk-button-group">
+                    <a href="#" role="button" draggable="false" class="govuk-button govuk-button--inverse"
+                        id="save-order-button">
+                        Save changes
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+        <div id="notification-banner-container"></div>
+
+        <form id="reorderable-form" action="/submit" method="POST">
+            <ol class="gem-c-reorderable-list js-enabled" id="reorderable-list" data-module="reorderable-list"
+                data-reorderable-list-module-started="true">
+                {% if formPages.length %}
+                {% for page in formPages %}
+                <li class="gem-c-reorderable-list__item" draggable="true" data-page-id="{{ page.pageId }}">
+                    <div class="gem-c-reorderable-list__wrapper">
+                        <div class="gem-c-reorderable-list__content">
+                            <p class="gem-c-reorderable-list__title">
+                                <span class="page-number"></span>
+                                {% if page.pageHeading %}
+                                {{ page.pageHeading }}
+                                {% elseif page.questions and page.questions.length %}
+                                {{ page.questions[0].label }}
+                                {% else %}
+                                Untitled Page
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="gem-c-reorderable-list__actions">
+                            <div class="govuk-form-group">
+                                <label for="input-{{ loop.index }}" class="gem-c-label govuk-label">
+                                    Position<span class="govuk-visually-hidden"> for Page</span>
+                                </label>
+                                <input class="gem-c-input govuk-input govuk-input--width-2" id="input-{{ loop.index }}"
+                                    inputmode="numeric" name="ordering[{{ loop.index }}]" spellcheck="false" type="text"
+                                    value="{{ loop.index }}">
+                            </div>
+                            <button class="gem-c-button govuk-button govuk-button--secondary js-reorderable-list-up"
+                                type="button" aria-label="Move Page Up">Up</button>
+                            <button class="gem-c-button govuk-button govuk-button--secondary js-reorderable-list-down"
+                                type="button" aria-label="Move Page Down">Down</button>
+                        </div>
+                    </div>
+                    {% if page.questions and page.questions.length > 1 %}
+                    <div class="govuk-summary-card__content" style="max-width: 50rem; margin: 0 auto;">
+                        <dl class="govuk-summary-list">
+                            {% for question in page.questions %}
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">Question {{ loop.index }}</dt>
+                                <dd class="govuk-summary-list__value">{{ question.label }}</dd>
+                            </div>
+                            {% endfor %}
+                        </dl>
+                    </div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+                {% else %}
+                <p>No pages have been created yet.</p>
+                {% endif %}
+            </ol>
+
+
+            {% from "govuk/components/button/macro.njk" import govukButton %}
+
+            {# <div class="govuk-button-group">
+                {{ govukButton({
+                text: "Save and close"
+                }) }}
+
+                {{ govukButton({
+                text: "Cancel",
+                classes: "govuk-button--secondary"
+                }) }}
+            </div> #}
+        </form>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+        <style>
+            .govuk-summary-card__content {
+                padding-left: 0;
+            }
+
+            /* Ensure the chosen item remains solid */
+            .sortable-chosen {
+                opacity: 1 !important;
+                background-color: white !important;
+            }
+
+            /* Style for hover state of the list item */
+            .gem-c-reorderable-list__item:hover {
+                background-color: #f0f0f0;
+                /* Light grey background on hover */
+
+                /* Change border color on hover */
+                cursor: move;
+                /* Change cursor to pointer on hover */
+            }
+
+            /* Style for the chosen item (when selected) */
+            .gem-c-reorderable-list__item.sortable-chosen {
+                background-color: #e5f5ff;
+                outline: 4px solid #ffdd00;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+            }
+
+            .gem-c-reorderable-list {
+                list-style-type: none;
+                margin-bottom: 30px;
+                margin-top: 0;
+                padding-left: 0;
+                position: relative;
+                font-family: "GDS Transport", arial, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                font-weight: 700;
+                font-size: 1rem;
+                line-height: 1.25;
+            }
+
+            @media (min-width: 40.0625em) {
+                .gem-c-reorderable-list {
+                    font-size: 1.1875rem;
+                    line-height: 1.3157894737;
+                }
+            }
+
+            .gem-c-reorderable-list__item {
+                margin-bottom: 15px;
+                border-left: 10px solid #008938;
+                outline: 1px solid #b1b4b6;
+                padding: 15px;
+                transition: background-color 0.3s, border-color 0.3s;
+                /* Smooth transition for hover effects */
+            }
+
+            @media (min-width: 48.0625em) {
+                .gem-c-reorderable-list__item {
+                    cursor: move;
+                }
+            }
+
+            .gem-c-reorderable-list__wrapper {
+                display: block;
+            }
+
+            @media (min-width: 48.0625em) {
+                .gem-c-reorderable-list__wrapper {
+                    display: inline-flex;
+                    width: 100%;
+                }
+            }
+
+            .gem-c-reorderable-list__content {
+                margin-bottom: 10px;
+            }
+
+            @media (min-width: 48.0625em) {
+                .gem-c-reorderable-list__content {
+                    margin-bottom: 0;
+                    flex: 0 1 auto;
+                    min-width: 65%;
+                }
+            }
+
+            .gem-c-reorderable-list__actions {
+                display: block;
+            }
+
+            @media (min-width: 48.0625em) {
+                .gem-c-reorderable-list__actions {
+                    flex: 1 0 auto;
+                    text-align: right;
+                }
+            }
+
+            .gem-c-reorderable-list__title {
+                margin: 0;
+                font-weight: bold;
+
+            }
+
+            @media (min-width: 40.0625em) {
+                .gem-c-reorderable-list .govuk-form-group {
+                    margin-bottom: 0;
+                }
+
+                .gem-c-reorderable-list__actions .govuk-form-group {
+                    display: none;
+                }
+
+                .gem-c-reorderable-list__actions .gem-c-button {
+                    display: none;
+                }
+
+                .gem-c-reorderable-list__actions .gem-c-button {
+                    display: inline-block;
+                    margin-left: 15px;
+                    width: 80px;
+                }
+
+                .gem-c-reorderable-list__actions .gem-c-button:first-of-type {
+                    margin-left: 0;
+                }
+
+                @media (min-width: 48.0625em) {
+                    .gem-c-reorderable-list__actions .gem-c-button:first-of-type {
+                        margin-left: 15px;
+                    }
+                }
+
+                .gem-c-reorderable-list__item:first-child .gem-c-button:first-of-type {
+                    display: none;
+                }
+
+                @media (min-width: 48.0625em) {
+                    .gem-c-reorderable-list__item:first-child .gem-c-button:first-of-type {
+                        display: inline-block;
+                        visibility: hidden;
+                    }
+                }
+
+                .gem-c-reorderable-list__item:first-child .gem-c-button:last-of-type {
+                    margin-left: 0;
+                }
+
+                @media (min-width: 48.0625em) {
+                    .gem-c-reorderable-list__item:first-child .gem-c-button:last-of-type {
+                        margin-left: 15px;
+                    }
+                }
+
+                .gem-c-reorderable-list__item:last-child .gem-c-button:last-of-type {
+                    display: none;
+                }
+
+                @media (min-width: 48.0625em) {
+                    .gem-c-reorderable-list__item:last-child .gem-c-button:last-of-type {
+                        display: inline-block;
+                        visibility: hidden;
+                    }
+                }
+            }
+        </style>
+
+        <script>
+
+
+            // Function to update order inputs and span numbers after sorting
+            function updateOrderInputs() {
+                const items = document.querySelectorAll(".gem-c-reorderable-list__item");
+                items.forEach((item, index) => {
+                    const input = item.querySelector('input');
+                    const pageNumberSpan = item.querySelector('.page-number');
+
+                    input.value = index + 1; // Update the hidden input value
+                    pageNumberSpan.textContent = `Page ${index + 1}: `; // Update the page number span
+                });
+            }
+
+            // Initialize SortableJS for the list
+            const sortable = new Sortable(document.getElementById("reorderable-list"), {
+                animation: 150,
+                handle: ".gem-c-reorderable-list__item",
+                draggable: ".gem-c-reorderable-list__item",
+                ghostClass: "sortable-ghost",
+                chosenClass: "sortable-chosen", // Use chosenClass for custom styles
+                onEnd: updateOrderInputs,
+                onStart: function (evt) {
+                    if (window.innerWidth <= 600) {
+                        evt.preventDefault(); // Prevent drag on small screens
+                    }
+                }
+            });
+
+            // Add event listeners to move buttons
+            document.querySelectorAll(".js-reorderable-list-up").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const li = button.closest(".gem-c-reorderable-list__item");
+                    if (li.previousElementSibling) {
+                        li.parentNode.insertBefore(li, li.previousElementSibling);
+                        updateOrderInputs();
+                    }
+                });
+            });
+
+            document.querySelectorAll(".js-reorderable-list-down").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const li = button.closest(".gem-c-reorderable-list__item");
+                    if (li.nextElementSibling) {
+                        li.parentNode.insertBefore(li.nextElementSibling, li);
+                        updateOrderInputs();
+                    }
+                });
+            });
+
+            // Ensure order is updated on page load
+            updateOrderInputs();
+
+            document.getElementById('save-order-button').addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent the default link behavior (e.g., navigating or reloading the page)
+
+                // HTML for the notification banner
+                const notificationHTML = `
+                    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                        <div class="govuk-notification-banner__header">
+                            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                                Success
+                            </h2>
+                        </div>
+                        <div class="govuk-notification-banner__content">
+                            <h3 class="govuk-notification-banner__heading">
+                                Changes saved
+                            </h3>
+                        </div>
+                    </div>
+                `;
+
+                // Insert the notification banner into the container
+                document.getElementById('notification-banner-container').innerHTML = notificationHTML;
+
+                // // Optional: Scroll to the notification banner
+                // document.getElementById('notification-banner-container').scrollIntoView({ behavior: 'smooth' });
+            });
+        </script>
+
+        <script>
+            document.getElementById('save-order-button').addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent the default behavior
+
+                // Gather the new order from the list items
+                const items = document.querySelectorAll(".gem-c-reorderable-list__item");
+                const orderedIds = Array.from(items).map(item => item.getAttribute("data-page-id"));
+
+                // Send the new order to the server via a POST request
+                fetch('/update-page-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ orderedIds: orderedIds })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Display a success notification (preserving your current notification HTML)
+                            const notificationHTML = `
+          <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner__header">
+              <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Success
+              </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+              <h3 class="govuk-notification-banner__heading">
+                Changes saved
+              </h3>
+            </div>
+          </div>
+        `;
+                            document.getElementById('notification-banner-container').innerHTML = notificationHTML;
+                            // Remove or comment out the redirect code below if you don't want an automatic redirect
+                            // setTimeout(() => {
+                            //   window.location.href = "/form-editor/listing.html";
+                            // }, 1000);
+                        } else {
+                            console.error("Error updating order:", data.message);
+                        }
+                    })
+                    .catch(err => console.error("Fetch error:", err));
+
+            });
+        </script>
+        {% endblock %}

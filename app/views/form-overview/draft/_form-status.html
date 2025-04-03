@@ -1,0 +1,42 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            {{ commonTerms.form_editor.overview.sections.form_status.status }}
+        </dt>
+        <dd class="govuk-summary-list__value">
+            <strong class="govuk-tag govuk-tag--{{ form.status.color }}">
+                {{ form.status.text }}
+            </strong>
+        </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            {{ commonTerms.form_editor.overview.sections.form_status.updated }}
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{ form.updatedAt | date("DD MMM YYYY") }} by Chris Smith
+        </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            {{ commonTerms.form_editor.overview.sections.form_status.created }}
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{ form.createdAt | date("DD MMM YYYY") }} by Chris Smith
+        </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            {{ commonTerms.form_editor.overview.sections.form_status.preview_link }}
+        </dt>
+        <dd class="govuk-summary-list__value" style="padding-right:0!important;">
+            <a href="{{ form.previewUrl }}" class="govuk-link" rel="noreferrer noopener" target="_blank">{{
+                form.previewUrl }} (opens in new tab)</a>
+        </dd>
+    </div>
+</dl>

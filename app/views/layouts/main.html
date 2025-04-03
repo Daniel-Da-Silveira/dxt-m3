@@ -1,0 +1,80 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+
+
+{% block footer %}
+{{ govukFooter({
+containerClasses: containerClasses,
+navigation: [
+
+{
+title: "Quick links",
+width: "full",
+items: [
+{
+href: "/index.html",
+text: "Kit of parts"
+},
+{
+href: "https://defra-forms-mvp-prototype-6c025bd15252.herokuapp.com/",
+text: "Heroku hosted prototype"
+},
+{
+href: "https://github.com/defra-design/defra-forms-mvp-prototype",
+text: "Github repo for prototype"
+},
+{
+href: "/old-index.html",
+text: "Old index with admin page patterns"
+},
+{
+href: "dictionary.html",
+text: "Dictionary"
+},
+{
+href: "/manage-prototype",
+text: "Manage prototype"
+},
+{
+href: "/manage-prototype/clear-data",
+text: "Clear data"
+}
+]
+}
+]
+}) }}
+
+{% endblock %}
+
+{# {% block footer %}
+{{ govukFooter({
+meta: {
+items: [{
+href: "/cph-overview/draft.html",
+text: "Kit of parts"
+}, {
+href: "dictionary.html",
+text: "Dictionary"
+}, {
+href: "/cph-overview/guidance-policies",
+text: "Restart guidance and policies"
+}, {
+href: "/manage-prototype/clear-data",
+text: "Clear data"
+}],
+visuallyHiddenTitle: "Footer links"
+}
+}) }}
+{% endblock %} #}
+
+{% block scripts %}
+{{ super() }}
+<script src="/public/javascripts/application.js"></script>
+<script src="/public/javascripts/screenwidth.js"></script>
+<script src="/public/javascripts/comments.js"></script>
+<script src="/public/javascripts/help.js"></script>
+{% endblock %}

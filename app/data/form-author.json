@@ -1,0 +1,117 @@
+{
+  "items": [
+    {
+      "text": "All authors",
+      "behaviour": "exclusive",
+      "value": ""
+    },
+    {
+      "text": "Me (Chris Smith)",
+      "value": "Chris Smith"
+    },
+    {
+      "text": "Alexandria Beard",
+      "value": "Alexandria Beard"
+    },
+    {
+      "text": "Angie Porter",
+      "value": "Angie Porter"
+    },
+    {
+      "text": "Arianna Booker",
+      "value": "Arianna Booker"
+    },
+    {
+      "text": "Aries Roach",
+      "value": "Aries Roach"
+    },
+    {
+      "text": "Cairo Molina",
+      "value": "Cairo Molina"
+    },
+    {
+      "text": "Callum Wallace",
+      "value": "Callum Wallace"
+    },
+    {
+      "text": "Cassidy Dunlap",
+      "value": "Cassidy Dunlap"
+    },
+    {
+      "text": "Dominik Barber",
+      "value": "Dominik Barber"
+    },
+    {
+      "text": "Eddie Barnett",
+      "value": "Eddie Barnett"
+    },
+    {
+      "text": "Enrique Chase",
+      "value": "Enrique Chase"
+    },
+    {
+      "text": "Fabian Stokes",
+      "value": "Fabian Stokes"
+    },
+    {
+      "text": "Harlow Carr",
+      "value": "Harlow Carr"
+    },
+    {
+      "text": "Izabella Norris",
+      "value": "Izabella Norris"
+    },
+    {
+      "text": "Judson Palmer",
+      "value": "Judson Palmer"
+    },
+    {
+      "text": "Juniper Perry",
+      "value": "Juniper Perry"
+    },
+    {
+      "text": "Lara Buchanan",
+      "value": "Lara Buchanan"
+    },
+    {
+      "text": "Lyanna Macias",
+      "value": "Lyanna Macias"
+    },
+    {
+      "text": "Matthias Mejia",
+      "value": "Matthias Mejia"
+    },
+    {
+      "text": "Miranda Frazier",
+      "value": "Miranda Frazier"
+    },
+    {
+      "text": "Moshe Pitt",
+      "value": "Moshe Pitt"
+    },
+    {
+      "text": "Nataly Cross",
+      "value": "Nataly Cross"
+    },
+    {
+      "text": "Nathanael Booker",
+      "value": "Nathanael Booker"
+    },
+    {
+      "text": "Rhett Calhoun",
+      "value": "Rhett Calhoun"
+    },
+    {
+      "text": "Saylor O’Neal",
+      "value": "Saylor O’Neal"
+    },
+    {
+      "text": "Thalia Pugh",
+      "value": "Thalia Pugh"
+    },
+    {
+      "text": "Waylon Brady",
+      "value": "Waylon Brady"
+    }
+  ]
+}

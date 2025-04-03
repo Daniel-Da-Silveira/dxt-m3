@@ -1,0 +1,77 @@
+{% from "./_label_size_macro.html" import get_label_size -%}
+
+{%- set page_heading = data['pageHeadingFileupload'] if data is defined and data['pageHeadingFileupload'] else false -%}
+{%- set question_count = currentPage.questions | length if currentPage and currentPage.questions else 1 -%}
+{%- set labelSize = get_label_size(page_heading, question_count, true) -%}
+
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-label--{{ labelSize }}" for="file-upload">{{ question.label }}</label>
+    {%- if question.hint -%}
+    <div id="file-upload-hint" class="govuk-hint">{{ question.hint }}</div>
+    {%- endif -%}
+    <input class="govuk-file-upload" id="file-upload" name="file-upload" type="file"
+        aria-describedby="file-upload-hint">
+</div>
+
+<h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="text-input-field" id="question-label-legend">
+        {{ question.label or '' }}
+    </label>
+</h1>
+<div id="hint-text-output" class="govuk-hint">
+    {{ question.hint or data or '' }}
+    <div class="govuk-form-group">
+        <label class="govuk-label" for="file-upload-1">
+            Upload a file
+        </label>
+        <input class="govuk-file-upload" disabled aria-disabled="true" id="file-upload-1" name="fileUpload1"
+            type="file">
+    </div>
+
+    <button type="submit" disabled aria-disabled="true" class="govuk-button govuk-button--secondary"
+        data-module="govuk-button">
+        Upload file
+    </button>
+
+    <p class="govuk-body" aria-live="polite">1 of 2 files uploaded</p>
+
+
+
+    <p class="govuk-body govuk-!-display-none" id="refreshPageProgress"><a href="#" class="govuk-link">Refresh page to
+            update file upload progress</a></p>
+
+    <dl class="govuk-summary-list govuk-summary-list--long-key">
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                File2.jpg
+            </dt>
+            <dd class="govuk-summary-list__value">
+                <strong class="govuk-tag govuk-tag--yellow">
+                    Uploading
+                </strong>
+
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link govuk-link--no-visited-state" href="#" style="color: #b1b4b6; cursor: default;"
+                    onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Remove<span
+                        class="govuk-visually-hidden"> file 1.jpg</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                File1.jpg
+            </dt>
+            <dd class="govuk-summary-list__value">
+                <strong class="govuk-tag govuk-tag--green">
+                    Uploaded
+                </strong>
+
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link govuk-link--no-visited-state" href="#" style="color: #b1b4b6; cursor: default;"
+                    onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Remove<span
+                        class="govuk-visually-hidden"> file 2.jpg</span></a>
+            </dd>
+        </div>
+    </dl>
+</div>

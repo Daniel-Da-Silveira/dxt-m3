@@ -1,0 +1,167 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+User journeys – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Kit of parts - Defra Forms Designer" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "Kit of parts",
+containerClasses: containerClasses,
+homepageLink: "/design-system/components.html",
+navigationItems: [
+{ href: "/design-system/prototype-route.html", text: "Prototype", id: "prototype" },
+{ href: "/design-system/components.html", text: "Components", id: "components" },
+{ href: "/design-system/user-journeys/home.html", text: "User journeys", id: "user-journeys" } ],
+activeLinkId: "user-journeys"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    User journeys
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+
+    <div class="govuk-grid-row">
+        <!-- Masthead (two-thirds) -->
+        <div class="govuk-grid-column-two-thirds">
+            <h2 class="govuk-heading-l">Summary</h2>
+            <p class="govuk-body">The user journeys for creating pages follow <a class="govuk-link"
+                    href="https://www.gov.uk/service-manual/technology/using-progressive-enhancement"> progressive
+                    enhancement principles</a>, ensuring a quality service for all
+                users, regardless of whether JavaScript is enabled. While the experience may vary slightly for users
+                without JavaScript,
+                the outcomes remain consistent and accessible.</p>
+
+            <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450"
+                src="https://embed.figma.com/design/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?node-id=18388-32046&embed-host=share"
+                allowfullscreen></iframe>
+
+
+            <h2 class="govuk-heading-l govuk-!-margin-top-6">How it works (the basic flow without JavaScript)</h2>
+            <p class="govuk-body">This process repeats each time a user adds a new question to the page.</p>
+            <ul class="govuk-list govuk-list--number">
+                <li>
+                    Select the type of page:
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>question: Allows users to create a question on the page.</li>
+                        <li>guidance: Provides users with informational content only.</li>
+                    </ul>
+                </li>
+                <li>
+                    Configure the first question on the page:
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>set a question label, for example, "What is your name?"</li>
+                        <li>optionally, add hint text to guide the user</li>
+                        <li><a class="govuk-link" href="/design-system/information-type/configuration-types">set
+                                specific question configurations</a>, such as whether the question is optional and <a
+                                class="govuk-link" href="/design-system/information-type/answer-limits">answer
+                                limits</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Save the question and proceed to the page overview. From here, users can:
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>edit the saved question if adjustments are needed.</li>
+                        <li><a class="govuk-link" href="/design-system/editor/previews-in-new-tab">preview</a> the
+                            current state of the page.</li>
+                        <li>add another question to the page.</li>
+                        <li><a class="govuk-link" href="/design-system/deletion/pages">delete the page</a> entirely if
+                            no longer needed.</li>
+                        <li>add a page heading and optional guidance text to provide context for users.</li>
+                        <li>enable the page to allow multiple responses (e.g., selecting multiple options).</li>
+                        <li><a class="govuk-link" href="/design-system/reordering/questions">re-order questions</a> (if
+                            more than one question has been added).</li>
+                    </ul>
+                </li>
+                <li>
+                    repeat the process to add more questions or configure additional pages.
+                </li>
+            </ul>
+
+
+
+            <h2 class="govuk-heading-l">View of user journey without Javascript</h2>
+            <div class="govuk-grid-column-full-from-desktop govuk-!-margin-bottom-6">
+
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="100%" height="450"
+                    src="https://embed.figma.com/design/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?node-id=13385-245749&embed-host=share"
+                    allowfullscreen></iframe>
+
+
+            </div>
+
+
+            <h2 class="govuk-heading-l govuk-!-margin-top-6">With JavaScript</h2>
+            <p class="govuk-body">When JavaScript is enabled the main differences are:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>the addition of a
+                    <a class="govuk-link" href="/design-system/editor/preview-panel">
+                        preview panel </a> that supports <a class="govuk-link"
+                        href="/design-system/editor/guided-input">
+                        guided input</a>
+                </li>
+                <li>the use of
+                    <a class="govuk-link" href="/design-system/editor/preview-panel">
+                        skip links </a> rather than buttons to view previews and navigate between the <a
+                        class="govuk-link" href="/design-system/editor/configuration-panel">
+                        configuration panel</a> and <a class="govuk-link" href="/design-system/editor/preview-panel">
+                        preview panel</a>
+                </li>
+            </ul>
+            <h2 class="govuk-heading-l govuk-!-m">View of user journey with Javascript</h2>
+            <div class="govuk-grid-column-full-from-desktop">
+
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="100%" height="450"
+                    src="https://embed.figma.com/design/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?node-id=13384-89841&embed-host=share"
+                    allowfullscreen></iframe>
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<style>
+    .moj-side-navigation__toggle {
+        background: none;
+        border: none;
+        color: #005ea5;
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: auto;
+    }
+
+    .moj-side-navigation__toggle:hover {
+        text-decoration: underline;
+    }
+</style>
+
+
+{% endblock %}

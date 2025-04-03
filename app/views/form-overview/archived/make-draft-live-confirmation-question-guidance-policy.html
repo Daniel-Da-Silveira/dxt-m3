@@ -1,0 +1,170 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/form-designer-v2/onboarding/sign-out-confirmation",
+    navigationItems: [
+    {
+      href: "/library.html",
+      text: "Forms library",
+      id: "library"
+     },
+    {
+      href: "/cph-overview/draft.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/editor",
+    text: 'Editor',
+    id: 'editor'
+    }],
+    activeLinkId: "/"
+  }) }}
+{% endblock %}
+
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+
+
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <!-- <h1 class="govuk-heading-xl">Apply for a county parish holding number in England</h1> -->
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+    <span class="govuk-caption-xl">Apply for a county-parish-holding-number</span>
+<h1 class="govuk-heading-xl">Check information added to this form</h1>
+
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+  Where completed forms will be sent
+</h2>
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Completed forms sent to"
+      },
+      value: {
+        text: "PolicyTeam@defra.gov.uk"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "Change where completed forms will be sent"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+  Contact details for support
+</h2>
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Provide contact details for support"
+      },
+      value: {
+        html: "Telephone: 020 7946 0101<br>Textphone: 020 7946 0102..."
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "Change contact details for support"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+
+
+
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+  What happens next
+</h2>
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Tell users what happens after they submit their form"
+      },
+      value: {
+        html: 'We’ll send you an email to let you know the outcome...whi'
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "Change information about what happens next"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+  Data protection
+</h2>
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Privacy notice"
+      },
+      value: {
+        text: "https://www.gov.uk/help/privacy-notice"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "Change privacy notice"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+
+<div class="govuk-button-group">
+  <a href="/cph-overview/make-draft-live-confirmation-question.html">
+    <button type="submit" class="govuk-button govuk-!-margin-top-5" data-module="govuk-button">
+      Save and continue
+    </button>
+
+</div>
+</div>
+</div>
+
+{% endblock %}

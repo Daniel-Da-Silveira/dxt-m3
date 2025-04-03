@@ -1,0 +1,1526 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName %}Edit page {{ pageNumber }}: question {{ questionNumber }} - {{ form.name }}{% endset %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+	<div class="govuk-width-container">
+		{{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text:
+		commonTerms.form_editor.information_type.back, href: "/form-editor/listing.html" }) }}
+
+		<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+			style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-full-from-desktop">
+				<h1 class="x-govuk-masthead__title">
+					{{ form.name }}
+				</h1>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		<div class="govuk-grid-row">
+			<!-- Left Column for Form Controls -->
+			<div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+				<div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+					<div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+
+						<dl class="govuk-summary-list">
+							<div class="govuk-summary-list__row">
+								<dd class="govuk-summary-list__value">
+									<!-- Dynamic Summary List -->
+
+									<!-- Question Settings Container -->
+									<div class="govuk-grid-row" id="page-settings-container-1">
+										<div id="question-1">
+											<div class="govuk-summary-card__content" style="margin-bottom: 0">
+												<!-- Sub Navigation for Question -->
+												<nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2"
+													aria-label="Sub navigation">
+													<ul class="moj-sub-navigation__list" id="nav-list2">
+														<li class="moj-sub-navigation__item">
+															<a class="moj-sub-navigation__link" aria-current="page"
+																href="#question-1-information-type">Question {{
+																questionNumber }}</a>
+														</li>
+													</ul>
+												</nav>
+
+												<div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0">
+												</div>
+
+												<span class="govuk-caption-l">Page {{ pageNumber }}</span>
+												<h2 class="govuk-heading-l">Edit question {{ questionNumber }}</h2>
+
+
+												<form id="question-form"
+													action="/form-editor/question-type/checkboxes/checkboxes-finalize"
+													method="post">
+													{% from "govuk/components/input/macro.njk" import govukInput %}
+													{% from "govuk/components/textarea/macro.njk" import govukTextarea
+													%}
+													{% from "govuk/components/fieldset/macro.njk" import govukFieldset
+													%}
+													{% from "govuk/components/button/macro.njk" import govukButton %}
+													{% from "govuk/components/summary-list/macro.njk" import
+													govukSummaryList %}
+
+													<!-- Hidden inputs for question type and configuration -->
+													<input type="hidden" name="questionType" value="list">
+													<input type="hidden" name="questionSubType" value="checkboxes">
+													<input type="hidden" name="pageId" value="{{ pageId }}">
+													<input type="hidden" name="questionId" value="{{ questionId }}">
+													<input type="hidden" name="questionNumber"
+														value="{{ questionNumber }}">
+													<input type="hidden" id="checkbox-options-data"
+														name="checkboxOptionsData" value="[]">
+
+													<!-- Question Label Input -->
+													{{ govukInput({
+													label: {
+													text: commonTerms.form_editor.question_settings.question,
+													classes: "govuk-label--m"
+													},
+													id: "question-label-input-checkboxes",
+													name: "questionLabelInputCheckboxes",
+													value: data['question-label-input-checkboxes']
+													}) }}
+
+													<!-- Hidden input for question label -->
+													<input type="hidden" name="questionLabel"
+														value="{{ data['question-label-input-checkboxes'] }}">
+
+													<!-- Hint Text Input -->
+													{{ govukTextarea({
+													label: {
+													text: commonTerms.form_editor.question_settings.hint,
+													classes: "govuk-label--m"
+													},
+													id: "question-hint-text-input-checkboxes",
+													name: "questionHintTextInputCheckboxes",
+													value: data['question-hint-text-input-checkboxes'],
+													rows: 3
+													}) }}
+
+													<!-- Make Optional Checkbox -->
+													<div class="govuk-form-group">
+														<div class="govuk-checkboxes--small">
+															<div class="govuk-checkboxes__item">
+																<input class="govuk-checkboxes__input" type="checkbox"
+																	id="makeOptional" name="makeOptional"
+																	value="{{ data['optional-label-q1'] }}">
+																<label class="govuk-label govuk-checkboxes__label"
+																	for="makeOptional">
+																	{{
+																	commonTerms.form_editor.question_settings.optional
+																	}}
+																</label>
+															</div>
+														</div>
+													</div>
+
+													<!-- Error Message Input -->
+													{{ govukInput({
+													label: {
+													text:
+													commonTerms.form_editor.question_settings.short_description.title,
+													classes: "govuk-label--m",
+													isPageHeading: false
+													},
+													hint: {
+													text:
+													commonTerms.form_editor.question_settings.short_description.hint
+													},
+													id: "error-message-input",
+													name: "errorMessageInput"
+													}) }}
+
+													<!-- Hidden input for hint text -->
+													<input type="hidden" name="hintText"
+														value="{{ data['question-hint-text-input-checkboxes'] }}">
+
+													<!-- Checkbox Options List -->
+													<div class="govuk-form-group">
+														<h2 class="govuk-heading-m moj-add-another__heading"
+															tabindex="-1">
+															<svg class="govuk-!-margin-right-1"
+																style="position: relative; top: -1px; vertical-align: middle;"
+																width="28" height="28" viewBox="0 0 24 24" fill="none"
+																xmlns="http://www.w3.org/2000/svg">
+																<circle cx="12" cy="12" r="11" fill="currentColor" />
+																<path d="M6 8h12M6 12h12M6 16h12" stroke="white"
+																	stroke-width="2.5" stroke-linecap="round" />
+															</svg>
+															{{
+															commonTerms.form_editor.information_type.list.types.checkboxes.edit_title
+															}}
+														</h2>
+														<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+															style="border-color:black; border-width: 3px;">
+														<ol class="gem-c-reorderable-list js-enabled"
+															id="options-container" data-module="reorderable-list">
+															{% for radio in radioList %}
+															<li class="gem-c-reorderable-list__item" draggable="true"
+																data-index="{{ loop.index }}">
+																<div class="gem-c-reorderable-list__wrapper">
+																	<div class="gem-c-reorderable-list__content">
+																		<p class="govuk-body fauxlabel option-label-display"
+																			id="option-{{ loop.index }}-label-display">
+																			{{ radio.label }}</p>
+																		<input type="hidden"
+																			id="option-{{ loop.index }}-label"
+																			name="option[{{ loop.index }}][option_label]"
+																			value="{{ radio.label }}"
+																			class="option-label-input-hidden">
+																		<input class="option-hint-input" type="hidden"
+																			id="option-{{ loop.index }}-hint"
+																			name="option[{{ loop.index }}][option_hint]"
+																			value="{{ radio.hint }}">
+																	</div>
+
+																	<div class="gem-c-reorderable-list__actions">
+																		<button
+																			class="gem-c-button govuk-button govuk-button--secondary js-reorderable-list-up"
+																			type="button" aria-label="Move option up"
+																			style="display: none;">Up</button>
+																		<button
+																			class="gem-c-button govuk-button govuk-button--secondary js-reorderable-list-down"
+																			type="button" aria-label="Move option down"
+																			style="display: inline-block;">Down</button>
+																	</div>
+																	<div class="edit-item">
+																		<ul class="govuk-summary-list__actions-list">
+																			<li
+																				class="govuk-summary-list__actions-list-item">
+																				<a class="govuk-link govuk-link--no-visited-state"
+																					href="editoption.html?index={{ loop.index }}">
+																					Edit<span
+																						class="govuk-visually-hidden">option
+																						{{ loop.index }}</span>
+																				</a>
+																			</li>
+																			<li
+																				class="govuk-summary-list__actions-list-item">
+																				<a class="govuk-link govuk-link--destructive delete-option-link"
+																					href="delete-option.html?index={{ loop.index }}&text={{ radio.label | urlencode }}"
+																					onclick="return true;">
+																					Delete<span
+																						class="govuk-visually-hidden">
+																						list item</span>
+																				</a>
+																			</li>
+																		</ul>
+																	</div>
+																</div>
+															</li>
+															{% endfor %}
+														</ol>
+													</div>
+
+													<!-- Add Option Form (Initially Hidden) -->
+													<div id="add-option-form"
+														class="govuk-!-margin-bottom-6 gem-c-reorderable-list__item"
+														style="display: none; ">
+														<h2 <span class="govuk-caption-m" id="add-option-heading">Item
+															1</span></h2>
+
+														<!-- Option Value (Label) -->
+														<div class="govuk-form-group">
+															<label class="govuk-label govuk-label--m"
+																for="new-option-label">Item</label>
+															<input class="govuk-input" id="new-option-label"
+																name="label" type="text" value="">
+														</div>
+
+														<!-- Hint Text -->
+														<div class="govuk-form-group">
+															<label class="govuk-label govuk-label--m"
+																for="new-option-hint">Hint text (optional)</label>
+															<div class="govuk-hint">{{
+																commonTerms.form_editor.information_type.list.types.checkboxes.hint_text
+																}}</div>
+															<input class="govuk-input" id="new-option-hint" name="hint"
+																type="text" value="">
+														</div>
+
+														<!-- Advanced Features Section -->
+														<details class="govuk-details" data-module="govuk-details">
+															<summary class="govuk-details__summary">
+																<span class="govuk-details__summary-text">Advanced
+																	features</span>
+															</summary>
+															<div class="govuk-details__text">
+																<!-- Additional Value -->
+																<div class="govuk-form-group">
+																	<label class="govuk-label govuk-label--m"
+																		for="new-option-value">Unique identifier
+																		(optional)</label>
+																	<div class="govuk-hint">Used in databases to
+																		identify the item</div>
+																	<input class="govuk-input" id="new-option-value"
+																		name="value" type="text" value="">
+																</div>
+															</div>
+														</details>
+
+														<div class="govuk-button-group">
+															<button type="button" class="govuk-button"
+																id="save-new-option">Save item</button>
+															<a class="govuk-link" href="#"
+																id="cancel-add-option">Cancel</a>
+														</div>
+													</div>
+
+													<!-- Buttons -->
+													<div class="govuk-button-group">
+														<!-- Add Another Option Button -->
+														<button id="add-option-button" type="button"
+															class="govuk-button moj-add-another__add-button govuk-!-margin-bottom-4 govuk-!-margin-bottom-6">
+															{% if data.radioList and data.radioList.length > 0 %}
+															Add another option
+															{% else %}
+															Add item
+															{% endif %}
+														</button>
+
+														<!-- Edit List Button -->
+														<button id="edit-options-button" type="button"
+															class="govuk-button govuk-button--inverse"
+															style="display: none;">
+															{{ commonTerms.form_editor.common.edit_list }}
+														</button>
+													</div>
+
+													<!-- Hidden input for radio options -->
+													<input type="hidden" name="radioOptions" id="radio-options-data"
+														value="">
+
+													<div id="summary-container">
+														<hr
+															class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+														<!-- The dynamic summary list will be populated here -->
+														<h2 class="govuk-heading-m">{{
+															commonTerms.form_editor.question_settings.title }}</h2>
+
+														{{ govukSummaryList({
+														classes: "govuk-summary-list govuk-section-break
+														govuk-section-break--visible govuk-!-margin-bottom-6",
+														rows: [
+														{
+														key: {
+														text: "Type of information"
+														},
+														value: {
+														html: "List: checkboxes"
+														},
+														actions: {
+														items: [
+														{
+														href:
+														"/form-editor/templates/1-question/information-type.html",
+														text: "Change",
+														visuallyHiddenText: "name"
+														}
+														]
+														}
+														}
+														]
+														}) }}
+													</div>
+													<div class="moj-button-action">
+														{{ govukButton({
+														text: commonTerms.form_editor.common.continue,
+														type: 'submit'
+														}) }}
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</dd>
+							</div>
+						</dl>
+					</div>
+				</div>
+			</div>
+
+			<!-- Right Column for Preview -->
+			<div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+				style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+				<!-- Before content -->
+				<div id="before-content" style="background-color: #cce2d8;">
+					<p class="govuk-body-s"
+						style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px; text-align: center;">
+						{{
+						commonTerms.form_editor.common.previews }}</p>
+				</div>
+
+				<div style="margin-top: 60px;">
+					{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+
+					<div class="govuk-tabs" data-module="govuk-tabs">
+						<h2 class="govuk-tabs__title">{{ commonTerms.form_editor.common.contents }}</h2>
+						<ul class="govuk-tabs__list">
+							<li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+								<a class="govuk-tabs__tab" href="#tab-one">{{
+									commonTerms.form_editor.common.page_preview }}</a>
+							</li>
+							<li class="govuk-tabs__list-item">
+								<a class="govuk-tabs__tab" href="#tab-two">{{
+									commonTerms.form_editor.common.error_messages }}</a>
+							</li>
+						</ul>
+
+						<div class="govuk-tabs__panel" id="tab-one">
+							<!-- Page Preview Content -->
+							<p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+								<a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener"
+									target="_blank">{{ commonTerms.form_editor.common.preview }}</a>
+							</p>
+
+							<!-- Ensure this included template contains the #radio-list .govuk-radios element -->
+							{% include "/form-editor/question-type/checkboxes/previews/edit-v2.html" %}
+
+							<a href="#edit-page" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+								data-module="govuk-skip-link">{{ commonTerms.form_editor.common.skip_to_edit }}</a>
+						</div>
+
+						<div class="govuk-tabs__panel" id="tab-two">
+							<p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+								<a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener"
+									target="_blank">{{ commonTerms.form_editor.common.preview_error }}</a>
+							</p>
+							<!-- Error Messages Content -->
+							<!-- Error Messages Section -->
+							<div class="govuk-error-summary" data-disable-auto-focus="true">
+								<h2 class="govuk-error-summary__title">{{
+									commonTerms.form_editor.common.there_is_a_problem }}</h2>
+								<ul class="govuk-list govuk-error-summary__list">
+									<!-- List of errors -->
+									<li><a id="empty-input-error-shorttext" class="govuk-error-message">Select <span
+												id="error-dynamic-text">[short description]</span></a></li>
+								</ul>
+							</div>
+							<a href="#error-message-input-shorttext" class="govuk-skip-link"
+								style="margin-bottom: 30px!important;" data-module="govuk-skip-link">{{
+								commonTerms.form_editor.common.skip_to_short_description }}</a>
+						</div>
+					</div>
+				</div> <!-- Closing the govuk-tabs div -->
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- Include SortableJS Library -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<style>
+	/* Styling for fauxlabel */
+	.fauxlabel {
+		border: 0;
+		/* font-size: 1rem; */
+		margin: 0;
+
+	}
+
+	.govuk-radios__item label {
+		text-transform: capitalize;
+	}
+
+	.fauxlabel:focus,
+	.fauxlabel:active {
+		background-color: transparent !important;
+	}
+
+	.gem-c-reorderable-list .gem-c-reorderable-list__item:hover,
+	.gem-c-reorderable-list__item:hover .fauxlabel {
+		background-color: #fff;
+		cursor: initial;
+	}
+
+	.gem-c-reorderable-list__item:hover .fauxlabel:focus {
+		cursor: initial;
+	}
+
+	/* Highlighting styles */
+	.highlight {
+		background-color: #ffe5cc;
+		border-bottom: 2px solid #ffb266;
+	}
+
+	.highlight-dragging {
+		border: 2px dotted #ffb266;
+		/* Example highlight style */
+		background-color: #f0f0f0;
+	}
+
+	.highlight-moving {
+		border: 2px dashed #ff0;
+		/* During drag over */
+	}
+
+	/* Styles for the reorderable list */
+	.gem-c-reorderable-list {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.gem-c-reorderable-list__item {
+		margin-bottom: 15px;
+		border-left: 5px solid #008938;
+		outline: 1px solid #b1b4b6;
+		padding: 15px;
+		background-color: #fff;
+	}
+
+	.gem-c-reorderable-list__wrapper {
+		display: flex;
+		align-items: center;
+	}
+
+	.gem-c-reorderable-list__content {
+		flex-grow: 1;
+	}
+
+	.gem-c-reorderable-list__actions {
+		display: none;
+		/* Hide by default */
+		flex-direction: column;
+		margin-left: 15px;
+	}
+
+	.gem-c-reorderable-list__actions .govuk-button {
+		margin-bottom: 10px;
+	}
+
+	.govuk-body.fauxlabel.option-label-display {
+		white-space: normal;
+		/* Allow text to wrap */
+		word-wrap: break-word;
+		/* Break long words if necessary */
+		overflow-wrap: break-word;
+		/* Ensure wrapping for long words */
+	}
+
+
+	.sortable-ghost {
+		opacity: 0.4;
+	}
+
+	.sortable-chosen {
+		background-color: #e5f5ff;
+	}
+
+	/* Style for hover state of the list item */
+	.gem-c-reorderable-list__item:hover {
+		background-color: #f0f0f0;
+		cursor: move;
+	}
+
+	/* Style for the chosen item (when selected) */
+	.gem-c-reorderable-list__item.sortable-chosen {
+		background-color: #e5f5ff;
+		outline: 4px solid #ffdd00;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+
+	#second-container {
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	#second-container>* {
+		padding-left: 0px;
+		z-index: 2;
+	}
+
+	.border-left-container {
+		border-left: 10px solid #ffb266;
+		padding-left: 20px;
+	}
+
+	/* Add option form styles */
+	#add-option-form {
+		background: #ffffff;
+		border-radius: 5px;
+		margin-top: 20px;
+	}
+
+	#add-option-form .govuk-button-group {
+		margin-top: 20px;
+	}
+
+	/* Animation for form appearance */
+	#add-option-form {
+		transition: all 0.3s ease-in-out;
+	}
+
+	#add-option-form:not([style*="display: none"]) {
+		animation: slideDown 0.3s ease-in-out;
+	}
+
+	@keyframes slideDown {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		// Get form elements
+		const addOptionForm = document.querySelector('#add-option-form');
+		const addOptionButton = document.querySelector('#add-option-button');
+		const saveItemButton = document.querySelector('#save-new-option');
+		const cancelButton = document.querySelector('#cancel-add-option');
+		const newOptionLabel = document.querySelector('#new-option-label');
+		const newOptionHint = document.querySelector('#new-option-hint');
+		const newOptionValue = document.querySelector('#new-option-value');
+		const optionsContainer = document.querySelector('#options-container');
+		const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+		const questionForm = document.getElementById('question-form');
+		const addOptionHeading = document.querySelector('#add-option-heading');
+
+		// Main question elements
+		const questionLabelInput = document.querySelector('#question-label-input-checkboxes');
+		const questionHintInput = document.querySelector('#question-hint-text-input-checkboxes');
+		const questionLabelPreview = document.querySelector('#question-label-preview');
+		const questionHintPreview = document.querySelector('#question-hint-preview');
+
+		// Initialize question label and hint text
+		function initializeQuestionPreview() {
+			if (questionLabelInput && questionLabelPreview) {
+				const labelValue = questionLabelInput.value.trim();
+				questionLabelPreview.textContent = labelValue || 'Question text';
+			}
+
+			if (questionHintInput && questionHintPreview) {
+				const hintValue = questionHintInput.value.trim();
+				if (hintValue) {
+					questionHintPreview.textContent = hintValue;
+					questionHintPreview.style.display = 'block';
+				} else {
+					questionHintPreview.style.display = 'none';
+				}
+			}
+		}
+
+		// Add event listeners for main question label and hint
+		if (questionLabelInput && questionLabelPreview) {
+			questionLabelInput.addEventListener('input', () => {
+				const value = questionLabelInput.value.trim();
+				questionLabelPreview.textContent = value || 'Question text';
+			});
+
+			questionLabelInput.addEventListener('focus', () => {
+				questionLabelPreview.classList.add('highlight');
+			});
+
+			questionLabelInput.addEventListener('blur', () => {
+				questionLabelPreview.classList.remove('highlight');
+			});
+		}
+
+		if (questionHintInput && questionHintPreview) {
+			questionHintInput.addEventListener('input', () => {
+				const value = questionHintInput.value.trim();
+				questionHintPreview.textContent = value || 'Hint text';
+				questionHintPreview.style.display = value || document.activeElement === questionHintInput ? 'block' : 'none';
+			});
+
+			questionHintInput.addEventListener('focus', () => {
+				questionHintPreview.classList.add('highlight');
+				questionHintPreview.style.display = 'block';
+				if (!questionHintInput.value.trim()) {
+					questionHintPreview.textContent = 'Hint text';
+				}
+			});
+
+			questionHintInput.addEventListener('blur', () => {
+				questionHintPreview.classList.remove('highlight');
+				if (!questionHintInput.value.trim()) {
+					questionHintPreview.style.display = 'none';
+				}
+			});
+		}
+
+		// Initialize the question preview
+		initializeQuestionPreview();
+
+		// Add option button click
+		addOptionButton.addEventListener('click', function (e) {
+			e.preventDefault();
+			const currentOptions = optionsContainer.querySelectorAll('.gem-c-reorderable-list__item');
+			const nextItemNumber = currentOptions.length + 1;
+			addOptionHeading.textContent = `Item ${nextItemNumber}`;
+			addOptionForm.style.display = 'block';
+			addOptionButton.style.display = 'none';
+			newOptionLabel.focus();
+
+			// Show initial preview immediately
+			const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+			if (checkboxList) {
+				checkboxList.innerHTML = `
+					<div class="govuk-checkboxes__item">
+						<input class="govuk-checkboxes__input" id="listPreview-option-new" name="listPreview" type="checkbox">
+						<label class="govuk-label govuk-checkboxes__label" for="listPreview-option-new">Item text</label>
+					</div>
+				`;
+				applyHighlight('label');
+			}
+			updatePreview(); // Update preview for any existing items
+		});
+
+		// Cancel button click
+		cancelButton.addEventListener('click', function (e) {
+			e.preventDefault();
+			hideForm();
+		});
+
+		// Add live preview event listeners
+		newOptionLabel.addEventListener('input', updatePreview);
+		newOptionHint.addEventListener('input', updatePreview);
+		newOptionValue.addEventListener('input', updatePreview);
+
+		// Add focus/blur event listeners for highlighting
+		newOptionLabel.addEventListener('focus', () => applyHighlight('label'));
+		newOptionLabel.addEventListener('blur', () => removeHighlight('label'));
+		newOptionHint.addEventListener('focus', () => {
+			applyHighlight('hint');
+			showHintPlaceholder();
+		});
+		newOptionHint.addEventListener('blur', () => {
+			removeHighlight('hint');
+			removeHintPlaceholder();
+		});
+
+		// Save item button click
+		saveItemButton.addEventListener('click', function (e) {
+			e.preventDefault();
+			const addOptionForm = document.getElementById('add-option-form');
+			const editIndex = addOptionForm.dataset.editIndex;
+			const labelValue = newOptionLabel.value.trim();
+			const hintValue = newOptionHint.value.trim();
+
+			if (editIndex) {
+				// Edit existing item
+				const listItem = document.querySelector(`.gem-c-reorderable-list__item[data-index="${editIndex}"]`);
+				if (listItem) {
+					const contentDiv = listItem.querySelector('.gem-c-reorderable-list__content');
+					contentDiv.innerHTML = `
+						<div class="govuk-!-margin-bottom-2">
+							<p class="govuk-body fauxlabel option-label-display" id="option-${editIndex}-label-display">${labelValue}</p>
+							${hintValue ? `<p class="govuk-body govuk-!-margin-top-0 govuk-!-margin-bottom-0" style="color: #505a5f;">${hintValue}</p>` : ''}
+						</div>
+						<input type="hidden" id="option-${editIndex}-label" class="option-label-input-hidden" name="option[${editIndex}][option_label]" value="${labelValue}">
+						<input type="hidden" id="option-${editIndex}-hint" class="option-hint-input" name="option[${editIndex}][option_hint]" value="${hintValue}">
+					`;
+
+					// Update the delete link with the new text
+					const deleteLink = listItem.querySelector('.delete-option-link');
+					if (deleteLink) {
+						deleteLink.href = `delete-option.html?index=${editIndex}&text=${encodeURIComponent(labelValue)}`;
+					}
+				}
+				// Reset edit mode
+				addOptionForm.dataset.editIndex = '';
+				document.getElementById('save-new-option').textContent = 'Save item';
+			} else {
+				// Add new item
+				const currentOptions = optionsContainer.querySelectorAll('.gem-c-reorderable-list__item');
+				const newIndex = currentOptions.length;
+
+				const newOptionHTML = `
+					<li class="gem-c-reorderable-list__item" draggable="true" data-index="${newIndex + 1}">
+						<div class="gem-c-reorderable-list__wrapper">
+							<div class="gem-c-reorderable-list__content">
+								<div class="govuk-!-margin-bottom-2">
+									<p class="govuk-body fauxlabel option-label-display" id="option-${newIndex + 1}-label-display">${labelValue}</p>
+									${hintValue ? `<p class="govuk-body-s govuk-!-margin-top-0 govuk-!-margin-bottom-0" style="color: #505a5f;">${hintValue}</p>` : ''}
+								</div>
+								<input type="hidden" id="option-${newIndex + 1}-label" class="option-label-input-hidden" name="option[${newIndex + 1}][option_label]" value="${labelValue}">
+								<input type="hidden" id="option-${newIndex + 1}-hint" class="option-hint-input" name="option[${newIndex + 1}][option_hint]" value="${hintValue}">
+							</div>
+							<div class="gem-c-reorderable-list__actions">
+								<button class="gem-c-button govuk-button govuk-button--secondary js-reorderable-list-up" type="button" aria-label="Move option up">Up</button>
+								<button class="gem-c-button govuk-button govuk-button--secondary js-reorderable-list-down" type="button" aria-label="Move option down">Down</button>
+							</div>
+							<div class="edit-item">
+								<ul class="govuk-summary-list__actions-list">
+									<li class="govuk-summary-list__actions-list-item">
+										<a class="govuk-link govuk-link--no-visited-state" href="editoption.html?index=${newIndex + 1}">
+											Edit<span class="govuk-visually-hidden">option ${newIndex + 1}</span>
+										</a>
+									</li>
+									<li class="govuk-summary-list__actions-list-item">
+										<a class="govuk-link govuk-link--destructive delete-option-link" href="delete-option.html?index=${newIndex + 1}&text=${encodeURIComponent(labelValue)}" onclick="return true;">
+											Delete<span class="govuk-visually-hidden"> list item</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				`;
+
+				optionsContainer.insertAdjacentHTML('beforeend', newOptionHTML);
+			}
+
+			hideForm();
+			updateAllOptionsPreview();
+			updateHiddenOptionsData();
+			updateEditButtonVisibility();
+			updateMoveButtons();
+		});
+
+		// Function to update the edit button visibility
+		function updateEditButtonVisibility() {
+			const editButton = document.getElementById('edit-options-button');
+			const optionItems = optionsContainer.querySelectorAll('.gem-c-reorderable-list__item');
+			if (editButton) {
+				editButton.style.display = optionItems.length > 1 ? 'inline-block' : 'none';
+			}
+		}
+
+		// Initialize edit button visibility on page load
+		document.addEventListener('DOMContentLoaded', updateEditButtonVisibility);
+
+		function hideForm() {
+			addOptionForm.style.display = 'none';
+			addOptionButton.style.display = 'inline-block';
+			newOptionLabel.value = '';
+			newOptionHint.value = '';
+			newOptionValue.value = '';
+			removeHighlight('label');
+			removeHighlight('hint');
+			updateAllOptionsPreview();
+			updateEditButtonVisibility();
+			addOptionButton.focus();
+		}
+
+		// Function to update the live preview of the option being added
+		function updatePreview() {
+			const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+			if (!checkboxList) return;
+
+			const labelValue = newOptionLabel.value.trim();
+			const hintValue = newOptionHint.value.trim();
+			const valueAttr = newOptionValue.value.trim() || labelValue;
+
+			// Get existing options
+			const existingOptions = Array.from(optionsContainer.querySelectorAll('.gem-c-reorderable-list__item'));
+
+			// Start with existing options HTML
+			let allOptionsHTML = '';
+
+			// Always show either existing options or the new option being added
+			if (existingOptions.length === 0 && addOptionForm.style.display === 'none') {
+				allOptionsHTML = `
+					<div class="govuk-inset-text">
+						<p class="govuk-body">No items added yet.</p>
+					</div>
+				`;
+			} else {
+				// Add existing options
+				allOptionsHTML = existingOptions.map((item, index) => {
+					const label = item.querySelector('.option-label-display').textContent.trim();
+					const hint = item.querySelector('input[name$="[option_hint]"]').value;
+					return `
+						<div class="govuk-checkboxes__item">
+							<input class="govuk-checkboxes__input" id="listPreview-option${index}" name="listPreview" type="checkbox" value="${label}">
+							<label class="govuk-label govuk-checkboxes__label" for="listPreview-option${index}">${label}</label>
+							${hint ? `<div class="govuk-hint govuk-checkboxes__hint">${hint}</div>` : ''}
+						</div>
+					`;
+				}).join('');
+
+				// Add the new option preview if the form is visible
+				if (addOptionForm.style.display === 'block') {
+					const newOptionPreview = `
+						<div class="govuk-checkboxes__item">
+							<input class="govuk-checkboxes__input" id="listPreview-option-new" name="listPreview" type="checkbox" value="${valueAttr}">
+							<label class="govuk-label govuk-checkboxes__label" for="listPreview-option-new">${labelValue || 'Item text'}</label>
+							${hintValue || document.activeElement === newOptionHint ? `<div class="govuk-hint govuk-checkboxes__hint">${hintValue || 'Hint text'}</div>` : ''}
+						</div>
+					`;
+					allOptionsHTML += newOptionPreview;
+				}
+			}
+
+			checkboxList.innerHTML = allOptionsHTML;
+
+			// Reapply highlights if needed
+			if (document.activeElement === newOptionLabel) {
+				applyHighlight('label');
+			} else if (document.activeElement === newOptionHint) {
+				applyHighlight('hint');
+			}
+		}
+
+		// Function to update the preview of all existing options
+		function updateAllOptionsPreview() {
+			const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+			if (!checkboxList) return;
+
+			const items = optionsContainer.querySelectorAll('.gem-c-reorderable-list__item');
+			checkboxList.innerHTML = '';
+
+			if (items.length === 0) {
+				checkboxList.innerHTML = `
+					<div class="govuk-inset-text">
+						<p class="govuk-body">No items added yet.</p>
+					</div>
+				`;
+				return;
+			}
+
+			items.forEach((item, index) => {
+				const label = item.querySelector('.option-label-display').textContent.trim();
+				const hint = item.querySelector('input[name$="[option_hint]"]').value;
+
+				const checkboxHTML = `
+					<div class="govuk-checkboxes__item">
+						<input class="govuk-checkboxes__input" id="listPreview-option${index}" name="listPreview" type="checkbox" value="${label}">
+						<label class="govuk-label govuk-checkboxes__label" for="listPreview-option${index}">${label}</label>
+						${hint ? `<div class="govuk-hint govuk-checkboxes__hint">${hint}</div>` : ''}
+					</div>
+				`;
+				checkboxList.insertAdjacentHTML('beforeend', checkboxHTML);
+			});
+		}
+
+		// Function to apply highlight to the preview
+		function applyHighlight(type) {
+			const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+			if (!checkboxList) return;
+			const lastOption = checkboxList.querySelector('.govuk-checkboxes__item:last-child');
+			if (!lastOption) return;
+
+			const elementToHighlight = type === 'label'
+				? lastOption.querySelector('.govuk-checkboxes__label')
+				: lastOption.querySelector('.govuk-checkboxes__hint');
+
+			if (elementToHighlight) {
+				elementToHighlight.classList.add('highlight');
+			} else if (type === 'hint') {
+				// If hint element doesn't exist, create it
+				const hintElement = document.createElement('div');
+				hintElement.className = 'govuk-hint govuk-checkboxes__hint highlight';
+				hintElement.textContent = 'Hint text';
+				lastOption.appendChild(hintElement);
+			}
+		}
+
+		// Function to remove highlight from the preview
+		function removeHighlight(type) {
+			const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+			if (!checkboxList) return;
+			const lastOption = checkboxList.querySelector('.govuk-checkboxes__item:last-child');
+			if (!lastOption) return;
+
+			const elementToUnhighlight = type === 'label'
+				? lastOption.querySelector('.govuk-checkboxes__label')
+				: lastOption.querySelector('.govuk-checkboxes__hint');
+
+			if (elementToUnhighlight) {
+				elementToUnhighlight.classList.remove('highlight');
+				// Remove empty hint element if it was just a placeholder
+				if (type === 'hint' && !newOptionHint.value.trim() && elementToUnhighlight.textContent === 'Hint text') {
+					elementToUnhighlight.remove();
+				}
+			}
+		}
+
+		// Function to show hint placeholder
+		function showHintPlaceholder() {
+			if (!checkboxList || newOptionHint.value.trim()) return;
+			const lastOption = checkboxList.querySelector('.govuk-checkboxes__item:last-child');
+			if (!lastOption) return;
+
+			let hintElement = lastOption.querySelector('.govuk-checkboxes__hint');
+			if (!hintElement) {
+				hintElement = document.createElement('div');
+				hintElement.className = 'govuk-hint govuk-checkboxes__hint highlight';
+				lastOption.appendChild(hintElement);
+			}
+			hintElement.textContent = 'Hint text';
+		}
+
+		// Function to remove hint placeholder
+		function removeHintPlaceholder() {
+			if (!checkboxList || newOptionHint.value.trim()) return;
+			const lastOption = checkboxList.querySelector('.govuk-checkboxes__item:last-child');
+			if (!lastOption) return;
+
+			const hintElement = lastOption.querySelector('.govuk-checkboxes__hint');
+			if (hintElement && !newOptionHint.value.trim()) {
+				hintElement.remove();
+			}
+		}
+
+		// Initialize the preview
+		updateAllOptionsPreview();
+
+		// Add event delegation for edit form hint text inputs
+		document.addEventListener('focus', function (e) {
+			if (e.target.classList.contains('option-hint-input')) {
+				const optionIndex = e.target.closest('.gem-c-reorderable-list__item').dataset.index;
+				const previewOption = checkboxList.querySelector(`#listPreview-option${optionIndex - 1}`).closest('.govuk-checkboxes__item');
+				let hintElement = previewOption.querySelector('.govuk-checkboxes__hint');
+
+				if (!hintElement) {
+					hintElement = document.createElement('div');
+					hintElement.className = 'govuk-hint govuk-checkboxes__hint highlight';
+					hintElement.textContent = 'Hint text';
+					previewOption.appendChild(hintElement);
+				} else {
+					hintElement.classList.add('highlight');
+				}
+			}
+		}, true);
+
+		document.addEventListener('blur', function (e) {
+			if (e.target.classList.contains('option-hint-input')) {
+				const optionIndex = e.target.closest('.gem-c-reorderable-list__item').dataset.index;
+				const previewOption = checkboxList.querySelector(`#listPreview-option${optionIndex - 1}`).closest('.govuk-checkboxes__item');
+				const hintElement = previewOption.querySelector('.govuk-checkboxes__hint');
+
+				if (hintElement) {
+					hintElement.classList.remove('highlight');
+					if (!e.target.value.trim() && hintElement.textContent === 'Hint text') {
+						hintElement.remove();
+					}
+				}
+			}
+		}, true);
+
+		// Function to update the hidden input with all current options
+		function updateHiddenOptionsData() {
+			const options = [];
+			const optionItems = optionsContainer.querySelectorAll('.gem-c-reorderable-list__item');
+
+			optionItems.forEach((item, index) => {
+				const labelInput = item.querySelector('.option-label-input-hidden');
+				const hintInput = item.querySelector('.option-hint-input');
+
+				if (labelInput) {
+					const label = labelInput.value;
+					const hint = hintInput ? hintInput.value : '';
+					const value = label.toLowerCase().replace(/\s+/g, '-');
+
+					options.push({
+						label: label,
+						hint: hint,
+						value: value
+					});
+				}
+			});
+
+			document.getElementById('checkbox-options-data').value = JSON.stringify(options);
+		}
+
+		// Form submission handler
+		questionForm.addEventListener('submit', function (e) {
+			updateHiddenOptionsData(); // Ensure options are up to date before submitting
+			return true;
+		});
+
+		// Function to update the visibility of Up/Down buttons
+		function updateMoveButtons() {
+			const items = optionsContainer.querySelectorAll('.gem-c-reorderable-list__item');
+			items.forEach((item, index) => {
+				const upButton = item.querySelector('.js-reorderable-list-up');
+				const downButton = item.querySelector('.js-reorderable-list-down');
+
+				if (upButton && downButton) {
+					// First item - only show Down
+					if (index === 0) {
+						upButton.style.display = 'none';
+						downButton.style.display = 'inline-block';
+					}
+					// Last item - only show Up
+					else if (index === items.length - 1) {
+						upButton.style.display = 'inline-block';
+						downButton.style.display = 'none';
+					}
+					// Middle items - show both
+					else {
+						upButton.style.display = 'inline-block';
+						downButton.style.display = 'inline-block';
+					}
+				}
+			});
+		}
+
+		// Add Up/Down button functionality
+		document.addEventListener('click', function (e) {
+			if (e.target.classList.contains('js-reorderable-list-up')) {
+				const item = e.target.closest('.gem-c-reorderable-list__item');
+				const prevItem = item.previousElementSibling;
+				if (prevItem) {
+					item.parentNode.insertBefore(item, prevItem);
+					updateAllOptionsPreview();
+					updateHiddenOptionsData();
+					updateMoveButtons();
+				}
+			} else if (e.target.classList.contains('js-reorderable-list-down')) {
+				const item = e.target.closest('.gem-c-reorderable-list__item');
+				const nextItem = item.nextElementSibling;
+				if (nextItem) {
+					item.parentNode.insertBefore(nextItem, item);
+					updateAllOptionsPreview();
+					updateHiddenOptionsData();
+					updateMoveButtons();
+				}
+			}
+		});
+
+		// Initialize Sortable for the options container
+		const sortableContainer = document.getElementById('options-container');
+		if (sortableContainer) {
+			new Sortable(sortableContainer, {
+				animation: 150,
+				ghostClass: 'sortable-ghost',
+				chosenClass: 'sortable-chosen',
+				dragClass: 'highlight-dragging',
+				onStart: function (evt) {
+					const index = evt.oldIndex;
+					highlightPreviewItem(index);
+				},
+				onEnd: function (evt) {
+					updateAllOptionsPreview();
+					updateHiddenOptionsData();
+					updateMoveButtons();
+					removePreviewHighlights();
+				}
+			});
+		}
+
+		// Function to highlight preview item
+		function highlightPreviewItem(index) {
+			const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+			if (!checkboxList) return;
+
+			// Remove any existing highlights
+			removePreviewHighlights();
+
+			// Add highlight to the corresponding preview item
+			const previewItem = checkboxList.querySelector(`.govuk-checkboxes__item:nth-child(${index + 1})`);
+			if (previewItem) {
+				previewItem.classList.add('highlight');
+			}
+		}
+
+		// Function to remove all preview highlights
+		function removePreviewHighlights() {
+			const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+			if (!checkboxList) return;
+
+			const items = checkboxList.querySelectorAll('.govuk-checkboxes__item');
+			items.forEach(item => item.classList.remove('highlight'));
+		}
+
+		// Add focus/blur handlers for list items in edit mode
+		document.addEventListener('focusin', function (e) {
+			if (e.target.classList.contains('js-reorderable-list-up') ||
+				e.target.classList.contains('js-reorderable-list-down')) {
+				const listItem = e.target.closest('.gem-c-reorderable-list__item');
+				if (listItem) {
+					const index = Array.from(listItem.parentNode.children).indexOf(listItem);
+					highlightPreviewItem(index);
+				}
+			}
+		});
+
+		document.addEventListener('focusout', function (e) {
+			if (e.target.classList.contains('js-reorderable-list-up') ||
+				e.target.classList.contains('js-reorderable-list-down')) {
+				removePreviewHighlights();
+			}
+		});
+
+		// Add hover handlers for list items in edit mode
+		document.addEventListener('mouseover', function (e) {
+			const listItem = e.target.closest('.gem-c-reorderable-list__item');
+			if (listItem && editOptionsButton.textContent.trim() === 'Edit list') {
+				const index = Array.from(listItem.parentNode.children).indexOf(listItem);
+				highlightPreviewItem(index);
+			}
+		});
+
+		document.addEventListener('mouseout', function (e) {
+			const listItem = e.target.closest('.gem-c-reorderable-list__item');
+			if (listItem && editOptionsButton.textContent.trim() === 'Edit list') {
+				removePreviewHighlights();
+			}
+		});
+
+		// Add edit options button functionality
+		const editOptionsButton = document.getElementById('edit-options-button');
+		if (editOptionsButton) {
+			editOptionsButton.addEventListener('click', function () {
+				const listItems = document.querySelectorAll('.gem-c-reorderable-list__item');
+				const actionButtons = document.querySelectorAll('.gem-c-reorderable-list__actions');
+				const editDeleteLinks = document.querySelectorAll('.edit-item');
+				const addButton = document.getElementById('add-option-button');
+
+				// Toggle button text and state
+				const isEditing = editOptionsButton.textContent.trim() === 'Done';
+				editOptionsButton.textContent = isEditing ? 'Edit list' : 'Done';
+
+				// Toggle button style - add inverse when NOT editing (showing "Edit list")
+				if (isEditing) {
+					editOptionsButton.classList.add('govuk-button--inverse');
+				} else {
+					editOptionsButton.classList.remove('govuk-button--inverse');
+				}
+
+				// Show/hide add button based on edit state
+				if (addButton) {
+					addButton.style.display = isEditing ? 'inline-block' : 'none';
+				}
+
+				// Toggle action buttons visibility
+				actionButtons.forEach(actions => {
+					actions.style.display = isEditing ? 'none' : 'flex';
+				});
+
+				// Toggle edit/delete links visibility
+				editDeleteLinks.forEach(links => {
+					links.style.display = isEditing ? 'block' : 'none';
+				});
+
+				// Update cursor style and hover effect
+				listItems.forEach(item => {
+					if (isEditing) {
+						item.style.cursor = 'default';
+						item.classList.remove('sortable-enabled');
+					} else {
+						item.style.cursor = 'move';
+						item.classList.add('sortable-enabled');
+					}
+				});
+
+				// Enable/disable sorting
+				if (sortableContainer) {
+					sortableContainer.sortable = !isEditing;
+				}
+
+				// Update button visibility and focus when entering edit mode
+				if (!isEditing) {
+					updateMoveButtons();
+					const firstItem = listItems[0];
+					if (firstItem) {
+						const firstDownButton = firstItem.querySelector('.js-reorderable-list-down');
+						if (firstDownButton) {
+							firstDownButton.focus();
+						}
+					}
+				}
+			});
+		}
+
+		// Add click handler for edit links
+		document.addEventListener('click', function (e) {
+			const editLink = e.target.closest('a[href*="editoption.html"]');
+			if (editLink) {
+				e.preventDefault();
+				console.log('Edit link clicked'); // Debug log
+
+				// Find the parent list item that contains the option data
+				const listItem = editLink.closest('.gem-c-reorderable-list__item');
+				if (!listItem) {
+					console.error('List item not found'); // Debug log
+					return;
+				}
+
+				// Hide the edit and delete links
+				const editItem = listItem.querySelector('.edit-item');
+				if (editItem) {
+					editItem.style.display = 'none';
+				}
+
+				const deleteLink = listItem.querySelector('.delete-option-link');
+				if (deleteLink) {
+					deleteLink.style.display = 'none';
+				}
+
+				const index = listItem.dataset.index;
+				const labelDisplay = listItem.querySelector('.option-label-display');
+				const labelInput = listItem.querySelector('.option-label-input-hidden');
+				const hintInput = listItem.querySelector('.option-hint-input');
+
+				if (!labelDisplay || !labelInput || !hintInput) {
+					console.error('Required elements not found'); // Debug log
+					return;
+				}
+
+				// Store the original content structure
+				const originalContent = `
+					<p class="govuk-body fauxlabel option-label-display" id="option-${index}-label-display">${labelInput.value}</p>
+					<input type="hidden" id="option-${index}-label" class="option-label-input-hidden" name="option[${index}][option_label]" value="${labelInput.value}">
+					<input type="hidden" id="option-${index}-hint" class="option-hint-input" name="option[${index}][option_hint]" value="${hintInput.value}">
+				`;
+
+				// Create edit form HTML using the same structure as add-option-form
+				const editFormHTML = `
+					<div class="govuk-form-group">
+						<label class="govuk-label govuk-label--m" for="edit-option-label-${index}">Item</label>
+						<input class="govuk-input" id="edit-option-label-${index}" type="text" value="${labelInput.value}">
+					</div>
+					<div class="govuk-form-group">
+						<label class="govuk-label govuk-label--m" for="edit-option-hint-${index}">Hint text (optional)</label>
+						<div class="govuk-hint">Add a hint to help users understand what to select</div>
+						<input class="govuk-input" id="edit-option-hint-${index}" type="text" value="${hintInput.value}">
+					</div>
+					<details class="govuk-details" data-module="govuk-details">
+						<summary class="govuk-details__summary">
+							<span class="govuk-details__summary-text">Advanced features</span>
+						</summary>
+						<div class="govuk-details__text">
+							<div class="govuk-form-group">
+								<label class="govuk-label govuk-label--m" for="edit-option-value-${index}">Unique identifier (optional)</label>
+								<div class="govuk-hint">Used in databases to identify the item</div>
+								<input class="govuk-input" id="edit-option-value-${index}" type="text" value="${listItem.querySelector('.option-value-input')?.value || ''}">
+							</div>
+						</div>
+					</details>
+					<div class="govuk-button-group">
+						<button type="button" class="govuk-button" id="save-edit-${index}">Save changes</button>
+						<a class="govuk-link" href="#" id="cancel-edit-${index}">Cancel</a>
+					</div>
+				`;
+
+				// Replace the display content with the edit form
+				const contentDiv = listItem.querySelector('.gem-c-reorderable-list__content');
+				if (!contentDiv) {
+					console.error('Content div not found'); // Debug log
+					return;
+				}
+
+				contentDiv.innerHTML = editFormHTML;
+
+				// Add event listeners for the edit form
+				const saveButton = document.getElementById(`save-edit-${index}`);
+				const cancelButton = document.getElementById(`cancel-edit-${index}`);
+				const editLabelInput = document.getElementById(`edit-option-label-${index}`);
+				const editHintInput = document.getElementById(`edit-option-hint-${index}`);
+				const newValueInput = document.getElementById(`edit-option-value-${index}`);
+
+				if (!saveButton || !cancelButton || !editLabelInput || !editHintInput || !newValueInput) {
+					console.error('Form elements not found'); // Debug log
+					return;
+				}
+
+				// Function to update preview for the edited item
+				function updateEditPreview(listItem, labelValue, hintValue) {
+					const checkboxList = document.querySelector('#checkbox-list .govuk-checkboxes');
+					if (!checkboxList) return;
+
+					const previewItem = checkboxList.querySelector(`#listPreview-option${listItem.dataset.index - 1}`).closest('.govuk-checkboxes__item');
+					if (previewItem) {
+						const labelElement = previewItem.querySelector('.govuk-checkboxes__label');
+						const hintElement = previewItem.querySelector('.govuk-checkboxes__hint');
+
+						if (labelElement) {
+							labelElement.textContent = labelValue || 'Item text';
+						}
+
+						if (hintValue || document.activeElement === editHintInput) {
+							if (!hintElement) {
+								const newHintElement = document.createElement('div');
+								newHintElement.className = 'govuk-hint govuk-checkboxes__hint';
+								newHintElement.textContent = hintValue || 'Hint text';
+								previewItem.appendChild(newHintElement);
+							} else {
+								hintElement.textContent = hintValue || 'Hint text';
+							}
+						} else if (hintElement) {
+							hintElement.remove();
+						}
+					}
+				}
+
+				// Add live preview event listeners
+				editLabelInput.addEventListener('input', () => updateEditPreview(listItem, editLabelInput.value, editHintInput.value));
+				editHintInput.addEventListener('input', () => updateEditPreview(listItem, editLabelInput.value, editHintInput.value));
+
+				// Add focus/blur event listeners for highlighting
+				editLabelInput.addEventListener('focus', () => {
+					const previewItem = document.querySelector(`#listPreview-option${listItem.dataset.index - 1}`).closest('.govuk-checkboxes__item');
+					if (previewItem) {
+						const labelElement = previewItem.querySelector('.govuk-checkboxes__label');
+						if (labelElement) {
+							labelElement.classList.add('highlight');
+						}
+					}
+				});
+
+				editLabelInput.addEventListener('blur', () => {
+					const previewItem = document.querySelector(`#listPreview-option${listItem.dataset.index - 1}`).closest('.govuk-checkboxes__item');
+					if (previewItem) {
+						const labelElement = previewItem.querySelector('.govuk-checkboxes__label');
+						if (labelElement) {
+							labelElement.classList.remove('highlight');
+						}
+					}
+				});
+
+				editHintInput.addEventListener('focus', () => {
+					const previewItem = document.querySelector(`#listPreview-option${listItem.dataset.index - 1}`).closest('.govuk-checkboxes__item');
+					if (previewItem) {
+						let hintElement = previewItem.querySelector('.govuk-checkboxes__hint');
+						if (!hintElement) {
+							hintElement = document.createElement('div');
+							hintElement.className = 'govuk-hint govuk-checkboxes__hint';
+							hintElement.textContent = editHintInput.value || 'Hint text';
+							previewItem.appendChild(hintElement);
+						}
+						hintElement.classList.add('highlight');
+					}
+				});
+
+				editHintInput.addEventListener('blur', () => {
+					const previewItem = document.querySelector(`#listPreview-option${listItem.dataset.index - 1}`).closest('.govuk-checkboxes__item');
+					if (previewItem) {
+						const hintElement = previewItem.querySelector('.govuk-checkboxes__hint');
+						if (hintElement) {
+							hintElement.classList.remove('highlight');
+							if (!editHintInput.value.trim() && hintElement.textContent === 'Hint text') {
+								hintElement.remove();
+							}
+						}
+					}
+				});
+
+				// Save changes
+				saveButton.addEventListener('click', function () {
+					const newLabel = editLabelInput.value.trim();
+					const newHint = editHintInput.value.trim();
+					const newValue = newValueInput.value.trim();
+
+					// Update the display and hidden inputs
+					contentDiv.innerHTML = `
+						<div class="govuk-!-margin-bottom-2">
+							<p class="govuk-body fauxlabel option-label-display" id="option-${index}-label-display">${newLabel}</p>
+							${newHint ? `<p class="govuk-body-s govuk-!-margin-top-0 govuk-!-margin-bottom-0" style="color: #505a5f;">${newHint}</p>` : ''}
+						</div>
+						<input type="hidden" id="option-${index}-label" class="option-label-input-hidden" name="option[${index}][option_label]" value="${newLabel}">
+						<input type="hidden" id="option-${index}-hint" class="option-hint-input" name="option[${index}][option_hint]" value="${newHint}">
+					`;
+
+					// Update the delete link with the new text
+					const deleteLink = listItem.querySelector('.delete-option-link');
+					if (deleteLink) {
+						deleteLink.href = `delete-option.html?index=${index}&text=${encodeURIComponent(newLabel)}`;
+						deleteLink.style.display = 'inline-block';
+					}
+
+					// Show the edit and delete links again
+					if (editItem) {
+						editItem.style.display = 'block';
+					}
+
+					// Update preview and data
+					updateAllOptionsPreview();
+					updateHiddenOptionsData();
+				});
+
+				// Cancel edit
+				cancelButton.addEventListener('click', function () {
+					contentDiv.innerHTML = originalContent;
+					// Show the edit and delete links again
+					if (editItem) {
+						editItem.style.display = 'block';
+					}
+					if (deleteLink) {
+						deleteLink.style.display = 'inline-block';
+					}
+					updateAllOptionsPreview(); // Restore the original preview state
+				});
+
+				// Focus on the label input
+				editLabelInput.focus();
+			}
+		});
+	});
+</script>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const urlParams = new URLSearchParams(window.location.search);
+		const deleteIndex = urlParams.get('deleteIndex');
+
+		console.log("Parsed deleteIndex:", deleteIndex);
+
+		if (deleteIndex !== null) {
+			const itemToDelete = document.querySelector(`.gem-c-reorderable-list__item[data-index="${deleteIndex}"]`);
+			if (itemToDelete) {
+				console.log("Found item to delete:", itemToDelete);
+				itemToDelete.remove();
+				updateAllOptionsPreview(); // Update the preview after deletion
+				updateHiddenOptionsData(); // Update the hidden input data
+				updateEditButtonVisibility(); // Update edit button visibility after deleting an option
+			} else {
+				console.error("Item to delete not found for index:", deleteIndex);
+			}
+
+			// Clean up the URL
+			const newUrl = window.location.href.split('?')[0];
+			window.history.replaceState({}, document.title, newUrl);
+		}
+	});
+</script>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		var secondContainer = document.getElementById("second-container");
+		var borderLeftContainerRadios = document.getElementById("border-left-container-radios");
+
+		if (secondContainer && borderLeftContainerRadios) {
+			// Scroll the `borderLeftContainerRadios` element into view within `second-container`
+			borderLeftContainerRadios.scrollIntoView({
+				behavior: "smooth",
+				block: "nearest"
+			});
+			console.log("Scrolled to border-left-container-textarea within second-container");
+		} else {
+			console.log("second-container or border-left-container-textarea not found");
+		}
+	});
+</script>{% endblock %}

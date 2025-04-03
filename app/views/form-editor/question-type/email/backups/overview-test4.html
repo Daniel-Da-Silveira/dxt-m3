@@ -1,0 +1,629 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Overview of email question - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/redesigntest/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/redesigntest/listing.html" }) }}
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {# <span class="govuk-caption-l" style="color: white">
+            Apply for a county parish holding certificate
+          </span> #}
+          Apply for a county parish holding certificate
+        </h1>
+        {# #}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            {# <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#question-1">Page settings</a>
+                            </li> #}
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page" id="overviewquestions"
+                                href="#overview-noquestions">Page 2 overview</a>
+                            </li>
+                          </ul>
+                        </nav>
+                        {# <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0">
+                        </div> #}
+                        <form class="form" action="/redesigntest/Multi/question-2-date/information-type" method="post">
+                          <h2 class="govuk-heading-xl govuk-!-margin-top-6">Page 2</h2>
+
+                          <div id="summary-container">
+                            <!-- The dynamic summary list will be populated here -->
+                            <h2 class="govuk-heading-l govuk-!-margin-top-4">Questions</h2>
+                            {{ govukSummaryList({
+                            classes: "govuk-summary-list govuk-section-break govuk-section-break--visible",
+                            rows: [
+                            {
+                            key: {
+                            text: "Question 1"
+                            },
+                            value: {
+                            html: data['questionLabelInputEmail'] or 'Email address'
+                            },
+                            actions: {
+                            items: [
+                            {
+                            href: "/redesigntest/templates/1-question/email/edit.html",
+                            text: "Change",
+                            visuallyHiddenText: "name"
+                            }
+                            ]
+                            }
+                            },
+                            {
+                            key: {
+                            text: "Question 2"
+                            },
+                            value: {
+                            html: data['additionalInfo'] or 'Address'
+                            },
+                            actions: {
+                            items: [
+                            {
+                            href: "/redesigntest/templates/1-question/email/edit-info.html",
+                            text: "Change",
+                            visuallyHiddenText: "additional info"
+                            }
+                            ]
+                            }
+                            }
+                            ]
+                            }) }}
+                          </div>
+                        </form>
+
+                        <div class="govuk-button-group govuk-!-margin-top-6 govuk-!-margin-bottom-0">
+                          {% from "govuk/components/button/macro.njk" import govukButton %}
+                          {{ govukButton({
+                          text: "Create next page"
+                          }) }}
+                          {{ govukButton({
+                          text: "Re-order questions",
+                          classes: "govuk-button--inverse"
+                          }) }}
+                          <p class="govuk-body">
+                            <a href="/redesigntest/templates/delete.html"
+                              class="govuk-link govuk-link--no-visited-state">Delete page</a>
+                          </p>
+
+                          <a href="#tab-one" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                            data-module="govuk-skip-link">
+                            Skip to page preview
+                          </a>
+                          <a href="#tab-two" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                            data-module="govuk-skip-link">
+                            Skip to error messages preview
+                          </a>
+                        </div>
+
+
+
+                        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+                        <h2 class="govuk-heading-l">Additional settings</h2>
+
+
+
+                        <div class="govuk-form-group">
+                          <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                              <h1 class="govuk-fieldset__heading">
+                                Page heading and guidance text
+                              </h1>
+                            </legend>
+                            <div id="contact-hint" class="govuk-hint">
+                              Add a page heading when you have multiple questions on a page or need to include a
+                              detailed
+                              explanation.
+                            </div>
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                              <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="contact" name="contact" type="checkbox"
+                                  value="email" data-aria-controls="conditional-contact">
+                                <label class="govuk-label govuk-checkboxes__label" for="contact">
+                                  Add a page heading with or without guidance text to this page
+                                </label>
+                              </div>
+                              <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                id="conditional-contact">
+                                <div>
+                                  <!-- Page Heading Input -->
+                                  {{ govukInput({
+                                  label: {
+                                  text: "Page heading",
+                                  classes: "govuk-label govuk-!-margin-top-0"
+                                  },
+                                  hint: {
+                                  text: "Page headings should be a statement and not a question. For example, ‘Passport
+                                  information’",
+                                  id: "page-heading-input-hint"
+                                  },
+                                  id: "page-heading-input-email",
+                                  name: "pageHeadingEmail",
+                                  type: "text",
+                                  attributes: {
+                                  'aria-describedby': "page-heading-input-hint",
+                                  'data-preview-target': '#dynamic-heading'
+                                  }
+                                  }) }}
+                                  <!-- Guidance Text Textarea -->
+                                  {{ govukTextarea({
+                                  label: {
+                                  text: "Guidance text",
+                                  classes: "govuk-label"
+                                  },
+                                  hint: {
+                                  text: "Use Markdown to format the content or add hyperlinks",
+                                  id: "guidance-textarea-hint"
+                                  },
+                                  id: "guidance-email",
+                                  name: "guidanceEmail",
+                                  rows: 5,
+                                  attributes: {
+                                  'aria-describedby': "guidance-email-hint",
+                                  'data-preview-target': '#guidance-paragraph'
+                                  }
+                                  }) }}
+                                </div>
+                                <details class="govuk-details">
+                                  <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">
+                                      Help with markdown
+                                    </span>
+                                  </summary>
+                                  <div class="govuk-details__text">
+                                    <h3 class="govuk-heading-s">Headings and subheadings</h3>
+                                    <p class="govuk-body">Use one hash symbol followed by a space for a heading, for
+                                      example:
+                                    </p>
+                                    <pre class="formatting-example"
+                                      style="background-color: white;"><code class="lang-md"># This is a heading</code></pre>
+                                    <p class="bottom-gutter-1-3">To add a subheading, use 2 hash symbols:</p>
+                                    <pre class="formatting-example"
+                                      style="background-color: white;"><code class="lang-md">## This is a subheading</code></pre>
+                                    <h3 class="govuk-heading-s" id="bullets">Bullet points</h3>
+                                    <p class="govuk-body">Use bullet points to help words or phrases stand out in your
+                                      emails
+                                      and letters.</p>
+                                    <p class="govuk-body">Copy this example to add bullet points:</p>
+                                    <pre class="formatting-example" style="background-color: white;"><code class="lang-md">Introduce bullet points with a lead-in line ending in a colon:
+* leave one empty line space after the lead-in line
+* use an asterisk or a dash followed by a space to add an item
+* start each item with a lowercase letter, do not end with a full stop
+* leave one empty line space after the last item</code></pre>
+                                    <h3 class="govuk-heading-s" id="bullets">Numbered steps</h3>
+                                    <p class="govuk-body">Copy this example to add numbered steps:</p>
+                                    <pre class="formatting-example" style="background-color: white;"><code class="lang-md">1. Leave one empty line space before starting your list.
+2. Enter a number followed by a full stop and a space to add an item.
+3. Start each item with a capital letter and end it with a full stop.
+4. Leave one empty line space after the last item.</code></pre>
+                                    <h3 class="govuk-heading-s">Links and URLs</h3>
+                                    <p class="govuk-body">To convert text into a link, use square brackets around the
+                                      link text
+                                      and round brackets around the full URL. Make sure there are no spaces between the
+                                      brackets
+                                      or the link will not work. For example:</p>
+                                    <pre class="formatting-example"
+                                      style="background-color: white;"><code class="lang-md">[Apply now](https://www.gov.uk/example)</code></pre>
+                                    {#
+                                  </div> #}
+                                </details>
+                                </details>
+                                {% from "govuk/components/button/macro.njk" import govukButton %}
+                                {{ govukButton({
+                                text: "Save changes"
+                                }) }}
+                              </div>
+                          </fieldset>
+                        </div>
+                        <div class="govuk-form-group">
+                          {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+                          {% from "govuk/components/hint/macro.njk" import govukHint %}
+                          {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+                          {% from "govuk/components/input/macro.njk" import govukInput %}
+                          {% from "govuk/components/button/macro.njk" import govukButton %}
+                          {{ govukFieldset({
+                          "legend": {
+                          "text": "Multiple responses",
+                          "classes": "govuk-fieldset__legend--m",
+                          "isPageHeading": true
+                          },
+                          "describedBy": "multiple-responses-hint",
+                          "html": govukHint({
+                          "id": "multiple-responses-hint",
+                          "text": "For scenarios where users need to give multiple responses to the same question(s)."
+                          }) +
+                          govukCheckboxes({
+                          "idPrefix": "allow-multiple-responses",
+                          "name": "allowMultipleResponses",
+                          "items": [
+                          {
+                          "value": "true",
+                          "text": "Allow multiple responses to questions on this page",
+                          "conditional": {
+                          "html": govukFieldset({
+                          "role": "group",
+                          "describedBy": "response-range-hint",
+                          "html":
+                          '<div class="govuk-form-group">' +
+                            '<label class="govuk-label govuk-label" for="response-min">Set the minimum and maximum times
+                              a user
+                              can
+                              answer questions</label>' +
+                            govukHint({
+                            "id": "response-range-hint",
+                            "text": "The range must be between 2 and 25"
+                            }) +
+                            '<div class="govuk-date-input" id="response-range">' +
+                              '<div class="govuk-date-input__item">' +
+                                govukInput({
+                                "id": "response-min",
+                                "name": "responseMin",
+                                "classes": "govuk-input--width-2 govuk-date-input__input",
+                                "label": {
+                                "text": "Min"
+                                },
+                                "attributes": {
+                                "autocomplete": "off",
+                                "inputmode": "numeric"
+                                }
+                                }) +
+                                '</div>' +
+                              '<div class="govuk-date-input__item">' +
+                                govukInput({
+                                "id": "response-max",
+                                "name": "responseMax",
+                                "classes": "govuk-input--width-2 govuk-date-input__input",
+                                "label": {
+                                "text": "Max"
+                                },
+                                "attributes": {
+                                "autocomplete": "off",
+                                "inputmode": "numeric"
+                                }
+                                }) +
+                                '</div>' +
+                              '</div>' +
+                            '</div>' +
+                          '<div class="govuk-form-group">' +
+                            '<label class="govuk-label govuk-label" for="response-label">Give the responses an
+                              identifiable name
+                              or
+                              label</label>' +
+                            govukHint({
+                            "id": "response-label-hint",
+                            "text": "Provide a descriptive label for the responses. For example, 'cow', 'pet'. This will
+                            be used
+                            to
+                            group and identify responses, such as 'cow 1', 'cow 2'."
+                            }) +
+                            govukInput({
+                            "id": "response-label",
+                            "name": "responseLabel",
+                            "attributes": {
+                            "aria-describedby": "response-label-hint"
+                            }
+                            }) +
+                            '</div>' +
+                          '<div class="govuk-form-group">' +
+                            govukButton({
+                            "text": "Save changes",
+                            "classes": "govuk-!-margin-top-4"
+                            }) +
+                            '</div>'
+                          })
+                          }
+                          }
+                          ]
+                          })
+                          }) }}
+                        </div>
+                        <h2 class="govuk-heading-m">Page conditions</h2>
+                        <p class="govuk-body">Set up conditions to skip this page based on how users answer earlier
+                          questions. For
+                          example, if a user selected "No" to a question like "Do you have a farm?" on a previous page,
+                          they can
+                          skip this page because it only applies to those who answered "Yes.".</p>
+                        {{ govukButton({
+                        text: "Add conditions",
+                        classes: "govuk-button"
+                        }) }}
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Right Column for Preview -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+        <!-- Before content -->
+        <div id="before-content" style=" background-color:  #cce2d8;">
+          <p class="govuk-body-s" style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px;
+  text-align: center;"> Preview
+          </p>
+        </div>
+        <div style="margin-top: 60px!important;">
+          {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+          <div class="govuk-tabs" data-module="govuk-tabs">
+            <h2 class="govuk-tabs__title">
+              Contents
+            </h2>
+            <ul class="govuk-tabs__list">
+              <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                <a class="govuk-tabs__tab" id="tab-one" href="#tab-one">Page preview</a>
+              </li>
+              <li class="govuk-tabs__list-item">
+                <a class="govuk-tabs__tab" href="#tab-two">Error messages</a>
+              </li>
+            </ul>
+            <div class="govuk-tabs__panel" id="tab-one">
+              <!-- Page Preview Content -->
+              <p class="govuk-body-s" style="margin-bottom: 0; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview this page in a new tab
+                </a>
+              </p>
+              <div id="heading-container">
+                <h1 class="govuk-heading-xl" id="dynamic-heading">{{ data['pageHeadingEmail'] or '' }}</h1>
+              </div>
+              <!-- Guidance Paragraph -->
+              <p class="govuk-body" id="guidance-paragraph">{{ data['guidanceEmail'] or '' }}</p>
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--l" for="text-input-field" id="question-label-legend">
+                  {{ data['questionLabelInputEmail'] or 'Email address' }}
+                </label>
+                <div id="hint-text-output" class="govuk-hint">
+                  {{ data['hintTextInputEmail'] or '' }}
+                </div>
+                <input class="govuk-input" id="email" name="email" type="email" spellcheck="false"
+                  aria-describedby="email-hint" autocomplete="email">
+              </div>
+
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                  <h1 class="govuk-fieldset__heading" id="question-label-legend">
+                    {{ data['questionLabelInputAddress'] or 'Address' }}
+                  </h1>
+                  <div class="govuk-hint" id="hint-text-output">{{ data['hintTextInputAddress'] or '' }}</div>
+                </legend>
+
+                <!-- Address Line 1 -->
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="address-line-1">
+                    Address line 1
+                  </label>
+                  <input class="govuk-input" id="address-line-1" name="addressLine1" type="text"
+                    autocomplete="address-line1">
+                </div>
+
+                <!-- Address Line 2 (Optional) -->
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="address-line-2">
+                    Address line 2 (optional)
+                  </label>
+                  <input class="govuk-input" id="address-line-2" name="addressLine2" type="text"
+                    autocomplete="address-line2">
+                </div>
+
+                <!-- Town or City -->
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="address-town">
+                    Town or city
+                  </label>
+                  <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="addressTown" type="text"
+                    autocomplete="address-level2">
+                </div>
+
+                <!-- Postcode -->
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="address-postcode">
+                    Postcode
+                  </label>
+                  <input class="govuk-input govuk-input--width-10" id="address-postcode" name="addressPostcode"
+                    type="text" autocomplete="postal-code">
+                </div>
+              </fieldset>
+              <a href="#overviewquestions" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to overview of questions
+              </a>
+            </div>
+            <div class="govuk-tabs__panel" id="tab-two">
+              <!-- Error Messages Content -->
+              <!-- Error Messages Section -->
+              <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview error messages in a new tab
+                </a>
+              </p>
+              <!-- Error Messages Content -->
+              <div class="govuk-error-summary" data-disable-auto-focus="true">
+                <h2 class="govuk-error-summary__title">There is a problem</h2>
+                <ul class="govuk-list govuk-error-summary__list">
+                  <!-- Empty input error -->
+                  <li>
+                    <a id="empty-input-error-textarea" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      Enter <span id="error-dynamic-text">[short description]</span>
+                    </a>
+                  </li>
+                  <a id="empty-input-error-textarea" class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span>
+                    <span id="error-dynamic-text">[Short description]</span> must be in the correct format
+                  </a>
+                  </li>
+                </ul>
+              </div>
+              <a href="#overviewquestions" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to overview of questions
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- JavaScript code -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // DOM Elements
+          const domElements = {
+            // Existing elements
+            questionLabelInput: document.getElementById('question-label-input'),
+            questionLabelLegend: document.getElementById('question-label-legend'),
+            hintTextInput: document.getElementById('hint-text-input'),
+            hintTextOutput: document.getElementById('hint-text-output'),
+            makeOptionalCheckbox: document.getElementById('make-optional'),
+            // New elements for page heading and guidance text
+            pageHeadingInput: document.getElementById('page-heading-input'),
+            dynamicHeading: document.getElementById('dynamic-heading'),
+            guidanceTextarea: document.getElementById('guidance-textarea'),
+            guidanceParagraph: document.getElementById('guidance-paragraph')
+          };
+          // Initialize event listeners
+          initializeEventListeners();
+          function initializeEventListeners() {
+            // Update question label
+            if (domElements.questionLabelInput && domElements.questionLabelLegend) {
+              domElements.questionLabelInput.addEventListener('input', updateQuestionLabel);
+            }
+            // Update hint text
+            if (domElements.hintTextInput && domElements.hintTextOutput) {
+              domElements.hintTextInput.addEventListener('input', updateHintText);
+            }
+            // Update optional label
+            if (domElements.makeOptionalCheckbox) {
+              domElements.makeOptionalCheckbox.addEventListener('change', updateQuestionLabel);
+            }
+            // Update page heading
+            if (domElements.pageHeadingInput && domElements.dynamicHeading) {
+              domElements.pageHeadingInput.addEventListener('input', updatePageHeading);
+            }
+            // Update guidance text
+            if (domElements.guidanceTextarea && domElements.guidanceParagraph) {
+              domElements.guidanceTextarea.addEventListener('input', updateGuidanceText);
+            }
+            // Apply focus/blur highlighting
+            applyHighlightOnFocus(domElements.questionLabelInput, domElements.questionLabelLegend);
+            applyHighlightOnFocus(domElements.hintTextInput, domElements.hintTextOutput);
+            applyHighlightOnFocus(domElements.pageHeadingInput, domElements.dynamicHeading);
+            applyHighlightOnFocus(domElements.guidanceTextarea, domElements.guidanceParagraph);
+          }
+          function updateQuestionLabel() {
+            const suffix = domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+            domElements.questionLabelLegend.textContent = domElements.questionLabelInput.value || 'Question';
+            domElements.questionLabelLegend.textContent += suffix;
+          }
+          function updateHintText() {
+            domElements.hintTextOutput.textContent = domElements.hintTextInput.value;
+          }
+          function updatePageHeading() {
+            domElements.dynamicHeading.textContent = domElements.pageHeadingInput.value;
+          }
+          function updateGuidanceText() {
+            domElements.guidanceParagraph.textContent = domElements.guidanceTextarea.value;
+          }
+          function applyHighlightOnFocus(inputElement, targetElement) {
+            if (inputElement && targetElement) {
+              inputElement.addEventListener('focus', function () {
+                targetElement.classList.add('highlight');
+              });
+              inputElement.addEventListener('blur', function () {
+                targetElement.classList.remove('highlight');
+              });
+              // If the input is already focused
+              if (document.activeElement === inputElement) {
+                targetElement.classList.add('highlight');
+              }
+            }
+          }
+        });
+      </script>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          window.scrollTo(0, 0);
+        });
+      </script>
+      <!-- CSS for Highlighting -->
+      <style>
+        .highlight {
+          background-color: #ffe5cc;
+          border-bottom: 2px solid #ffb266;
+        }
+
+        #before-content {
+          position: absolute;
+          top: 0;
+          left: 10 !important;
+          right: 0;
+          width: 100%;
+          padding: 10px !important;
+          box-sizing: border-box;
+          z-index: 1;
+          border-bottom: 1px solid #008938;
+          padding-left: 10px;
+        }
+
+        #second-container {
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        #second-container>* {
+          padding-left: 0px;
+          z-index: 2;
+        }
+      </style>
+    </div>
+  </div>
+  {% endblock %}

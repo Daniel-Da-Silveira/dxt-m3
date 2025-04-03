@@ -1,0 +1,16 @@
+<!-- Preview for Text Question -->
+{% set labelSize = labelSize or "m" %}
+
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-label--{{ labelSize }}" for="list">
+        {{ question.label }}
+    </label>
+    {% if question.hint %}
+    <div id="list-hint" class="govuk-hint">
+        {{ question.hint }}
+    </div>
+    {% endif %}
+    <select class="govuk-select" id="list" name="list" aria-describedby="list-hint">
+        <option value="">Please select</option>
+    </select>
+</div>

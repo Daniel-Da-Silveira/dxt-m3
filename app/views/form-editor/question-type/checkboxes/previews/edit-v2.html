@@ -1,0 +1,79 @@
+<!-- Include the preview template -->
+<!-- Your provided preview code -->
+
+<div id="heading-container">
+  {# {% set setName = data['setName'] or '' %}
+  <span id="dynamic-caption" class="govuk-caption-xl" data-setname="{{ setName }}">{{ data['setName'] or '' }}
+    1</span>
+  #}
+
+  <h1 class="govuk-heading-xl" id="dynamic-heading-radios">{{ data['pageHeadingInputRadios'] or '' }}</h1>
+</div>
+
+<!-- Guidance Paragraph -->
+<p class="govuk-body" id="guidance-paragraph">{{ data['guidanceTextareaRadios'] or '' }}</p>
+
+
+
+<div class="border-left-container">
+  <div id="checkbox-list">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading" id="question-label-preview">
+          Question text
+        </h1>
+      </legend>
+
+      <!-- Hint text -->
+      <div id="question-hint-preview" class="govuk-hint" style="display: none;"></div>
+
+      <!-- Checkboxes container -->
+      <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+        <!-- Dynamically generated checkbox items will go here -->
+      </div>
+    </fieldset>
+  </div>
+
+
+</div>
+
+</form>
+
+
+
+<style>
+  .border-left-container {
+    border-left: 10px solid #ffb266;
+    padding-left: 20px;
+  }
+
+  /* Highlighting styles */
+  .highlight {
+    background-color: #ffe5cc;
+    border-bottom: 2px solid #ffb266;
+  }
+
+  .highlight-dragging {
+    border: 2px dotted #ffb266;
+    background-color: #f0f0f0;
+  }
+
+  .highlight-moving {
+    border: 2px dashed #ff0;
+  }
+
+  /* Preview styles */
+  .govuk-checkboxes__item {
+    position: relative;
+    transition: background-color 0.3s ease;
+  }
+
+  .govuk-checkboxes__item.highlight {
+    background-color: #ffe5cc;
+  }
+
+  .govuk-checkboxes__item.highlight .govuk-checkboxes__label,
+  .govuk-checkboxes__item.highlight .govuk-checkboxes__hint {
+    background-color: #ffe5cc;
+  }
+</style>

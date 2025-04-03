@@ -1,0 +1,160 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Change form name - Apply for a county parish holding number in England" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/onboarding/sign-out-confirmation",
+    navigationItems: [
+    {
+      href: "/library.html",
+      text: "Forms library",
+      id: "library"
+     },
+    {
+      href: "/cph-overview/draft/complete-clean.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/editor/0",
+    text: 'Editor',
+    id: 'editor'
+    }],
+    activeLinkId: ""
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+text: "Back",
+href: "/cph-overview/draft/complete-clean.html"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+  {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+  {% from "govuk/components/table/macro.njk" import govukTable %}
+
+  <!-- <main class="govuk-main-wrapper" id="main-content" role="main"> -->
+  <form class="form" action="/cph-overview/draft/organisational-details/overview/form-name-changed" method="post">
+
+    {% from "govuk/components/input/macro.njk" import govukInput %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {{ govukInput({
+  label: {
+    text: "Enter a name for your form",
+    classes: "govuk-label--l",
+    isPageHeading: true
+  },
+  hint: {
+    text: "Use an appropriate name for your form. You cannot change the form name once your form is live"
+  },
+  id: "form-name",
+  name: "formName",
+  value: "Apply for a county parish holding number in England"
+}) }}
+
+        {{ govukButton({
+      text: "Continue"
+      }) }}
+      </form>
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            View error messages
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+          {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+          <p class="govuk-body-l">Missing string</p>
+
+          {{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: "Enter a form name",
+      href: "#"
+
+    }
+  ]
+}) }}
+
+          {{ govukInput({
+      label: {
+      text: "Enter a name for your form",
+      classes: "govuk-label--l",
+      isPageHeading: true
+     },
+        errorMessage: {
+          text: "Enter a form name"
+        },
+      id: "form-name",
+      name: "formName"
+      }) }}
+
+          <p class="govuk-body-l">Name already exists</p>
+          {{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: "Form name already exists",
+      href: "#"
+
+    }
+  ]
+}) }}
+
+          {{ govukInput({
+      label: {
+      text: "Enter a name for your form",
+      classes: "govuk-label--l",
+      isPageHeading: true
+     },
+        errorMessage: {
+          text: "Form name already exists"
+        },
+      id: "form-name",
+      name: "formName"
+      }) }}
+          <p class="govuk-body-l">More than 250 characters</p>
+          {{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: "Form name must be 250 characters or less",
+      href: "#"
+
+    }
+  ]
+}) }}
+
+          {{ govukInput({
+      label: {
+      text: "Enter a name for your form",
+      classes: "govuk-label--l",
+      isPageHeading: true
+     },
+        errorMessage: {
+          text: "Form name must be 250 characters or less"
+        },
+      id: "form-name",
+      name: "formName"
+      }) }}
+        </div>
+      </details>
+
+    {% endblock %}

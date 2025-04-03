@@ -1,0 +1,386 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Overview - Apply for a county parish holding number in England" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/onboarding/sign-out-confirmation",
+    navigationItems: [
+    {
+      href: "/library.html",
+      text: "Forms library",
+      id: "library"
+     },
+    {
+      href: "/cph-overview/draft/complete-clean.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/redesigntest/listing",
+    text: 'Editor',
+    id: 'editor'
+    }],
+    activeLinkId: "overview"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+text: "Back to forms library",
+href: "/library.html"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+      <h1 class="govuk-heading-l">
+        Apply for a county parish holding number in England
+      </h1>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Status
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <strong class="govuk-tag govuk-tag--orange">
+              Draft
+            </strong>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Updated
+          </dt>
+          <dd class="govuk-summary-list__value">
+            22 Mar 2024 by Chris Smith
+          </dd>
+
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Created
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <p class="govuk-body">11 Oct 2023 by Waylon Brady</p>
+          </dd>
+
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Preview link
+          </dt>
+          <dd class="govuk-summary-list__value" style="padding-right:0!important;">
+            <a href="https://preview.submit-a-form-to-defra.gov.uk/apply-for-a county-parish-holding-number" class="govuk-link" rel="noreferrer noopener" target="_blank">https://preview.submit-a-form-to-defra.gov.uk/apply-for-a county-parish-holding-number</a>
+          </dd>
+        </dd>
+
+      </div>
+    </dl>
+
+    <h2 class="govuk-heading-m govuk-!-padding-top-4">
+      Where submitted forms are sent
+    </h2>
+    {{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Submitted forms sent to"
+      },
+      value: {
+        html: 'PolicyTeam@defra.gov.uk'
+      },
+      actions: {
+        items: [
+          {
+            href: "/cph-overview/notification-email.html",
+            text: "Change",
+            visuallyHiddenText: "Submitted forms sent to"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+    <h2 class="govuk-heading-m govuk-!-padding-top-2">
+      Contact details for support
+    </h2>
+
+    <p class="govuk-body">You must provide at least one way for users to get help.</p>
+    <p class="govuk-body">The contact details are shown in the footer of every page of the form.</p>
+
+    {{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Phone"
+      },
+      value: {
+        html: '
+          <ul class="govuk-list">
+            <li>Telephone: 020 7946 0101</li>
+            <li>Textphone: 020 7946 0102</li>
+            <li>Monday to Friday, 8am to 6pm</li>
+            <li>Saturday and Sunday, 10am to 4pm</li>
+          </ul>
+          <p class="govuk-body">
+            <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/call-charges">https://www.gov.uk/call-charges</a>
+          </p>'
+      },
+      actions: {
+        items: [
+          {
+            href: "/cph-overview/support/add-telephone.html",
+            text: "Change",
+            visuallyHiddenText: "Telephone number for support"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Email address"
+      },
+      value: {
+        html: '<p class="govuk-body"><a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/call-charges">DefraSupport@defra.gov.uk</a></p><p class="govuk-body">We aim to respond in 2 working days.</p> '
+      },
+      actions: {
+        items: [
+          {
+            href: "/cph-overview/support/add-email.html",
+            text: "Change",
+            visuallyHiddenText: "Email address for support"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Online contact link"
+      },
+      value: {
+        html: '<p class="govuk-body">Defra Helpline</p><a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/call-charges">https://www.gov.uk/guidance/contact-defra</a></p>'
+      },
+      actions: {
+        items: [
+          {
+            href: "/cph-overview/draft/support-details.html",
+            text: "Change",
+            visuallyHiddenText: "Completed forms sent to"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+    <h2 class="govuk-heading-m govuk-!-padding-top-2">
+      What happens next
+    </h2>
+    {{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Tell users what happens after they submit their form"
+      },
+      value: {
+        html: 'We’ll send you an email to let you know the outcome. You’ll usually get a response within 10 working days.'
+      },
+      actions: {
+        items: [
+          {
+            href: "/cph-overview/support/next-steps.html",
+            text: "Change",
+            visuallyHiddenText: "Completed forms sent to"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+    <h2 class="govuk-heading-m govuk-!-padding-top-2">
+      Data protection
+    </h2>
+    {{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Privacy notice"
+      },
+      value: {
+        html: '<a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/call-charges">https://www.gov.uk/help/privacy-notice</a></p>'
+  },
+      actions: {
+        items: [
+          {
+            href: "/cph-overview/privacy-notice.html",
+            text: "Change",
+            visuallyHiddenText: "Completed forms sent to"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+    <h2 class="govuk-heading-m govuk-!-padding-top-2">Organisation details</h2>
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+    {{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Form name"
+      },
+      value: {
+        text: "Apply for a county parish holding number in England"
+      },
+      actions: {
+        items: [
+          {
+            href: "/cph-overview/draft/organisational-details/form-name.html",
+            text: "Change",
+            visuallyHiddenText: "form name"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Lead organisation"
+      },
+      value: {
+        text: "Center for Environment, Fisheries and Aquaculture Science - Cefas"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "lead organisation"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Team name"
+      },
+      value: {
+        text: "Policy directorate"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "team name"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Shared email address"
+      },
+      value: {
+        text: "SM-Defra-Not-Real@defra.gov.uk"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "shared email address"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+  </div>
+
+  <div class="govuk-grid-column-one-third-from-desktop">
+
+    <div style="background-color: #f3f2f1; padding: 15px;">
+      <h2 class="govuk-heading-m">Manage form</h2>
+
+      <a href="/redesigntest/listing.html">
+        <button class="gem-c-button govuk-button gem-c-button-publishing--secondary-quiet" style="width: 100%; margin-bottom: 15px;" type="submit">Edit draft</button>
+        <!-- <button class="gem-c-button govuk-button gem-c-button-publishing--secondary snipcss0-3-3-4" style="width: 100%; margin-bottom: 15px;" type="submit">Edit draft</button> -->
+      </a>
+
+      <a href="/cph-overview/manage-form/make-draft-live/passed-validation.html">
+        <button type="submit" class="govuk-button" data-module="govuk-button" style="width: 100%; margin-bottom: 15px;">
+          Make draft live
+        </button>
+      </a>
+
+      <!-- <button type="submit" class="govuk-button govuk-button--warning" data-module="govuk-button" style="width: 100%;margin-bottom: 15px;"> Close live form </button> -->
+      <a href="#" class="govuk-link">Delete draft</a>
+
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    <h2 class="govuk-heading-m">Internal notes</h2>
+    {{ govukButton({
+      text: "Add internal note",
+      href: "",
+      classes: "govuk-button--secondary"
+    }) }}
+
+    {{ mojTimeline({
+            items: [
+              {
+                label: {
+                  text:  "Changed field validation behaviour"
+                },
+                text: "Updated the email address input field to include a more sophisticated validation check, reducing the incidence of users entering incorrect email formats.",
+                datetime: {
+                  timestamp: "2024-05-14T10:15:00.000Z",
+                  type: "datetime"
+                },
+                byline: {
+                  text: "Chris Smith"
+                }
+              },
+                            {
+                label: {
+                  text:  "New form created"
+                },
+                text: "Created this forms as requested by Policy Team.",
+                datetime: {
+                  timestamp: "2024-05-13T12:32:00.000Z",
+                  type: "datetime"
+                },
+                byline: {
+                  text: "Moshe Pitt"
+                }
+              }
+            ]
+          }) }}
+
+  </div>
+</div>
+</div>
+
+{% endblock %}

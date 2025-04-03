@@ -1,0 +1,78 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+    {{ commonTerms.form_editor.overview.sections.organisation.title }}
+</h2>
+
+{{ govukSummaryList({
+rows: [
+{
+key: {
+text: commonTerms.form_editor.overview.sections.organisation.form_name.label
+},
+value: {
+text: form.name
+},
+actions: {
+items: [
+{
+href: "/form-overview/draft/organisational-details/form-name.html",
+text: commonTerms.form_editor.overview.sections.organisation.form_name.change,
+visuallyHiddenText: commonTerms.form_editor.overview.sections.organisation.form_name.label
+}
+]
+}
+},
+{
+key: {
+text: commonTerms.form_editor.overview.sections.organisation.lead_org.label
+},
+value: {
+text: form.organisation.name
+},
+actions: {
+items: [
+{
+href: "/create-new-form/organisation-name",
+text: commonTerms.form_editor.overview.sections.organisation.lead_org.change,
+visuallyHiddenText: commonTerms.form_editor.overview.sections.organisation.lead_org.label
+}
+]
+}
+},
+{
+key: {
+text: "Team name"
+},
+value: {
+text: form.team.name
+},
+actions: {
+items: [
+{
+href: "/create-new-form/policy-sme",
+text: "Change",
+visuallyHiddenText: "team name"
+}
+]
+}
+},
+{
+key: {
+text: "Shared email address"
+},
+value: {
+text: form.team.email
+},
+actions: {
+items: [
+{
+href: "/create-new-form/policy-sme",
+text: "Change",
+visuallyHiddenText: "shared email address"
+}
+]
+}
+}
+]
+}) }}

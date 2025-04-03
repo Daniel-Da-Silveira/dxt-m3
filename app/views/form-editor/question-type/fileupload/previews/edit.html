@@ -1,0 +1,140 @@
+{#
+<!-- New HTML content for before element -->
+<div id="before-content">
+  <p class="govuk-body-s" style="margin-bottom: 0">
+    <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Preview this
+      page in a new tab</a>
+  </p>
+</div>
+
+<!-- Additional Content Here -->
+<div class="additional-content">
+
+  <div>
+    <!-- Tag for Preview -->
+    {{ govukTag({ text: "Preview of page 11", classes: "govuk-tag--yellow
+    govuk-!-margin-bottom-2 govuk-!-margin-top-8" }) }}
+    <!-- Form for Preview -->
+    <!-- Dynamic Heading --> #}
+
+
+    {#
+    <div id="heading-container">
+      {% set setName = data['setName'] or '' %}
+      <span id="dynamic-caption" class="govuk-caption-xl" data-setname="{{ setName }}">{{ data['setName'] or '' }}
+        1</span>
+
+      <h1 class="govuk-heading-xl" id="dynamic-heading">{{ data['pageHeading'] or '' }}</h1>
+    </div>
+
+    <!-- Guidance Paragraph -->
+    <p class="govuk-body" id="guidance-paragraph">{{ data['guidanceText'] or '' }}</p> #}
+
+    <div class="border-left-container-file">
+
+      <div class="govuk-form-group"></div>
+      <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="text-input-field" id="question-label-legend">
+          Question
+        </label>
+      </h1>
+      <div id="hint-text-output" class="govuk-hint">
+      </div>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="file-upload-1">
+          Upload a file
+        </label>
+        <input class="govuk-file-upload" disabled aria-disabled="true" id="file-upload-1" name="fileUpload1"
+          type="file">
+      </div>
+
+      <button type="submit" disabled aria-disabled="true" class="govuk-button govuk-button--secondary"
+        data-module="govuk-button">
+        Upload file
+      </button>
+
+      <p class="govuk-body" aria-live="polite">1 of 2 files uploaded</p>
+
+
+
+      <p class="govuk-body govuk-!-display-none" id="refreshPageProgress"><a href="#" class="govuk-link">Refresh page to
+          update file upload progress</a></p>
+
+      <dl class="govuk-summary-list govuk-summary-list--long-key">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            File2.jpg
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <strong class="govuk-tag govuk-tag--yellow">
+              Uploading
+            </strong>
+
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="#" style="color: #b1b4b6; cursor: default;"
+              onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Remove<span
+                class="govuk-visually-hidden"> file 1.jpg</span></a>
+            {# <a class="govuk-link" href="#">Remove<span class="govuk-visually-hidden"> file1.jpg</span></a> #}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            File1.jpg
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <strong class="govuk-tag govuk-tag--green">
+              Uploaded
+            </strong>
+
+          </dd>
+          <dd class="govuk-summary-list__actions">
+
+            <a class="govuk-link govuk-link--no-visited-state" href="#" style="color: #b1b4b6; cursor: default;"
+              onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Remove<span
+                class="govuk-visually-hidden"> file 2.jpg</span></a>
+            {# <a class="govuk-link" href="#">Remove<span class="govuk-visually-hidden"> receipt1.jpg</span></a> #}
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    {# {% set setName = data['setName'] or '' %}
+    {% set overview0 = data['overview0'] or '' %}
+
+    {% if overview0 == "morethan1" %}
+    {{ govukButton({
+    text: "Add another " ~ setName,
+    classes: "govuk-button govuk-!-margin-top-3",
+    id: "add-another-set-button",
+    disabled: true
+    }) }}
+    {% else %}
+    {{ govukButton({
+    text: "Continue",
+    classes: "govuk-button govuk-!-margin-top-6",
+    id: "once-button",
+    disabled: true
+    }) }}
+    {% endif %} #}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const dynamicCaption = document.getElementById("dynamic-caption");
+        const setName = dynamicCaption.getAttribute("data-setname");
+
+        if (!setName) {
+          dynamicCaption.style.display = "none";
+        }
+      });
+
+    </script>
+
+
+    <style>
+      .border-left-container-file {
+        border-left: 10px solid #ffb266;
+        padding-left: 20px;
+      }
+    </style>

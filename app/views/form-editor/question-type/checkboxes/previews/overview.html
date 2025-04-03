@@ -1,0 +1,66 @@
+<div id="heading-container" class="govuk-!-margin-top-6">
+  <!-- Dynamic Caption (Commented out until needed) -->
+  {#
+  {% set setName = data['setName'] or '' %}
+  <span id="dynamic-caption" class="govuk-caption-xl" data-setname="{{ setName }}">
+    {{ data['setName'] or '' }} 1
+  </span>
+  #}
+
+  <!-- Dynamic Heading -->
+  <h1 class="govuk-heading-xl" id="dynamic-heading">{{ data['pageHeadingInputCheckboxes'] or '' }}</h1>
+{# </div> #}
+
+<!-- Guidance Paragraph -->
+{% if data['guidanceTextareaRadios'] %}
+<p class="govuk-body" id="guidance-paragraph">{{ data['guidanceTextareaRadios'] }}</p>
+{% endif %}
+
+<!-- Form Group Container -->
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" aria-describedby="listPreview-hint">
+    <!-- Legend for the Fieldset -->
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+        {{ data['multiQuestionLabelInputRadios'] or 'Question' }}
+      </h1>
+    </legend>
+
+    <!-- Hint Text -->
+    {% if data['oldMultiQuestionHintTextInputRadios'] %}
+    <div id="listPreview-hint" class="govuk-hint">
+      {{ data['oldMultiQuestionHintTextInputRadios'] }}
+    </div>
+    {% endif %}
+
+    <!-- Radio List -->
+    <div class="govuk-radios" data-module="govuk-radios" id="radio-list">
+      {% for option in data.radioList %}
+      <div class="govuk-radios__item">
+        <!-- Radio Input -->
+        <input
+          class="govuk-radios__input"
+          id="listPreview-option{{ loop.index0 }}"
+          name="listPreview"
+          type="radio"
+          value="{{ option.label }}"
+        >
+        <!-- Radio Label -->
+        <label
+          class="govuk-label govuk-radios__label"
+          for="listPreview-option{{ loop.index0 }}"
+        >
+          {{ option.label }}
+        </label>
+
+        <!-- Optional Hint for Each Option -->
+        {% if option.hint %}
+        <div class="govuk-hint govuk-radios__hint">
+          {{ option.hint }}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </fieldset>
+</div>

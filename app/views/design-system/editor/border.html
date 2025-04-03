@@ -1,0 +1,218 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Question border – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Kit of parts - Defra Forms Designer" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "Kit of parts",
+containerClasses: containerClasses,
+homepageLink: "/design-system/components.html",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/design-system/prototype-route.html", text: "Prototype", id: "prototype" },
+{ href: "/design-system/components.html", text: "Components", id: "components" },
+{ href: "/design-system/user-journeys/home.html", text: "User journeys", id: "user-journeys" }
+],
+activeLinkId: "components"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+
+        {# {{ govukBackLink({
+        classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+        text: "Back to add and edit pages",
+        href: "/form-editor/listing.html"
+        }) }} #}
+
+        {#
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom: 1px solid white; margin-bottom: 0;" /> #}
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    Component parts for the form editor
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-quarter">
+            <!-- Side Navigation Here -->
+            {% from "side-navigation/macro.njk" import dwpSideNavigation %}
+            <nav>
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Question editor</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-question-editor",
+                selectedItem: "/design-system/editor/border.html",
+                items: [
+                { text: "Configuration panels", href: "/design-system/editor/configuration-panel.html", id:
+                "sn-config-panels"
+                },
+                { text: "Guided input", href: "/design-system/editor/guided-input.html", id: "sn-guided-input" },
+                { text: "Preview panels", href: "/design-system/editor/preview-panel.html", id: "sn-preview-panels" },
+                { text: "Previews in a new tab", href: "/design-system/editor/previews-in-new-tab.html", id:
+                "sn-previews-new-tab"
+                },
+                { text: "Question borders", href: "/design-system/editor/border.html", id: "sn-question-borders" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Information types</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-information-types",
+                selectedItem: "",
+                items: [
+                { text: "Answer limits", href: "/design-system/information-type/answer-limits.html", id:
+                "sn-answer-limits" },
+                { text: "Configuration for each type", href: "/design-system/information-type/configuration-types.html",
+                id:
+                "sn-configuration-types" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Re-ordering</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-reordering",
+                selectedItem: "",
+                items: [
+                { text: "Lists", href: "/design-system/reordering/lists.html", id: "sn-lists" },
+                { text: "Pages", href: "/design-system/reordering/pages.html", id: "sn-pages" },
+                { text: "Questions", href: "/design-system/reordering/questions.html", id: "sn-questions" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Deletion</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-deletion",
+                selectedItem: "",
+                items: [
+                { text: "Pages", href: "/design-system/deletion/pages.html", id: "sn-deletion-pages" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Header</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-header",
+                selectedItem: "",
+                items: [
+                { text: "Mastheads", href: "/design-system/header/masthead.html", id: "sn-mastheads" }
+                ]
+                })
+                }}
+        </div>
+        </nav>
+
+        <div class="govuk-grid-column-three-quarters">
+            <!-- Main Content Here -->
+            <span class="govuk-caption-xl">Editor</span>
+            <h1 class="govuk-heading-xl">Question borders</h1>
+
+            <h2 class="govuk-heading-l">When this component is used</h2>
+            <p class="govuk-body">
+                Use the question border styling to make it clearer to users what is being edited.
+            </p>
+
+            <h2 class="govuk-heading-l">How it works while editing a question</h2>
+            <p class="govuk-body">
+                In the form editor's preview panel, a left border is added to highlight the question
+                currently being edited:
+            </p>
+            <p class="govuk-body" style="background-color: #f7f7f7; padding: 30px;">
+                <code>border-left: 10px solid #ffb266; padding-left: 20px;</code>
+            </p>
+
+            <h2 class="govuk-heading-l">Examples</h2>
+
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+            <div class="border-left-container-yesno">
+                {{ govukRadios({
+                classes: "govuk-radios--inline",
+                name: "yesNo",
+                fieldset: {
+                legend: {
+                text: "Question",
+                isPageHeading: false,
+                classes: "govuk-fieldset__legend--l"
+                }
+                },
+                hint: { text: "Hint text" },
+                items: [
+                { value: "yes", text: "Yes" },
+                { value: "no", text: "No" }
+                ]
+                }) }}
+            </div>
+
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+            <div class="border-left-container-yesno">
+                {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+                {{ govukDateInput({
+                id: "date",
+                namePrefix: "date",
+                fieldset: {
+                legend: {
+                text: "Question",
+                isPageHeading: false,
+                classes: "govuk-fieldset__legend--l"
+                }
+                },
+                hint: {
+                text: "For example, 27 3 2007"
+                }
+                }) }}
+            </div>
+
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+            <h2 class="govuk-heading-l">See more examples in Figma</h2>
+            <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450"
+                src="https://embed.figma.com/design/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?node-id=13394-309689&embed-host=share"
+                allowfullscreen>
+            </iframe>
+        </div><!-- /.govuk-grid-column-three-quarters -->
+    </div><!-- /.govuk-grid-row -->
+</div><!-- /.govuk-width-container -->
+
+<style>
+    .border-left-container-yesno {
+        border-left: 10px solid #ffb266;
+        padding-left: 20px;
+    }
+</style>
+<!-- ============================================= -->
+<!-- Styles Section -->
+<!-- ============================================= -->
+<style>
+    .border-left-container-yesno {
+        border-left: 10px solid #ffb266;
+        padding-left: 20px;
+    }
+</style>
+
+
+
+{% endblock %}

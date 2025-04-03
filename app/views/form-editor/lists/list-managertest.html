@@ -1,0 +1,104 @@
+{% extends "layouts/main.html" %}
+{# {% set containerClasses = "app-width-container--full-width" %} #}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Manage lists" %}
+
+{% block header %}
+
+{{ serviceHeader({
+  organisationName: "Defra",
+  productName: "Forms Designer",
+  serviceName: "",
+  containerClasses: containerClasses,
+  accountName: "Chris Smith",
+  homepageLink: "/",
+  signOutLink: "/onboarding/sign-out-confirmation",
+  navigationItems: [
+    { href: "/library.html", text: "Forms library", id: "nav-library" },
+    { href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+    { href: "/redesigntest/listing", text: "Editor", id: "nav-editor", subNavigation: mojSubNavigation({
+      label: 'Editor sub navigation',
+      items: [
+        {
+          text: 'Pages',
+          href: '/redesigntest/listing',
+          active: true
+        },
+        {
+          text: 'Lists',
+          href: '/redesigntest/list-manager'
+        }
+      ]
+    })}
+  ],
+  activeLinkId: "nav-editor"
+}) }}
+
+        <div class="x-govuk-masthead x-govuk-masthead--large">
+            <div class="govuk-width-container">
+
+            <h1 class="govuk-heading-l--inverse x-govuk-masthead__title">
+                <span class="govuk-caption-l" style="color: white;">Manage lists</span>
+                Add and edit lists
+            </h1>
+
+        </div>
+    </div>
+
+    <style>
+      .moj-sub-navigation {
+  margin-top: 0; /* Ensure it aligns immediately under Editor */
+}
+    </style>
+
+    {% endblock %}
+
+    <!-- manage lists -->
+
+   {% block content %}
+   <div class="govuk-width-container">
+     <main class="govuk-main-wrapper">
+       <div class="govuk-grid-row">
+         <div class="govuk-grid-column-two-thirds">
+           <h2 class="govuk-heading-l">Your lists</h2>
+           <div class="govuk-inset-text">
+             Create and manage reusable lists of options for use in radios, checkboxes, and select inputs across your forms. (TBD) Please note if you change or edit a list, every form using that list will be updated.
+           </div>
+
+           {{ govukButton({
+             text: "Create new list",
+             href: "/redesigntest/new-list",
+             classes: "govuk-button"
+           }) }}
+
+           {% if tableRows and tableRows.length > 0 %}
+             {{ govukTable({
+               classes: "app-table--vertical-align",
+               attributes: {
+                 'data-module': 'moj-sortable-table'
+               },
+               head: [
+                 {
+                   text: "List name",
+                   classes: "govuk-!-padding-top-2 govuk-!-padding-bottom-2",
+                   attributes: {
+                     "aria-sort": "ascending"
+                   }
+                 }
+               ],
+               rows: tableRows
+             }) }}
+           {% else %}
+             <p class="govuk-body">No lists available</p>
+           {% endif %}
+
+
+         </div>
+       </div>
+     </main>
+   </div>
+   {% endblock %}
+
+    <!-- manage lists -->

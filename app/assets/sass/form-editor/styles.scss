@@ -1,0 +1,146 @@
+// Form editor specific styles
+.gem-c-reorderable-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  &__item {
+    margin-bottom: govuk-spacing(3);
+    border-left: 5px solid govuk-colour("green");
+    outline: 1px solid $govuk-border-colour;
+    padding: govuk-spacing(4);
+    background-color: govuk-colour("white");
+
+    &:hover {
+      background-color: govuk-colour("light-grey");
+      cursor: move;
+    }
+
+    &.sortable-chosen {
+      background-color: govuk-colour("light-blue");
+      outline: 4px solid govuk-colour("yellow");
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    &.sortable-ghost {
+      opacity: 0.4;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__content {
+    flex-grow: 1;
+  }
+
+  &__actions {
+    display: none;
+    flex-direction: column;
+    margin-left: govuk-spacing(4);
+
+    .govuk-button {
+      margin-bottom: govuk-spacing(2);
+    }
+  }
+}
+
+// Question edit container styles
+.question-edit-container {
+  background-color: govuk-colour("light-grey");
+  padding: govuk-spacing(4);
+  margin-bottom: govuk-spacing(6);
+
+  .govuk-form-group:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Preview panel styles
+.preview-panel {
+  position: sticky;
+  top: govuk-spacing(4);
+  background-color: govuk-colour("white");
+  padding: govuk-spacing(6);
+  border: 1px solid $govuk-border-colour;
+  border-left: 4px solid govuk-colour("blue");
+  margin-top: govuk-spacing(2);
+
+  &__header {
+    margin-bottom: govuk-spacing(6);
+    padding-bottom: govuk-spacing(2);
+    border-bottom: 1px solid $govuk-border-colour;
+  }
+}
+
+// Option editing styles
+.option-edit {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: govuk-spacing(4);
+  }
+
+  &__actions {
+    display: flex;
+    gap: govuk-spacing(2);
+  }
+}
+
+// Error state styles
+.has-error {
+  border-left: 4px solid $govuk-error-colour;
+  padding-left: govuk-spacing(3);
+}
+
+// Utility classes
+.hidden {
+  display: none;
+}
+
+.draggable {
+  cursor: move;
+}
+
+.no-select {
+  user-select: none;
+}
+
+// Question edit container
+.question-edit {
+  background-color: govuk-colour("light-grey");
+  padding: govuk-spacing(6);
+  margin-bottom: govuk-spacing(6);
+}
+
+// Highlighting styles
+.highlight {
+  background-color: govuk-colour("orange");
+  border-bottom: 2px solid darken(govuk-colour("orange"), 10%);
+}
+
+.highlight-dragging {
+  border: 2px dotted govuk-colour("orange");
+  background-color: govuk-colour("light-grey");
+}
+
+// Fauxlabel styles
+.fauxlabel {
+  border: 0;
+  margin: 0;
+  padding: govuk-spacing(1);
+
+  &:focus,
+  &:active {
+    background-color: transparent !important;
+  }
+}
+
+.govuk-body.fauxlabel.option-label-display {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

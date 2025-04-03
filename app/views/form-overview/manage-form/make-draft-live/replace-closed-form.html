@@ -1,0 +1,69 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/onboarding/sign-out-confirmation",
+    navigationItems: [
+    {
+      href: "/library.html",
+      text: "Forms library",
+      id: "library"
+     },
+    {
+      href: "/cph-overview/live/01-clean.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/editor",
+    text: 'Editor',
+    id: 'editor'
+    }],
+    activeLinkId: "/"
+  }) }}
+{% endblock %}
+
+{% set pageName = "Overview - Apply for a county parish holding number in England" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <!-- <h1 class="govuk-heading-xl">Apply for a county parish holding number in England</h1> -->
+
+      {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+      <span class="govuk-caption-xl">Apply for a county-parish-holding-number</span>
+      <h1 class="govuk-heading-xl">Are you sure you want to make the draft live?</h1>
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+      {{ govukWarningText({
+  text: "It will replace the form that is currently closed.",
+  iconFallbackText: "Warning"
+}) }}
+
+      <p class="govuk-body-l">Submitted forms will be sent to
+        <a href="#" class="govuk-link">PolicyTeam@defra.gov.uk</a>.
+      </p>
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+
+      <div class="govuk-button-group">
+        <a href="/cph-overview/live/01">
+          <button type="submit" class="govuk-button" data-module="govuk-button">
+            Make draft live
+          </button>
+        </a>
+        <a href="javascript:window.history.back()">
+          <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+            Cancel
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,627 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName %}Edit page {{ pageNumber }}: question {{ questionNumber }} - {{ form.name }}{% endset %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text:
+    commonTerms.form_editor.information_type.back, href: "/form-editor/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {{ form.name }}
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#question-1-information-type">Question {{ questionNumber }}</a>
+                            </li>
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+                        <span class="govuk-caption-l">Page {{ pageNumber }}</span>
+                        <h2 class="govuk-heading-l">Edit question {{ questionNumber }}</h2>
+
+                        <form id="s" action="/question-configuration-save" method="post">
+
+                          <!-- Question Label Input -->
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m" for="question-label-input-number">
+                              {{ commonTerms.form_editor.question_settings.question }}
+                            </label>
+                            <input class="govuk-input" id="question-label-input-number" name="questionLabelInputNumber"
+                              type="text" value="">
+                          </div>
+
+                          <!-- Hint Text Input -->
+                          {{ govukTextarea({
+                          label: {
+                          text: commonTerms.form_editor.question_settings.hint,
+                          classes: "govuk-label--m"
+                          },
+                          id: "hint-text-input-number",
+                          name: "hintTextInputNumber",
+                          value: data['hint-text-input-number'],
+                          classes: "govuk-textarea",
+                          rows: 3,
+                          describedBy: "hint-text-input-number"
+                          }) }}
+
+                          <!-- Make Optional Checkbox -->
+                          <div class="govuk-form-group">
+                            <div class="govuk-checkboxes--small">
+                              <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="make-optional" name="makeOptional"
+                                  type="checkbox" value="optional">
+                                <label class="govuk-label govuk-checkboxes__label" for="make-optional">
+                                  {{ commonTerms.form_editor.question_settings.optional }}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+
+                          {{ govukInput({
+                          label: {
+                          text: commonTerms.form_editor.question_settings.short_description.title,
+                          classes: "govuk-label--m",
+                          isPageHeading: false
+                          },
+                          hint: {
+                          text: commonTerms.form_editor.question_settings.short_description.hint
+                          },
+                          id: "error-message-input-number",
+                          name: "errorMessageInputNumber"
+                          }) }}
+
+                          <!-- Answer limits -->
+                          <details class="govuk-details" data-module="govuk-details">
+                            <summary class="govuk-details__summary">
+                              <span class="govuk-details__summary-text">
+                                {{ commonTerms.form_editor.question_settings.answer_limits.title }}
+                              </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                              <!-- Default Content for Question 1 -->
+                              <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+                                {{ govukTextarea({
+                                label: {
+                                text: "Classes (optional)",
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                hint: {
+                                text: "Apply CSS classes to this field. For example, 'govuk-input govuk-!-width-full'"
+                                },
+                                id: "classes",
+                                rows: "1",
+                                name: "classes",
+                                spellcheck: false
+                                }) }} </div>
+                          </details>
+
+                          <!-- Section Break -->
+                          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                          <!-- Question Settings Summary List -->
+                          <h2 class="govuk-heading-m">{{ commonTerms.form_editor.question_settings.title }}</h2>
+
+                          {{ govukSummaryList({
+                          "rows": [
+                          {
+                          "key": {
+                          "text": "Type of information"
+                          },
+                          "value": {
+                          "html": commonTerms.form_editor.information_type.written.types.numbers
+                          },
+                          "actions": {
+                          "items": [
+                          {
+                          "href": "/form-editor/1-question/information-type.html",
+                          "text": commonTerms.form_editor.common.edit,
+                          "visuallyHiddenText": " type"
+                          }
+                          ]
+                          }
+                          }
+                          ]
+                          }) }}
+
+                          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                          <!-- Submit Button -->
+                          <div class="moj-button-action">
+                            {{ govukButton({
+                            text: commonTerms.form_editor.common.continue,
+                            type: 'submit'
+                            }) }}
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column for Preview -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+        <!-- Before content -->
+        <div id="before-content" style=" background-color:  #cce2d8;">
+          <p class="govuk-body-s" style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px;
+text-align: center;"> Previews
+          </p>
+        </div>
+
+        <div style="margin-top: 60px;">
+          {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+
+          <div class="govuk-tabs" data-module="govuk-tabs">
+            <h2 class="govuk-tabs__title">
+              Contents
+            </h2>
+            <ul class="govuk-tabs__list">
+              <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+              </li>
+              <li class="govuk-tabs__list-item">
+                <a class="govuk-tabs__tab" href="#tab-two">Error messages</a>
+              </li>
+            </ul>
+
+            <div class="govuk-tabs__panel" id="tab-one">
+              <!-- Page Preview Content -->
+
+
+              <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview this page in a new tab
+                </a>
+              </p>
+
+              {% include "/form-editor/question-type/numbers/previews/edit.html" %}
+
+              <a href="#edit-page" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to edit page
+              </a>
+            </div>
+
+
+            <div class="govuk-tabs__panel" id="tab-two">
+              <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview error messages in a new tab
+                </a>
+              </p>
+              <!-- Error Messages Content -->
+              <div class="govuk-error-summary" data-disable-auto-focus="true">
+                <h2 class="govuk-error-summary__title">There is a problem</h2>
+                <ul class="govuk-list govuk-error-summary__list">
+                  <!-- List of errors -->
+                  <li><a id="empty-input-error-shorttext" class="govuk-error-message">Enter <span
+                        id="error-dynamic-text">[short description]</span></a></li>
+                  <li><a id="empty-input-error-shorttext" class="govuk-error-message"><span
+                        id="error-dynamic-text">[Short description]</span> must be a whole number</a></li>
+                  <h3 class="govuk-heading-s">If you set answer limits:</h3>
+                  <li><a id="too-long-input-error-shorttext" class="govuk-error-message"><span
+                        id="error-dynamic-text-long">[Short description]</span> must be <span id="max-length">[lowest
+                        number]</span> or more</a></li>
+                  <li><a id="too-short-input-error-shorttext" class="govuk-error-message"><span
+                        id="error-dynamic-text-short">[Short description]</span> must be <span id="min-length">[highest
+                        number]</span> or fewer</a></li>
+                </ul>
+              </div>
+              <a href="#error-message-input-shorttext" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to edit short description
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- JavaScript code -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // DOM Elements
+          const domElements = {
+            // Existing elements
+            questionLabelInputNumbers: document.getElementById('question-label-input-numbers'),
+            questionLabelLegendNumbers: document.getElementById('question-label-legend-numbers'),
+            hintTextInputNumbers: document.getElementById('hint-text-input-numbers'),
+            hintTextOutputNumbers: document.getElementById('hint-text-output-numbers'),
+            makeOptionalCheckbox: document.getElementById('make-optional'),
+
+            // New elements for page heading and guidance text
+            pageHeadingInputNumbers: document.getElementById('page-heading-input-numbers'),
+            dynamicHeading: document.getElementById('dynamic-heading'),
+            guidanceNumbers: document.getElementById('guidance-numbers'),
+            guidanceParagraph: document.getElementById('guidance-paragraph')
+          };
+
+          // Initialize event listeners
+          initializeEventListeners();
+
+          function initializeEventListeners() {
+            // Update question label
+            if (domElements.questionLabelInputNumbers && domElements.questionLabelLegendNumbers) {
+              domElements.questionLabelInputNumbers.addEventListener('input', updateQuestionLabel);
+            }
+
+            // Update hint text and handle placeholder
+            if (domElements.hintTextInputNumbers && domElements.hintTextOutputNumbers) {
+              domElements.hintTextInputNumbers.addEventListener('input', updateHintText);
+              domElements.hintTextInputNumbers.addEventListener('focus', showPlaceholderHint);
+              domElements.hintTextInputNumbers.addEventListener('blur', clearPlaceholderHint);
+            }
+
+            // Update page heading and handle placeholder
+            if (domElements.pageHeadingInputNumbers && domElements.dynamicHeading) {
+              domElements.pageHeadingInputNumbers.addEventListener('input', updatePageHeading);
+              domElements.pageHeadingInputNumbers.addEventListener('focus', showPlaceholderHeading);
+              domElements.pageHeadingInputNumbers.addEventListener('blur', clearPlaceholderHeading);
+            }
+
+            // Update guidance text and handle placeholder
+            if (domElements.guidanceNumbers && domElements.guidanceParagraph) {
+              domElements.guidanceNumbers.addEventListener('input', updateGuidanceText);
+              domElements.guidanceNumbers.addEventListener('focus', showPlaceholderGuidance);
+              domElements.guidanceNumbers.addEventListener('blur', clearPlaceholderGuidance);
+            }
+
+            // Apply focus/blur highlighting
+            applyHighlightOnFocus(domElements.questionLabelInputNumbers, domElements.questionLabelLegendNumbers);
+            applyHighlightOnFocus(domElements.hintTextInputNumbers, domElements.hintTextOutputNumbers);
+            applyHighlightOnFocus(domElements.pageHeadingInputNumbers, domElements.dynamicHeading);
+            applyHighlightOnFocus(domElements.guidanceNumbers, domElements.guidanceParagraph);
+          }
+
+          function updateQuestionLabel() {
+            const suffix = domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+            domElements.questionLabelLegendNumbers.textContent = domElements.questionLabelInputNumbers.value || 'Question';
+            domElements.questionLabelLegendNumbers.textContent += suffix;
+          }
+
+          function updateHintText() {
+            domElements.hintTextOutputNumbers.textContent = domElements.hintTextInputNumbers.value;
+          }
+
+          function updatePageHeading() {
+            domElements.dynamicHeading.textContent = domElements.pageHeadingInputNumbers.value;
+          }
+
+          function updateGuidanceText() {
+            domElements.guidanceParagraph.textContent = domElements.guidanceNumbers.value;
+          }
+
+          function applyHighlightOnFocus(inputElement, targetElement) {
+            if (inputElement && targetElement) {
+              inputElement.addEventListener('focus', function () {
+                targetElement.classList.add('highlight');
+              });
+              inputElement.addEventListener('blur', function () {
+                targetElement.classList.remove('highlight');
+              });
+
+              // If the input is already focused
+              if (document.activeElement === inputElement) {
+                targetElement.classList.add('highlight');
+              }
+            }
+          }
+
+          // Placeholder handling for hint text
+          function showPlaceholderHint() {
+            if (!domElements.hintTextInputNumbers.value) {
+              domElements.hintTextOutputNumbers.textContent = 'Hint text';
+            }
+          }
+
+          function clearPlaceholderHint() {
+            if (!domElements.hintTextInputNumbers.value) {
+              domElements.hintTextOutput.textContent = '';
+            }
+          }
+
+          // Placeholder handling for page heading
+          function showPlaceholderHeading() {
+            if (!domElements.pageHeadingInputNumbers.value) {
+              domElements.dynamicHeading.textContent = 'Page heading';
+            }
+          }
+
+          function clearPlaceholderHeading() {
+            if (!domElements.pageHeadingInputNumbers.value) {
+              domElements.dynamicHeading.textContent = '';
+            }
+          }
+
+          // Placeholder handling for guidance text
+          function showPlaceholderGuidance() {
+            if (!domElements.guidanceNumbers.value) {
+              domElements.guidanceParagraph.textContent = 'Guidance text';
+            }
+          }
+
+          function clearPlaceholderGuidance() {
+            if (!domElements.guidanceNumbers.value) {
+              domElements.guidanceParagraph.textContent = '';
+            }
+          }
+        });
+      </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const prefixInput = document.getElementById("prefix-number");
+          const suffixInput = document.getElementById("suffix-number");
+
+          const formGroupContainer = document.querySelector(".govuk-form-group h1 .govuk-label--l#question-label-legend-numbers")?.closest(".govuk-form-group");
+          const targetInput = document.getElementById("numbers");
+
+          if (formGroupContainer && targetInput) {
+            let inputWrapper = formGroupContainer.querySelector(".govuk-input__wrapper");
+            if (!inputWrapper) {
+              inputWrapper = document.createElement("div");
+              inputWrapper.className = "govuk-input__wrapper";
+
+              const prefixDiv = document.createElement("div");
+              prefixDiv.className = "govuk-input__prefix";
+              prefixDiv.setAttribute("aria-hidden", "true");
+              prefixDiv.style.display = "none"; // Hide by default
+
+              const suffixDiv = document.createElement("div");
+              suffixDiv.className = "govuk-input__suffix";
+              suffixDiv.setAttribute("aria-hidden", "true");
+              suffixDiv.style.display = "none"; // Hide by default
+
+              inputWrapper.appendChild(prefixDiv);
+              inputWrapper.appendChild(targetInput);
+              inputWrapper.appendChild(suffixDiv);
+
+              formGroupContainer.appendChild(inputWrapper);
+            }
+
+            const prefixDiv = formGroupContainer.querySelector(".govuk-input__prefix");
+            const suffixDiv = formGroupContainer.querySelector(".govuk-input__suffix");
+
+            // Function to show prefix/suffix on focus and update with input
+            function handleFocus(element, displayElement, placeholderText) {
+              displayElement.style.display = "inline-block"; // Show when focused
+              displayElement.textContent = element.value || placeholderText; // Set value or placeholder
+              displayElement.classList.add("highlight");
+            }
+
+            function handleBlur(element, displayElement) {
+              if (!element.value) {
+                displayElement.style.display = "none"; // Hide if empty on blur
+              }
+              displayElement.classList.remove("highlight");
+            }
+
+            // Event listeners for prefix
+            prefixInput.addEventListener("focus", function () {
+              handleFocus(prefixInput, prefixDiv, "Prefix");
+            });
+            prefixInput.addEventListener("blur", function () {
+              handleBlur(prefixInput, prefixDiv);
+            });
+            prefixInput.addEventListener("input", function () {
+              prefixDiv.textContent = prefixInput.value || "Prefix";
+            });
+
+            // Event listeners for suffix
+            suffixInput.addEventListener("focus", function () {
+              handleFocus(suffixInput, suffixDiv, "Suffix");
+            });
+            suffixInput.addEventListener("blur", function () {
+              handleBlur(suffixInput, suffixDiv);
+            });
+            suffixInput.addEventListener("input", function () {
+              suffixDiv.textContent = suffixInput.value || "Suffix";
+            });
+          }
+        });
+      </script>
+
+
+
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // DOM Elements
+          const domElements = {
+            questionLabelInputShorttext: document.getElementById('question-label-input-shorttext'),
+            errorMessageInputShorttext: document.getElementById('error-message-input-shorttext'),
+            errorMessagePreviewElements: document.querySelectorAll("#error-dynamic-text, #error-dynamic-text-long, #error-dynamic-text-short, #error-dynamic-text-range"),
+            makeOptionalCheckbox: document.getElementById('make-optional'),
+            minCharactersInput: document.getElementById('min-characters'),
+            maxCharactersInput: document.getElementById('max-characters'),
+            minCharactersPreview: document.querySelectorAll("#min-characters, #min-length, #min-length-range"),
+            maxCharactersPreview: document.querySelectorAll("#max-characters, #max-length, #max-length-range")
+          };
+
+          // Initialize event listeners
+          initializeEventListeners();
+
+          function initializeEventListeners() {
+            // Update short description and apply highlighting
+            if (domElements.errorMessageInputShorttext && domElements.errorMessagePreviewElements.length) {
+              domElements.errorMessageInputShorttext.addEventListener('input', updateErrorMessages);
+              applyHighlightOnFocus(domElements.errorMessageInputShorttext, domElements.errorMessagePreviewElements);
+            }
+
+            // Apply focus/blur highlighting to other elements
+            applyHighlightOnFocus(domElements.questionLabelInputShorttext, document.getElementById('question-label-legend'));
+
+            // Update character limits dynamically
+            if (domElements.minCharactersInput && domElements.maxCharactersInput) {
+              domElements.minCharactersInput.addEventListener('input', updateCharacterLimits);
+              domElements.maxCharactersInput.addEventListener('input', updateCharacterLimits);
+            }
+          }
+
+          function updateErrorMessages() {
+            const shortDescription = domElements.errorMessageInputShorttext.value || '[Short description]';
+            domElements.errorMessagePreviewElements.forEach(element => {
+              element.textContent = shortDescription;
+            });
+          }
+
+          function updateCharacterLimits() {
+            const minCharacters = domElements.minCharactersInput.value || '[min length]';
+            const maxCharacters = domElements.maxCharactersInput.value || '[max length]';
+
+            domElements.minCharactersPreview.forEach(element => {
+              element.textContent = minCharacters;
+            });
+
+            domElements.maxCharactersPreview.forEach(element => {
+              element.textContent = maxCharacters;
+            });
+          }
+
+          function applyHighlightOnFocus(inputElement, targetElements) {
+            if (inputElement && targetElements) {
+              inputElement.addEventListener('focus', function () {
+                targetElements.forEach(target => target.classList.add('highlight'));
+              });
+              inputElement.addEventListener('blur', function () {
+                targetElements.forEach(target => target.classList.remove('highlight'));
+              });
+
+              // If the input is already focused, apply the highlight immediately
+              if (document.activeElement === inputElement) {
+                targetElements.forEach(target => target.classList.add('highlight'));
+              }
+            }
+          }
+        });
+      </script>
+
+
+
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const errorMessageInputShorttext = document.getElementById('error-message-input-shorttext');
+          const errorMessagePreviewSummary = document.getElementById('error-message-preview-summary');
+
+          if (errorMessageInputShorttext && errorMessagePreviewSummary) {
+            // Open details when input is focused
+            errorMessageInputShorttext.addEventListener('focus', function () {
+              errorMessagePreviewSummary.setAttribute('open', 'open');
+            });
+
+            // Close details when input loses focus
+            errorMessageInputShorttext.addEventListener('blur', function () {
+              errorMessagePreviewSummary.removeAttribute('open');
+            });
+          }
+        });
+
+      </script>
+
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // Get the textarea and the output paragraph elements
+          const textarea = document.getElementById('guidance-numbers');
+          const paragraph = document.getElementById('guidance-paragraph');
+
+          // Listen for input events on the textarea
+          textarea.addEventListener('input', function () {
+            // Convert the textarea content using the marked library
+            paragraph.innerHTML = marked.parse(textarea.value);
+          });
+        });
+      </script>
+
+      <!-- CSS for Highlighting -->
+      <style>
+        .highlight {
+          background-color: #ffe5cc;
+          border-bottom: 2px solid #ffb266;
+        }
+
+        #before-content {
+          position: absolute;
+          top: 0;
+          left: 10 !important;
+          right: 0;
+          width: 100%;
+          padding: 10px !important;
+          box-sizing: border-box;
+          z-index: 1;
+          border-bottom: 1px solid #008938;
+          padding-left: 10px;
+        }
+
+        #second-container {
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        #second-container>* {
+          padding-left: 0px;
+          z-index: 2;
+        }
+      </style>
+    </div>
+  </div>
+  {% endblock %}

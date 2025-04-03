@@ -1,0 +1,181 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit checkbox option - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+        {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to edit page", href:
+        "/form-editor/question-type/checkboxes-nf/edit" }) }}
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    {{ form.name }}
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-grid-row">
+            <!-- Left Column for Form Controls -->
+            <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+                <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+                    <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row">
+                                <dd class="govuk-summary-list__value">
+                                    <!-- Dynamic Summary List -->
+                                    <!-- Question Settings Container -->
+                                    <div class="govuk-grid-row" id="page-settings-container-1">
+                                        <div id="question-1">
+                                            <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                                                <!-- Sub Navigation for Question -->
+                                                <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2"
+                                                    aria-label="Sub navigation">
+                                                    <ul class="moj-sub-navigation__list" id="nav-list2">
+                                                        <li class="moj-sub-navigation__item">
+                                                            <a class="moj-sub-navigation__link"
+                                                                href="#question-1-information-type">Question {{
+                                                                questionNumber }}</a>
+                                                        </li>
+                                                        <li class="moj-sub-navigation__item">
+                                                            <a class="moj-sub-navigation__link" aria-current="page"
+                                                                href="#overview-noquestions">Edit checkbox option</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+
+                                                <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0">
+                                                </div>
+
+                                                <span class="govuk-caption-l">Page {{ pageNumber }}</span>
+                                                <h2 class="govuk-heading-l">Edit checkbox option</h2>
+
+                                                {% from "govuk/components/input/macro.njk" import govukInput %}
+                                                {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+                                                {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+                                                {% from "govuk/components/button/macro.njk" import govukButton %}
+                                                {% from "govuk/components/summary-list/macro.njk" import
+                                                govukSummaryList %}
+
+                                                <!-- List config -->
+                                                <div class="govuk-form-group">
+                                                    <div id="options-edit-container">
+                                                        <div class="govuk-form-group">
+                                                            {% set index = (data.index | int) - 1 %}
+                                                            {% set option = data.checkboxList[index] %}
+
+                                                            <form method="POST"
+                                                                action="/form-editor/question-type/checkboxes-nf/save-option"
+                                                                novalidate>
+                                                                <input type="hidden" name="index" value="{{ index }}">
+
+                                                                <!-- Option Value (Label) -->
+                                                                <div class="govuk-form-group">
+                                                                    <label class="govuk-label govuk-label--m"
+                                                                        for="option-label">Item</label>
+                                                                    <input class="govuk-input govuk-!-width-two-thirds"
+                                                                        id="option-label" name="option-label"
+                                                                        type="text" value="{{ option.label }}" />
+                                                                </div>
+
+                                                                <!-- Hint Text -->
+                                                                <div class="govuk-form-group">
+                                                                    <label class="govuk-label govuk-label--m"
+                                                                        for="option-hint">Hint text (optional)</label>
+                                                                    <span id="option-hint-hint" class="govuk-hint">
+                                                                        Provide an optional hint for this option.
+                                                                    </span>
+                                                                    <input class="govuk-input govuk-!-width-two-thirds"
+                                                                        id="option-hint" name="option-hint" type="text"
+                                                                        value="{{ option.hint }}" />
+                                                                </div>
+
+                                                                <!-- Additional Value -->
+                                                                <div class="govuk-form-group">
+                                                                    <label class="govuk-label govuk-label--m"
+                                                                        for="option-value">Option value</label>
+                                                                    <input class="govuk-input govuk-!-width-two-thirds"
+                                                                        id="option-value" name="option-value"
+                                                                        type="text" value="{{ option.value }}" />
+                                                                </div>
+
+                                                                <!-- Submit Button -->
+                                                                <div class="govuk-form-group">
+                                                                    <button type="submit" class="govuk-button">Save
+                                                                        changes</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column for Preview -->
+            <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+                style="flex: 1 1 25%; overflow-y: auto">
+                <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+                    <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+                        <h2 class="govuk-heading-m">Preview</h2>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <div class="govuk-checkboxes">
+                                    {% for checkbox in data.checkboxList %}
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="checkbox-{{ loop.index }}"
+                                            name="checkbox-group" type="checkbox" value="{{ checkbox.value }}">
+                                        <label class="govuk-label govuk-checkboxes__label"
+                                            for="checkbox-{{ loop.index }}">
+                                            {{ checkbox.label }}
+                                        </label>
+                                        {% if checkbox.hint %}
+                                        <div class="govuk-hint govuk-checkboxes__hint">
+                                            {{ checkbox.hint }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

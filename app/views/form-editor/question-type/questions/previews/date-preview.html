@@ -1,0 +1,37 @@
+{% from "./_label_size_macro.html" import get_label_size -%}
+
+{%- set page_heading = data['pageHeadingDate'] if data is defined and data['pageHeadingDate'] else false -%}
+{%- set question_count = currentPage.questions | length if currentPage and currentPage.questions else 1 -%}
+{%- set labelSize = get_label_size(page_heading, question_count, true) -%}
+
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--{{ labelSize }}">{{ question.label }}</legend>
+        {%- if question.hint -%}
+        <div id="date-hint" class="govuk-hint">{{ question.hint }}</div>
+        {%- endif -%}
+        <div class="govuk-date-input" id="date">
+            <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="date-day">Day</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-day"
+                        name="date-day" type="text" pattern="[0-9]*" inputmode="numeric">
+                </div>
+            </div>
+            <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="date-month">Month</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-month"
+                        name="date-month" type="text" pattern="[0-9]*" inputmode="numeric">
+                </div>
+            </div>
+            <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="date-year">Year</label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-year"
+                        name="date-year" type="text" pattern="[0-9]*" inputmode="numeric">
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>

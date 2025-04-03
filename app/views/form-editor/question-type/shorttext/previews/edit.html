@@ -1,0 +1,124 @@
+<!-- Additional Content Here -->
+<div class="additional-content">
+
+  <div>
+    <!-- Tag for Preview -->
+    {# {{ govukTag({ text: "Preview of page 5", classes: "govuk-tag--yellow
+    govuk-!-margin-bottom-2 govuk-!-margin-top-8" }) }} #}
+    <!-- Form for Preview -->
+    <!-- Dynamic Heading -->
+
+
+
+    {# <div id="heading-container">
+      {% set setName = data['setName'] or '' %}
+      <span id="dynamic-caption" class="govuk-caption-xl" data-setname="{{ setName }}">{{ data['setNameShorttext'] or ''
+        }} 1</span>
+
+      <h1 class="govuk-heading-xl" id="dynamic-heading">{{ data['pageHeading'] or '' }}</h1>
+    </div>
+
+    <!-- Guidance Paragraph -->
+    <p class="govuk-body" id="guidance-paragraph">{{ data['guidanceText'] or '' }}</p> #}
+
+    <div class="border-left-container-shorttext">
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="text-input-field" id="question-label-legend">
+            Question
+          </label>
+        </h1>
+        <div id="hint-text-output" class="govuk-hint">
+
+        </div>
+
+        <input class="govuk-input" id="text-input-field" name="textInputField" type="text"
+          aria-describedby="hint-text-output">
+
+      </div>
+    </div>
+
+
+    {% set setName = data['setName'] or '' %}
+    {% set overview0 = data['overview0'] or '' %}
+
+    {% if overview0 == "morethan1" %}
+    {{ govukButton({
+    text: "Add another " ~ setName,
+    classes: "govuk-button govuk-!-margin-top-3",
+    id: "add-another-set-button",
+    disabled: true
+    }) }}
+    {% else %}
+    {{ govukButton({
+    text: "Continue",
+    classes: "govuk-button govuk-!-margin-top-6 govuk-!-display-none",
+    id: "once-button",
+    disabled: true
+    }) }}
+    {% endif %}
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const dynamicCaption = document.getElementById("dynamic-caption");
+        const setName = dynamicCaption.getAttribute("data-setname");
+
+        if (!setName) {
+          dynamicCaption.style.display = "none";
+        }
+
+        // Select the input fields and the details element
+        const inputField = document.getElementById("error-message-input-shorttext");
+        const regexTextarea = document.getElementById("regex-message");
+        const errorMessagePreview = document.getElementById("error-message-preview-summary");
+
+        // Function to open the details element
+        function openErrorMessagePreview() {
+          errorMessagePreview.setAttribute("open", "true");
+        }
+
+        // Function to close the details element if neither field is focused
+        function closeErrorMessagePreview() {
+          if (document.activeElement !== inputField && document.activeElement !== regexTextarea) {
+            errorMessagePreview.removeAttribute("open");
+          }
+        }
+
+        // Add event listeners for focus and blur on both input fields
+        inputField.addEventListener("focus", openErrorMessagePreview);
+        inputField.addEventListener("blur", closeErrorMessagePreview);
+
+        regexTextarea.addEventListener("focus", openErrorMessagePreview);
+        regexTextarea.addEventListener("blur", closeErrorMessagePreview);
+      });
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Get the textarea and the output paragraph elements
+        const textarea = document.getElementById('guidance-shorttext');
+        const previewTarget = document.querySelector(textarea.getAttribute('data-preview-target'));
+
+        // Listen for input events on the textarea
+        textarea.addEventListener('input', function () {
+          // Convert the textarea content using the marked library
+          previewTarget.innerHTML = marked.parse(textarea.value);
+        });
+
+
+      });
+    </script>
+
+
+
+
+
+    <style>
+      .border-left-container-shorttext {
+        border-left: 10px solid #ffb266;
+        padding-left: 20px;
+      }
+    </style>

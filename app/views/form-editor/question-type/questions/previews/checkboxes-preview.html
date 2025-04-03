@@ -1,0 +1,39 @@
+{% from "./_label_size_macro.html" import get_label_size -%}
+
+{%- set page_heading = data['pageHeadingCheckboxes'] if data is defined and data['pageHeadingCheckboxes'] else false -%}
+{%- set question_count = currentPage.questions | length if currentPage and currentPage.questions else 1 -%}
+{%- set labelSize = get_label_size(page_heading, question_count, true) -%}
+
+<!-- Debug info -->
+<!-- Page heading: {{ page_heading }} -->
+<!-- Question count: {{ question_count }} -->
+<!-- Label size: {{ labelSize }} -->
+
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--{{ labelSize }}">{{ question.label }}</legend>
+        {%- if question.hint -%}
+        <div id="checkboxes-hint-{{ question.questionId }}" class="govuk-hint">{{ question.hint }}</div>
+        {%- endif -%}
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            {%- if question.options and question.options.length > 0 -%}
+            {%- for option in question.options -%}
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="checkbox-{{ question.questionId }}-{{ loop.index }}"
+                    name="checkbox-group-{{ question.questionId }}" type="checkbox" value="{{ option.value }}" {%- if
+                    option.hint %}aria-describedby="checkbox-{{ question.questionId }}-{{ loop.index }}-hint" {% endif
+                    -%}>
+                <label class="govuk-label govuk-checkboxes__label"
+                    for="checkbox-{{ question.questionId }}-{{ loop.index }}">{{ option.label }}</label>
+                {%- if option.hint -%}
+                <div id="checkbox-{{ question.questionId }}-{{ loop.index }}-hint"
+                    class="govuk-hint govuk-checkboxes__hint">{{ option.hint }}</div>
+                {%- endif -%}
+            </div>
+            {%- endfor -%}
+            {%- else -%}
+            <p class="govuk-body">No options available.</p>
+            {%- endif -%}
+        </div>
+    </fieldset>
+</div>

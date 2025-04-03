@@ -1,0 +1,146 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Where submitted forms are sent - Apply for a county parish holding number in England" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{
+href: "/library.html",
+text: "Forms library",
+id: "library"
+},
+{
+href: "/cph-overview/draft/complete.html",
+text: "Overview",
+id: "overview"
+},{
+href: "/editor.html",
+text: 'Editor',
+id: 'editor'
+}],
+activeLinkId: "/"
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl">Apply for a county-parish-holding-number</span>
+    <h1 class="govuk-heading-xl">Email address for submitted forms</h1>
+    <p class="govuk-body">Enter an email address for submitted forms to be sent to for processing.</p>
+    <p class="govuk-body">It should be a shared government email inbox and you should test it before making a form live.
+      The email address must end with 'gov.uk'.</p>
+
+    <form action="/form-overview/draft/support/notification-email" method="post">
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+      label: {
+      text: "What email address should submitted forms be sent to?",
+      classes: "govuk-label--m",
+      isPageHeading: false
+      },
+      id: "notification-email",
+      name: "notificationEmail",
+      type: "email",
+      autocomplete: "email",
+      spellcheck: false,
+      value: data.notificationEmail
+      }) }}
+
+      {% from "govuk/components/button/macro.njk" import govukButton %}
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+        text: "Save and continue"
+        }) }}
+        <a href="javascript:window.history.back()" class="govuk-button govuk-button--secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      View error messages
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    <p class="govuk-body-l">Empty string</p>
+
+    {{ govukErrorSummary({
+    titleText: "There is a problem",
+    errorList: [
+    {
+    text: "Enter an email address submitted forms should be sent to",
+    href: "#notification-email"
+    }
+    ]
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: "What email address should submitted forms be sent to?",
+    classes: "govuk-label--m",
+    isPageHeading: false
+    },
+    id: "notification-email",
+    name: "notificationEmail",
+    type: "email",
+    autocomplete: "email",
+    spellcheck: false,
+    errorMessage: {
+    text: "Enter an email address submitted forms should be sent to"
+    }
+    }) }}
+
+    <p class="govuk-body-l">Incorrect format</p>
+
+    {{ govukErrorSummary({
+    titleText: "There is a problem",
+    errorList: [
+    {
+    text: "Enter an email address submitted forms should be sent to in the correct format, like name@gov.uk",
+    href: "#notification-email"
+    }
+    ]
+    }) }}
+
+    {{ govukInput({
+    label: {
+    text: "What email address should submitted forms be sent to?",
+    classes: "govuk-label--m",
+    isPageHeading: false
+    },
+    id: "notification-email",
+    name: "notificationEmail",
+    type: "email",
+    autocomplete: "email",
+    spellcheck: false,
+    errorMessage: {
+    text: "Enter an email address submitted forms should be sent to in the correct format, like name@gov.uk"
+    }
+    }) }}
+  </div>
+</details>
+
+{% endblock %}

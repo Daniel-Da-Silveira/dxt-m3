@@ -1,0 +1,659 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit Check answer page - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+<!-- Marked.js (for Markdown parsing) -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+
+    {{ govukBackLink({
+    classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+    text: "Back to add and edit pages",
+    href: "/form-editor/listing.html"
+    }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0;" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          Apply for a county parish holding (CPH) number
+        </h1>
+        {# <p class="govuk-body" style="color: white">Last saved at <time>5:24pm</time></p> #}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Outer grid row to hold BOTH columns side by side from desktop width -->
+<div class="govuk-grid-row">
+
+  <!-- LEFT COLUMN: Page Settings / Form Controls -->
+  <div class="govuk-grid-column-one-half-from-desktop" id="container"
+    style="flex: 1 1 75%; height: 100%; overflow-y: auto;">
+    <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #b1b4b6;">
+      <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1;">
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dd class="govuk-summary-list__value">
+
+              <!-- Question Settings Container -->
+              <div class="govuk-grid-row" id="page-settings-container-1">
+                <div id="question-1">
+                  <div class="govuk-summary-card__content" style="margin-bottom: 0;">
+                    <!-- Sub Navigation for Question -->
+                    <nav class="moj-sub-navigation" aria-label="Sub navigation">
+                      <ul class="moj-sub-navigation__list" id="nav-list2">
+                        <li class="moj-sub-navigation__item">
+                          <a class="moj-sub-navigation__link" aria-current="page" href="#question-1">
+                            Page settings
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+
+                    <span class="govuk-caption-l">Check answers</span>
+                    <h1 class="govuk-heading-l">Page settings</h1>
+
+                    <form class="form" action="/form-editor/listing" method="post">
+                      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+                      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                      {% set textHtml %}
+                      <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+                      {{ govukTextarea({
+                      label: {
+                      text: "Declaration text",
+                      classes: "govuk-label--m"
+                      },
+                      hint: {
+                      text: "Use a declaration if you need users to declare or agree to something before they submit the
+                      form"
+                      },
+                      id: "check-answers-guidance-text-input",
+                      name: "checkAnswersGuidanceTextInput",
+                      value: data['checkAnswersGuidanceTextInput'],
+                      classes: "govuk-textarea",
+                      rows: 8,
+                      describedBy: "guidance-textarea-hint",
+                      'data-preview-target': '#guidance-paragraph'
+                      }) }}
+
+                      <details class="govuk-details">
+                        <summary class="govuk-details__summary">
+                          <span class="govuk-details__summary-text">
+                            Help with markdown
+                          </span>
+                        </summary>
+                        <div class="govuk-details__text">
+                          <h3 class="govuk-heading-s">Headings and subheadings</h3>
+                          <p class="govuk-body">
+                            Use one hash symbol followed by a space for a heading, for example:
+                          </p>
+                          <pre class="formatting-example" style="background-color: white;">
+<code class="lang-md"># This is a heading</code></pre>
+                          <p class="bottom-gutter-1-3">
+                            To add a subheading, use 2 hash symbols:
+                          </p>
+                          <pre class="formatting-example" style="background-color: white;">
+<code class="lang-md">## This is a subheading</code></pre>
+
+                          <h3 class="govuk-heading-s" id="bullets">Bullet points</h3>
+                          <p class="govuk-body">
+                            Use bullet points to help words or phrases stand out in your emails and letters.
+                          </p>
+                          <p class="govuk-body">
+                            Copy this example to add bullet points:
+                          </p>
+                          <pre class="formatting-example" style="background-color: white;">
+<code class="lang-md">Introduce bullet points with a lead-in line ending in a colon:
+
+* leave one empty line space after the lead-in line
+* use an asterisk or a dash followed by a space to add an item
+* start each item with a lowercase letter, do not end with a full stop
+* leave one empty line space after the last item</code></pre>
+
+                          <h3 class="govuk-heading-s" id="bullets">Numbered steps</h3>
+                          <p class="govuk-body">
+                            Copy this example to add numbered steps:
+                          </p>
+                          <pre class="formatting-example" style="background-color: white;">
+<code class="lang-md">1. Leave one empty line space before starting your list.
+2. Enter a number followed by a full stop and a space to add an item.
+3. Start each item with a capital letter and end it with a full stop.
+4. Leave one empty line space after the last item.</code></pre>
+
+                          <h3 class="govuk-heading-s">Links and URLs</h3>
+                          <p class="govuk-body">
+                            To convert text into a link, use square brackets around the link text and round brackets
+                            around the full URL.
+                            Make sure there are no spaces between the brackets or the link will not work. For example:
+                          </p>
+                          <pre class="formatting-example" style="background-color: white;">
+<code class="lang-md">[Apply now](https://www.gov.uk/example)</code></pre>
+                        </div>
+                      </details>
+                      {% endset %}
+
+                      {{ govukRadios({
+                      name: "declarationOption",
+                      fieldset: {
+                      legend: {
+                      text: "Do users need to make a declaration?",
+                      isPageHeading: true,
+                      classes: "govuk-fieldset__legend--m"
+                      }
+                      },
+                      hint: {
+                      text: "Use a declaration if you need users to declare or agree to something before they submit the
+                      form"
+                      },
+                      items: [
+                      {
+                      value: "no-declaration",
+                      text: "No"
+                      },
+                      {
+                      value: "yes-declaration",
+                      text: "Yes",
+                      conditional: {
+                      html: textHtml
+                      }
+                      }
+                      ]
+                      }) }}
+
+                      <div class="govuk-button-group">
+                        {{ govukButton({
+                        text: "Save and continue",
+                        type: "submit",
+                        id: "continue-button"
+                        }) }}
+
+                        <a href="#tab-one-check-answers" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                          data-module="govuk-skip-link">
+                          Skip to page preview
+                        </a>
+                      </div>
+                    </form>
+                  </div> <!-- .govuk-summary-card__content -->
+                </div> <!-- #question-1 -->
+              </div> <!-- #page-settings-container-1 -->
+
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <!-- END LEFT COLUMN -->
+
+  <!-- RIGHT COLUMN: Check Answers Preview -->
+  <div class="govuk-grid-column-one-half-from-desktop">
+    <!--
+      Keep your .preview-container styles.
+      They are placed here so they only affect the right column,
+      but you could move them to a global stylesheet if you like.
+    -->
+    <style>
+      .preview-container {
+        outline: solid 1px #b1b4b6;
+        position: sticky;
+        overflow-y: auto;
+        height: 100vh;
+        top: 0;
+        padding: 20px;
+        box-shadow: 5px 10px #b1b4b6;
+        margin-bottom: 30px;
+      }
+    </style>
+
+    <!-- Preview Container -->
+    <div class="preview-container" style="margin-top: 1px;" id="check-preview-no-declaration">
+      <div class="preview-container" id="dynamic-preview-content-check-no-declaration">
+        <div id="before-content"
+          style="background-color: #e3e3e3; outline-color: #b1b4b6; border-bottom-color: #b1b4b6; display: flex; align-items: left;">
+          <p class="govuk-body-s" style="margin-bottom: 0; color: #0b0c0c; padding: 2px 8px 2px;">
+            Preview of Check answers page
+          </p>
+          <!-- Close link removed as per your instruction -->
+        </div>
+
+        <div style="margin-top: 60px;">
+          <!-- Tabs Structure -->
+          <div class="govuk-tabs" data-module="govuk-tabs">
+            <h2 class="govuk-tabs__title">Contents</h2>
+            <ul class="govuk-tabs__list">
+              <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                <a class="govuk-tabs__tab" href="#tab-one-check-answers">Page preview</a>
+              </li>
+            </ul>
+
+            <!-- Tab One Content -->
+            <div class="govuk-tabs__panel" id="tab-one-check-answers">
+              <!-- Preview Link -->
+              <p class="govuk-body-s" style="margin-bottom: 30px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview this page in a new tab
+                </a>
+              </p>
+
+              <!-- Dynamic Heading -->
+              <div id="heading-container">
+                {% if data['setName'] %}
+                <span id="dynamic-caption" class="govuk-caption-xl" data-setname="{{ data['setName'] | capitalize }}">
+                  {{ data['setName'] | capitalize }} 1
+                </span>
+                {% endif %}
+                <h1 class="govuk-heading-l" id="dynamic-heading">
+                  Check your answers before sending your form
+                </h1>
+              </div>
+
+              <!-- Summary List -->
+              {{ govukSummaryList({
+              classes: "govuk-!-margin-bottom-9",
+              rows: [
+              {
+              key: { text: "Business registered with RPA" },
+              value: { text: "Yes" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> registration status</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Country for livestock" },
+              value: { text: "England" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> country</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Arrival date of livestock" },
+              value: { text: "20 04 2024" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> arrival date</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Type of livestock" },
+              value: { text: "Cow" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> livestock type</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Applicant\'s name" },
+              value: { text: "John Doe" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> applicant name</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Business name" },
+              value: { text: "Doe Farms Ltd" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> business name</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Main phone number" },
+              value: { text: "07700 900457" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> phone number</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Email address" },
+              value: { text: "john.doe@example.com" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> email address</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Business address" },
+              value: { text: "123 Farm Lane, Rural Town" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> business address</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Business purpose" },
+              value: { text: "Livestock farming" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> business purpose</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "National Grid field number" },
+              value: { text: "NG123456" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> field number</span></a>'
+              }
+              ]
+              }
+              },
+              {
+              key: { text: "Methodology statement" },
+              value: { text: "1 file uploaded" },
+              actions: {
+              items: [
+              {
+              html: '<a class="govuk-link govuk-link--no-visited-state" href="#"
+                style="color: #b1b4b6; cursor: default;"
+                onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">Change<span
+                  class="govuk-visually-hidden"> methodology statement</span></a>'
+              }
+              ]
+              }
+              }
+              ]
+              }) }}
+
+              <!-- Guidance Paragraph -->
+              <div class="border-left-container govuk-!-margin-top-6">
+                <p class="govuk-body" id="guidance-paragraph">
+                  {{ data['checkAnswersGuidanceTextInput'] or '' }}
+                </p>
+                <div id="dynamic-guidance-text" class="govuk-body"></div>
+              </div>
+
+              <!-- Send Button -->
+              <button class="govuk-button govuk-!-margin-top-6" id="once-button" disabled>
+                Send
+              </button>
+
+              <a href="#tab-one-check-answers" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to page settings
+              </a>
+            </div> <!-- End of Tab One -->
+          </div> <!-- End of govuk-tabs -->
+        </div> <!-- End of margin-top: 60px container -->
+      </div> <!-- End of dynamic-preview-content-check-no-declaration -->
+    </div> <!-- End of outer preview-container -->
+  </div>
+  <!-- END RIGHT COLUMN -->
+
+</div> <!-- End .govuk-grid-row (which wraps both columns) -->
+
+<!-- Keep your scripts below. Everything is still included. -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dynamicCaption = document.getElementById("dynamic-caption");
+    const setName = dynamicCaption ? dynamicCaption.getAttribute("data-setname") : null;
+
+    if (!setName && dynamicCaption) {
+      dynamicCaption.style.display = "none";
+    }
+  });
+</script>
+
+<style>
+  .border-left-container {
+    border-left: 10px solid #ffb266;
+    padding-left: 20px;
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/marked.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const domElements = {
+      checkAnswersGuidanceTextInput: document.getElementById("check-answers-guidance-text-input"),
+      guidanceParagraph: document.getElementById("guidance-paragraph"),
+      continueButton: document.getElementById("once-button"),
+      noDeclarationRadio: document.querySelector('input[value="no-declaration"]'),
+      yesDeclarationRadio: document.querySelector('input[value="yes-declaration"]')
+    };
+
+    initializeEventListeners();
+
+    function initializeEventListeners() {
+      if (domElements.checkAnswersGuidanceTextInput) {
+        domElements.checkAnswersGuidanceTextInput.addEventListener("input", updateGuidanceParagraph);
+        domElements.checkAnswersGuidanceTextInput.addEventListener("focus", function () {
+          applyHighlight(domElements.guidanceParagraph);
+          showPlaceholderGuidance();
+        });
+        domElements.checkAnswersGuidanceTextInput.addEventListener("blur", function () {
+          removeHighlight(domElements.guidanceParagraph);
+          clearPlaceholderGuidance();
+        });
+      }
+
+      // Event listener for radio buttons to change button text and hide/show guidance paragraph
+      if (domElements.noDeclarationRadio && domElements.yesDeclarationRadio) {
+        domElements.noDeclarationRadio.addEventListener("change", toggleButtonTextAndGuidance);
+        domElements.yesDeclarationRadio.addEventListener("change", toggleButtonTextAndGuidance);
+      }
+    }
+
+    // Function to update the guidance paragraph with rendered Markdown
+    function updateGuidanceParagraph() {
+      const markdownText = domElements.checkAnswersGuidanceTextInput.value;
+      if (typeof marked === "function") {
+        try {
+          const renderedHtml = marked(markdownText);
+          domElements.guidanceParagraph.innerHTML = renderedHtml;
+        } catch (error) {
+          console.error("Error rendering Markdown:", error);
+        }
+      } else {
+        // Fallback to plain text if marked isn't available
+        domElements.guidanceParagraph.textContent = markdownText;
+      }
+    }
+
+    // Toggle button text and show/hide guidance paragraph based on selected radio button
+    function toggleButtonTextAndGuidance() {
+      if (domElements.yesDeclarationRadio.checked) {
+        domElements.continueButton.textContent = "Accept and send";
+        domElements.guidanceParagraph.style.display = "block"; // Show guidance paragraph if "Yes" is selected
+      } else if (domElements.noDeclarationRadio.checked) {
+        domElements.continueButton.textContent = "Continue";
+        domElements.guidanceParagraph.style.display = "none"; // Hide guidance paragraph if "No" is selected
+      }
+    }
+
+    function showPlaceholderGuidance() {
+      if (!domElements.checkAnswersGuidanceTextInput.value) {
+        domElements.guidanceParagraph.textContent = "Declaration text";
+      }
+    }
+
+    function clearPlaceholderGuidance() {
+      if (!domElements.checkAnswersGuidanceTextInput.value) {
+        domElements.guidanceParagraph.textContent = "Declaration text";
+      }
+    }
+
+    function applyHighlight(element) {
+      element.classList.add("highlight");
+    }
+
+    function removeHighlight(element) {
+      element.classList.remove("highlight");
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const textarea = document.getElementById("check-answers-guidance-text-input");
+    const previewTarget = document.querySelector("#guidance-paragraph");
+    const secondContainer = document.getElementById("second-container");
+
+    if (textarea && previewTarget) {
+      // Input Event Listener
+      textarea.addEventListener("input", () => {
+        try {
+          previewTarget.innerHTML = marked.parse(textarea.value || "");
+        } catch (error) {
+          console.error("Markdown rendering error:", error);
+          previewTarget.textContent = textarea.value; // Fallback
+        }
+      });
+
+      // Focus Event Listener
+      textarea.addEventListener("focus", () => {
+        if (secondContainer && secondContainer.contains(previewTarget)) {
+          previewTarget.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+        applyHighlight(previewTarget);
+        if (!textarea.value) previewTarget.textContent = "Declaration text";
+      });
+
+      // Blur Event Listener
+      textarea.addEventListener("blur", () => {
+        removeHighlight(previewTarget);
+        if (!textarea.value) previewTarget.textContent = ""; // Clear placeholder
+      });
+    }
+
+    // Helper Functions
+    function applyHighlight(element) {
+      if (element) element.classList.add("highlight");
+    }
+
+    function removeHighlight(element) {
+      if (element) element.classList.remove("highlight");
+    }
+  });
+</script>
+
+<script>
+  document.getElementById("check-answers-guidance-text-input")?.addEventListener("focus", function () {
+    const guidanceParagraph = document.getElementById("guidance-paragraph");
+    const secondContainer = document.getElementById("second-container");
+
+    if (secondContainer && secondContainer.contains(guidanceParagraph)) {
+      guidanceParagraph.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  });
+</script>
+
+<style>
+  .highlight {
+    background-color: #ffe5cc;
+    border-bottom: 2px solid #ffb266;
+  }
+
+  .custom-change-text {
+    color: #b1b4b6;
+    text-decoration: none !important;
+    cursor: default !important;
+    pointer-events: none !important;
+  }
+
+  .custom-change-text:hover {
+    color: #b1b4b6 !important;
+    /* Prevent hover color change */
+    text-decoration: none !important;
+    /* Prevent hover underline */
+  }
+</style>
+
+{% endblock %}

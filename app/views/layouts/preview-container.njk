@@ -1,0 +1,60 @@
+<!-- preview-container.njk -->
+<div class="govuk-grid-column-one-half-from-desktop preview-container">
+    <div class="preview-container__header">
+        <p class="govuk-body-s preview-container__title">Previews</p>
+    </div>
+
+    <div class="preview-container__content">
+        {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+
+        <div class="govuk-tabs" data-module="govuk-tabs">
+            <h2 class="govuk-tabs__title">Contents</h2>
+            <ul class="govuk-tabs__list">
+                <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                    <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+                </li>
+                <li class="govuk-tabs__list-item">
+                    <a class="govuk-tabs__tab" href="#tab-two">Error messages</a>
+                </li>
+            </ul>
+
+            <div class="govuk-tabs__panel" id="tab-one">
+                <p class="govuk-body-s preview-container__link">
+                    <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener"
+                        target="_blank">Preview this page in a new tab</a>
+                </p>
+                {% include "/form-editor/previews/numbers/edit.html" %}
+                <a href="#edit-page" class="govuk-skip-link preview-container__skip-link" data-module="govuk-skip-link">
+                    Skip to edit page
+                </a>
+            </div>
+
+            <div class="govuk-tabs__panel" id="tab-two">
+                <p class="govuk-body-s preview-container__link">
+                    <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener"
+                        target="_blank">Preview error messages in a new tab</a>
+                </p>
+
+                <div class="govuk-error-summary" data-module="govuk-error-summary">
+                    <h2 class="govuk-error-summary__title">There is a problem</h2>
+                    <ul class="govuk-list govuk-error-summary__list">
+                        <li><a id="empty-input-error-shorttext" class="govuk-error-message">Enter <span
+                                    id="error-dynamic-text">[short description]</span></a></li>
+                        <li><a id="empty-input-error-shorttext" class="govuk-error-message"><span
+                                    id="error-dynamic-text">[Short description]</span> must be a whole number</a></li>
+                        <h3 class="govuk-heading-s">If you set answer limits:</h3>
+                        <li><a id="too-long-input-error-shorttext" class="govuk-error-message"><span
+                                    id="error-dynamic-text-long">[Short description]</span> must be <span
+                                    id="max-length">[lowest number]</span> or more</a></li>
+                        <li><a id="too-short-input-error-shorttext" class="govuk-error-message"><span
+                                    id="error-dynamic-text-short">[Short description]</span> must be <span
+                                    id="min-length">[highest number]</span> or fewer</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <a href="#error-message-input-shorttext" class="govuk-skip-link preview-container__skip-link"
+                data-module="govuk-skip-link">Skip to edit short description</a>
+        </div>
+    </div>
+</div>

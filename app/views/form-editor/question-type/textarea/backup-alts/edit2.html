@@ -1,0 +1,485 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit long answer question - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/redesigntest/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/redesigntest/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          <span class="govuk-caption-l" style="color: white">
+            Apply for a county parish holding certificate
+          </span>
+          Edit page 2
+        </h1>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% set questionType = "textarea" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#question-1">Page settings</a>
+                            </li>
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" href="#overview-noquestions">Overview of questions</a>
+                            </li>
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#question-1-information-type">Question</a>
+                            </li>
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+                        <span class="govuk-caption-l">Page 1</span>
+                        <h2 class="govuk-heading-l">Question</h2>
+
+                        <form method="post" id="{{ 'options-form' | appendSuffix(textarea) }}" action="/submit">
+
+                          <!-- Question Label Input -->
+                          <div class="govuk-form-group">
+                            <label class="govuk-label--m" for="{{ 'question-label-input' | appendSuffix(textarea) }}">
+                              Question
+                            </label>
+                            <input class="govuk-input" id="{{ 'question-label-input' | appendSuffix(textarea) }}"
+                              name="{{ 'questionLabelInput' | appendSuffix(textarea) }}" type="text" value="">
+                          </div>
+
+                          <!-- Hint Text Input -->
+                          {{ govukTextarea({
+                          label: {
+                          text: "Hint text (optional)",
+                          classes: "govuk-label--m"
+                          },
+                          id: "hint-text-input" | appendSuffix(textarea),
+                          name: "hintTextInput" | appendSuffix(textarea),
+                          rows: 3,
+                          describedBy: "hint-text-input" | appendSuffix(textarea),
+                          attributes: {
+                          'aria-describedby': "hint-text-input" | appendSuffix(textarea)
+                          }
+                          }) }}
+
+                          <!-- Answer Limits -->
+                          <details class="govuk-details govuk-!-margin-top-6">
+                            <summary class="govuk-details__summary">
+                              <span class="govuk-details__summary-text">Set answer limits (optional) </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                              <!-- Checkbox for Answer Limits -->
+                              {{ govukCheckboxes({
+                              idPrefix: "contact",
+                              name: "contact",
+                              items: [
+                              {
+                              value: "betweenDates",
+                              text: "Answer must be between two dates",
+                              id: "contact-betweenDates",
+                              conditional: {
+                              html: govukDateInput({
+                              id: "first-date",
+                              namePrefix: "first-date",
+                              fieldset: {
+                              legend: {
+                              text: "First date",
+                              classes: "govuk-fieldset__legend--m"
+                              }
+                              },
+                              items: [
+                              {
+                              name: "day",
+                              classes: "govuk-input--width-2",
+                              attributes: {
+                              inputmode: "numeric"
+                              }
+                              },
+                              {
+                              name: "month",
+                              classes: "govuk-input--width-2",
+                              attributes: {
+                              inputmode: "numeric"
+                              }
+                              },
+                              {
+                              name: "year",
+                              classes: "govuk-input--width-4",
+                              attributes: {
+                              inputmode: "numeric"
+                              }
+                              }
+                              ]
+                              }) + govukDateInput({
+                              id: "second-date",
+                              namePrefix: "second-date",
+                              fieldset: {
+                              legend: {
+                              text: "Second date",
+                              classes: "govuk-fieldset__legend--m"
+                              }
+                              },
+                              items: [
+                              {
+                              name: "day",
+                              classes: "govuk-input--width-2",
+                              attributes: {
+                              inputmode: "numeric"
+                              }
+                              },
+                              {
+                              name: "month",
+                              classes: "govuk-input--width-2",
+                              attributes: {
+                              inputmode: "numeric"
+                              }
+                              },
+                              {
+                              name: "year",
+                              classes: "govuk-input--width-4",
+                              attributes: {
+                              inputmode: "numeric"
+                              }
+                              }
+                              ]
+                              })
+                              }
+                              }
+                              ]
+                              }) }}
+                            </div>
+                          </details>
+
+                          <!-- Add guidance above this question -->
+                          <details class="govuk-details" data-module="govuk-details">
+                            <summary class="govuk-details__summary">
+                              <span class="govuk-details__summary-text">
+                                Add guidance above this question (optional)
+                              </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                              <!-- Default Content for Question 1 -->
+                              <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+                                <!-- Page Heading Input -->
+                                {{ govukInput({
+                                label: {
+                                text: "Page heading",
+                                classes: "govuk-label govuk-label--m govuk-!-margin-top-0"
+                                },
+                                hint: {
+                                text: "Page headings should be a statement and not a question. For example, ‘Passport
+                                information’",
+                                id: "page-heading-input-hint"
+                                },
+                                id: "page-heading-input" | appendSuffix(textarea),
+
+
+                                name: "pageHeading" | appendSuffix(textarea),
+                                type: "text",
+                                attributes: {
+                                'aria-describedby': "page-heading-input-hint" | appendSuffix(textarea),
+                                'data-preview-target': '#dynamic-heading'
+                                }
+                                }) }}
+
+                                <!-- Guidance Text Textarea -->
+                                {{ govukTextarea({
+                                label: {
+                                text: "Guidance text (optional)",
+                                classes: "govuk-label govuk-label--m"
+                                },
+                                hint: {
+                                text: "Use Markdown to format the content or add hyperlinks",
+                                id: "guidance-textarea-hint"
+                                },
+                                id: "guidance-textarea" | appendSuffix(textarea),
+                                name: "guidanceText" | appendSuffix(textarea),
+                                rows: 5,
+                                attributes: {
+                                'aria-describedby': "guidance-textarea-hint" | appendSuffix(textarea),
+                                'data-preview-target': '#guidance-paragraph' | appendSuffix(textarea)
+                                }
+                                }) }}
+
+                              </div>
+                            </div>
+                          </details>
+
+
+
+                          <!-- Section Break -->
+                          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                          <!-- Question Settings Summary List -->
+                          <h2 class="govuk-heading-m">Question settings</h2>
+
+                          {{ govukSummaryList({
+                          "rows": [
+                          {
+                          "key": {
+                          "text": "Type of information"
+                          },
+                          "value": {
+                          "html": "Long written answer"
+                          },
+                          "actions": {
+                          "items": [
+                          {
+                          "href": "#",
+                          "text": "Change",
+                          "visuallyHiddenText": " type"
+                          }
+                          ]
+                          }
+                          }
+                          ]
+                          }) }}
+
+                          <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+
+                          <!-- Other form elements... -->
+
+                          <!-- Submit Button -->
+                          <div class="moj-button-action">
+                            {{ govukButton({
+                            text: 'Save and continue',
+                            type: 'submit'
+                            }) }}
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column for Preview -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+
+
+        <!-- Include the preview template -->
+        {% include "/redesigntest/templates/previews/textarea/edit2.html" %}
+      </div>
+    </div>
+
+    <!-- JavaScript code -->
+    <!-- JavaScript -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Retrieve the suffix type from the body data attribute or default to 'textarea'
+        const suffixType = document.body.getAttribute('data-suffixType') || 'textarea';
+
+        // Define a mapping from suffix types to their corresponding suffix strings
+        const suffixMap = {
+          'textarea': '-textarea',
+          'input': '-input',
+          'button': '-button',
+          'address': '-address',
+          'checkboxes': '-checkboxes',
+          'date': '-date',
+          'email': '-email',
+          'fileupload': '-fileupload',
+          'phone': '-phone',
+          'radios': '-radios',
+          'select': '-select',
+          'short-text': '-short-text',
+          'yesno': '-yesno',
+          // Add more suffix mappings as needed
+        };
+
+        // Determine the actual suffix based on the suffix type
+        const appendedSuffix = suffixMap[suffixType] || '-textarea';
+
+        // Define the DOM elements with dynamic suffixes
+        const domElements = {
+          // Existing elements with dynamic suffix
+          optionsForm: document.getElementById(`options-form${appendedSuffix}`),
+          questionLabelInput: document.getElementById(`question-label-input${appendedSuffix}`),
+          questionLabelLegend: document.getElementById(`question-label-legend${appendedSuffix}`),
+          hintTextInput: document.getElementById(`hint-text-input${appendedSuffix}`),
+          hintTextOutput: document.getElementById(`hint-text-output${appendedSuffix}`),
+          makeOptionalCheckbox: document.getElementById(`make-optional${appendedSuffix}`),
+
+          // New elements for page heading and guidance text with dynamic suffix
+          pageHeadingInput: document.getElementById(`page-heading-input${appendedSuffix}`),
+          dynamicHeading: document.getElementById(`dynamic-heading${appendedSuffix}`),
+          guidanceTextarea: document.getElementById(`guidance-textarea${appendedSuffix}`),
+          guidanceParagraph: document.getElementById(`guidance-paragraph${appendedSuffix}`)
+        };
+
+        // Initialize event listeners
+        initializeEventListeners();
+
+        function initializeEventListeners() {
+          // Update question label when input changes
+          if (domElements.questionLabelInput && domElements.questionLabelLegend) {
+            domElements.questionLabelInput.addEventListener('input', updateQuestionLabel);
+          }
+
+          // Update hint text when input changes
+          if (domElements.hintTextInput && domElements.hintTextOutput) {
+            domElements.hintTextInput.addEventListener('input', updateHintText);
+          }
+
+          // Update optional label when checkbox state changes
+          if (domElements.makeOptionalCheckbox) {
+            domElements.makeOptionalCheckbox.addEventListener('change', updateQuestionLabel);
+          }
+
+          // Update page heading when input changes
+          if (domElements.pageHeadingInput && domElements.dynamicHeading) {
+            domElements.pageHeadingInput.addEventListener('input', updatePageHeading);
+          }
+
+          // Update guidance text when textarea changes
+          if (domElements.guidanceTextarea && domElements.guidanceParagraph) {
+            domElements.guidanceTextarea.addEventListener('input', updateGuidanceText);
+          }
+
+          // Apply focus/blur highlighting to inputs and associated labels/hints/headings/guidance
+          applyHighlightOnFocus(domElements.questionLabelInput, domElements.questionLabelLegend);
+          applyHighlightOnFocus(domElements.hintTextInput, domElements.hintTextOutput);
+          applyHighlightOnFocus(domElements.pageHeadingInput, domElements.dynamicHeading);
+          applyHighlightOnFocus(domElements.guidanceTextarea, domElements.guidanceParagraph);
+        }
+
+        // Function to update the question label text, appending '(optional)' if checkbox is checked
+        function updateQuestionLabel() {
+          const suffix = domElements.makeOptionalCheckbox && domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+          const newText = (domElements.questionLabelInput && domElements.questionLabelInput.value) ? domElements.questionLabelInput.value : 'Question';
+          domElements.questionLabelLegend.textContent = `${newText}${suffix}`;
+        }
+
+        // Function to update the hint text output
+        function updateHintText() {
+          if (domElements.hintTextInput && domElements.hintTextOutput) {
+            domElements.hintTextOutput.textContent = domElements.hintTextInput.value;
+          }
+        }
+
+        // Function to update the dynamic heading text
+        function updatePageHeading() {
+          if (domElements.dynamicHeading && domElements.pageHeadingInput) {
+            domElements.dynamicHeading.textContent = domElements.pageHeadingInput.value;
+          }
+        }
+
+        // Function to update the guidance paragraph text
+        function updateGuidanceText() {
+          if (domElements.guidanceParagraph && domElements.guidanceTextarea) {
+            domElements.guidanceParagraph.textContent = domElements.guidanceTextarea.value;
+          }
+        }
+
+        // Function to apply highlighting on focus and remove on blur
+        function applyHighlightOnFocus(inputElement, targetElement) {
+          if (inputElement && targetElement) {
+            inputElement.addEventListener('focus', function () {
+              targetElement.classList.add('highlight');
+            });
+            inputElement.addEventListener('blur', function () {
+              targetElement.classList.remove('highlight');
+            });
+
+            // If the input is already focused when the script runs, apply highlighting
+            if (document.activeElement === inputElement) {
+              targetElement.classList.add('highlight');
+            }
+          }
+        }
+      });
+    </script>
+
+
+
+    <!-- CSS for Highlighting -->
+    <style>
+      .highlight {
+        background-color: #ffe5cc;
+        border-bottom: 2px solid #ffb266;
+        color: black;
+      }
+
+      #before-content {
+        position: absolute;
+        top: 0;
+        left: 10 !important;
+        right: 0;
+        width: 100%;
+        padding: 10px !important;
+        box-sizing: border-box;
+        z-index: 1;
+        border-bottom: 1px solid #008938;
+        padding-left: 10px;
+      }
+
+      #second-container {
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #second-container>* {
+        padding-left: 0px;
+        z-index: 2;
+      }
+    </style>
+  </div>
+</div>
+{% endblock %}

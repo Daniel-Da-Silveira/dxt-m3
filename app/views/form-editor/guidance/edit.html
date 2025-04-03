@@ -1,0 +1,534 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Edit page 1 - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{# {% block beforeContent %}
+{{ govukBackLink({
+text: "Back to manage pages",
+href: "javascript:window.history.back()"
+}) }}
+{% endblock %} #}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+    classes: "govuk-back-link--inverse",
+    text: "Back to add and edit pages",
+    href: "/september/listing/3.html"
+    }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom:1px solid white; margin-bottom: 0;">
+
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        <h1 class="x-govuk-masthead__title">
+          <span class="govuk-caption-l" style="color:white;">Apply for a county parish holding certificate</span>
+
+          Edit page 3
+        </h1>
+        {# <p class="x-govuk-masthead__description">
+          Create and manage the pages in this form.</p> #}
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+
+{% block content %}
+<!-- Main Grid Row -->
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full ">
+    <div class="govuk-grid-row">
+
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half" id="container" style="flex: 1 1 75%; overflow-y: auto;">
+        <div class="govuk-summary-card" style="border-left: 10px solid #008938;">
+          <div class="govuk-summary-card__title-wrapper" style="border-bottom: #008938 1px solid;">
+            <h2 class="govuk-summary-card__title">Page 3:
+              <span id="page-1-heading-text"></span>
+            </h2>
+
+            <ul class="govuk-summary-card__actions">
+
+            </ul>
+          </div>
+          <div class="govuk-summary-card__content" style="background-color: #f3f2f1;">
+            <!-- Dynamic Summary List -->
+            {# <div id="summary-container">
+              <!-- The dynamic summary list will be populated here -->
+            </div> #}
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+                  <div id="summary-container">
+                    <!-- The dynamic summary list will be populated here -->
+                  </div>
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0;">
+
+
+
+
+                        <!-- Question Tag -->
+                        <strong class="govuk-tag govuk-tag--green govuk-!-margin-bottom-2">Guidance</strong>
+
+
+
+
+
+                        <!-- Default Content for Question 1 -->
+                        <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+                          <!-- Page Heading Input -->
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m govuk-!-margin-top-0" for="page-heading-input">
+                              Page heading
+                            </label>
+                            <span id="page-heading-input-hint" class="govuk-hint">
+                              Page headings should be a statement and not a question. For example, 'Passport
+                              information'
+                            </span>
+                            <input class="govuk-input" id="page-heading-input" name="pageHeading" type="text"
+                              aria-describedby="page-heading-input-hint">
+                          </div>
+
+                          <!-- Guidance Text Textarea -->
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-label--m" for="guidance-textarea">
+                              Guidance text (optional)
+                            </label>
+                            <span id="guidance-textarea-hint" class="govuk-hint">
+                              Use Markdown to format the content or add hyperlinks
+                            </span>
+                            <textarea class="govuk-textarea" id="guidance-textarea" name="guidanceText" rows="5"
+                              aria-describedby="guidance-textarea-hint"></textarea>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <!-- Section Break -->
+                  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                  <h2 class="govuk-heading-m">Question summary</h2>
+
+                  {{ govukSummaryList({
+                  rows: [
+                  {
+                  key: {
+                  text: "Page type"
+                  },
+                  value: {
+                  text: "Guidance"
+                  },
+                  actions: {
+                  items: [
+                  {
+                  href: "#",
+                  text: "Change",
+                  visuallyHiddenText: "name"
+                  }
+                  ]
+                  }
+
+                  }
+                  ]
+                  }) }}
+                  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                  <div class="govuk-button-group">
+                    {{ govukButton({
+                    text: "Save changes",
+                    id: "save-changes-button"
+                    }) }}
+
+                    <p class="govuk-body">
+                      <a href="#" class="govuk-link govuk-link--no-visited-state">Delete page</a>
+                    </p>
+                  </div>
+
+
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Right Column for Additional Content -->
+      <div class="govuk-grid-column-one-half" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+
+        <!-- New HTML content for before element -->
+        <div id="before-content">
+          <p class="govuk-body-s" style="margin-bottom: 0;">
+            <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener"
+              target="_blank">Preview
+              this page in a new tab</a>
+          </p>
+        </div>
+
+        <!-- Additional Content Here -->
+        <div class="additional-content">
+          <!-- Header Template Usage -->
+          {{ govukHeader({
+          homepageUrl: null,
+          serviceName: null,
+          classes: "govuk-!-margin-top-8"
+          }) }}
+          <div>
+            <!-- Tag for Preview -->
+            {{ govukTag({ text: "Preview of page 3", classes: "govuk-tag--yellow govuk-!-margin-bottom-2
+            govuk-!-margin-top-2" }) }}
+            <!-- Form for Preview -->
+            <form>
+              <!-- Dynamic Heading -->
+              <div id="heading-container">
+                <span id="dynamic-caption" class="govuk-caption-l"></span>
+                <h1 class="govuk-heading-l" id="dynamic-heading"></h1>
+              </div>
+
+              <!-- Guidance Paragraph -->
+              <p class="govuk-body" id="guidance-paragraph"></p>
+
+              {{ govukButton({
+              text: "Continue",
+              classes: "govuk-button govuk-!-margin-top-3",
+              id: "once-button",
+              disabled: true
+              }) }}
+
+              {{ govukButton({
+              text: "Add another [question set name]",
+              classes: "govuk-button govuk-!-margin-top-3",
+              id: "add-another-set-button",
+              disabled: true,
+              attributes: { style: "display:none;" }
+              }) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const saveChangesButton = document.getElementById('save-changes-button'); // Target the "Save Changes" button by ID
+        const summaryContainer = document.getElementById('summary-container'); // Container for the summary list
+        const pageHeadingInput = document.getElementById('page-heading-input'); // Page heading input
+        const pageHeadingTextSpan = document.getElementById('page-1-heading-text'); // Span in accordion header
+        const guidanceTextarea = document.getElementById('guidance-textarea'); // Guidance textarea
+        const dynamicHeading = document.getElementById('dynamic-heading'); // Dynamic heading in preview
+        const guidanceParagraph = document.getElementById('guidance-paragraph'); // Guidance paragraph in preview
+
+        // Function to display an error message next to each input
+        function displayFieldError(inputElement, errorMessage) {
+          if (!inputElement) return; // Prevent further processing if the element doesn't exist
+
+          const formGroup = inputElement.closest('.govuk-form-group');
+
+          if (formGroup) {
+            formGroup.classList.add('govuk-form-group--error');
+
+            let errorElement = formGroup.querySelector('.govuk-error-message');
+            if (!errorElement) {
+              errorElement = document.createElement('p');
+              errorElement.className = 'govuk-error-message';
+              errorElement.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${errorMessage}`;
+              formGroup.insertBefore(errorElement, inputElement);
+            }
+
+            inputElement.classList.add('govuk-input--error');
+            inputElement.setAttribute('aria-describedby', `${errorElement.id}`);
+          }
+        }
+
+        // Function to display error summary at the top of the content area
+        function displayErrorSummary(errors) {
+          clearErrorSummary(); // Clear previous error summary
+
+          if (errors.length > 0) {
+            const errorSummary = document.createElement('div');
+            errorSummary.className = 'govuk-error-summary';
+            errorSummary.setAttribute('role', 'alert');
+            errorSummary.setAttribute('aria-labelledby', 'error-summary-title');
+            errorSummary.setAttribute('tabindex', '-1');
+
+            let errorListItems = '';
+            errors.forEach(error => {
+              errorListItems += `<li><a href="#${error.href}">${error.text}</a></li>`;
+            });
+
+            errorSummary.innerHTML =
+              `<h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>
+            <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                    ${errorListItems}
+                </ul>
+            </div>`;
+
+            // Insert the error summary at the top of the summary container
+            summaryContainer.prepend(errorSummary);
+
+            // Scroll the error summary into view and focus it
+            errorSummary.scrollIntoView({ behavior: 'auto', block: 'center' });
+            errorSummary.focus();
+          }
+        }
+
+        // Function to clear error messages and summary
+        function clearErrors() {
+          const errorElements = document.querySelectorAll('.govuk-error-message');
+          errorElements.forEach(errorElement => errorElement.remove());
+
+          const errorInputs = document.querySelectorAll('.govuk-input--error');
+          errorInputs.forEach(input => {
+            input.classList.remove('govuk-input--error');
+            const formGroup = input.closest('.govuk-form-group');
+            if (formGroup) {
+              formGroup.classList.remove('govuk-form-group--error');
+            }
+          });
+
+          clearErrorSummary();
+        }
+
+        // Function to clear the error summary
+        function clearErrorSummary() {
+          const errorSummary = document.querySelector('.govuk-error-summary');
+          if (errorSummary) {
+            errorSummary.remove();
+          }
+        }
+
+        // Simplified validation function
+        function validateFields() {
+          clearErrors(); // Clear previous errors
+          let isValid = true;
+          const errors = [];
+
+          // Validate Page Heading Input
+          if (!pageHeadingInput.value.trim()) {
+            isValid = false;
+            const errorMessage = 'Page heading is required';
+            displayFieldError(pageHeadingInput, errorMessage);
+            errors.push({ text: errorMessage, href: 'page-heading-input' });
+          }
+
+          // Validate Guidance Textarea
+          if (!guidanceTextarea.value.trim()) {
+            isValid = false;
+            const errorMessage = 'Guidance text is required';
+            displayFieldError(guidanceTextarea, errorMessage);
+            errors.push({ text: errorMessage, href: 'guidance-textarea' });
+          }
+
+          if (!isValid) {
+            displayErrorSummary(errors);
+          }
+
+          return isValid;
+        }
+
+        // Function to display success message
+        function displaySuccessMessage() {
+          clearMessages(); // Clear previous messages
+
+          const successBanner = document.createElement('div');
+          successBanner.className = 'govuk-notification-banner govuk-notification-banner--success';
+          successBanner.setAttribute('role', 'alert');
+          successBanner.setAttribute('aria-labelledby', 'govuk-notification-banner-title');
+
+          successBanner.innerHTML =
+            `<div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">Success</h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <h3 class="govuk-notification-banner__heading">Changes saved</h3>
+        </div>`;
+
+          // Insert the success banner after the sub-navigation
+          summaryContainer.prepend(successBanner);
+
+          // Scroll the success banner into view and focus it
+          successBanner.scrollIntoView({ behavior: 'auto', block: 'center' });
+          successBanner.focus();
+
+          // Add event listener to remove success message when any link or button is clicked
+          document.addEventListener('click', function removeSuccessMessage(event) {
+            if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON') {
+              successBanner.remove(); // Remove the success message
+              document.removeEventListener('click', removeSuccessMessage); // Remove this event listener
+            }
+          });
+        }
+
+        // Function to clear messages
+        function clearMessages() {
+          clearErrorSummary();
+          const notificationBanner = document.querySelector('.govuk-notification-banner');
+          if (notificationBanner) {
+            notificationBanner.remove();
+          }
+        }
+
+        // Function to update the dynamic heading based on the input
+        function updateHeading() {
+          dynamicHeading.textContent = pageHeadingInput.value.trim() || "Page heading";
+        }
+
+        // Event listener to update heading on input change
+        pageHeadingInput.addEventListener('input', updateHeading);
+        updateHeading();
+
+        // Function to update guidance paragraph based on the textarea input
+        function updateGuidanceParagraph() {
+          guidanceParagraph.textContent = guidanceTextarea.value.trim() || "Guidance text";
+        }
+
+        // Event listener to update guidance paragraph on input change
+        guidanceTextarea.addEventListener('input', updateGuidanceParagraph);
+        updateGuidanceParagraph();
+
+        // Event listener for "Save changes" button click
+        document.addEventListener('click', function (event) {
+          if (event.target && event.target.id === 'save-changes-button') {
+            event.preventDefault();
+
+            // Validate fields before proceeding
+            if (!validateFields()) {
+              console.log('Validation failed');
+              return;
+            }
+
+            // Update the content of the span with id "page-1-heading-text" with the value of "page-heading-input"
+            pageHeadingTextSpan.textContent = pageHeadingInput.value.trim();
+
+            console.log('Saving changes...');
+            displaySuccessMessage(); // Display a success banner or message
+          }
+        });
+
+        // Function to add and remove highlight class based on focus and blur events
+        function applyHighlightOnFocus(inputElementId, targetElementId) {
+          const inputElement = document.getElementById(inputElementId);
+          const targetElement = document.getElementById(targetElementId);
+
+          if (inputElement && targetElement) {
+            inputElement.addEventListener('focus', function () {
+              targetElement.classList.add('highlight');
+            });
+
+            inputElement.addEventListener('blur', function () {
+              targetElement.classList.remove('highlight');
+            });
+          } else {
+            console.error(`Element not found: ${inputElementId} or ${targetElementId}`);
+          }
+        }
+
+        // Apply highlight function to input-target pairs
+        applyHighlightOnFocus('page-heading-input', 'dynamic-heading');
+        applyHighlightOnFocus('guidance-textarea', 'guidance-paragraph');
+      });
+    </script>
+
+
+
+
+
+
+
+
+    <style>
+      .highlight {
+        background-color: #FFE5CC;
+        border-bottom: 2px solid #FFB266;
+      }
+
+      #before-content {
+        position: absolute;
+        top: 0;
+        left: 10 !important;
+        right: 0;
+        /* Ensure the right side is aligned with the container edge */
+        width: 100%;
+        padding: 10px !important;
+
+
+
+        /* Remove padding to avoid affecting the width */
+        box-sizing: border-box;
+        /* Ensure content, padding, and borders are within width */
+        z-index: 1;
+        border-bottom: 1px solid #008938;
+        padding-left: 10px;
+        /* Add padding-left specifically for content */
+      }
+
+      #second-container {
+        padding: 0;
+        /* Ensure no padding on the container itself */
+        box-sizing: border-box;
+        /* Ensure container handles padding/border correctly */
+      }
+
+      #second-container>* {
+        padding-left: 0px;
+        z-index: 2;
+        /* Ensure content is above the #before-content */
+      }
+    </style>
+
+    {% endblock %}

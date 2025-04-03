@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{{ govukHeader({
+homepageUrl: "#",
+serviceName: "Form Editor",
+serviceUrl: "#",
+navigation: [
+{
+href: "/library.html",
+text: "Forms library",
+active: true
+},
+{
+href: "/cph-overview/draft/complete-clean.html",
+text: "Overview"
+},
+{
+href: "/form-editor/listing",
+text: "Editor"
+}
+]
+}) }}
+
+<div class="govuk-width-container">
+    {{ govukBackLink({
+    text: "Back to add and edit pages",
+    href: "/form-editor/listing.html"
+    }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Page settings</h1>
+
+            <form class="form" action="/form-editor/templates/1-question/radios/overview" method="post">
+                {{ govukInput({
+                label: {
+                text: "Page title",
+                classes: "govuk-label--m"
+                },
+                id: "page-title",
+                name: "page-title",
+                value: data["page-title"]
+                }) }}
+
+                {{ govukTextarea({
+                label: {
+                text: "Page description",
+                classes: "govuk-label--m"
+                },
+                id: "page-description",
+                name: "page-description",
+                value: data["page-description"]
+                }) }}
+
+                {{ govukButton({
+                text: "Save changes",
+                type: "submit"
+                }) }}
+
+                <a href="/form-editor/templates/1-question/radios/delete.html" id="delete-page"
+                    class="govuk-button govuk-button--warning">Delete page</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButton = document.getElementById('delete-page');
+        const form = document.querySelector('form');
+
+        if (deleteButton) {
+            deleteButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to delete this page?')) {
+                    window.location.href = '/form-editor/templates/1-question/radios/delete.html';
+                }
+            });
+        }
+
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                window.location.href = '/form-editor/templates/1-question/radios/overview.html';
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Number of questions - Apply for a county parish holding number in England" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+        {{ govukBackLink({
+        classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+        text: commonTerms.form_editor.page_type.back,
+        href: "/form-editor/listing.html"
+        }) }}
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    {{ form.name }}
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds" id="container">
+        {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+        <form class="form" action="/question-number" method="post">
+            <div class="govuk-form-group" id="question-page-radio-group">
+                {{ govukRadios({
+                name: "questionnumber",
+                fieldset: {
+                legend: {
+                text: commonTerms.form_editor.page_type.title,
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+                }
+                },
+                items: [
+                {
+                value: "oncenf",
+                text: commonTerms.form_editor.page_type.question_page,
+                hint: {
+                text: commonTerms.form_editor.page_type.question_page_hint
+                }
+                },
+                {
+                value: "guidance",
+                text: commonTerms.form_editor.page_type.guidance_page,
+                hint: {
+                text: commonTerms.form_editor.page_type.guidance_page_hint
+                }
+                }
+                ],
+                attributes: {
+                id: "question-page-radio-group"
+                }
+                }) }}
+            </div>
+            {{ govukButton({
+            text: commonTerms.form_editor.common.continue,
+            type: "submit"
+            }) }}
+        </form>
+    </div>
+</div>
+{% endblock %}

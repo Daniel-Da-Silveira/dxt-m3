@@ -1,0 +1,1232 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit radios question - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    containerClasses: containerClasses,
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/onboarding/sign-out-confirmation",
+    navigationItems: [
+      { href: "/library.html", text: "Forms library", id: "nav-library" },
+      { href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+      { href: "/redesigntest/listing", text: "Editor", id: "nav-editor" }
+    ],
+    activeLinkId: "nav-editor"
+  }) }}
+
+  <!-- ARIA Live Region for Screen Reader Announcements -->
+  <div aria-live="polite" aria-atomic="true" class="sr-only" id="ariaStatus"></div>
+
+  <div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+      {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add and edit pages", href: "/redesigntest/listing.html" }) }}
+
+      <hr
+        class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+        style="border-bottom: 1px solid white; margin-bottom: 0"
+      />
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full-from-desktop">
+          <h1 class="x-govuk-masthead__title">
+            Apply for a county parish holding certificate
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 " aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page" href="#question-1-information-type">Page 2</a>
+                            </li>
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+                        <h2 class="govuk-heading-l">Edit page 2</h2>
+
+                        <form method="post" id="options-form" action="/redesigntest/templates/1-question/radios/overview">
+
+                          {% from "govuk/components/input/macro.njk" import govukInput %}
+
+                          {{ govukInput({
+                            label: {
+                              text: "Question",
+                              classes: "govuk-label--m",
+                              isPageHeading: false
+                            },
+                            id: "question-label-input-radios",
+                            value: data['question-label-input-radios'],
+                            name: "questionLabelInputRadios",
+                            oninput: "updateHeading()"
+                          }) }}
+
+                          <!-- Hint Text Area -->
+                          {{ govukTextarea({
+                            label: {
+                              text: "Hint text (optional)",
+                              classes: "govuk-label--m"
+                            },
+                            id: "hint-text-input-radios",
+                            name: "hintTextInputRadios",
+                            value: data['hint-text-input-radios'],
+                            classes: "govuk-textarea",
+                            rows: 3,
+                            describedBy: "hint-text-input-radios"
+                          }) }}
+
+                       <!-- Focus Trap Container -->
+                       <div
+                       id="focus-trap-container"
+                       aria-hidden="true"
+                       tabindex="-1"
+                       role="dialog"
+                       aria-modal="true"
+                     >
+                       {# <!-- Screen Reader Instruction for Reordering -->
+                       <p id="reorderHelp" class="govuk-visually-hidden">
+                         You are in reordering mode. Use the Up and Down arrow keys to reorder options. Press Enter to edit. Press Save changes when done.
+                       </p> #}
+
+                       <!-- List Config -->
+                       <div class="govuk-form-group">
+                         <h2 class="govuk-heading-m moj-add-another__heading" tabindex="-1">
+                           Create and edit your list of options
+                         </h2>
+
+                         <!-- Start Creating Your List Button (State 1) -->
+                         <button id="start-list-button" class="govuk-button govuk-!-margin-bottom-4" type="button">
+                           Start creating your list
+                         </button>
+
+                         <!-- Options Container (hidden initially) -->
+                         <ol class="gem-c-reorderable-list js-enabled" id="options-container" role="list" style="display: none;">
+                           <!-- List items will be dynamically injected here -->
+                         </ol>
+
+                         <!-- Button Group for Add, Reorder, Finish, and Edit -->
+                         <div class="govuk-button-group">
+                           <div class="moj-button-action">
+                             {{ govukButton({
+                               text: 'Add another option',
+                               classes: 'moj-add-another__add-button govuk-!-margin-bottom-4 govuk-!-margin-bottom-6',
+                               id: 'add-option-button',
+                               type: 'button',
+                               style: 'display: none;'
+                             }) }}
+                           </div>
+
+                           {{ govukButton({
+                             text: 'Re-order list',
+                             classes: 'govuk-button--inverse',
+                             id: 'edit-options-button',
+                             type: 'button',
+                             style: 'display: none;'
+                           }) }}
+
+                           {{ govukButton({
+                             text: 'Finish editing',
+                             classes: 'govuk-button--secondary',
+                             id: 'finish-editing-button',
+                             type: 'button',
+                             style: 'display: none;'
+                           }) }}
+
+                           {{ govukButton({
+                             text: 'Edit list of options',
+                             classes: 'govuk-button',
+                             id: 'edit-list-button',
+                             type: 'button',
+                             style: 'display: none;'
+                           }) }}
+                         </div>
+                       </div>
+                     </div>
+
+
+
+                            <!-- Make Optional Checkbox -->
+                            <div class="govuk-form-group">
+                              <div class="govuk-checkboxes--small">
+                                <div class="govuk-checkboxes__item">
+                                  <input
+                                    class="govuk-checkboxes__input"
+                                    type="checkbox"
+                                    id="makeOptional"
+                                    name="makeOptional"
+                                    value="{{ data['optional-label-q1'] }}"
+                                  >
+                                  <label class="govuk-label govuk-checkboxes__label" for="makeOptional">
+                                    Make this question optional
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- Add guidance above this question -->
+                            <details class="govuk-details" data-module="govuk-details">
+                              <summary class="govuk-details__summary">
+                                <span class="govuk-details__summary-text">
+                                  Add guidance above this question (optional)
+                                </span>
+                              </summary>
+                              <div class="govuk-details__text">
+                                <!-- Default Content for Question 1 -->
+                                <div id="question-1-content" class="question-content" style="margin-top: 10px;">
+
+                                  <!-- Page Heading Input -->
+                                  {{ govukInput({
+                                    label: {
+                                      text: "Page heading",
+                                      classes: "govuk-label govuk-label--m govuk-!-margin-top-0"
+                                    },
+                                    hint: {
+                                      text: "Page headings should be a statement and not a question. For example, ‘Passport information’",
+                                      id: "page-heading-input-hint"
+                                    },
+                                    id: "page-heading-input-radios",
+                                    name: "pageHeadingInputRadios",
+                                    type: "text",
+                                    attributes: {
+                                      'aria-describedby': "page-heading-input-hint",
+                                      'data-preview-target': '#dynamic-heading'
+                                    }
+                                  }) }}
+
+                                  <!-- Guidance Text Textarea -->
+                                  {{ govukTextarea({
+                                    label: {
+                                      text: "Guidance text (optional)",
+                                      classes: "govuk-label govuk-label--m"
+                                    },
+                                    hint: {
+                                      text: "Use Markdown to format the content or add hyperlinks",
+                                      id: "guidance-textarea-hint"
+                                    },
+                                    id: "guidance-textarea-radios",
+                                    name: "guidanceTextareaRadios",
+                                    rows: 5,
+                                    attributes: {
+                                      'aria-describedby': "guidance-textarea-hint",
+                                      'data-preview-target': '#guidance-paragraph'
+                                    }
+                                  }) }}
+
+                                </div>
+
+                                <details class="govuk-details">
+                                  <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">
+                                      Help with markdown
+                                    </span>
+                                  </summary>
+                                  <div class="govuk-details__text">
+                                      <!-- Markdown Help Content -->
+                                      <!-- ... existing markdown help content ... -->
+                                  </div>
+                                </details>
+                              </div>
+                            </details>
+
+                            <!-- Error Message Input -->
+                            {{ govukInput({
+                              label: {
+                                text: "Short description",
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                              },
+                              hint: {
+                                text: "Enter a short description for this question like 'licence period'. Short descriptions are used in error messages and on the check your answers page."
+                              },
+                              id: "error-message-input-radios",
+                              name: "errorMessageInputRadios"
+                            }) }}
+
+                            <div id="summary-container">
+                              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                              <!-- The dynamic summary list will be populated here -->
+                              <h2 class="govuk-heading-m">Question settings</h2>
+
+                              {{ govukSummaryList({
+                                classes: "govuk-summary-list govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-6",
+                                rows: [
+                                  {
+                                    key: { text: "Type of information" },
+                                    value: { html: "List: radios" },
+                                    actions: {
+                                      items: [
+                                        {
+                                          href: "/redesigntest/templates/1-question/information-type.html",
+                                          text: "Change",
+                                          visuallyHiddenText: "name"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }) }}
+                            </div>
+                            <div class="moj-button-action">
+                              {{ govukButton({
+                                text: 'Save and continue',
+                                type: 'submit'
+                              }) }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </dd>
+                  </div>
+                </div>  </div></div>
+
+
+                <!-- Right Column for Preview -->
+                <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+                  style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+                  <!-- Before content -->
+                  <div id="before-content">
+                    <p class="govuk-body-s" style="margin-bottom: 0">
+                      <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">Preview this page in a new tab</a>
+                    </p>
+                  </div>
+
+                  <!-- Include the preview template -->
+                  {% include "/redesigntest/templates/previews/radios/edit.html" %}
+                </div>
+              </div>
+
+              <!-- Error Message Preview -->
+              <div id="error-message-preview-summary" class="govuk-summary-list__value">
+                <span id="error-dynamic-text-radios">[Short description]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     <!-- Include SortableJS Library -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<!-- Include Focus Trap and Tabbable Libraries -->
+<script src="https://unpkg.com/tabbable@5.2.0/dist/index.umd.min.js"></script>
+<script src="https://unpkg.com/focus-trap@6.6.0/dist/focus-trap.umd.js"></script>
+
+<!-- JavaScript Code -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const domElements = {
+      startListButton: document.getElementById('start-list-button'),
+      addOptionButton: document.getElementById('add-option-button'),
+      reorderOptionsButton: document.getElementById('edit-options-button'),
+      finishEditingButton: document.getElementById('finish-editing-button'),
+      editListButton: document.getElementById('edit-list-button'),
+      optionsContainer: document.getElementById('options-container'),
+      focusTrapContainer: document.getElementById('focus-trap-container'),
+      ariaStatus: document.getElementById('ariaStatus')
+    };
+
+    let reorderMode = false;
+
+    // Accessibility function for screen readers
+    function announce(message) {
+      if (domElements.ariaStatus) {
+        domElements.ariaStatus.textContent = message;
+      }
+    }
+
+    // Function to focus on the first input element in the list
+    function focusOnFirstInput() {
+      const firstInput = domElements.optionsContainer.querySelector('.option-label-input');
+      if (firstInput) {
+        firstInput.focus();
+      } else {
+        // If no options exist yet, focus on the add button
+        domElements.addOptionButton.focus();
+      }
+    }
+
+    // Initialize Focus Trap
+    const trap = focusTrap.createFocusTrap(domElements.focusTrapContainer, {
+      escapeDeactivates: true,
+      clickOutsideDeactivates: false,
+      onActivate: () => {
+        domElements.focusTrapContainer.classList.add('focused-trap');
+        domElements.focusTrapContainer.removeAttribute('aria-hidden');
+        announce("Focus trapped. You are in list creation or editing mode.");
+        focusOnFirstInput();
+      },
+      onDeactivate: () => {
+        domElements.focusTrapContainer.classList.remove('focused-trap');
+        domElements.focusTrapContainer.setAttribute('aria-hidden', 'true');
+        announce("Focus trap deactivated. Exited list creation or editing mode.");
+      }
+    });
+
+    // Initialize to Initial State (State 1)
+    function initializeState1() {
+      domElements.startListButton.style.display = 'block';
+      domElements.addOptionButton.style.display = 'none';
+      domElements.reorderOptionsButton.style.display = 'none';
+      domElements.finishEditingButton.style.display = 'none';
+      domElements.editListButton.style.display = 'none';
+      domElements.optionsContainer.style.display = 'none';
+    }
+
+    // State 2: User clicks "Start creating your list of options"
+    domElements.startListButton.addEventListener('click', function () {
+      domElements.startListButton.style.display = 'none';
+      domElements.addOptionButton.style.display = 'inline-block';
+      domElements.reorderOptionsButton.style.display = 'inline-block';
+      domElements.finishEditingButton.style.display = 'inline-block';
+      domElements.editListButton.style.display = 'none';
+      domElements.optionsContainer.style.display = 'block';
+      announce("You can now create your list of options, starting with option 1.");
+      trap.activate();
+    });
+
+    // State 3: User clicks "Finish editing"
+    domElements.finishEditingButton.addEventListener('click', function () {
+      domElements.startListButton.style.display = 'none';
+      domElements.addOptionButton.style.display = 'none';
+      domElements.reorderOptionsButton.style.display = 'none';
+      domElements.finishEditingButton.style.display = 'none';
+      domElements.editListButton.style.display = 'inline-block';
+      announce("You have now finished editing your list of options.");
+      trap.deactivate();
+    });
+
+    // State 4: User clicks "Edit list of options"
+    domElements.editListButton.addEventListener('click', function () {
+      domElements.startListButton.style.display = 'none';
+      domElements.addOptionButton.style.display = 'inline-block';
+      domElements.reorderOptionsButton.style.display = 'inline-block';
+      domElements.finishEditingButton.style.display = 'inline-block';
+      domElements.editListButton.style.display = 'none';
+      announce("Edit mode activated. You can now make changes to your list of options.");
+      trap.activate();
+    });
+
+    // Handle "Re-order list" button
+    domElements.reorderOptionsButton.addEventListener('click', () => {
+      reorderMode = true;
+      announce("You have now entered re-ordering mode. Use the Tab key to navigate to each option in your list and the Up and Down arrow keys to move them to where you want them to be.");
+    });
+
+    // Additional Dynamic Announcements
+    function announceOptionAdded(optionIndex) {
+      announce(`Added new option ${optionIndex + 1}.`);
+    }
+
+    function announceOptionMoved(label, direction) {
+      announce(`Moved ${label} ${direction}.`);
+    }
+
+    function announceOptionRemoved(label) {
+      announce(`Removed ${label}.`);
+    }
+
+    // Initialize to State 1 on load
+    initializeState1();
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- JavaScript Code -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const domElements = {
+            questionLabelInputRadios: document.getElementById('question-label-input-radios'),
+            hintTextInputRadios: document.getElementById('hint-text-input-radios'),
+            hintTextOutput: document.getElementById('listPreview-hint'),
+            makeOptionalCheckbox: document.getElementById('makeOptional'),
+
+            editOptionsButton: document.getElementById('edit-options-button'),
+            optionsContainer: document.getElementById('options-container'),
+            radioList: document.getElementById('radio-list'),
+
+            addOptionButton: document.getElementById('add-option-button'),
+
+            ariaStatus: document.getElementById('ariaStatus'),
+            errorMessageInputRadios: document.getElementById('error-message-input-radios'),
+            errorDynamicTextRadios: document.getElementById('error-dynamic-text-radios')
+          };
+
+          let optionIndex = 0;
+          let editMode = false; // Moved editMode to global scope
+
+          // Initialize event listeners
+          initializeEventListeners();
+
+          function initializeEventListeners() {
+            if (domElements.questionLabelInputRadios) {
+              domElements.questionLabelInputRadios.addEventListener('input', updateQuestionLabel);
+              applyHighlightOnFocus(domElements.questionLabelInputRadios, getQuestionLabelLegend());
+            }
+
+            initializeOptionsReordering();
+            initializeOtherInputListeners();
+          }
+
+          function getQuestionLabelLegend() {
+            return document.querySelector('legend[for="question-label-input-radios"]');
+          }
+
+          function updateQuestionLabel() {
+            const questionLabelLegend = getQuestionLabelLegend();
+            if (questionLabelLegend) {
+              const suffix = domElements.makeOptionalCheckbox && domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+              questionLabelLegend.textContent = (domElements.questionLabelInputRadios.value || 'Question') + suffix;
+            }
+          }
+
+          function applyHighlightOnFocus(inputElement, targetElement) {
+            if (inputElement && targetElement) {
+              inputElement.addEventListener('focus', () => targetElement.classList.add('highlight'));
+              inputElement.addEventListener('blur', () => targetElement.classList.remove('highlight'));
+              if (document.activeElement === inputElement) targetElement.classList.add('highlight');
+            }
+          }
+
+          function initializeOptionsReordering() {
+            // Removed 'let editMode = false;' from here
+
+            function createOptionItem(index, labelValue = '') {
+              const li = document.createElement('li');
+              li.className = 'gem-c-reorderable-list__item';
+              li.setAttribute('role', 'listitem');
+              li.setAttribute('data-index', index);
+              li.setAttribute('tabindex', '0');
+              li.setAttribute('aria-label', `Option ${index + 1}`);
+
+              const optionContent = document.createElement('div');
+              optionContent.className = 'gem-c-reorderable-list__content';
+
+              if (editMode) {
+                // In re-order mode, show static label
+                li.setAttribute('data-label', labelValue || `Option ${index + 1}`);
+                const staticLabel = document.createElement('p');
+                staticLabel.className = 'gem-c-reorderable-list__static-label';
+                staticLabel.textContent = `Option ${index + 1}: ${labelValue || `Option ${index + 1}`}`;
+
+                optionContent.appendChild(staticLabel);
+              } else {
+                // In normal mode, show input box
+                const inputContainer = document.createElement('p');
+                inputContainer.className = 'gem-c-reorderable-list__title';
+
+                const optionNumberSpan = document.createElement('span');
+                optionNumberSpan.className = 'option-number';
+                optionNumberSpan.textContent = `Option ${index + 1}:`;
+
+                const inputField = document.createElement('input');
+                inputField.className = 'govuk-input option-label-input';
+                inputField.type = 'text';
+                inputField.id = `option-${index}-label`;
+                inputField.name = `options[${index}][label]`;
+                inputField.value = labelValue;
+
+                // Add event listener for input changes
+                inputField.addEventListener('input', () => {
+                  // Update data-label attribute
+                  li.setAttribute('data-label', inputField.value.trim() || `Option ${index + 1}`);
+                  updateOptionPreview(index, inputField.value);
+                  announce(`Updated label for Option ${index + 1}.`);
+                });
+
+                inputContainer.appendChild(optionNumberSpan);
+                inputContainer.appendChild(inputField);
+                optionContent.appendChild(inputContainer);
+
+                // Apply highlight on focus
+                applyHighlightOnFocusForOptions(inputField.id, `listPreview-option${index}`);
+              }
+
+              // Build the rest of the item
+              li.innerHTML = `
+                <div class="gem-c-reorderable-list__wrapper">
+                  <!-- Drag Handle -->
+                  <button class="drag-handle govuk-button govuk-button--icon" type="button" tabindex="0" aria-label="Drag Option ${index + 1}">
+                    <!-- SVG Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="govuk-button__icon" viewBox="0 0 16 16">
+                      <path d="M2 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm4-8a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm4-8a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </svg>
+                  </button>
+                </div>
+              `;
+
+              // Append the option content to the wrapper
+              const wrapper = li.querySelector('.gem-c-reorderable-list__wrapper');
+              wrapper.appendChild(optionContent);
+
+              // Add actions (up/down/remove buttons)
+              const actionsContainer = document.createElement('div');
+              actionsContainer.className = 'gem-c-reorderable-list__actions';
+
+              // Up Button
+              const upButton = document.createElement('button');
+              upButton.className = 'govuk-button govuk-button--secondary js-reorderable-list-up';
+              upButton.type = 'button';
+              upButton.setAttribute('aria-label', `Move Option ${index + 1} up`);
+              upButton.textContent = 'Up';
+
+              // Down Button
+              const downButton = document.createElement('button');
+              downButton.className = 'govuk-button govuk-button--secondary js-reorderable-list-down';
+              downButton.type = 'button';
+              downButton.setAttribute('aria-label', `Move Option ${index + 1} down`);
+              downButton.textContent = 'Down';
+
+              // Remove Button
+              const removeButton = document.createElement('button');
+              removeButton.className = 'govuk-button govuk-button--warning js-remove-option';
+              removeButton.type = 'button';
+              removeButton.setAttribute('aria-label', `Remove Option ${index + 1}`);
+              removeButton.textContent = 'Remove';
+
+              actionsContainer.appendChild(upButton);
+              actionsContainer.appendChild(downButton);
+              actionsContainer.appendChild(removeButton);
+
+              wrapper.appendChild(actionsContainer);
+
+              return li;
+            }
+
+            // Initialize the sortable instance
+            initializeSortable();
+
+            // Handle "Re-order list" and "Save changes" button
+            domElements.editOptionsButton.addEventListener('click', () => {
+              editMode = !editMode;
+              domElements.editOptionsButton.textContent = editMode ? 'Save changes' : 'Re-order list';
+
+              // In the edit mode toggle function
+if (editMode) {
+  domElements.optionsContainer.classList.add('edit-mode');
+  document.querySelectorAll('.gem-c-reorderable-list__actions').forEach(actions => {
+    actions.style.display = 'flex';
+  });
+  sortableInstance.option('disabled', false);
+  announce('Re-ordering mode activated. Input boxes are hidden. Use the drag handles to move options. Press Save changes to apply.');
+
+  // Hide the add-option button in edit mode
+  domElements.addOptionButton.style.display = 'none';
+
+  // Move focus to the first item in the list
+  const firstItem = domElements.optionsContainer.querySelector('.gem-c-reorderable-list__item');
+  if (firstItem) {
+    firstItem.focus();
+  }
+} else {
+  domElements.optionsContainer.classList.remove('edit-mode');
+  document.querySelectorAll('.gem-c-reorderable-list__actions').forEach(actions => {
+    actions.style.display = 'none';
+  });
+  sortableInstance.option('disabled', true);
+  announce('Re-ordering mode deactivated. Input boxes are shown. Your changes have been saved.');
+
+  // Show the add-option button when not in edit mode
+  domElements.addOptionButton.style.display = 'block';
+}
+
+
+              // Toggle the option labels between input boxes and static text
+              toggleOptionLabels();
+
+              manageUpDownButtons();
+            });
+
+            function toggleOptionLabels() {
+              const items = document.querySelectorAll('#options-container .gem-c-reorderable-list__item');
+              items.forEach((item, index) => {
+                const optionContent = item.querySelector('.gem-c-reorderable-list__content');
+
+                if (editMode) {
+                  // Hide input box and show static text
+                  const inputContainer = optionContent.querySelector('.gem-c-reorderable-list__title');
+                  if (inputContainer) {
+                    const inputField = inputContainer.querySelector('.option-label-input');
+                    const labelValue = inputField.value.trim() || `Option ${index + 1}`;
+                    // Store the label value in a data attribute
+                    item.setAttribute('data-label', labelValue);
+
+                    // Remove input container
+                    optionContent.removeChild(inputContainer);
+
+                    // Create static label
+                    const staticLabel = document.createElement('p');
+                    staticLabel.className = 'gem-c-reorderable-list__static-label';
+                    staticLabel.textContent = `Option ${index + 1}: ${labelValue}`;
+
+                    optionContent.appendChild(staticLabel);
+                  }
+                } else {
+                  // Hide static text and show input box
+                  const staticLabel = optionContent.querySelector('.gem-c-reorderable-list__static-label');
+                  if (staticLabel) {
+                    // Retrieve the label value from data attribute
+                    const labelValue = item.getAttribute('data-label') || `Option ${index + 1}`;
+
+                    // Remove static label
+                    optionContent.removeChild(staticLabel);
+
+                    // Recreate the input field
+                    const inputContainer = document.createElement('p');
+                    inputContainer.className = 'gem-c-reorderable-list__title';
+
+                    const optionNumberSpan = document.createElement('span');
+                    optionNumberSpan.className = 'option-number';
+                    optionNumberSpan.textContent = `Option ${index + 1}:`;
+
+                    const inputField = document.createElement('input');
+                    inputField.className = 'govuk-input option-label-input';
+                    inputField.type = 'text';
+                    inputField.id = `option-${index}-label`;
+                    inputField.name = `options[${index}][label]`;
+                    inputField.value = labelValue;
+
+                    // Add event listener for input changes
+                    inputField.addEventListener('input', () => {
+                      // Update data-label attribute
+                      item.setAttribute('data-label', inputField.value.trim() || `Option ${index + 1}`);
+                      updateOptionPreview(index, inputField.value);
+                      announce(`Updated label for Option ${index + 1}.`);
+                    });
+
+                    inputContainer.appendChild(optionNumberSpan);
+                    inputContainer.appendChild(inputField);
+                    optionContent.appendChild(inputContainer);
+
+                    // Apply highlight on focus
+                    applyHighlightOnFocusForOptions(inputField.id, `listPreview-option${index}`);
+                  }
+                }
+
+                // Update the preview label
+                const labelValue = item.getAttribute('data-label') || `Option ${index + 1}`;
+                updateOptionPreview(index, labelValue);
+              });
+            }
+
+            function initializeSortable() {
+              sortableInstance = new Sortable(document.getElementById('options-container'), {
+                animation: 150,
+                handle: ".drag-handle",
+                draggable: ".gem-c-reorderable-list__item",
+                ghostClass: "sortable-ghost",
+                onEnd: function (evt) {
+                  updateOptionNumbers();
+                  const movedItem = evt.item;
+                  const newPosition = getItemPosition(movedItem);
+                  announce(`Moved ${getOptionLabel(movedItem)} to position ${newPosition}.`);
+                  setFocusToMovedItem(movedItem);
+                },
+                disabled: true
+              });
+            }
+
+            function addOptionEventListeners(item) {
+              const upButton = item.querySelector('.js-reorderable-list-up');
+              const downButton = item.querySelector('.js-reorderable-list-down');
+              const removeButton = item.querySelector('.js-remove-option');
+              const inputElement = item.querySelector('.option-label-input');
+
+              // Ensure buttons exist before adding event listeners
+              if (upButton) {
+                upButton.addEventListener('click', () => {
+                  const prevItem = item.previousElementSibling;
+                  if (prevItem) {
+                    simulateDragEffect(item);
+                    item.parentNode.insertBefore(item, prevItem);
+                    updateOptionNumbers();
+                    announce(`Moved ${getOptionLabel(item)} up.`);
+                    setFocusToMovedItem(item);
+                  }
+                });
+              }
+
+              if (downButton) {
+                downButton.addEventListener('click', () => {
+                  const nextItem = item.nextElementSibling;
+                  if (nextItem) {
+                    simulateDragEffect(item);
+                    item.parentNode.insertBefore(nextItem, item);
+                    updateOptionNumbers();
+                    announce(`Moved ${getOptionLabel(item)} down.`);
+                    setFocusToMovedItem(item);
+                  }
+                });
+              }
+
+              if (removeButton) {
+                removeButton.addEventListener('click', () => {
+                  const label = getOptionLabel(item);
+                  item.remove();
+                  updateOptionNumbers();
+                  announce(`Removed ${label}.`);
+                  domElements.addOptionButton.focus();
+                });
+              }
+
+              // Input element may not exist in re-order mode
+              if (inputElement) {
+                inputElement.addEventListener('input', () => {
+                  // Update data-label attribute
+                  item.setAttribute('data-label', inputElement.value.trim() || `Option ${getItemPosition(item)}`);
+                  updateOptionPreview(item.getAttribute('data-index'), inputElement.value);
+                  announce(`Updated label for Option ${getItemPosition(item)}.`);
+                });
+
+                // Apply focus/blur highlighting
+                applyHighlightOnFocusForOptions(inputElement.id, `listPreview-option${item.getAttribute('data-index')}`);
+              }
+
+             // Keyboard interaction
+item.addEventListener('keydown', (event) => {
+  switch (event.key) {
+    case 'ArrowUp':
+      event.preventDefault();
+      const prevItem = item.previousElementSibling;
+      if (prevItem) {
+        simulateDragEffect(item, 'up');
+        item.parentNode.insertBefore(item, prevItem);
+        updateOptionNumbers();
+        announce(`Moved ${getOptionLabel(item)} up.`);
+        setFocusToMovedItem(item);
+      }
+      break;
+    case 'ArrowDown':
+      event.preventDefault();
+      const nextItem = item.nextElementSibling;
+      if (nextItem) {
+        simulateDragEffect(item, 'down');
+        item.parentNode.insertBefore(nextItem, item);
+        updateOptionNumbers();
+        announce(`Moved ${getOptionLabel(item)} down.`);
+        setFocusToMovedItem(item);
+      }
+      break;
+    case 'Enter':
+      // Focus on the input field, if it exists
+      if (inputElement) {
+        inputElement.focus();
+      }
+      break;
+    default:
+      break;
+  }
+});
+
+
+            }
+
+            function simulateDragEffect(item, direction) {
+  // Remove any existing movement classes
+  item.classList.remove('move-up', 'move-down', 'reset-transform');
+
+  // Add the appropriate movement class
+  if (direction === 'up') {
+    item.classList.add('move-up');
+  } else if (direction === 'down') {
+    item.classList.add('move-down');
+  }
+
+  // Force reflow to restart the animation
+  item.offsetHeight;
+
+  // After the animation duration, reset the transform
+  setTimeout(() => {
+    item.classList.remove('move-up', 'move-down');
+    item.classList.add('reset-transform');
+  }, 300); // Duration should match the CSS transition duration
+
+  // Highlight the moved item
+  item.classList.add('highlight-moved');
+
+  // Remove the highlight after a delay
+  setTimeout(() => {
+    item.classList.remove('highlight-moved');
+  }, 1000); // Adjust the duration as needed
+}
+
+
+
+            function getOptionLabel(item) {
+              if (editMode) {
+                // In re-order mode, get label from data attribute
+                return item.getAttribute('data-label') || `Option ${getItemPosition(item)}`;
+              } else {
+                // In edit mode, get label from input field
+                const input = item.querySelector('.option-label-input');
+                return input ? input.value.trim() || `Option ${getItemPosition(item)}` : `Option ${getItemPosition(item)}`;
+              }
+            }
+
+            function getItemPosition(item) {
+              return Array.from(item.parentNode.children).indexOf(item) + 1;
+            }
+
+            function announce(message) {
+              if (domElements.ariaStatus) {
+                domElements.ariaStatus.textContent = message;
+              }
+            }
+
+            function updateOptionNumbers() {
+              const items = document.querySelectorAll('#options-container .gem-c-reorderable-list__item');
+              const previewContainer = document.getElementById('radio-list');
+              previewContainer.innerHTML = '';
+
+              items.forEach((item, index) => {
+                item.setAttribute('data-index', index);
+                item.setAttribute('aria-label', `Option ${index + 1} - Use Up and Down arrow keys to reorder.`);
+
+                const labelValue = item.getAttribute('data-label') || `Option ${index + 1}`;
+
+                if (editMode) {
+                  // In re-order mode, update the static label numbering
+                  const staticLabel = item.querySelector('.gem-c-reorderable-list__static-label');
+                  if (staticLabel) {
+                    staticLabel.textContent = `Option ${index + 1}: ${labelValue}`;
+                  }
+                } else {
+                  // In edit mode, update the input label numbering and attributes
+                  const optionNumberSpan = item.querySelector('.option-number');
+                  if (optionNumberSpan) {
+                    optionNumberSpan.textContent = `Option ${index + 1}:`;
+                  }
+
+                  const input = item.querySelector('.option-label-input');
+                  if (input) {
+                    input.setAttribute('name', `options[${index}][label]`);
+                    input.id = `option-${index}-label`;
+
+                    // Update event listeners for highlighting (optional)
+                    applyHighlightOnFocusForOptions(input.id, `listPreview-option${index}`);
+                  }
+                }
+
+                // Update the preview
+                addOptionToPreview(index, labelValue);
+              });
+
+              optionIndex = items.length;
+              manageUpDownButtons();
+            }
+
+            function manageUpDownButtons() {
+              const items = document.querySelectorAll('#options-container .gem-c-reorderable-list__item');
+              items.forEach((item, index) => {
+                const upButton = item.querySelector('.js-reorderable-list-up');
+                const downButton = item.querySelector('.js-reorderable-list-down');
+
+                if (upButton && downButton) {
+                  upButton.style.display = index === 0 ? 'none' : 'inline-block';
+                  downButton.style.display = index === items.length - 1 ? 'none' : 'inline-block';
+
+                  // Update aria-labels with current position
+                  upButton.setAttribute('aria-label', `Move Option ${index + 1} up`);
+                  downButton.setAttribute('aria-label', `Move Option ${index + 1} down`);
+                }
+              });
+            }
+
+            function updateOptionPreview(index, value) {
+              const previewOptionLabel = document.querySelector(`label[for="listPreview-option${index}"]`);
+              if (previewOptionLabel) {
+                previewOptionLabel.textContent = value.trim() || `Option ${parseInt(index) + 1}`;
+                previewOptionLabel.classList.add('highlight');
+                setTimeout(() => previewOptionLabel.classList.remove('highlight'), 300);
+              }
+            }
+
+            function addOptionToPreview(index, labelValue) {
+              const radioList = document.getElementById('radio-list');
+              const newRadioHTML = `
+                <div class="govuk-radios__item" id="preview-option-${index}">
+                  <input class="govuk-radios__input" id="listPreview-option${index}" name="listPreview" type="radio" value="option${index}">
+                  <label class="govuk-label govuk-radios__label" for="listPreview-option${index}">${labelValue.trim() || `Option ${parseInt(index) + 1}`}</label>
+                </div>
+              `;
+              radioList.insertAdjacentHTML('beforeend', newRadioHTML);
+            }
+
+            function setFocusToMovedItem(item) {
+              const inputField = item.querySelector('.option-label-input');
+              if (inputField) {
+                inputField.focus();
+              }
+            }
+
+            // Handle "Add another option" button
+            domElements.addOptionButton.addEventListener('click', () => {
+              const newItem = createOptionItem(optionIndex);
+              domElements.optionsContainer.appendChild(newItem);
+              addOptionEventListeners(newItem);
+              addOptionToPreview(optionIndex, newItem.querySelector('.option-label-input') ? newItem.querySelector('.option-label-input').value : '');
+              announce(`Added new option ${optionIndex + 1}.`);
+              optionIndex++;
+              manageUpDownButtons();
+              setFocusToMovedItem(newItem);
+            });
+
+            // Initialize the first option
+            const initialItem = createOptionItem(optionIndex);
+            domElements.optionsContainer.appendChild(initialItem);
+            addOptionEventListeners(initialItem);
+            addOptionToPreview(optionIndex, '');
+            announce(`Added initial option ${optionIndex + 1}.`);
+            optionIndex++;
+          }
+
+          function applyHighlightOnFocusForOptions(inputElementId, radioElementId) {
+            const inputElement = document.getElementById(inputElementId);
+            const radioLabel = document.querySelector(`label[for="${radioElementId}"]`);
+            if (inputElement && radioLabel) {
+              inputElement.addEventListener('focus', () => radioLabel.classList.add('highlight'));
+              inputElement.addEventListener('blur', () => radioLabel.classList.remove('highlight'));
+              if (document.activeElement === inputElement) radioLabel.classList.add('highlight');
+            }
+          }
+
+          function initializeOtherInputListeners() {
+            // Implement other input listeners as needed
+          }
+
+        });
+      </script>
+
+      <!-- CSS Styles -->
+      <style>
+        /* Styles for the reorderable list */
+        .gem-c-reorderable-list {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        .gem-c-reorderable-list__item {
+          margin-bottom: 15px;
+          border-left: 5px solid #008938;
+          outline: 1px solid #b1b4b6;
+          padding: 15px;
+          background-color: #fff;
+          display: flex;
+          align-items: flex-start;
+          position: relative;
+        }
+
+        .gem-c-reorderable-list__wrapper {
+          display: flex;
+          align-items: flex-start; /* Change from center to flex-start */
+          width: 100%;
+        }
+
+        .gem-c-reorderable-list__content {
+          flex-grow: 1;
+          padding-left: 60px;
+        }
+
+        .gem-c-reorderable-list__actions {
+          display: none;
+          flex-direction: column;
+          margin-left: 15px;
+        }
+
+        .gem-c-reorderable-list__actions .govuk-button {
+          margin-bottom: 10px;
+        }
+
+        /* Visual effect for the ghost item */
+        .sortable-ghost {
+          opacity: 0.7;
+          background-color: #d9f0ff;
+          border: 2px solid #005ea5;
+        }
+
+        /* Visual effect during dragging */
+        .sortable-chosen {
+          background-color: #e5f5ff;
+          outline: 2px dashed #005ea5;
+          transition: background-color 0.3s ease, outline 0.3s ease;
+        }
+
+        /* Style for the static labels in re-order mode */
+        .gem-c-reorderable-list__static-label {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+
+        .highlight {
+          background-color: #ffe5cc;
+          border-bottom: 2px solid #ffb266;
+        }
+
+        /* Styles for the drag handle */
+        .drag-handle {
+          display: none;
+          visibility: hidden;
+          opacity: 0;
+          transition: visibility 0.3s, opacity 0.3s;
+          background: none;
+          border: none;
+          cursor: grab;
+          padding: 8px;
+          width: 40px;
+          height: 40px;
+          flex-shrink: 0;
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          color: #0b0c0c;
+        }
+
+        /* Show the drag handle when in edit mode */
+        .edit-mode .drag-handle {
+          display: flex;
+          visibility: visible;
+          opacity: 1;
+        }
+
+        /* Increase SVG size within the drag handle */
+        .drag-handle svg {
+          width: 24px;
+          height: 100%;
+        }
+
+        .drag-handle:active {
+          cursor: grabbing;
+        }
+
+        /* Ensure the list item is positioned relative for absolute positioning of drag handle */
+        .gem-c-reorderable-list__item {
+          position: relative;
+          display: flex;
+          align-items: flex-start;
+          padding-left: 10px;
+          transition: transform 0.3s ease-in-out;
+        }
+
+
+/* Define a class for moving up */
+.move-up {
+  transform: translateY(-100%);
+}
+
+/* Define a class for moving down */
+.move-down {
+  transform: translateY(100%);
+}
+
+.highlight-moved {
+  background-color: #fffae6;
+}
+
+
+/* Reset transform after animation */
+.reset-transform {
+  transform: translateY(0);
+}
+
+        .gem-c-reorderable-list__content {
+          flex-grow: 1;
+          padding-left: 0;
+          transition: padding-left 0.3s ease;
+        }
+
+        /* Edit mode: Add padding to accommodate the drag handle */
+        .edit-mode .gem-c-reorderable-list__content {
+          padding-left: 60px;
+        }
+
+        /* Style for the chosen item (when selected) */
+        .gem-c-reorderable-list__item.sortable-chosen {
+          background-color: #e5f5ff;
+          outline: 4px solid #ffdd00;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Screen reader only class */
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          border: 0;
+        }
+
+        /* Ensure buttons in actions are visible in edit mode */
+        .edit-mode .gem-c-reorderable-list__actions {
+          display: flex;
+        }
+
+        /* Focus styles for accessibility */
+        .edit-mode .gem-c-reorderable-list__item:focus {
+          outline: 3px solid #ffdd00;
+          outline-offset: 2px;
+        }
+
+        .gem-c-reorderable-list__actions .govuk-button:focus {
+          outline: 3px solid #ffdd00;
+          outline-offset: 2px;
+        }
+
+        #focus-trap-container {
+  /* Default border style (none) */
+  border: none;
+  transition: border 0.3s ease;
+}
+
+#focus-trap-container.focused-trap {
+  /* Border style when focus trap is active */
+  border: 6px solid #005ea5;  /* GOV.UK blue */
+  border-radius: 4px;
+  padding: 10px;
+}
+
+      </style>
+    {% endblock %}

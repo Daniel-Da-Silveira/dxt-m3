@@ -1,0 +1,26 @@
+{
+  "name": "defra-forms-mvp-prototype",
+  "scripts": {
+    "dev": "govuk-prototype-kit dev",
+    "serve": "govuk-prototype-kit serve",
+    "start": "govuk-prototype-kit start"
+  },
+  "dependencies": {
+    "@dwp/dwp-frontend": "^3.2.0",
+    "@govuk-prototype-kit/common-templates": "2.0.1",
+    "@govuk-prototype-kit/step-by-step": "2.2.3",
+    "@hods/highlight": "^0.4.0",
+    "@ministryofjustice/frontend": "3.3.0",
+    "@x-govuk/govuk-prototype-components": "^3.0.6",
+    "@x-govuk/govuk-prototype-filters": "^1.4.0",
+    "accessible-autocomplete": "^3.0.0",
+    "govuk-frontend": "^5.7.1",
+    "govuk-one-login-service-header": "github:govuk-one-login/service-header",
+    "govuk-prototype-kit": "^13.16.2",
+    "hmrc-frontend": "^6.22.0",
+    "iframe-resizer": "4.4.2",
+    "marked": "^13.0.3",
+    "puppeteer": "^24.4.0",
+    "sortablejs": "^1.15.2"
+  }
+}

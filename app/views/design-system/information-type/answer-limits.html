@@ -1,0 +1,699 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+Answer limits – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Kit of parts - Defra Forms Designer" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "Kit of parts",
+containerClasses: containerClasses,
+homepageLink: "/design-system/components.html",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/design-system/prototype-route.html", text: "Prototype", id: "prototype" },
+{ href: "/design-system/components.html", text: "Components", id: "components" },
+{ href: "/design-system/user-journeys/home.html", text: "User journeys", id: "user-journeys" }
+],
+activeLinkId: "components"
+}) }}
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+
+        {# {{ govukBackLink({
+        classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+        text: "Back to add and edit pages",
+        href: "/form-editor/listing.html"
+        }) }} #}
+
+        {#
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom: 1px solid white; margin-bottom: 0;" /> #}
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full-from-desktop">
+                <h1 class="x-govuk-masthead__title">
+                    Component parts for the form editor
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-quarter">
+            <!-- Side Navigation Here -->
+            {% from "side-navigation/macro.njk" import dwpSideNavigation %}
+            <nav>
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Question editor</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-question-editor",
+                selectedItem: "",
+                items: [
+                { text: "Configuration panels", href: "/design-system/editor/configuration-panel.html", id:
+                "sn-config-panels"
+                },
+                { text: "Guided input", href: "/design-system/editor/guided-input.html", id: "sn-guided-input" },
+                { text: "Preview panels", href: "/design-system/editor/preview-panel.html", id: "sn-preview-panels" },
+                { text: "Previews in a new tab", href: "/design-system/editor/previews-in-new-tab.html", id:
+                "sn-previews-new-tab"
+                },
+                { text: "Question borders", href: "/design-system/editor/border.html", id: "sn-question-borders" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Information types</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-information-types",
+                selectedItem: "/design-system/information-type/answer-limits.html",
+                items: [
+                { text: "Answer limits", href: "/design-system/information-type/answer-limits.html", id:
+                "sn-answer-limits" },
+                { text: "Configuration for each type", href: "/design-system/information-type/configuration-types.html",
+                id:
+                "sn-configuration-types" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Re-ordering</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-reordering",
+                selectedItem: "",
+                items: [
+                { text: "Lists", href: "/design-system/reordering/lists.html", id: "sn-lists" },
+                { text: "Pages", href: "/design-system/reordering/pages.html", id: "sn-pages" },
+                { text: "Questions", href: "/design-system/reordering/questions.html", id: "sn-questions" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Deletion</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-deletion",
+                selectedItem: "",
+                items: [
+                { text: "Pages", href: "/design-system/deletion/pages.html", id: "sn-deletion-pages" }
+                ]
+                })
+                }}
+
+                <h2 class="govuk-caption-m govuk-!-font-weight-bold">Header</h2>
+                {{
+                dwpSideNavigation({
+                pageId: "side-navigation-header",
+                selectedItem: "",
+                items: [
+                { text: "Mastheads", href: "/design-system/header/masthead.html", id: "sn-mastheads" }
+                ]
+                })
+                }}
+        </div>
+        </nav>
+
+        <div class="govuk-grid-column-three-quarters">
+            <!-- Main Content Here -->
+            <span class="govuk-caption-xl">Information type</span>
+            <h1 class="govuk-heading-xl">Answer limits</h1>
+
+            <h2 class="govuk-heading-l">When this component is used</h2>
+            <p class="govuk-body">
+                When setting up a page, users can choose the information they need to collect. Each type of information
+                has specific
+                answer limits that can be applied when editing a question.
+            </p>
+
+            {{ govukInsetText({
+            text: "UK address, Radios, Checkboxes and Autocomplete do not have answer limits."
+            }) }}
+
+            <h2 class="govuk-heading-l">View in Figma</h2>
+
+            <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450"
+                src="https://embed.figma.com/design/1A9Tthy0CJeqp2rGNSKRjH/Defra-Form-Builder-flows?node-id=14290-318043&embed-host=share"
+                allowfullscreen></iframe>
+
+            <h2 class="govuk-heading-l govuk-!-margin-top-6">Summary of answer limits by information type</h2>
+
+
+            <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-input-types">
+                <!-- Short Written Answers -->
+                <div class="govuk-accordion__section">
+                    <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading">
+                            <span class="govuk-accordion__section-button" id="accordion-short-written-answers-heading">
+                                Short Written Answers
+                            </span>
+                        </h2>
+                        <div class="govuk-accordion__section-summary govuk-body"
+                            id="accordion-short-written-answers-summary">
+                            Configure settings for short text inputs, including minimum and maximum character limits,
+                            regex validation, and
+                            custom CSS classes.
+                        </div>
+                    </div>
+                    <div id="accordion-short-written-answers-content" class="govuk-accordion__section-content">
+
+                        {{ govukInput({
+                        label: {
+                        text: "Minimum character length (optional)",
+                        classes: "govuk-label--m",
+                        isPageHeading: false
+                        },
+                        classes: "govuk-input--width-3",
+                        hint: {
+                        text: "The minimum number of characters users can enter"
+                        },
+                        id: "min-character",
+                        name: "minCharacter",
+                        inputmode: "numeric",
+                        spellcheck: false
+                        }) }}
+
+                        {{ govukInput({
+                        label: {
+                        text: "Maximum character length (optional)",
+                        classes: "govuk-label--m",
+                        isPageHeading: false
+                        },
+                        classes: "govuk-input--width-3",
+                        hint: {
+                        text: "The maximum number of characters users can enter"
+                        },
+                        id: "max-character",
+                        name: "maxCharacter",
+                        inputmode: "numeric",
+                        spellcheck: false
+                        }) }}
+
+                        {{ govukTextarea({
+                        label: {
+                        text: "Regex (optional)",
+                        classes: "govuk-label--m",
+                        isPageHeading: false
+                        },
+                        hint: {
+                        text: "Specifies a regular expression to validate users' inputs. Use JavaScript syntax"
+                        },
+                        id: "regex",
+                        rows: "3",
+                        name: "regex",
+                        spellcheck: false
+                        }) }}
+
+                        {{ govukTextarea({
+                        label: {
+                        text: "Classes (optional)",
+                        classes: "govuk-label--m",
+                        isPageHeading: false
+                        },
+                        hint: {
+                        text: "Apply CSS classes to this field. For example, 'govuk-input govuk-!-width-full'"
+                        },
+                        id: "classes",
+                        rows: "1",
+                        name: "classes",
+                        spellcheck: false
+                        }) }}
+                    </div>
+
+                    <!-- Long Written Answers -->
+                    <div class="govuk-accordion__section">
+                        <div class="govuk-accordion__section-header">
+                            <h2 class="govuk-accordion__section-heading">
+                                <span class="govuk-accordion__section-button"
+                                    id="accordion-long-written-answers-heading">
+                                    Long Written Answers
+                                </span>
+                            </h2>
+                            <div class="govuk-accordion__section-summary govuk-body"
+                                id="accordion-long-written-answers-summary">
+                                Define settings for long text inputs, including character limits, number of rows, regex
+                                validation, and custom CSS
+                                classes.
+                            </div>
+                        </div>
+                        <div id="accordion-long-written-answers-content" class="govuk-accordion__section-content">
+                            {{ govukInput({
+                            label: {
+                            text: "Minimum character length (optional)",
+                            classes: "govuk-label--m",
+                            isPageHeading: false
+                            },
+                            classes: "govuk-input--width-3",
+                            hint: {
+                            text: "The minimum number of characters users can enter"
+                            },
+                            id: "min-character",
+                            name: "minCharacter",
+                            inputmode: "numeric",
+                            spellcheck: false
+                            }) }}
+
+                            {{ govukInput({
+                            label: {
+                            text: "Maximum character length (optional)",
+                            classes: "govuk-label--m",
+                            isPageHeading: false
+                            },
+                            classes: "govuk-input--width-3",
+                            hint: {
+                            text: "The maximum number of characters users can enter"
+                            },
+                            id: "max-character",
+                            name: "maxCharacter",
+                            inputmode: "numeric",
+                            spellcheck: false
+                            }) }}
+
+                            {{ govukInput({
+                            label: {
+                            text: "Rows",
+                            classes: "govuk-label--m",
+                            isPageHeading: false
+                            },
+                            classes: "govuk-input--width-3",
+                            hint: {
+                            text: "Specifies the number of textarea rows (default is 5 rows)"
+                            },
+                            id: "rows",
+                            name: "rows",
+                            inputmode: "numeric",
+                            spellcheck: false
+                            }) }}
+
+                            {{ govukTextarea({
+                            label: {
+                            text: "Regex (optional)",
+                            classes: "govuk-label--m",
+                            isPageHeading: false
+                            },
+                            hint: {
+                            text: "Specifies a regular expression to validate users' inputs. Use JavaScript syntax"
+                            },
+                            id: "regex",
+                            rows: "3",
+                            name: "regex",
+                            spellcheck: false
+                            }) }}
+
+                            {{ govukTextarea({
+                            label: {
+                            text: "Classes (optional)",
+                            classes: "govuk-label--m",
+                            isPageHeading: false
+                            },
+                            hint: {
+                            text: "Apply CSS classes to this field. For example, 'govuk-input govuk-!-width-full'"
+                            },
+                            id: "classes",
+                            rows: "1",
+                            name: "classes",
+                            spellcheck: false
+                            }) }}
+                        </div>
+
+                        <!-- Numbers -->
+                        <div class="govuk-accordion__section">
+                            <div class="govuk-accordion__section-header">
+                                <h2 class="govuk-accordion__section-heading">
+                                    <span class="govuk-accordion__section-button" id="accordion-numbers-heading">
+                                        Numbers
+                                    </span>
+                                </h2>
+                                <div class="govuk-accordion__section-summary govuk-body" id="accordion-numbers-summary">
+                                    Specify settings for numeric inputs, such as range limits, precision, and optional
+                                    prefixes or suffixes.
+                                </div>
+                            </div>
+                            <div id="accordion-numbers-content" class="govuk-accordion__section-content">
+                                {{ govukInput({
+                                label: {
+                                text: "Lowest number users can enter (optional)",
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                classes: "govuk-input--width-3",
+                                id: "lowest-number",
+                                name: "lowestNumber",
+                                inputmode: "numeric",
+                                spellcheck: false
+                                }) }}
+
+                                {{ govukInput({
+                                label: {
+                                text: "Highest number users can enter (optional)",
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                classes: "govuk-input--width-3",
+                                id: "highest-number",
+                                name: "highestNumber",
+                                inputmode: "numeric",
+                                spellcheck: false
+                                }) }}
+
+                                {{ govukInput({
+                                label: {
+                                text: "Precision (optional)",
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                classes: "govuk-input--width-3",
+                                hint: {
+                                text: "Specifies the number of decimal places users can enter. For example, to allow
+                                users to enter numbers with up to two
+                                decimal places, set this to 2"
+                                },
+                                id: "rows",
+                                name: "rows",
+                                inputmode: "numeric",
+                                spellcheck: false
+                                }) }}
+
+                                {{ govukInput({
+                                label: {
+                                text: "Prefix (optional)",
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                classes: "govuk-input--width-5",
+                                hint: {
+                                text: "For example, a symbol or abbreviation for the type of information you're asking
+                                for, like, '£'"
+                                },
+                                id: "prefix",
+                                name: "prefix",
+                                inputmode: "text",
+                                autocomplete: false,
+                                spellcheck: false
+                                }) }}
+
+                                {{ govukInput({
+                                label: {
+                                text: "Suffix (optional)",
+                                classes: "govuk-label--m",
+                                isPageHeading: false
+                                },
+                                classes: "govuk-input--width-5",
+                                hint: {
+                                text: "For example, a symbol or abbreviation for the type of information you're asking
+                                for, like,'per item' or 'Kg'"
+                                },
+                                id: "suffix",
+                                name: "suffix",
+                                inputmode: "text",
+                                autocomplete: false,
+                                spellcheck: false
+                                }) }}
+
+
+                            </div>
+
+                            <!-- Date (dd/mm/yyyy) -->
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button"
+                                            id="accordion-date-dd-mm-yyyy-heading">
+                                            Date (dd/mm/yyyy)
+                                        </span>
+                                    </h2>
+                                    <div class="govuk-accordion__section-summary govuk-body"
+                                        id="accordion-date-dd-mm-yyyy-summary">
+                                        Set constraints for date inputs in day/month/year format, including limits for
+                                        past and future dates.
+                                    </div>
+                                </div>
+                                <div id="accordion-date-dd-mm-yyyy-content" class="govuk-accordion__section-content">
+                                    {{ govukInput({
+                                    label: {
+                                    text: "Max days in the past (optional)",
+                                    classes: "govuk-label--m",
+                                    isPageHeading: false
+                                    },
+                                    classes: "govuk-input--width-3",
+                                    hint: {
+                                    text: "Determines the earliest date users can enter"
+                                    },
+                                    id: "max-past",
+                                    name: "maxPast",
+                                    inputmode: "numeric",
+                                    spellcheck: false
+                                    }) }}
+
+                                    {{ govukInput({
+                                    label: {
+                                    text: "Max days in the future (optional)",
+                                    classes: "govuk-label--m",
+                                    isPageHeading: false
+                                    },
+                                    classes: "govuk-input--width-3",
+                                    hint: {
+                                    text: "Determines the latest date users can enter"
+                                    },
+                                    id: "max-future",
+                                    name: "maxFuture",
+                                    inputmode: "numeric",
+                                    spellcheck: false
+                                    }) }}
+
+                                    {{ govukTextarea({
+                                    label: {
+                                    text: "Classes (optional)",
+                                    classes: "govuk-label--m",
+                                    isPageHeading: false
+                                    },
+                                    hint: {
+                                    text: "Apply CSS classes to this field. For example, 'govuk-input
+                                    govuk-!-width-full'"
+                                    },
+                                    id: "classes",
+                                    rows: "1",
+                                    name: "classes",
+                                    spellcheck: false
+                                    }) }}
+
+
+                                </div>
+                            </div>
+
+                            <!-- Date (mm/yyyy) -->
+                            <div class="govuk-accordion__section">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button"
+                                            id="accordion-date-mm-yyyy-heading">
+                                            Date (mm/yyyy)
+                                        </span>
+                                    </h2>
+                                    <div class="govuk-accordion__section-summary govuk-body"
+                                        id="accordion-date-mm-yyyy-summary">
+                                        For entering month and year without a specific day.
+                                    </div>
+                                </div>
+                                <div id="accordion-date-mm-yyyy-content" class="govuk-accordion__section-content">
+                                    <div class="govuk-form-group">
+                                        {{ govukInput({
+                                        label: {
+                                        text: "Max days in the past (optional)",
+                                        classes: "govuk-label--m",
+                                        isPageHeading: false
+                                        },
+                                        classes: "govuk-input--width-3",
+                                        hint: {
+                                        text: "Determines the earliest date users can enter"
+                                        },
+                                        id: "max-past",
+                                        name: "maxPast",
+                                        inputmode: "numeric",
+                                        spellcheck: false
+                                        }) }}
+
+                                        {{ govukInput({
+                                        label: {
+                                        text: "Max days in the future (optional)",
+                                        classes: "govuk-label--m",
+                                        isPageHeading: false
+                                        },
+                                        classes: "govuk-input--width-3",
+                                        hint: {
+                                        text: "Determines the latest date users can enter"
+                                        },
+                                        id: "max-future",
+                                        name: "maxFuture",
+                                        inputmode: "numeric",
+                                        spellcheck: false
+                                        }) }}
+
+                                        {{ govukTextarea({
+                                        label: {
+                                        text: "Classes (optional)",
+                                        classes: "govuk-label--m",
+                                        isPageHeading: false
+                                        },
+                                        hint: {
+                                        text: "Apply CSS classes to this field. For example, 'govuk-input
+                                        govuk-!-width-full'"
+                                        },
+                                        id: "classes",
+                                        rows: "1",
+                                        name: "classes",
+                                        spellcheck: false
+                                        }) }}
+                                    </div>
+                                </div>
+
+                                <!-- Phone Number -->
+                                <div class="govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            <span class="govuk-accordion__section-button"
+                                                id="accordion-phone-number-heading">
+                                                Phone Number
+                                            </span>
+                                        </h2>
+                                        <div class="govuk-accordion__section-summary govuk-body"
+                                            id="accordion-phone-number-summary">
+                                            Adding custom CSS classes.
+                                        </div>
+                                    </div>
+                                    <div id="accordion-phone-number-content" class="govuk-accordion__section-content">
+                                        {{ govukTextarea({
+                                        label: {
+                                        text: "Classes (optional)",
+                                        classes: "govuk-label--m",
+                                        isPageHeading: false
+                                        },
+                                        hint: {
+                                        text: "Apply CSS classes to this field. For example, 'govuk-input
+                                        govuk-!-width-full'"
+                                        },
+                                        id: "classes",
+                                        rows: "1",
+                                        name: "classes",
+                                        spellcheck: false
+                                        }) }}
+                                    </div>
+                                </div>
+
+                                <!-- Supporting Evidence -->
+                                <div class="govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            <span class="govuk-accordion__section-button"
+                                                id="accordion-supporting-evidence-heading">
+                                                Supporting Evidence
+                                            </span>
+                                        </h2>
+                                        <div class="govuk-accordion__section-summary govuk-body"
+                                            id="accordion-supporting-evidence-summary">
+                                            Configure the minimum and maximum number of files allowed.
+                                        </div>
+                                    </div>
+                                    <div id="accordion-supporting-evidence-content"
+                                        class="govuk-accordion__section-content">
+                                        {{ govukInput({
+                                        label: {
+                                        text: "Minimum file count",
+                                        classes: "govuk-label--m",
+                                        isPageHeading: false
+                                        },
+                                        classes: "govuk-input--width-3",
+                                        hint: {
+                                        text: "The minimum number of files users can upload"
+                                        },
+                                        id: "min-files",
+                                        name: "minFiles",
+                                        inputmode: "numeric",
+                                        spellcheck: false
+                                        }) }}
+
+                                        {{ govukInput({
+                                        label: {
+                                        text: "Maximum file count",
+                                        classes: "govuk-label--m",
+                                        isPageHeading: false
+                                        },
+                                        classes: "govuk-input--width-3",
+                                        hint: {
+                                        text: "The maximum number of files users can upload"
+                                        },
+                                        id: "max-files",
+                                        name: "maxFiles",
+                                        inputmode: "numeric",
+                                        spellcheck: false
+                                        }) }}
+                                    </div>
+                                </div>
+
+                                <!-- Email Address -->
+                                <div class="govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            <span class="govuk-accordion__section-button"
+                                                id="accordion-email-address-heading">
+                                                Email Address
+                                            </span>
+                                        </h2>
+                                        <div class="govuk-accordion__section-summary govuk-body"
+                                            id="accordion-email-address-summary">
+                                            Set up email input fields with the option to apply custom CSS classes.
+                                        </div>
+                                    </div>
+                                    <div id="accordion-email-address-content" class="govuk-accordion__section-content">
+                                        {{ govukTextarea({
+                                        label: {
+                                        text: "Classes (optional)",
+                                        classes: "govuk-label--m",
+                                        isPageHeading: false
+                                        },
+                                        hint: {
+                                        text: "Apply CSS classes to this field. For example, 'govuk-input
+                                        govuk-!-width-full'"
+                                        },
+                                        id: "classes",
+                                        rows: "1",
+                                        name: "classes",
+                                        spellcheck: false
+                                        }) }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- /.govuk-grid-row -->
+                    </div><!-- /.govuk-width-container -->
+
+                    <style>
+                        .border-left-container-yesno {
+                            border-left: 10px solid #ffb266;
+                            padding-left: 20px;
+                        }
+                    </style>
+                    <!-- ============================================= -->
+                    <!-- Styles Section -->
+                    <!-- ============================================= -->
+                    <style>
+                        .border-left-container-yesno {
+                            border-left: 10px solid #ffb266;
+                            padding-left: 20px;
+                        }
+                    </style>
+
+
+
+                    {% endblock %}

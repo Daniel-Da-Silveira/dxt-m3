@@ -1,0 +1,499 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "What information do you need from users? - Page " + pageNumber + " - Apply for a county parish
+holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{# #}
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" }
+],
+activeLinkId: "nav-editor",
+slots: {
+start: "<span class='govuk-heading-s'>Licence to Import an Animal Pathogen/Carrier into Great Britain</span>"
+}
+}) }}
+
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({
+    classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+    text: commonTerms.form_editor.information_type.back,
+    href: "/form-editor/listing.html"
+    }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {# <span class="govuk-caption-l" style="color: white">{{ form.name }}</span> #}
+          {{ form.name }}
+        </h1>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <div class="govuk-grid-row">
+
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-full govuk-grid-column-two-thirds-from-desktop" id="container"
+        style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page"
+                                href="#overview-noquestions">Question
+                                {{ questionNumber }}</a>
+                            </li>
+
+                          </ul>
+                        </nav>
+
+                        <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div>
+
+                        <form class="form" action="/information-type-answer-nf" method="post">
+
+                          {% set dateHtml %}
+                          {{ govukRadios({
+                          name: "dateType",
+                          fieldset: {
+                          legend: {
+                          text: commonTerms.form_editor.information_type.date.types.title,
+                          isPageHeading: true,
+                          classes: "govuk-fieldset__legend"
+                          }
+                          },
+                          items: [
+                          {
+                          value: "day-month-year",
+                          text: commonTerms.form_editor.information_type.date.types.full
+                          },
+                          {
+                          value: "month-year",
+                          text: commonTerms.form_editor.information_type.date.types.partial
+                          }
+                          ]
+                          }) }}
+                          {% endset -%}
+
+                          {% set writtenHtml %}
+                          {{ govukRadios({
+                          name: "written",
+                          fieldset: {
+                          legend: {
+                          text: commonTerms.form_editor.information_type.written.types.title
+                          }
+                          },
+                          items: [
+                          {
+                          value: "short-answer-nf",
+                          text: commonTerms.form_editor.information_type.written.types.short
+                          },
+                          {
+                          value: "long-answer",
+                          text: commonTerms.form_editor.information_type.written.types.long
+                          },
+                          {
+                          value: "numbers",
+                          text: commonTerms.form_editor.information_type.written.types.numbers
+                          }
+                          ]
+                          }) }}
+                          {% endset -%}
+
+                          {% set list2Html %}
+                          {{ govukRadios({
+                          name: "listType",
+                          fieldset: {
+                          legend: {
+                          text: commonTerms.form_editor.information_type.list.types.title,
+                          classes: "govuk-fieldset__legend"
+                          }
+                          },
+                          items: [
+                          {
+                          value: "yes-no",
+                          text: commonTerms.form_editor.information_type.list.types.yes_no.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.list.types.yes_no.hint
+                          }
+                          },
+                          {
+                          value: "checkboxes",
+                          text: commonTerms.form_editor.information_type.list.types.checkboxes.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.list.types.checkboxes.hint
+                          }
+                          },
+                          {
+                          value: "radios",
+                          text: commonTerms.form_editor.information_type.list.types.radios.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.list.types.radios.hint
+                          }
+                          },
+                          {
+                          value: "select",
+                          text: commonTerms.form_editor.information_type.list.types.select.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.list.types.select.hint
+                          }
+                          }
+                          ]
+                          }) }}
+                          {% endset -%}
+
+                          <span class="govuk-caption-l">Page {{ pageNumber }}: question {{ questionNumber }}</span>
+                          {{ govukRadios({
+                          name: "informationQuestion1",
+                          fieldset: {
+                          legend: {
+                          text: commonTerms.form_editor.information_type.title,
+                          isPageHeading: true,
+                          classes: "govuk-fieldset__legend--l"
+                          }
+                          },
+                          hint: {
+                          text: commonTerms.form_editor.information_type.hint
+                          },
+                          items: [
+                          {
+                          value: "text",
+                          text: commonTerms.form_editor.information_type.written.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.written.hint
+                          },
+                          conditional: {
+                          html: writtenHtml
+                          }
+                          },
+                          {
+                          value: "date",
+                          text: commonTerms.form_editor.information_type.date.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.date.hint
+                          },
+                          conditional: {
+                          html: dateHtml
+                          }
+                          },
+                          {
+                          value: "address",
+                          text: commonTerms.form_editor.information_type.address.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.address.hint
+                          }
+                          },
+                          {
+                          value: "phone",
+                          text: commonTerms.form_editor.information_type.phone.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.phone.hint
+                          }
+                          },
+                          {
+                          value: "file",
+                          text: commonTerms.form_editor.information_type.file.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.file.hint
+                          }
+                          },
+                          {
+                          value: "email",
+                          text: commonTerms.form_editor.information_type.email.title,
+                          hint: {
+                          text: commonTerms.form_editor.information_type.email.hint
+                          }
+                          },
+                          {
+                          divider: "or"
+                          },
+                          {
+                          value: "list",
+                          text: commonTerms.form_editor.information_type.list.title,
+                          conditional: {
+                          html: list2Html
+                          }
+                          }
+                          ]
+                          }) }}
+
+                          {{ govukButton({
+                          text: commonTerms.form_editor.common.continue,
+                          type: "submit",
+                          id: "add-question-button"
+                          }) }}
+                        </form>
+
+
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          console.log("JavaScript Loaded");
+
+          // Function to show the relevant preview and hide others
+          function showPreview(selectedType) {
+            console.log("Showing preview for:", selectedType);
+            document.querySelectorAll(".preview-content").forEach((content) => {
+              content.classList.remove("active");
+            });
+
+            const selectedPreview = document.querySelector(`.${selectedType}-preview`);
+            if (selectedPreview) {
+              console.log("Found preview to show:", selectedPreview);
+              selectedPreview.classList.add("active");
+            } else {
+              console.log("No matching preview found for:", selectedType);
+            }
+          }
+
+          // Listen for changes to the radio buttons
+          document.querySelectorAll("input[name='informationQuestion1']").forEach((radio) => {
+            radio.addEventListener("change", function () {
+              console.log("Radio changed:", this.value);
+              showPreview(this.value);
+            });
+          });
+
+          // Listen for changes to sub-options
+          document.querySelectorAll("input[name='written'], input[name='dateType'], input[name='listType']").forEach((subRadio) => {
+            subRadio.addEventListener("change", function () {
+              console.log("Sub-option changed:", this.value);
+              showPreview(this.value);
+            });
+          });
+
+          // Show the preview for the initially selected radio button (if any)
+          const initialSelection = document.querySelector("input[name='informationQuestion1']:checked");
+          if (initialSelection) {
+            console.log("Initial selection found:", initialSelection.value);
+            showPreview(initialSelection.value);
+          }
+        });
+      </script>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const dynamicCaption = document.getElementById("dynamic-caption");
+          const setName = dynamicCaption.getAttribute("data-setname");
+
+          if (!setName) {
+            dynamicCaption.style.display = "none";
+          }
+        });
+
+      </script>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const dynamicCaption = document.getElementById("dynamic-caption");
+
+          // Check if the element exists
+          if (!dynamicCaption) {
+            console.error("Element with id 'dynamic-caption' not found.");
+            return;
+          }
+
+          // Initial `setName` retrieved from `data-setname`
+          let originalSetName = dynamicCaption.getAttribute("data-setname");
+
+          // Function to update `data-setname` based on selected option
+          function updateSetName(suffix) {
+            // Reset to original `setName` and append new suffix
+            let updatedSetName = `${originalSetName} ${suffix}`;
+            dynamicCaption.setAttribute("data-setname", updatedSetName);
+
+            // Log for verification
+            console.log("Updated data-setname:", updatedSetName);
+          }
+
+          // Listen for changes on main selection
+          document.querySelectorAll("input[name='informationQuestion1']").forEach(option => {
+            option.addEventListener("change", function () {
+              const selectedOption = this.value;
+
+              if (selectedOption === "text") {
+                updateSetName("Text");
+              } else if (selectedOption === "date") {
+                updateSetName("Date");
+              } else if (selectedOption === "list") {
+                updateSetName("List");
+              } else {
+                updateSetName("");
+              }
+            });
+          });
+
+          // Listen for changes on sub-options to update `data-setname` further
+          document.querySelectorAll("input[name='written'], input[name='dateType'], input[name='listType']").forEach(subOption => {
+            subOption.addEventListener("change", function () {
+              const mainOption = document.querySelector("input[name='informationQuestion1']:checked");
+              const selectedSubOption = this.value;
+
+              if (mainOption && mainOption.value === "text") {
+                updateSetName(selectedSubOption === "short-answer" ? "Text Short" : "Text Long");
+              } else if (mainOption && mainOption.value === "date") {
+                updateSetName(selectedSubOption === "day-month-year" ? "Date Full" : "Date Month-Year");
+              } else if (mainOption && mainOption.value === "list") {
+                updateSetName(selectedSubOption);
+              }
+            });
+          });
+        });
+
+
+      </script>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const dynamicCaption = document.getElementById("dynamic-caption");
+
+          // Verify that the element exists
+          if (!dynamicCaption) {
+            console.error("Element with id 'dynamic-caption' not found.");
+            return;
+          }
+
+          // Original display content to maintain without modification
+          const originalContent = dynamicCaption.textContent.trim();
+
+          // Function to set the appropriate data attribute based on the suffix
+          function setCustomDataAttribute(suffix) {
+            // Remove any existing custom data attributes
+            Array.from(dynamicCaption.attributes).forEach(attr => {
+              if (attr.name.startsWith("data-setname")) {
+                dynamicCaption.removeAttribute(attr.name);
+              }
+            });
+
+            // Set the new custom data attribute without changing the displayed content
+            if (suffix) {
+              const dataAttribute = `data-setname${suffix}`;
+              dynamicCaption.setAttribute(dataAttribute, originalContent);
+              console.log(`Set ${dataAttribute} with value "${originalContent}"`);
+            }
+          }
+
+          // Listener for main option changes
+          document.querySelectorAll("input[name='informationQuestion1']").forEach(option => {
+            option.addEventListener("change", function () {
+              const selectedOption = this.value;
+
+              if (selectedOption === "text") {
+                setCustomDataAttribute("Shorttext");
+              } else if (selectedOption === "date") {
+                setCustomDataAttribute("Date");
+              } else if (selectedOption === "list") {
+                setCustomDataAttribute("List");
+              } else {
+                setCustomDataAttribute("");
+              }
+            });
+          });
+
+          // Listener for sub-option changes
+          document.querySelectorAll("input[name='written'], input[name='dateType'], input[name='listType']").forEach(subOption => {
+            subOption.addEventListener("change", function () {
+              const mainOption = document.querySelector("input[name='informationQuestion1']:checked");
+              const selectedSubOption = this.value;
+
+              if (mainOption && mainOption.value === "text") {
+                setCustomDataAttribute(selectedSubOption === "short-answer" ? "Shorttext" : "Longtext");
+              } else if (mainOption && mainOption.value === "date") {
+                setCustomDataAttribute(selectedSubOption === "day-month-year" ? "DateFull" : "DateMonthYear");
+              } else if (mainOption && mainOption.value === "list") {
+                setCustomDataAttribute(selectedSubOption.charAt(0).toUpperCase() + selectedSubOption.slice(1));
+              }
+            });
+          });
+        });
+
+      </script>
+
+
+
+
+      <style>
+        .highlight {
+          background-color: #ffe5cc;
+          border-bottom: 2px solid #ffb266;
+        }
+
+        #before-content {
+          position: absolute;
+          top: 0;
+          left: 10 !important;
+          right: 0;
+          width: 100%;
+          padding: 10px !important;
+          box-sizing: border-box;
+          z-index: 1;
+          border-bottom: 1px solid #008938;
+          padding-left: 10px;
+        }
+
+        #second-container {
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        #second-container>* {
+          padding-left: 0px;
+          z-index: 2;
+        }
+
+        .preview-content {
+          display: none;
+        }
+
+        .preview-content.active {
+          display: block !important;
+        }
+      </style>
+
+      {% endblock %}
+    </div>
+  </div>

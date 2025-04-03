@@ -1,0 +1,586 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Edit page 1 - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+{# #}
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/form-editor/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/form-editor/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {# <span class="govuk-caption-l" style="color: white">Apply for a county parish holding certificate</span> #}
+          {{ form.name }}
+        </h1>
+
+        <a href="/form-editor/page-type.html" role="button" draggable="false" class="govuk-button govuk-button--inverse"
+          data-module="govuk-button">
+          Add new page
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation" aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page" href="#question-1">Page
+                                settings</a>
+                            </li>
+
+                          </ul>
+                        </nav>
+
+                        {# <div class="govuk-summary-card__title-wrapper govuk-!-padding-top-0"></div> #}
+
+
+
+
+                        <span class="govuk-caption-l">Page {{ pageNumber }}</span>
+                        <h1 class="govuk-heading-l">Edit guidance page</h1>
+
+                        <form class="form" action="/form-editor/guidance/overview" method="post">
+                          <!-- Page Heading Input -->
+                          {{ govukInput({
+                          label: {
+                          text: "Page heading",
+                          classes: "govuk-label--m govuk-!-margin-top-0",
+                          isPageHeading: false
+                          },
+                          hint: {
+                          text: "This should be a statement, not a question. For example, 'Passport information'"
+                          },
+                          id: "guidance-only-page-heading-input",
+                          name: "guidanceOnlyHeadingInput",
+                          classes: "govuk-input",
+                          describedBy: "page-heading-input-hint",
+                          value: currentPage.guidanceOnlyHeadingInput or '',
+                          attributes: {
+                          "data-preview": "heading-preview"
+                          }
+                          }) }}
+
+                          {{ govukTextarea({
+                          label: {
+                          text: "Guidance text",
+                          classes: "govuk-label--m"
+                          },
+                          hint: {
+                          text: "You can use Markdown if you want to format the content or add links"
+                          },
+                          id: "guidance-only-guidance-text-input",
+                          name: "guidanceOnlyGuidanceTextInput",
+                          value: currentPage.guidanceOnlyGuidanceTextInput or '',
+                          classes: "govuk-textarea",
+                          rows: 8,
+                          describedBy: "guidance-textarea-hint",
+                          attributes: {
+                          "data-preview": "guidance-preview"
+                          }
+                          }) }}
+
+                          <details class="govuk-details">
+                            <summary class="govuk-details__summary">
+                              <span class="govuk-details__summary-text">
+                                Help with markdown
+                              </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                              <h3 class="govuk-heading-s">Headings and subheadings</h3>
+                              <p class="govuk-body">Use one hash symbol followed by a space for a heading, for example:
+                              </p>
+                              <pre class="formatting-example"
+                                style="background-color: white;"><code class="lang-md"># This is a heading</code></pre>
+                              <p class="bottom-gutter-1-3">To add a subheading, use 2 hash symbols:</p>
+                              <pre class="formatting-example"
+                                style="background-color: white;"><code class="lang-md">## This is a subheading</code></pre>
+
+                              <h3 class="govuk-heading-s" id="bullets">Bullet points</h3>
+                              <p class="govuk-body">Use bullet points to help words or phrases stand out in your emails
+                                and letters.</p>
+                              <p class="govuk-body">Copy this example to add bullet points:</p>
+                              <pre class="formatting-example" style="background-color: white;"><code class="lang-md">Introduce bullet points with a lead-in line ending in a colon:
+
+* leave one empty line space after the lead-in line
+* use an asterisk or a dash followed by a space to add an item
+* start each item with a lowercase letter, do not end with a full stop
+* leave one empty line space after the last item</code></pre>
+
+                              <h3 class="govuk-heading-s" id="bullets">Numbered steps</h3>
+                              <p class="govuk-body">Copy this example to add numbered steps:</p>
+                              <pre class="formatting-example" style="background-color: white;"><code class="lang-md">1. Leave one empty line space before starting your list.
+2. Enter a number followed by a full stop and a space to add an item.
+3. Start each item with a capital letter and end it with a full stop.
+4. Leave one empty line space after the last item.</code></pre>
+
+                              <h3 class="govuk-heading-s">Links and URLs</h3>
+                              <p class="govuk-body">To convert text into a link, use square brackets around the link
+                                text and round brackets around the full URL. Make sure there are no spaces between the
+                                brackets or the link will not work. For example:</p>
+                              <pre class="formatting-example"
+                                style="background-color: white;"><code class="lang-md">[Apply now](https://www.gov.uk/example)</code></pre>
+
+                            </div>
+                          </details>
+
+                          {{ govukCheckboxes({
+                          idPrefix: "exit-page",
+                          classes: "govuk-checkboxes--small",
+                          name: "exitPage",
+                          items: [
+                          {
+                          value: "true",
+                          text: "Mark as Exit Page",
+                          hint: {
+                          text: "Users who reach this page will be unable to continue filling out the form"
+                          }
+                          }
+                          ]
+                          }) }}
+
+                          <div class="govuk-button-group">
+                            {{ govukButton({
+                            text: "Save",
+                            type: "submit",
+                            id: "continue-button"
+                            }) }}
+
+                            <p class="govuk-body">
+                              <a href="/form-editor/delete/{{ currentPage.pageId }}"
+                                class="govuk-link govuk-link--no-visited-state govuk-link--destructive hide-in-reorder-mode hide-when-edit-mode">
+                                Delete page
+                              </a>
+                            </p>
+
+                            </p>
+                          </div>
+                        </form>
+
+
+                        <!-- Add Page Conditions Section -->
+                        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+
+                        <h2 class="govuk-heading-m">Page conditions</h2>
+                        <p class="govuk-body">The selected conditions will be evaluated when the user reaches this
+                          page. If the conditions are
+                          not met then users will not be shown this page.</p>
+
+                        {% if currentPage.conditions and currentPage.conditions.length > 0 %}
+                        <div class="govuk-inset-text">
+                          <h3 class="govuk-heading-s">Current conditions</h3>
+                          <ul class="govuk-list">
+                            {% for condition in currentPage.conditions %}
+                            <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                              <svg style="min-width: 24px; margin-right: 10px;" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="#00703c" stroke-width="2">
+                                <path d="M20 6L9 17l-5-5"></path>
+                              </svg>
+                              {% set cleanText = condition.text | replace(" (radios)", "") %}
+                              {{ cleanText }}
+                            </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                        {% else %}
+                        <div class="govuk-inset-text">
+                          <p class="govuk-body">No conditions have been added to this page yet.</p>
+                        </div>
+                        {% endif %}
+
+                        {% if currentPage and currentPage.pageId %}
+                        {{ govukButton({
+                        text: "Manage conditions",
+                        href: "/conditions/" + currentPage.pageId,
+                        classes: "govuk-button"
+                        }) }}
+                        {% else %}
+                        <!-- Add error handling or debugging -->
+                        <p class="govuk-body">Error: Page ID not found</p>
+                        <!-- Optional: Add debug info -->
+                        <pre>{{ currentPage | dump }}</pre>
+                        {% endif %}
+
+
+
+
+
+
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column for Preview -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+        <!-- Before content -->
+        <div id="before-content" style=" background-color:  #cce2d8;">
+          <p class="govuk-body-s" style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px;
+        text-align: center;"> Previews
+          </p>
+        </div>
+
+        <div style="margin-top: 60px;">
+          {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+
+          <div class="govuk-tabs" data-module="govuk-tabs">
+            <h2 class="govuk-tabs__title">
+              Contents
+            </h2>
+            <ul class="govuk-tabs__list">
+              <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+              </li>
+
+            </ul>
+
+            <div class="govuk-tabs__panel" id="tab-one">
+              <!-- Page Preview Content -->
+
+
+              <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview this page in a new tab
+                </a>
+              </p>
+
+              <div id="heading-container">
+                {% include "/form-editor/question-type/questions/previews/guidance-preview.html" %}
+              </div>
+
+              <a href="#edit-page" class="govuk-skip-link" style="margin-bottom: 30px!important;" <!-- Guidance
+                Paragraph -->
+
+
+                {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+
+                {% set setName = currentPage.setName or '' %}
+
+
+
+                {# {{ govukButton({
+                text: "Continue",
+                classes: "govuk-button govuk-!-margin-top-6",
+                id: "once-button",
+                disabled: true
+                }) }} #}
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const domElements = {
+            questionLabelInputEmail: document.getElementById("question-label-input-email"),
+            questionLabelLegend: document.getElementById("question-label-legend"),
+            hintTextInputEmail: document.getElementById("hint-text-input-email"),
+            hintTextOutput: document.getElementById("hint-text-output"),
+            makeOptionalCheckbox: document.getElementById("make-optional"),
+            guidanceOnlyHeadingInput: document.getElementById("guidance-only-page-heading-input"),
+            dynamicHeading: document.getElementById("dynamic-heading-more-than-1"),
+            guidanceEmail: document.getElementById("guidance-only-guidance-text-input"),
+            guidanceParagraph: document.getElementById("guidance-paragraph"),
+            addAnotherSetButton: document.getElementById("add-another-set-button")
+          };
+
+          initializeEventListeners();
+
+          // Set default placeholders on page load
+          domElements.dynamicHeading.textContent = "Page heading";
+          domElements.guidanceParagraph.textContent = "Guidance text"; // Set default guidance placeholder
+
+
+          function initializeEventListeners() {
+            // Question Label Input
+            if (domElements.questionLabelInputEmail && domElements.questionLabelLegend) {
+              domElements.questionLabelInputEmail.addEventListener("input", updateQuestionLabel);
+              applyHighlightOnFocus(domElements.questionLabelInputEmail, domElements.questionLabelLegend);
+            }
+
+            // Hint Text Input
+            if (domElements.hintTextInputEmail && domElements.hintTextOutput) {
+              domElements.hintTextInputEmail.addEventListener("input", updateHintText);
+              domElements.hintTextInputEmail.addEventListener("focus", showPlaceholderHint);
+              applyHighlightOnFocus(domElements.hintTextInputEmail, domElements.hintTextOutput);
+            }
+
+            // Page Heading Input
+            if (domElements.guidanceOnlyHeadingInput && domElements.dynamicHeading) {
+              domElements.guidanceOnlyHeadingInput.addEventListener("input", updatePageHeading);
+              domElements.guidanceOnlyHeadingInput.addEventListener("focus", showPlaceholderHeading);
+              applyHighlightOnFocus(domElements.guidanceOnlyHeadingInput, domElements.dynamicHeading);
+            }
+
+            // Guidance Text Input with placeholder behavior on blur
+            if (domElements.guidanceEmail && domElements.guidanceParagraph) {
+              domElements.guidanceEmail.addEventListener("input", updateGuidanceText);
+              domElements.guidanceEmail.addEventListener("focus", showPlaceholderGuidance);
+              domElements.guidanceEmail.addEventListener("blur", clearPlaceholderGuidance);
+              applyHighlightOnFocus(domElements.guidanceEmail, domElements.guidanceParagraph);
+            }
+
+            // Optional Checkbox
+            if (domElements.makeOptionalCheckbox) {
+              domElements.makeOptionalCheckbox.addEventListener("change", updateQuestionLabel);
+            }
+          }
+
+          // Update Question Label with Optional Suffix
+          function updateQuestionLabel() {
+            const suffix = domElements.makeOptionalCheckbox.checked ? " (optional)" : "";
+            domElements.questionLabelLegend.textContent = domElements.questionLabelInputEmail.value || "Question";
+            domElements.questionLabelLegend.textContent += suffix;
+          }
+
+          // Update Hint Text Dynamically
+          function updateHintText() {
+            domElements.hintTextOutput.textContent = domElements.hintTextInputEmail.value || "Hint text";
+          }
+
+          // Update Page Heading Dynamically
+          function updatePageHeading() {
+            domElements.dynamicHeading.textContent = domElements.guidanceOnlyHeadingInput.value || "Page heading";
+          }
+
+          // Update Guidance Text Dynamically
+          function updateGuidanceText() {
+            domElements.guidanceParagraph.textContent = domElements.guidanceEmail.value || "Guidance text";
+          }
+
+          // Apply and Remove Highlight on Focus/Blur
+          function applyHighlightOnFocus(inputElement, targetElement) {
+            if (inputElement && targetElement) {
+              inputElement.addEventListener("focus", function () {
+                targetElement.classList.add("highlight");
+                if (!inputElement.value) {
+                  targetElement.textContent = getPlaceholderText(targetElement.id);
+                }
+              });
+              inputElement.addEventListener("blur", function () {
+                targetElement.classList.remove("highlight");
+              });
+
+              // If the input is already focused
+              if (document.activeElement === inputElement) {
+                targetElement.classList.add("highlight");
+              }
+            }
+          }
+
+          // Placeholder functions to show placeholder text when empty
+          function showPlaceholderHint() {
+            if (!domElements.hintTextInputEmail.value) {
+              domElements.hintTextOutput.textContent = "Hint text";
+            }
+          }
+
+          function showPlaceholderHeading() {
+            if (!domElements.guidanceOnlyHeadingInput.value) {
+              domElements.dynamicHeading.textContent = "Page heading";
+            }
+          }
+
+          function showPlaceholderGuidance() {
+            if (!domElements.guidanceEmail.value) {
+              domElements.guidanceParagraph.textContent = "Guidance text";
+            }
+          }
+
+          // Remove guidance placeholder if the field is empty and focus is lost
+          function clearPlaceholderGuidance() {
+            if (!domElements.guidanceEmail.value) {
+              domElements.guidanceParagraph.textContent = "Guidance text";
+            }
+          }
+
+          // Helper function for setting placeholder text
+          function getPlaceholderText(elementId) {
+            const placeholders = {
+              "question-label-legend": "Question",
+              "hint-text-output": "Hint text",
+              "dynamic-heading-more-than-1": "Page heading",
+              "guidance-paragraph": "Guidance text"
+            };
+            return placeholders[elementId] || "";
+          }
+        });
+      </script>
+
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const domElements = {
+            moreThanOnceRadio: document.getElementById("more-than-1"),
+            onceRadio: document.getElementById("once"),
+            addAnotherSetButton: document.getElementById("add-another-set-button"),
+            onceButton: document.getElementById("once-button"),
+            setName: document.getElementById("set-name"),
+            dynamicCaption: document.getElementById("dynamic-caption"),
+          };
+
+          initializeEventListeners();
+          toggleCaptionAndButtons(); // Set initial visibility on page load
+
+          function initializeEventListeners() {
+            domElements.moreThanOnceRadio.addEventListener("change", toggleCaptionAndButtons);
+            domElements.onceRadio.addEventListener("change", toggleCaptionAndButtons);
+            domElements.setName.addEventListener("focus", onFocusUpdate);
+            domElements.setName.addEventListener("input", updateDynamicCaptionAndButton);
+            domElements.setName.addEventListener("blur", removeButtonHighlight);
+          }
+
+          function onFocusUpdate() {
+            updateDynamicCaptionAndButton();
+            domElements.dynamicCaption.classList.add("highlight");
+          }
+
+          function updateDynamicCaptionAndButton() {
+            const setName = domElements.setName.value.trim();
+
+            // Update dynamic caption
+            domElements.dynamicCaption.textContent = setName ? `${setName} 1` : "Question set name";
+            domElements.dynamicCaption.style.display = "block";
+
+            // Highlight part of 'Add another' button text
+            const highlightedText = `<span class="highlight" style="color: black;">${setName || "[question set name]"}</span>`;
+            domElements.addAnotherSetButton.innerHTML = `Add another ${highlightedText}`;
+            domElements.addAnotherSetButton.disabled = !setName && domElements.setName !== document.activeElement;
+          }
+
+          function removeButtonHighlight() {
+            const setName = domElements.setName.value.trim();
+            domElements.addAnotherSetButton.innerHTML = `Add another ${setName || "[question set name]"}`;
+            domElements.dynamicCaption.classList.remove("highlight");
+          }
+
+          function toggleCaptionAndButtons() {
+            if (domElements.moreThanOnceRadio.checked) {
+              showCaptionWithPlaceholder();
+              domElements.addAnotherSetButton.style.display = "inline-block";
+              domElements.onceButton.style.display = "none";
+            } else {
+              hideCaptionAndClearInput();
+              domElements.addAnotherSetButton.style.display = "none";
+              domElements.onceButton.style.display = "inline-block";
+            }
+          }
+
+          function showCaptionWithPlaceholder() {
+            domElements.dynamicCaption.textContent = "Question set name";
+            domElements.dynamicCaption.style.display = "block";
+          }
+
+          function hideCaptionAndClearInput() {
+            domElements.dynamicCaption.style.display = "none";
+            domElements.dynamicCaption.classList.remove("highlight");
+          }
+        });
+      </script>
+
+
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // Get the textarea and the output paragraph elements
+          const textarea = document.getElementById('guidance-only-guidance-text-input');
+          const paragraph = document.getElementById('guidance-paragraph');
+
+          // Listen for input events on the textarea
+          textarea.addEventListener('input', function () {
+            // Convert the textarea content using the marked library
+            paragraph.innerHTML = marked.parse(textarea.value);
+          });
+        });
+      </script>
+
+
+      <style>
+        .highlight {
+          background-color: #ffe5cc;
+          border-bottom: 2px solid #ffb266;
+        }
+
+        #before-content {
+          position: absolute;
+          top: 0;
+          left: 10 !important;
+          right: 0;
+          /* Ensure the right side is aligned with the container edge */
+          width: 100%;
+          padding: 10px !important;
+
+          /* Remove padding to avoid affecting the width */
+          box-sizing: border-box;
+          /* Ensure content, padding, and borders are within width */
+          z-index: 1;
+          border-bottom: 1px solid #008938;
+          padding-left: 10px;
+          /* Add padding-left specifically for content */
+        }
+
+        #second-container {
+          padding: 0;
+          /* Ensure no padding on the container itself */
+          box-sizing: border-box;
+          /* Ensure container handles padding/border correctly */
+        }
+
+        #second-container>* {
+          padding-left: 0px;
+          z-index: 2;
+          /* Ensure content is above the #before-content */
+        }
+      </style>
+
+      {% endblock %}
+    </div>
+  </div>

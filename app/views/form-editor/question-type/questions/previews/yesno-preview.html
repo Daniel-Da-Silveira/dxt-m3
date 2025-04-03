@@ -1,0 +1,24 @@
+{% from "./_label_size_macro.html" import get_label_size -%}
+
+{%- set page_heading = data['pageHeadingYesno'] if data is defined and data['pageHeadingYesno'] else false -%}
+{%- set question_count = currentPage.questions | length if currentPage and currentPage.questions else 1 -%}
+{%- set labelSize = get_label_size(page_heading, question_count, true) -%}
+
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="yesno-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--{{ labelSize }}">{{ question.label }}</legend>
+        {%- if question.hint -%}
+        <div id="yesno-hint" class="govuk-hint">{{ question.hint }}</div>
+        {%- endif -%}
+        <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="yesno" name="yesno" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="yesno">Yes</label>
+            </div>
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="yesno-2" name="yesno" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="yesno-2">No</label>
+            </div>
+        </div>
+    </fieldset>
+</div>

@@ -1,0 +1,551 @@
+{% extends "layouts/main.html" %}
+{% from "components/service-header/macro.njk" import serviceHeader %}
+{% set pageName = "Overview of short answer question - Apply for a county parish holding number in England" %}
+{% set headingPlaceholder = "Page heading" %}
+{% set guidancePlaceholder = "" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: "Forms library", id: "nav-library" },
+{ href: "/cph-overview/draft/complete-clean.html", text: "Overview", id: "nav-overview" },
+{ href: "/redesigntest/listing", text: "Editor", id: "nav-editor" } ],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+  <div class="govuk-width-container">
+    {{ govukBackLink({ classes: "govuk-back-link--inverse govuk-!-margin-bottom-0", text: "Back to add
+    and edit pages", href: "/redesigntest/listing.html" }) }}
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+      style="border-bottom: 1px solid white; margin-bottom: 0" />
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-from-desktop">
+        <h1 class="x-govuk-masthead__title">
+          {# <span class="govuk-caption-l" style="color: white">
+            Apply for a county parish holding certificate
+          </span> #}
+          {{ form.name }}
+        </h1>
+
+        {# #}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <!-- Left Column for Form Controls -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="container" style="flex: 1 1 75%; overflow-y: auto">
+        <div class="govuk-summary-card govuk-!-margin-top-0" style="border-left: 10px solid #008938">
+          <div class="govuk-summary-card__content govuk-!-padding-top-0" style="background-color: #f3f2f1">
+            <dl class="govuk-summary-list">
+              <div class="govuk-summary-list__row">
+                <dd class="govuk-summary-list__value">
+                  <!-- Dynamic Summary List -->
+                  <!-- Question Settings Container -->
+                  <div class="govuk-grid-row" id="page-settings-container-1">
+                    <div id="question-1">
+                      <div class="govuk-summary-card__content" style="margin-bottom: 0">
+                        <!-- Sub Navigation for Question -->
+                        <nav class="moj-sub-navigation govuk-!-padding-top-0 govuk-!-margin-bottom-2 "
+                          aria-label="Sub navigation">
+                          <ul class="moj-sub-navigation__list" id="nav-list2">
+                            <!-- Question Link -->
+                            {# <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link"
+                                href="/redesigntest/templates/1-question/settings.html">Page settings</a>
+                            </li> #}
+                            <li class="moj-sub-navigation__item">
+                              <a class="moj-sub-navigation__link" aria-current="page" id="overviewquestions"
+                                href="#overview-noquestions">Page 5</a>
+                            </li>
+
+                          </ul>
+                        </nav>
+
+                        <h1 class="govuk-heading-xl govuk-!-margin-top-4">Page 5</h1>
+
+                        <h2 class="govuk-heading-l" id="page-heading">Questions</h2>
+                        {#
+                        <form class="form" action="/redesigntest/Multi/question-2-date/information-type" method="post">
+                          #}
+
+                          <!-- Dynamic Summary List -->
+
+                          <div id="summary-container">
+                            <!-- The dynamic summary list will be populated here -->
+
+                            {{ govukSummaryList({
+                            classes: "govuk-summary-list govuk-section-break govuk-section-break--visible bgwhite",
+                            rows: [
+                            {
+                            key: {
+                            html: data['questionLabelInputShortText'] or 'Test question'
+                            },
+                            value: {
+                            text: ""
+
+                            },
+                            actions: {
+                            items: [
+                            {
+                            href: "/redesigntest/templates/1-question/shorttext/edit-nf.html",
+                            text: "Edit",
+                            visuallyHiddenText: "name"
+                            }
+                            ]
+                            }
+                            }
+                            ]
+                            }) }}
+
+                          </div>
+
+                        </form>
+
+                        <div class="govuk-button-group govuk-!-margin-top-6">
+                          <a href="/redesigntest/questiontype" class="govuk-button" role="button">
+                            Add question
+                          </a>
+
+                          <!--<a href="/redesigntest/templates/1-question/page-type.html" class="govuk-button govuk-button--inverse" role="button">
+                            Add a new page
+                          </a>-->
+
+                          <p class="govuk-body">
+                            <a href="/redesigntest/templates/delete.html"
+                              class="govuk-link govuk-link--no-visited-state">Delete page</a>
+                          </p>
+
+
+                        </div>
+
+                        <a href="#tab-one" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                          data-module="govuk-skip-link">
+                          Skip to page preview
+                        </a>
+
+                        <a href="#tab-two" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                          data-module="govuk-skip-link">
+                          Skip to error messages preview
+                        </a>
+
+
+                        </form>
+
+                        <h1 class="govuk-heading-l">Settings</h1>
+
+                        <!-- question settings -->
+
+                        <div class="govuk-form-group">
+                          <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                              <h1 class="govuk-fieldset__heading">
+                                Page heading and guidance text
+                              </h1>
+                            </legend>
+                            <div id="contact-hint" class="govuk-hint">
+                              Add a page heading if you have multiple questions on a page or add guidance to help users
+                              answer questions
+                            </div>
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                              <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="guidance" name="guidance" type="checkbox"
+                                  value="guidance" data-aria-controls="conditional-guidance">
+                                <label class="govuk-label govuk-checkboxes__label" for="guidance">
+                                  Add a page heading, guidance or both
+                                </label>
+                              </div>
+                              <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                id="conditional-guidance">
+                                <div class="govuk-form-group">
+                                  <fieldset class="govuk-fieldset" role="group" aria-describedby="dob-hint">
+                                    <div class="govuk-form-group">
+                                      <h1 class="govuk-label-wrapper">
+                                        <label class="govuk-label govuk-label--l" for="event-name">
+                                          Page heading
+                                        </label>
+                                      </h1>
+                                      <div id="event-name-hint" class="govuk-hint">
+                                        Ihis Should be a statement, not a question. For example,
+                                        'Passport information'
+                                      </div>
+                                      <input class="govuk-input" id="event-name" name="eventName" type="text"
+                                        aria-describedby="event-name-hint">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                      <h1 class="govuk-label-wrapper">
+                                        <label class="govuk-label govuk-label--l" for="more-detail">
+                                          Guidance text (optional)
+                                        </label>
+                                      </h1>
+                                      <div id="more-detail-hint" class="govuk-hint">
+                                        You can use Markdown if you want to format the content
+                                        or add links
+                                      </div>
+                                      <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="5"
+                                        aria-describedby="more-detail-hint"></textarea>
+                                    </div>
+                                  </fieldset>
+                                </div>
+
+
+                              </div>
+                              <a href="" class="govuk-button govuk-!-margin-top-4" role="button">
+                                Save and update
+                              </a>
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <!-- question settings -->
+
+
+                        <!-- experimental multiple question -->
+
+                        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+                        <div class="govuk-form-group">
+                          <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                              <h1 class="govuk-fieldset__heading">
+                                Multiple responses
+                              </h1>
+                            </legend>
+                            <div id="contact-hint" class="govuk-hint">
+                              For scenarios where users need to give multiple responses to the same question(s)
+                            </div>
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                              <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="contact" name="contact" type="checkbox"
+                                  value="email" data-aria-controls="conditional-contact">
+                                <label class="govuk-label govuk-checkboxes__label" for="contact">
+                                  Allow multiple responses to questions on this page
+                                </label>
+                              </div>
+                              <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                                id="conditional-contact">
+                                <div class="govuk-form-group">
+                                  <fieldset class="govuk-fieldset" role="group" aria-describedby="dob-hint">
+                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend">
+                                      <label class="govuk-label govuk-label--s">Set the minimum and maximum times a user
+                                        can
+                                        answer questions</label>
+                                    </legend>
+                                    <div id="dob-hint" class="govuk-hint">The range must be between 2 and 25</div>
+                                    <div class="govuk-date-input" id="dob">
+                                      <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                          <label class="govuk-label govuk-date-input__label" for="dob-day">Min</label>
+                                          <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="dob-day" name="dob-day" type="text" autocomplete="bday-day"
+                                            inputmode="numeric">
+                                        </div>
+                                      </div>
+                                      <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                          <label class="govuk-label govuk-date-input__label" for="dob-month">Max</label>
+                                          <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            id="dob-month" name="dob-month" type="text" autocomplete="bday-month"
+                                            inputmode="numeric">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </fieldset>
+                                </div>
+
+                                <div class="govuk-form-group">
+                                  <h1 class="govuk-label-wrapper">
+                                    <label class="govuk-label govuk-label--s" for="set-name">
+                                      Give the responses an identifiable name or label
+                                    </label>
+                                  </h1>
+
+                                  <div id="set-name-hint" class="govuk-hint">
+                                    Use a word that helps describe the individual response. For example, 'cow', 'pet'.
+                                    This will be used to label and group the answers, for example 'cow 1', cow 2'
+                                  </div>
+
+                                  <input class="govuk-input" id="set-name" name="setName" type="text"
+                                    aria-describedby="set-name-hint">
+
+                                </div>
+                                <a href="" class="govuk-button govuk-!-margin-top-4" role="button">
+                                  Save and update
+                                </a>
+                              </div>
+                          </fieldset>
+                        </div>
+
+                        <!-- experiemental multiple question -->
+
+                        <div class="govuk-button-group govuk-!-margin-top-6">
+                          <a href="" class="govuk-button" role="button">
+                            Save changes
+                          </a>
+                        </div>
+
+                        <h3 class="govuk-heading-m">Page conditions</h3>
+
+                        <div id="condition-hint" class="govuk-hint">
+                          The selected conditions will be evaluated when the user reaches this pase. If the conditions
+                          are not met then this page will be skipped.
+                          Add conditions
+                        </div>
+
+                        <div class="govuk-button-group govuk-!-margin-top-6">
+                          <a href="" class="govuk-button" role="button">
+                            Add conditions
+                          </a>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Right Column for Preview -->
+      <div class="govuk-grid-column-one-half-from-desktop" id="second-container"
+        style="outline: solid 1px #008938; height: 100%; position: sticky; top: 0; padding: 20px; box-shadow: 5px 10px #008938;">
+        <!-- Before content -->
+        <div id="before-content" style=" background-color:  #cce2d8;">
+          <p class="govuk-body-s" style="margin-bottom: 0; color: #005a30; padding: 2px 8px 3px;
+    text-align: center;"> Preview
+          </p>
+        </div>
+
+        <div style="margin-top: 60px!important;">
+          {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+
+          <div class="govuk-tabs" data-module="govuk-tabs">
+            <h2 class="govuk-tabs__title">
+              Contents
+            </h2>
+            <ul class="govuk-tabs__list">
+              <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+              </li>
+              <li class="govuk-tabs__list-item">
+                <a class="govuk-tabs__tab" href="#tab-two">Error messages</a>
+              </li>
+            </ul>
+
+            <div class="govuk-tabs__panel" id="tab-one">
+              <!-- Page Preview Content -->
+
+
+              <p class="govuk-body-s" style="margin-bottom: 0; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview this page in a new tab
+                </a>
+              </p>
+
+              {% include "/redesigntest/templates/previews/shorttext/overview.html" %}
+
+              <a href="#overviewquestions" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to overview of questions
+              </a>
+            </div>
+
+            <div class="govuk-tabs__panel" id="tab-two">
+              <!-- Error Messages Content -->
+
+              <p class="govuk-body-s" style="margin-bottom: 30px; border-bottom: #008938 1px;">
+                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener" target="_blank">
+                  Preview error messages in a new tab
+                </a>
+              </p>
+
+              <!-- Error Messages Section -->
+              <div class="govuk-error-summary" data-disable-auto-focus="true">
+                <h2 class="govuk-error-summary__title">There is a problem</h2>
+                <ul class="govuk-list govuk-error-summary__list">
+                  <!-- Error messages -->
+                  <li>
+                    <a id="empty-input-error-shorttext" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      Enter <span id="error-dynamic-text" style="text-transform: lowercase;">[Short description]</span>
+                    </a>
+                  </li>
+                  <h3 class="govuk-heading-s">If you set answer limits:</h3>
+                  <li>
+                    <a id="too-long-input-error-shorttext" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      <span id="error-dynamic-text-long">[Short description]</span> must be
+                      <span id="max-length">[max length]</span> characters or less
+                    </a>
+                  </li>
+                  <li>
+                    <a id="too-short-input-error-shorttext" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      <span id="error-dynamic-text-short">[Short description]</span> must be
+                      <span id="min-length">[min length]</span> characters or more
+                    </a>
+                  </li>
+                </ul>
+
+
+              </div>
+              <a href="#overviewquestions" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                data-module="govuk-skip-link">
+                Skip to overview of questions
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- JavaScript code -->
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            // DOM Elements
+            const domElements = {
+              // Existing elements
+              questionLabelInput: document.getElementById('question-label-input'),
+              questionLabelLegend: document.getElementById('question-label-legend'),
+              hintTextInput: document.getElementById('hint-text-input'),
+              hintTextOutput: document.getElementById('hint-text-output'),
+              makeOptionalCheckbox: document.getElementById('make-optional'),
+
+              // New elements for page heading and guidance text
+              pageHeadingInput: document.getElementById('page-heading-input'),
+              dynamicHeading: document.getElementById('dynamic-heading'),
+              guidanceTextarea: document.getElementById('guidance-textarea'),
+              guidanceParagraph: document.getElementById('guidance-paragraph')
+            };
+
+            // Initialize event listeners
+            initializeEventListeners();
+
+            function initializeEventListeners() {
+              // Update question label
+              if (domElements.questionLabelInput && domElements.questionLabelLegend) {
+                domElements.questionLabelInput.addEventListener('input', updateQuestionLabel);
+              }
+
+              // Update hint text
+              if (domElements.hintTextInput && domElements.hintTextOutput) {
+                domElements.hintTextInput.addEventListener('input', updateHintText);
+              }
+
+              // Update optional label
+              if (domElements.makeOptionalCheckbox) {
+                domElements.makeOptionalCheckbox.addEventListener('change', updateQuestionLabel);
+              }
+
+              // Update page heading
+              if (domElements.pageHeadingInput && domElements.dynamicHeading) {
+                domElements.pageHeadingInput.addEventListener('input', updatePageHeading);
+              }
+
+              // Update guidance text
+              if (domElements.guidanceTextarea && domElements.guidanceParagraph) {
+                domElements.guidanceTextarea.addEventListener('input', updateGuidanceText);
+              }
+
+              // Apply focus/blur highlighting
+              applyHighlightOnFocus(domElements.questionLabelInput, domElements.questionLabelLegend);
+              applyHighlightOnFocus(domElements.hintTextInput, domElements.hintTextOutput);
+              applyHighlightOnFocus(domElements.pageHeadingInput, domElements.dynamicHeading);
+              applyHighlightOnFocus(domElements.guidanceTextarea, domElements.guidanceParagraph);
+            }
+
+            function updateQuestionLabel() {
+              const suffix = domElements.makeOptionalCheckbox.checked ? ' (optional)' : '';
+              domElements.questionLabelLegend.textContent = domElements.questionLabelInput.value || 'Question';
+              domElements.questionLabelLegend.textContent += suffix;
+            }
+
+            function updateHintText() {
+              domElements.hintTextOutput.textContent = domElements.hintTextInput.value;
+            }
+
+            function updatePageHeading() {
+              domElements.dynamicHeading.textContent = domElements.pageHeadingInput.value;
+            }
+
+            function updateGuidanceText() {
+              domElements.guidanceParagraph.textContent = domElements.guidanceTextarea.value;
+            }
+
+            function applyHighlightOnFocus(inputElement, targetElement) {
+              if (inputElement && targetElement) {
+                inputElement.addEventListener('focus', function () {
+                  targetElement.classList.add('highlight');
+                });
+                inputElement.addEventListener('blur', function () {
+                  targetElement.classList.remove('highlight');
+                });
+
+                // If the input is already focused
+                if (document.activeElement === inputElement) {
+                  targetElement.classList.add('highlight');
+                }
+              }
+            }
+          });
+        </script>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            window.scrollTo(0, 0);
+          });
+
+        </script>
+
+
+        <!-- CSS for Highlighting -->
+        <style>
+          .highlight {
+            background-color: #ffe5cc;
+            border-bottom: 2px solid #ffb266;
+          }
+
+          #before-content {
+            position: absolute;
+            top: 0;
+            left: 10 !important;
+            right: 0;
+            width: 100%;
+            padding: 10px !important;
+            box-sizing: border-box;
+            z-index: 1;
+            border-bottom: 1px solid #008938;
+            padding-left: 10px;
+          }
+
+          #second-container {
+            padding: 0;
+            box-sizing: border-box;
+          }
+
+          #second-container>* {
+            padding-left: 0px;
+            z-index: 2;
+          }
+        </style>
+      </div>
+    </div>
+    {% endblock %}

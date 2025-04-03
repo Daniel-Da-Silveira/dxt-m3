@@ -1,0 +1,35 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+<h2 class="govuk-heading-m govuk-!-padding-top-2">
+    {{ commonTerms.form_editor.overview.sections.data_protection.title }}
+</h2>
+
+{% set privacyNoticeHtml %}
+<a href="/form-overview/support/privacy-notice.html" class="govuk-link govuk-link--no-visited-state">
+    {{ commonTerms.form_editor.overview.sections.data_protection.privacy_notice.add }}
+</a>
+{% endset %}
+
+{% set privacyNoticeActions = {
+items: [
+{
+href: "/form-overview/support/privacy-notice.html",
+text: commonTerms.form_editor.overview.sections.data_protection.privacy_notice.change,
+visuallyHiddenText: commonTerms.form_editor.overview.sections.data_protection.privacy_notice.label
+}
+]
+} if form.privacyNotice else null %}
+
+{{ govukSummaryList({
+rows: [
+{
+key: {
+text: commonTerms.form_editor.overview.sections.data_protection.privacy_notice.label
+},
+value: {
+html: form.privacyNotice or privacyNoticeHtml
+},
+actions: privacyNoticeActions
+}
+]
+}) }}

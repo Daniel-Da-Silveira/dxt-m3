@@ -1,0 +1,35 @@
+{% from "./_label_size_macro.html" import get_label_size -%}
+
+{%- set page_heading = data['pageHeadingPhone'] if data is defined and data['pageHeadingPhone'] else false -%}
+{%- set question_count = currentPage.questions | length if currentPage and currentPage.questions else 1 -%}
+{%- set labelSize = get_label_size(page_heading, question_count, true) -%}
+
+<!-- Debug info -->
+<!-- Page heading: {{ page_heading }} -->
+<!-- Question count: {{ question_count }} -->
+<!-- Label size: {{ labelSize }} -->
+
+<div class="govuk-form-group">
+    <label class="govuk-label govuk-label--{{ labelSize }}" for="phone">{{ question.label }}</label>
+    {%- if question.hint -%}
+    <div id="phone-hint" class="govuk-hint">{{ question.hint }}</div>
+    {%- endif -%}
+    <input class="govuk-input govuk-input--width-20" id="phone" name="phone" type="tel" autocomplete="tel"
+        aria-describedby="phone-hint">
+</div>
+
+{# {% if overview0 == "morethan1" %}
+{{ govukButton({
+text: "Add another " ~ setName,
+classes: "govuk-button govuk-!-margin-top-3",
+id: "add-another-set-button",
+disabled: true
+}) }}
+{% else %}
+{{ govukButton({
+text: "Continue",
+classes: "govuk-button govuk-!-margin-top-6",
+id: "once-button",
+disabled: true
+}) }}
+{% endif %} #}

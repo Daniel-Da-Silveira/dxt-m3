@@ -1,0 +1,202 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Change lead organisation - Apply for a county parish holding number in England" %}
+
+{% block header %}
+  {{ serviceHeader({
+    organisationName: "Defra",
+    productName: "Forms Designer",
+    serviceName: "",
+    accountName: "Chris Smith",
+    homepageLink: "/",
+    signOutLink: "/onboarding/sign-out-confirmation",
+    navigationItems: [
+    {
+      href: "/library.html",
+      text: "Forms library",
+      id: "library"
+     },
+    {
+      href: "/cph-overview/draft/complete-clean.html",
+      text: "Overview",
+      id: "overview"
+     },{
+         href: "/editor/0",
+    text: 'Editor',
+    id: 'editor'
+    }],
+    activeLinkId: ""
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+text: "Back",
+href: "/cph-overview/draft/complete-clean.html"
+}) }}
+
+{% endblock %}
+
+{% block content %}
+
+  {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+  {% from "govuk/components/table/macro.njk" import govukTable %}
+
+  <!-- <main class="govuk-main-wrapper" id="main-content" role="main"> -->
+  <form class="form" action="/cph-overview/draft/organisational-details/overview/organisation-name-changed" method="post">
+
+    {{ govukRadios({
+      name: "organisation-name",
+      fieldset: {
+        legend: {
+          text: "Choose a lead organisation for this form",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "apha",
+          text: "Animal and Plant Health Agency - APHA"
+        },
+
+          {
+            value: "cefas",
+            checked: true,
+            text: "Centre for Environment, Fisheries and Aquaculture Science - Cefas"
+          },
+
+          {
+            value: "defra",
+            text: "Defra"
+          },
+
+          {
+            value: "ea",
+            text: "Environment Agency"
+          },
+
+          {
+            value: "fc",
+            text: "Forestry Commision"
+          },
+
+          {
+            value: "mmo",
+            text: "Marine Management Organisaiton - MMO"
+          },
+
+
+          {
+            value: "ne",
+            text: "Natural England"
+          },
+
+          {
+            value: "rpa",
+            text: "Rural Payments Agency - RPA"
+          },
+
+          {
+            value: "vmd",
+            text: "Veterinary Medicines Directorate - VMD"
+          }
+
+          ]
+        }) }}
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+  </form>
+
+  <details class="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">
+        View error messages
+      </span>
+    </summary>
+    <div class="govuk-details__text">
+      {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+      {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+      <p class="govuk-body-l">Missing selection</p>
+
+      {{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: "Select a lead organisation",
+      href: "#"
+
+    }
+  ]
+}) }}
+      {{ govukRadios({
+      name: "organisation-name",
+      fieldset: {
+        legend: {
+          text: "Choose a lead organisation for this form",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "apha",
+          text: "Animal and Plant Health Agency - APHA"
+        },
+
+          {
+            value: "cefas",
+            text: "Centre for Environment, Fisheries and Aquaculture Science - Cefas"
+          },
+
+          {
+            value: "defra",
+            text: "Defra"
+          },
+
+          {
+            value: "ea",
+            text: "Environment Agency"
+          },
+
+          {
+            value: "fc",
+            text: "Forestry Commision"
+          },
+
+          {
+            value: "mmo",
+            text: "Marine Management Organisaiton - MMO"
+          },
+
+
+          {
+            value: "ne",
+            text: "Natural England"
+          },
+
+          {
+            value: "rpa",
+            text: "Rural Payments Agency - RPA"
+          },
+
+          {
+            value: "vmd",
+            text: "Veterinary Medicines Directorate - VMD"
+       }
+  ],
+  errorMessage: {
+    text: "Select a lead organisation"
+  }
+}) }}
+
+    </div>
+  </details>
+
+{% endblock %}

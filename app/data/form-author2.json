@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "text": "All authors",
+      "checked": "true",
+      "behaviour": "exclusive",
+      "value": "all"
+    },
+    {
+      "text": "Me (Chris Smith)",
+      "value": "Chris Smith"
+    }
+  ]
+}

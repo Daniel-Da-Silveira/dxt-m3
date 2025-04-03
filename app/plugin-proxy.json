@@ -1,0 +1,10 @@
+{
+  "iframe-resizer": {
+    "assets": [
+      "/js/iframeResizer.contentWindow.min.js",
+      "/js/iframeResizer.contentWindow.map",
+      "/js/iframeResizer.min.js",
+      "/js/iframeResizer.map"
+    ]
+  }
+}

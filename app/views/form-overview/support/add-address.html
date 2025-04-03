@@ -1,0 +1,130 @@
+{% extends "layouts/main.html" %}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Enter an address for support - Apply for a county parish holding number in England" %}
+
+{% block header %}
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/form-designer-v2/onboarding/sign-out-confirmation",
+navigationItems: [
+{
+href: "/library.html",
+text: "Forms library",
+id: "library"
+},
+{
+href: "/form-overview/draft/overview",
+text: "Overview",
+id: "overview"
+},{
+href: "/editor.html",
+text: 'Editor',
+id: 'editor'
+}],
+activeLinkId: "/"
+}) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+text: "Back",
+href: "/form-overview/draft/overview"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+    {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+    {% from "govuk/components/input/macro.njk" import govukInput %}
+    {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+    {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+
+    <span class="govuk-caption-l">Apply for a county parish holding number in England</span>
+
+    <form action="/form-overview/draft/support/address" method="post">
+      {% call govukFieldset({
+      legend: {
+      text: "Enter an address for support",
+      classes: "govuk-fieldset__legend--l",
+      isPageHeading: true
+      },
+      hint: {
+      html: 'Follow the <a href="https://design-system.service.gov.uk/patterns/contact-a-department-or-service-team/"
+        class="govuk-link" rel="noreferrer noopener" target="_blank">GOV.UK design system pattern (opens in new tab)</a>
+      for contacting a department or service team.'
+      }
+      }) %}
+      {{ govukInput({
+      label: {
+      text: "Address line 1"
+      },
+      id: "addressLine1",
+      name: "addressLine1",
+      autocomplete: "address-line1",
+      value: form.support.address.line1
+      }) }}
+
+      {{ govukInput({
+      label: {
+      text: "Address line 2 (optional)"
+      },
+      id: "addressLine2",
+      name: "addressLine2",
+      autocomplete: "address-line2",
+      value: form.support.address.line2
+      }) }}
+
+      {{ govukInput({
+      label: {
+      text: "Town or city"
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "addressTown",
+      name: "addressTown",
+      autocomplete: "address-level2",
+      value: form.support.address.town
+      }) }}
+
+      {{ govukInput({
+      label: {
+      text: "County (optional)"
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "addressCounty",
+      name: "addressCounty",
+      value: form.support.address.county
+      }) }}
+
+      {{ govukInput({
+      label: {
+      text: "Postcode"
+      },
+      classes: "govuk-input--width-10",
+      id: "addressPostcode",
+      name: "addressPostcode",
+      autocomplete: "postal-code",
+      value: form.support.address.postcode
+      }) }}
+      {% endcall %}
+
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Save and continue
+        </button>
+        <a href="/form-overview/draft/overview" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

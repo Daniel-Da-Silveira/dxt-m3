@@ -1,0 +1,1131 @@
+{% extends "layouts/main.html" %}
+{# {% set containerClasses = "app-width-container--full-width" %} #}
+
+{% from "components/service-header/macro.njk" import serviceHeader %}
+
+{% set pageName = "Add and edit your pages - Apply for a county parish holding number in England" %}
+
+{% block header %}
+
+{{ serviceHeader({
+organisationName: "Defra",
+productName: "Forms Designer",
+serviceName: "",
+containerClasses: containerClasses,
+accountName: "Chris Smith",
+homepageLink: "/",
+signOutLink: "/onboarding/sign-out-confirmation",
+navigationItems: [
+{ href: "/library.html", text: commonTerms.form_editor.navigation.forms_library, id: "nav-library" },
+{ href: "/form-overview/draft/complete-clean.html", text: commonTerms.form_editor.navigation.overview, id:
+"nav-overview" },
+{ href: "/form-editor/listing", text: commonTerms.form_editor.navigation.editor, id: "nav-editor" }
+],
+activeLinkId: "nav-editor"
+}) }}
+
+<div class="x-govuk-masthead x-govuk-masthead--large">
+    <div class="govuk-width-container">
+        {{ govukBackLink({
+        classes: "govuk-back-link--inverse govuk-!-margin-bottom-0",
+        text: commonTerms.form_editor.navigation.back_to_overview,
+        href: "/form-overview/draft/complete-clean.html"
+        }) }}
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+            style="border-bottom:1px solid white; margin-bottom: 0;">
+
+        <h1 class="govuk-heading-l--inverse x-govuk-masthead__title">
+            <span class="govuk-caption-l" style="color: white;">{{ form.name }}
+            </span>
+            Add and edit pages
+        </h1>
+
+        <div class="govuk-button-group">
+            <a href="/form-editor/page-type.html" role="button" draggable="false"
+                class="govuk-button govuk-button--inverse" data-module="govuk-button">
+                Add new page
+            </a>
+
+            <a href="/form-editor/reorder/main.html" role="button" draggable="false"
+                class="govuk-button govuk-button--secondary" id="reorder-button" data-module="govuk-button"
+                style="display: none;">
+                Re-order pages
+            </a>
+
+            <a href="#" class="govuk-link govuk-link--inverse" id="preview-link" style="display: none;">
+                Preview form
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block content %}
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half-from-desktop">
+            {% set uniqueConditions = [] %}
+            {% for page in formPages %}
+            {% if page.conditions %}
+            {% for condition in page.conditions %}
+            {% if condition.conditionName not in uniqueConditions %}
+            {% set uniqueConditions = (uniqueConditions.push(condition.conditionName), uniqueConditions) %}
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+
+            {# Initialize items array with the show-all option #}
+            {% set items = [] %}
+            {% set items = (items.push({
+            value: "show-all",
+            text: commonTerms.form_editor.filters.show_all_pages,
+            behaviour: "exclusive"
+            }), items) %}
+
+            {# Add condition items #}
+            {% for condition in uniqueConditions %}
+            {% set items = (items.push({
+            value: condition,
+            text: condition
+            }), items) %}
+            {% endfor %}
+
+            {{ govukAccordion({
+            id: "filter-accordion",
+            items: [
+            {
+            heading: { text: commonTerms.form_editor.filters.filter_by_condition },
+            content: {
+            html: govukCheckboxes({
+            idPrefix: "condition-filter",
+            name: "condition-filter",
+            classes: "govuk-checkboxes--small",
+            items: items
+            })
+            }
+            }
+            ]
+            }) }}
+        </div>
+    </div>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half-from-desktop">
+            <div id="selected-filters" class="govuk-body govuk-!-margin-top-2" style="display: none;">
+                <span class="govuk-!-font-weight-bold">Active filters: </span>
+                <span id="filter-summary"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .govuk-checkboxes--small {
+        margin-bottom: 0;
+    }
+
+    .govuk-checkboxes__item {
+        min-height: 30px;
+        margin-bottom: 10px;
+        padding: 5px 10px;
+    }
+
+    .govuk-checkboxes__item:hover {
+        background-color: #f3f2f1;
+    }
+
+    .guidance-card {
+        border-left: 10px solid #b1b4b6;
+    }
+
+    .question-card {
+        border-left: 10px solid #008938;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('input[name="condition-filter"]');
+        const showAllCheckbox = document.querySelector('input[value="show-all"]');
+        const filterSummary = document.getElementById('filter-summary');
+        const selectedFilters = document.getElementById('selected-filters');
+        const pageCards = document.querySelectorAll('.app-page-card');
+
+        function updatePages() {
+            const selectedConditions = Array.from(checkboxes)
+                .filter(cb => cb.checked && cb.value !== 'show-all')
+                .map(cb => cb.value);
+
+            console.log('Selected conditions:', selectedConditions); // Debug log
+
+            // Update details summary text
+            const detailsSummary = document.querySelector('.govuk-details__summary-text');
+            if (selectedConditions.length > 0) {
+                detailsSummary.innerHTML = `Filter pages by condition (${selectedConditions.length} selected)`;
+            } else {
+                detailsSummary.innerHTML = 'Filter pages by condition';
+            }
+
+            // Show/hide the filter summary
+            if (selectedConditions.length > 0) {
+                filterSummary.textContent = selectedConditions.join(', ');
+                selectedFilters.style.display = 'block';
+            } else {
+                selectedFilters.style.display = 'none';
+            }
+
+            // Update page visibility
+            pageCards.forEach(card => {
+                const cardConditions = (card.dataset.conditions || '').split(',').filter(Boolean);
+                console.log('Card conditions:', cardConditions); // Debug log
+
+                // Show the card if:
+                // 1. No conditions are selected (show all), OR
+                // 2. The card has no conditions (always show), OR
+                // 3. The card has one of the selected conditions
+                const shouldShow = selectedConditions.length === 0 ||
+                    cardConditions.length === 0 ||
+                    selectedConditions.some(condition => cardConditions.includes(condition));
+
+                card.style.display = shouldShow ? 'block' : 'none';
+            });
+        }
+
+        // Handle "Show all" checkbox
+        showAllCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                checkboxes.forEach(cb => {
+                    if (cb !== showAllCheckbox) {
+                        cb.checked = false;
+                    }
+                });
+            }
+            updatePages();
+        });
+
+        // Handle other checkboxes
+        checkboxes.forEach(checkbox => {
+            if (checkbox !== showAllCheckbox) {
+                checkbox.addEventListener('change', function () {
+                    if (this.checked) {
+                        showAllCheckbox.checked = false;
+                    }
+                    const anyChecked = Array.from(checkboxes)
+                        .some(cb => cb !== showAllCheckbox && cb.checked);
+                    if (!anyChecked) {
+                        showAllCheckbox.checked = true;
+                    }
+                    updatePages();
+                });
+            }
+        });
+
+        // Initial update
+        updatePages();
+    });
+</script>
+
+<form class="form" action="/form-editor/questionnumber" method="post">
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full-from-desktop" id="container" style="overflow-y: auto;">
+            <!-- Add this temporarily at the top of your template for debugging -->
+
+            {% if formPages.length %}
+            {% for page in formPages %}
+            {% if page.questions and page.questions.length > 0 or page.pageType == 'guidance' %}
+
+            <div class="govuk-grid-row page-row app-page-card"
+                data-conditions="{% for condition in page.conditions %}{{ condition.conditionName }}{% if not loop.last %},{% endif %}{% endfor %}">
+                <!-- Left Column: Summary Card -->
+                <div class="govuk-grid-column-full govuk-grid-column-one-half-from-desktop">
+                    <div class="govuk-summary-card" {% if page.isExitPage %} style="border-left: 10px solid #6b1c40;" {%
+                        else %} style="border-left: 10px solid #008938;" {% endif %}>
+                        <div class="govuk-summary-card__title-wrapper">
+                            <div class="govuk-grid-row">
+                                <div class="govuk-grid-column-full">
+                                    <h2 class="govuk-summary-card__title" style="margin: 0;">
+                                        {% if page.isExitPage %}
+                                        <span class="govuk-tag govuk-tag--pink"
+                                            style="margin-right: 10px; max-width: 100%;">Exit
+                                            page</span>
+                                        {% endif %}
+                                        Page {{ loop.index }}:
+                                        {% if page.pageType == 'guidance' %}
+                                        {{ page.guidanceOnlyHeadingInput }}
+                                        {% elif page.questions and page.questions.length == 1 %}
+                                        {{ page.questions[0].label }}
+                                        {% else %}
+                                        {% if page.pageHeading %}
+                                        {{ page.pageHeading }}
+                                        {% else %}
+                                        {{ page.pageType | capitalize }}
+                                        {% endif %}
+                                        {% endif %}
+                                    </h2>
+                                </div>
+                            </div>
+                            <ul class="govuk-summary-card__actions">
+                                <li class="govuk-summary-card__action">
+                                    <a class="govuk-link govuk-link--no-visited-state" href="{% if page.pageType == 'guidance' %}
+                                            /form-editor/edit-guidance?pageId={{ page.pageId }}
+                                        {% else %}
+                                            /edit-page/{{ page.pageId }}
+                                        {% endif %}">
+                                        Edit<span class="govuk-visually-hidden"> page {{ page.pageId }}</span>
+                                    </a>
+                                </li>
+                                <li class="govuk-summary-card__action">
+                                    <a class="govuk-link govuk-link--no-visited-state preview-link"
+                                        data-preview="preview-{{ page.pageId }}" href="#">
+                                        Preview<span class="govuk-visually-hidden"> page {{ page.pageId }}</span>
+                                    </a>
+                                    <a class="govuk-link close-link" data-preview="preview-{{ page.pageId }}"
+                                        id="close-before-content-{{ page.pageId }}" style="display: none;" href="#">
+                                        Close Preview<span class="govuk-visually-hidden"> page {{ page.pageId
+                                            }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% if not (page.questions and page.questions.length == 1) or (page.conditions and
+                        page.conditions.length > 0) or
+                        page.pageType == 'guidance' %}
+                        <div class="govuk-summary-card__content">
+                            <dl class="govuk-summary-list">
+                                {% if page.questions and page.questions.length > 1 %}
+                                {% for question in page.questions %}
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Question {{ loop.index }}</dt>
+                                    <dd class="govuk-summary-list__value">{{ question.label }}</dd>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+
+                                {% if page.pageType == 'guidance' %}
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key" style="white-space: nowrap;">Guidance</dt>
+                                    <dd class="govuk-summary-list__value">
+                                        {% if (page.guidanceOnlyGuidanceTextInput or '').length > 150 %}
+                                        {{ (page.guidanceOnlyGuidanceTextInput or '').substring(0, 150) }}...
+                                        {% else %}
+                                        {{ page.guidanceOnlyGuidanceTextInput or '' }}
+                                        {% endif %}
+                                    </dd>
+                                </div>
+                                {% endif %}
+
+
+                                {% if page.setName %}
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">People can answer</dt>
+                                    <dd class="govuk-summary-list__value">More than once</dd>
+                                </div>
+                                {% endif %}
+                                {% if page.conditions and page.conditions.length > 0 %}
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Page shown when</dt>
+                                    <dd class="govuk-summary-list__value">
+                                        <ul class="govuk-list">
+                                            {% for condition in page.conditions %}
+                                            <li style="display: flex; align-items: flex-start; margin-bottom: 10px;">
+                                                <svg style="min-width: 24px; margin-right: 10px; margin-top: 3px;"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="#00703c" stroke-width="2">
+                                                    <path d="M20 6L9 17l-5-5"></path>
+                                                </svg>
+                                                <div>
+                                                    <span class="govuk-!-font-weight-bold">{{
+                                                        condition.conditionName
+                                                        }}</span>
+                                                    <div class="govuk-!-margin-left-3 govuk-!-margin-top-1">
+                                                        {{ condition.text }}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </dd>
+                                </div>
+                                {% endif %}
+                            </dl>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Right Column: Preview Panel -->
+                <div class="govuk-grid-column-full govuk-grid-column-one-half-from-desktop">
+                    <div class="preview-container govuk-!-margin-top-1" id="preview-{{ page.pageId }}">
+                        <div id="dynamic-preview-content-{{ page.pageId }}">
+                            <!-- Preview Header -->
+                            <div id="before-content"
+                                style="background-color: #cce2d8; display: flex; justify-content: space-between; align-items: left;">
+                                <p class="govuk-body-s" style="margin-bottom: 0; color: #005a30; padding: 2px 8px 2px;">
+                                    Preview of page {{ loop.index }}
+                                </p>
+                                <a href="#" id="close-before-content-{{ page.pageId }}" class="govuk-link"
+                                    style="color: #005a30;" aria-label="Close Previews">
+                                    Close<span class="govuk-visually-hidden"> Previews section</span>
+                                </a>
+                            </div>
+                            <div style="margin-top: 60px;">
+                                {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+                                <div class="govuk-tabs" data-module="govuk-tabs">
+                                    <h2 class="govuk-tabs__title">Contents</h2>
+                                    <ul class="govuk-tabs__list">
+                                        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                            <a class="govuk-tabs__tab" href="#tab-one-{{ page.pageId }}">Page
+                                                preview</a>
+                                        </li>
+                                        {% if page.questions and page.questions.length == 1 %}
+                                        <li class="govuk-tabs__list-item">
+                                            <a class="govuk-tabs__tab" href="#tab-two-{{ page.pageId }}">Error
+                                                messages</a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+
+                                    <!-- Tab One Panel: Preview -->
+                                    <div class="govuk-tabs__panel" id="tab-one-{{ page.pageId }}">
+                                        <p class="govuk-body-s" style="margin-bottom: 30px;">
+                                            <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                rel="noreferrer noopener" target="_blank">
+                                                Preview this page in a new tab
+                                            </a>
+                                        </p>
+
+                                        <!-- Dynamic Heading and Guidance -->
+                                        <div id="heading-container-{{ page.pageId }}">
+                                            {% if page.setName %}
+                                            <span id="dynamic-caption-{{ page.pageId }}" class="govuk-caption-xl"
+                                                data-setname="{{ page.setName | capitalize }}">
+                                                {{ page.setName | capitalize }} {{ loop.index }}
+                                            </span>
+                                            {% endif %}
+
+                                            {% if page.pageType == 'guidance' %}
+                                            <h1 class="govuk-heading-l">{{ page.guidanceOnlyHeadingInput or '' }}</h1>
+                                            <div class="govuk-body guidance-content"
+                                                id="guidance-content-{{ page.pageId }}">
+                                                {{ page.guidanceOnlyGuidanceTextInput or '' }}
+                                            </div>
+                                            {% else %}
+                                            <h1 class="govuk-heading-xl" id="dynamic-heading-{{ page.pageId }}">
+                                                {{ page.pageHeading or '' }}
+                                            </h1>
+                                            {% endif %}
+                                        </div>
+
+
+                                        <!-- Render each question's preview -->
+                                        <div id="preview-container-inner-{{ page.pageId }}">
+                                            <div id="preview-items-{{ page.pageId }}">
+                                                {% if page.questions and page.questions.length > 0 %}
+                                                {% for question in page.questions %}
+                                                <div class="preview-item" data-id="question-{{ question.questionId }}">
+                                                    {# Set the preview template based on question type and subtype #}
+                                                    {% set previewTemplate =
+                                                    '/form-editor/question-type/questions/previews/' %}
+                                                    {% if question.type == 'phone' %}
+                                                    {% set previewTemplate = previewTemplate ~ 'phone-preview.html'
+                                                    %}
+                                                    {% elif question.type == 'address' %}
+                                                    {% set previewTemplate = previewTemplate ~
+                                                    'address-preview.html' %}
+                                                    {% elif question.type == 'file' %}
+                                                    {% set previewTemplate = previewTemplate ~
+                                                    'fileupload-preview.html'
+                                                    %}
+                                                    {% elif question.type == 'email' %}
+                                                    {% set previewTemplate = previewTemplate ~ 'email-preview.html'
+                                                    %}
+                                                    {% elif question.type == 'text' %}
+                                                    {% if question.subType == 'short-answer-nf' %}
+                                                    {% set previewTemplate = previewTemplate ~
+                                                    'shorttext-preview.html'
+                                                    %}
+                                                    {% elif question.subType == 'long-answer' %}
+                                                    {% set previewTemplate = previewTemplate ~
+                                                    'textarea-preview.html'
+                                                    %}
+                                                    {% elif question.subType == 'numbers' %}
+                                                    {% set previewTemplate = previewTemplate ~
+                                                    'numbers-preview.html' %}
+                                                    {% else %}
+                                                    {% set previewTemplate = previewTemplate ~ 'text-preview.html'
+                                                    %}
+                                                    {% endif %}
+                                                    {% elif question.type == 'list' %}
+                                                    {% if question.subType == 'radios' %}
+                                                    {% set previewTemplate = previewTemplate ~ 'radios-preview.html' %}
+                                                    {% elif question.subType == 'checkboxes' %}
+                                                    {% set previewTemplate = previewTemplate ~ 'checkboxes-preview.html'
+                                                    %}
+                                                    {% elif question.subType == 'yes-no' %}
+                                                    {% set previewTemplate = previewTemplate ~ 'yesno-preview.html' %}
+                                                    {% elif question.subType == 'select' %}
+                                                    {% set previewTemplate = previewTemplate ~
+                                                    'autocomplete-preview.html' %}
+                                                    {% else %}
+                                                    {% set previewTemplate = previewTemplate ~ 'list-preview.html' %}
+                                                    {% endif %}
+                                                    {% endif %}
+                                                    {% include previewTemplate %}
+                                                </div>
+                                                {% endfor %}
+                                                {% else %}
+                                                {# <p>No content available to preview.</p> #}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        {% if page.setName %}
+                                        <button class="govuk-button" id="add-another-set-button-{{ page.setName }}">
+                                            Add another
+                                            <span style="text-transform: lowercase;">
+                                                {{ page.setName }}
+                                            </span>
+                                        </button>
+                                        {% endif %}
+
+                                        <a href="#overviewquestions" class="govuk-skip-link"
+                                            style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                            Skip to page overview
+                                        </a>
+                                    </div>
+
+                                    <!-- Tab Two Panel: Error messages -->
+                                    {% if page.questions and page.questions.length == 1 %}
+                                    <div class="govuk-tabs__panel" id="tab-two-{{ page.pageId }}" hidden>
+                                        <p class="govuk-body-s" style="margin-bottom: 30px;">
+                                            <a href="#" class="govuk-link govuk-link--no-visited-state"
+                                                rel="noreferrer noopener" target="_blank">
+                                                Preview error messages in a new tab
+                                            </a>
+                                        </p>
+                                        <div class="govuk-error-summary" data-module="govuk-error-summary"
+                                            data-disable-auto-focus="true" hidden>
+                                            <h2 class="govuk-error-summary__title">There is a problem</h2>
+                                            <ul class="govuk-list govuk-error-summary__list">
+                                                <!-- List your error messages here -->
+                                            </ul>
+                                        </div>
+                                        <a href="#overviewquestions" class="govuk-skip-link"
+                                            style="margin-bottom: 30px!important;" data-module="govuk-skip-link">
+                                            Skip to page overview
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end .govuk-grid-row.page-row -->
+            {% else %}
+            {# Optional content if no formPages exist #}
+            {% endif %}
+            {% endfor %}
+            {% else %}
+            {# Optional content if no formPages exist #}
+            {% endif %}
+        </div> <!-- end #container -->
+    </div> <!-- end .govuk-grid-row -->
+
+
+</form>
+
+
+{# =========================================================
+CHECK ANSWERS PAGE
+========================================================= #}
+
+{# {% if data['checkAnswersGuidanceTextInput'] %} #}
+<div class="govuk-grid-row">
+    <!-- Summary Card Column -->
+    <div class="govuk-grid-column-full govuk-grid-column-one-half-from-desktop">
+        <!-- Section Break and Heading -->
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+        <h2 class="govuk-heading-m">End pages</h2>
+
+        <!-- Main Content: Summary Card -->
+        <div class="govuk-summary-card" style="border-left: 10px solid #b1b4b6;">
+            <div class="govuk-summary-card__title-wrapper">
+                <h2 class="govuk-summary-card__title" id="card-title-check-1q">
+                    Check answers page <span id="page-13-heading-text"></span>
+                </h2>
+                <ul class="govuk-summary-card__actions">
+                    <li class="govuk-summary-card__action">
+                        <a class="govuk-link govuk-link--no-visited-state" id="editpage13"
+                            href="/form-editor/check-answers/settings.html">
+                            Edit <span class="govuk-visually-hidden">page 13</span>
+                        </a>
+                    </li>
+                    <li class="govuk-summary-card__action">
+                        <a class="govuk-link govuk-link--no-visited-state preview-link" data-preview="check-preview"
+                            href="#">
+                            Preview <span class="govuk-visually-hidden">page 13</span>
+                        </a>
+                        <a class="govuk-link close-link" data-preview="check-preview" style="display: none;" href="#">
+                            Close Preview <span class="govuk-visually-hidden">page 13</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            {% if data['checkAnswersGuidanceTextInput'] %}
+            <div class="govuk-summary-card__content">
+                <dl class="govuk-summary-list">
+                    {% if data['declarationOption'] == "yes-declaration" %}
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">Declaration</dt>
+                        <dd class="govuk-summary-list__value">
+                            {% if (data['checkAnswersGuidanceTextInput'] or '').length > 150 %}
+                            {{ (data['checkAnswersGuidanceTextInput'] or '').substring(0, 150) }}...
+                            {% else %}
+                            {{ data['checkAnswersGuidanceTextInput'] or '' }}
+                            {% endif %}
+                        </dd>
+                    </div>
+                    {% endif %}
+                </dl>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Preview Column -->
+    <div class="govuk-grid-column-full govuk-grid-column-one-half-from-desktop">
+        <!-- Preview Container -->
+        <div class="preview-container govuk-!-margin-top-1"
+            style="outline-color: #b1b4b6; box-shadow: 5px 10px #b1b4b6;" id="check-preview">
+            <div id="dynamic-preview-content-check">
+                <!-- Preview Header -->
+                <div id="before-content"
+                    style="background-color: #e3e3e3; outline-color: #b1b4b6; border-bottom-color: #b1b4b6; display: flex; justify-content: space-between; align-items: left;">
+                    <p class="govuk-body-s" style="margin-bottom: 0; color: #0b0c0c; padding: 2px 8px 2px;">
+                        Preview of Check answers page
+                    </p>
+                    <a href="#" id="close-before-content" class="govuk-link" style="color: #0b0c0c;"
+                        aria-label="Close Previews">
+                        Close<span class="govuk-visually-hidden"> Previews section</span>
+                    </a>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <!-- Tab Structure -->
+                    <div class="govuk-tabs" data-module="govuk-tabs">
+                        <h2 class="govuk-tabs__title">Contents</h2>
+                        <ul class="govuk-tabs__list">
+                            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                <a class="govuk-tabs__tab" href="#tab-one">Page preview</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab One Content -->
+                        <div class="govuk-tabs__panel" id="tab-one">
+                            <p class="govuk-body-s" style="margin-bottom: 30px;">
+                                <a href="#" class="govuk-link govuk-link--no-visited-state" rel="noreferrer noopener"
+                                    target="_blank">
+                                    Preview this page in a new tab
+                                </a>
+                            </p>
+
+                            <!-- Dynamic Heading -->
+                            <div id="heading-container">
+                                {% if data['setName'] %}
+                                <span id="dynamic-caption" class="govuk-caption-xl"
+                                    data-setname="{{ data['setName'] | capitalize }}">
+                                    {{ data['setName'] | capitalize }} 1
+                                </span>
+                                {% endif %}
+                                <h1 class="govuk-heading-l" id="dynamic-heading">
+                                    Check your answers before sending your form
+                                </h1>
+                            </div>
+
+                            <!-- Summary List -->
+                            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                                <!-- Business registered with RPA -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Business registered with RPA</dt>
+                                    <dd class="govuk-summary-list__value">Yes</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> registration status</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Country for livestock -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Country for livestock</dt>
+                                    <dd class="govuk-summary-list__value">England</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> country</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Arrival date of livestock -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Arrival date of livestock</dt>
+                                    <dd class="govuk-summary-list__value">20 04 2024</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> arrival date</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Type of livestock -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Type of livestock</dt>
+                                    <dd class="govuk-summary-list__value">Cow</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> livestock type</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Applicant's name -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Applicant's name</dt>
+                                    <dd class="govuk-summary-list__value">John Doe</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> applicant name</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Business name -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Business name</dt>
+                                    <dd class="govuk-summary-list__value">Doe Farms Ltd</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> business name</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Main phone number -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Main phone number</dt>
+                                    <dd class="govuk-summary-list__value">07700 900457</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> phone number</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Email address -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Email address</dt>
+                                    <dd class="govuk-summary-list__value">john.doe@example.com</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> email address</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Business address -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Business address</dt>
+                                    <dd class="govuk-summary-list__value">123 Farm Lane, Rural Town</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> business address</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Business purpose -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Business purpose</dt>
+                                    <dd class="govuk-summary-list__value">Livestock farming</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> business purpose</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- National Grid field number -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">National Grid field number</dt>
+                                    <dd class="govuk-summary-list__value">NG123456</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> field number</span>
+                                        </a>
+                                    </dd>
+                                </div>
+
+                                <!-- Methodology statement -->
+                                <div class="govuk-summary-list__row">
+                                    <dt class="govuk-summary-list__key">Methodology statement</dt>
+                                    <dd class="govuk-summary-list__value">1 file uploaded</dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <a class="govuk-link govuk-link--no-visited-state" href="#"
+                                            style="color: #b1b4b6; cursor: default;"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.blur(); return false;">
+                                            Change<span class="govuk-visually-hidden"> methodology statement</span>
+                                        </a>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <!-- Guidance Paragraph -->
+                            <p class="govuk-body" id="guidance-paragraph">
+                                {{ data['checkAnswersGuidanceTextInput'] or '' }}
+                            </p>
+
+                            <!-- Conditional Button -->
+                            {% if data['checkAnswersGuidanceTextInput'] %}
+                            {{ govukButton({
+                            text: commonTerms.form_editor.actions.accept_and_send,
+                            classes: "govuk-button govuk-!-margin-top-3",
+                            id: "accept-and-send-button",
+                            disabled: true
+                            }) }}
+                            {% else %}
+                            {{ govukButton({
+                            text: commonTerms.form_editor.actions.send,
+                            classes: "govuk-button govuk-!-margin-top-3",
+                            id: "send-button",
+                            disabled: true
+                            }) }}
+                            {% endif %}
+
+                            <a href="#editpage13" class="govuk-skip-link" style="margin-bottom: 30px!important;"
+                                data-module="govuk-skip-link">
+                                Close preview and skip to page 13 details
+                            </a>
+                        </div> <!-- End of Tab One -->
+                    </div> <!-- End of govuk-tabs -->
+                </div>
+            </div> <!-- End of dynamic-preview-content-check -->
+        </div> <!-- End of preview-container -->
+    </div>
+</div> <!-- End of govuk-grid-row -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const filterButton = document.getElementById('apply-filter');
+
+        filterButton.addEventListener('click', function () {
+            const selectedCondition = document.getElementById('condition-filter').value;
+            const pageRows = document.querySelectorAll('.page-row');
+
+            console.log('Selected condition:', selectedCondition);
+            console.log('Found page rows:', pageRows.length);
+
+            pageRows.forEach((row, index) => {
+                console.log(`\nChecking row ${index + 1}:`);
+
+                if (!selectedCondition) {
+                    row.style.display = '';
+                    return;
+                }
+
+                // First, check if this page has a conditions section
+                const conditionsSection = row.querySelector('.govuk-summary-list__row dt.govuk-summary-list__key');
+                let hasCondition = false;
+
+                if (conditionsSection && conditionsSection.textContent.trim() === 'Page shown when') {
+                    const conditions = row.querySelectorAll('.govuk-summary-list__value .govuk-!-font-weight-bold');
+                    console.log('Number of conditions found:', conditions.length);
+
+                    conditions.forEach(condition => {
+                        const conditionText = condition.textContent.trim();
+                        console.log('Found condition:', conditionText);
+                        if (conditionText === selectedCondition) {
+                            hasCondition = true;
+                        }
+                    });
+                }
+
+                console.log('Has matching condition:', hasCondition);
+                row.style.display = hasCondition ? '' : 'none';
+            });
+
+            // Update the count of visible pages
+            const visiblePages = Array.from(pageRows).filter(row => row.style.display !== 'none').length;
+            const totalPages = pageRows.length;
+
+            // Add or update the counter
+            const counterElement = document.getElementById('visible-pages-counter') ||
+                document.createElement('p');
+            counterElement.id = 'visible-pages-counter';
+            counterElement.className = 'govuk-body';
+            counterElement.innerHTML = selectedCondition ?
+                `Showing ${visiblePages} of ${totalPages} pages with condition "${selectedCondition}"` :
+                `Showing all ${totalPages} pages`;
+
+            if (!document.getElementById('visible-pages-counter')) {
+                document.querySelector('.govuk-form-group').after(counterElement);
+            }
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dynamicCaption = document.getElementById("dynamic-caption");
+        const setName = dynamicCaption ? dynamicCaption.getAttribute("data-setname") : null;
+
+        if (!setName && dynamicCaption) {
+            dynamicCaption.style.display = "none";
+        }
+    });
+</script>
+{# {% endif %} #}
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const filterButton = document.getElementById('apply-filter');
+        if (!filterButton) {
+            console.error('Filter button not found');
+            return;
+        }
+
+        const newFilterButton = filterButton.cloneNode(true);
+        filterButton.parentNode.replaceChild(newFilterButton, filterButton);
+
+        newFilterButton.addEventListener('click', function () {
+            const selectedCondition = document.getElementById('condition-filter').value;
+
+            // Get all edit links to identify pages
+            const editLinks = document.querySelectorAll('a[href^="/edit-page/"]');
+            console.log('Found pages:', editLinks.length);
+
+            editLinks.forEach(editLink => {
+                const pageId = editLink.getAttribute('href').split('/').pop();
+                const pageElement = editLink.closest('.page-row');
+
+                if (!pageElement) {
+                    console.log(`No page element found for ID ${pageId}`);
+                    return;
+                }
+
+                console.log(`\n=== Checking page ID: ${pageId} ===`);
+                console.log('Current display style:', pageElement.style.display);
+
+                // If no condition is selected, show all pages
+                if (!selectedCondition) {
+                    pageElement.style.display = '';
+                    console.log('No condition selected - showing page');
+                    return;
+                }
+
+                // Check if this page has conditions
+                const conditionsSection = pageElement.querySelector('.govuk-summary-list__row dt.govuk-summary-list__key');
+                const hasConditions = conditionsSection &&
+                    conditionsSection.textContent.trim() === 'Page shown when';
+
+                console.log('Has conditions section:', hasConditions);
+
+                // If page has no conditions, always show it
+                if (!hasConditions) {
+                    console.log(`Page ${pageId} has no conditions - explicitly setting to visible`);
+                    pageElement.style.removeProperty('display');
+                    return;
+                }
+
+                // Get all conditions for this page
+                const conditions = Array.from(pageElement.querySelectorAll('span[class*="font-weight-bold"]'))
+                    .map(span => span.textContent.trim());
+
+                console.log(`Page ${pageId} conditions:`, conditions);
+
+                // Show page if it has the selected condition
+                const hasMatchingCondition = conditions.includes(selectedCondition);
+                console.log(`Page ${pageId} matches condition: ${hasMatchingCondition}`);
+
+                if (hasMatchingCondition) {
+                    pageElement.style.removeProperty('display');
+                } else {
+                    pageElement.style.display = 'none';
+                }
+
+                console.log('Final display style:', pageElement.style.display);
+            });
+
+            // Update counter
+            const totalPages = editLinks.length;
+            const visiblePages = Array.from(document.querySelectorAll('.page-row'))
+                .filter(row => row.style.display !== 'none').length;
+
+            const counterElement = document.getElementById('visible-pages-counter') ||
+                document.createElement('p');
+            counterElement.id = 'visible-pages-counter';
+            counterElement.className = 'govuk-body';
+            counterElement.innerHTML = selectedCondition ?
+                `Showing ${visiblePages} of ${totalPages} pages with condition "${selectedCondition}"` :
+                `Showing all ${totalPages} pages`;
+
+            if (!document.getElementById('visible-pages-counter')) {
+                document.querySelector('.govuk-form-group').after(counterElement);
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dynamicCaption = document.getElementById("dynamic-caption");
+        const setName = dynamicCaption ? dynamicCaption.getAttribute("data-setname") : null;
+
+        if (!setName && dynamicCaption) {
+            dynamicCaption.style.display = "none";
+        }
+    });
+</script>
+{# {% endif %} #}
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Add event listener to all preview links
+        document.querySelectorAll(".preview-link").forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                // Get the ID of the preview container to open
+                const previewId = this.dataset.preview;
+                const previewContainer = document.getElementById(previewId);
+
+                if (previewContainer) {
+                    // Show the preview container
+                    previewContainer.style.display = "block";
+
+                    // Move focus to the "Close Previews" link;
+                    // use an attribute selector so it works with our unique IDs.
+                    const closeLink = previewContainer.querySelector("[id^='close-before-content']");
+                    if (closeLink) {
+                        closeLink.focus();
+                    }
+                }
+            });
+        });
+
+        // Add event listener to all close links within previews using an attribute selector
+        document.querySelectorAll("[id^='close-before-content']").forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                // Get the parent preview container
+                const previewContainer = this.closest(".preview-container");
+
+                if (previewContainer) {
+                    // Hide the preview container
+                    previewContainer.style.display = "none";
+
+                    // Move focus back to the corresponding preview link
+                    const previewLink = document.querySelector(`.preview-link[data-preview="${previewContainer.id}"]`);
+                    if (previewLink) {
+                        previewLink.focus();
+                    }
+                }
+            });
+        });
+
+        // Add event listener to all "Close preview and skip" links
+        document.querySelectorAll("[data-module='govuk-skip-link']").forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                // Get the ID to skip to from the href attribute
+                const targetId = this.getAttribute("href").substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                // Hide the current preview if applicable
+                const previewContainer = this.closest(".preview-container");
+                if (previewContainer) {
+                    previewContainer.style.display = "none";
+                }
+
+                // Move focus to the target section if it exists
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: "smooth" });
+                    targetElement.focus();
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Count the number of <h2> elements with the class govuk-summary-card__title
+        const pageTitles = document.querySelectorAll("h2.govuk-summary-card__title");
+
+        // Get the reorder button and preview form link elements
+        const reorderButton = document.querySelector("#reorder-button");
+        const previewLink = document.querySelector("#preview-link");
+
+        // Show the reorder button and preview link if 2 or more titles are found
+        if (pageTitles.length >= 2) {
+            reorderButton.style.display = "inline-block";
+            previewLink.style.display = "inline-block";
+        } else {
+            reorderButton.style.display = "none";
+            previewLink.style.display = "none";
+        }
+    });
+
+
+</script>
+
+
+<style>
+    .before-content {
+        background-color: #cce2d8;
+        display: flex;
+        justify-content: space-between;
+        align-items: left;
+    }
+</style>
+
+{% endblock %}
